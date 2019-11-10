@@ -8,6 +8,21 @@ public class User {
 	private String umajor;//用户所在专业
 	private String upassword;//用户密码
 	private String utemp;//备用字段
+	private int ustate;//用户状态
+	private String uphone;//用户电话
+	
+	public int getUstate() {
+		return ustate;
+	}
+	public void setUstate(int ustate) {
+		this.ustate = ustate;
+	}
+	public String getUphone() {
+		return uphone;
+	}
+	public void setUphone(String uphone) {
+		this.uphone = uphone;
+	}
 	public int getUid() {
 		return uid;
 	}

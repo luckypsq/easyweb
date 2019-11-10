@@ -6,11 +6,21 @@ public class Book {
 	private String bucollege;//书籍分类学院
 	private String bumajor;//书籍分类专业
 	private String bclass;//书籍分类年级
+	
 	private String bcontent;//描述
 	private String bimg;//图片
 	private String bprice;//价格
 	private String bstate;//状态
 	private long btid;//类别
+	
+	private String btemp;//所属系列
+	
+	public String getBtemp() {
+		return btemp;
+	}
+	public void setBtemp(String btemp) {
+		this.btemp = btemp;
+	}
 	public String getBprice() {
 		return bprice;
 	}
