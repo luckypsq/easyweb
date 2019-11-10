@@ -6,7 +6,7 @@ public class Book {
 	private String bucollege;//书籍分类学院
 	private String bumajor;//书籍分类专业
 	private String bclass;//书籍分类年级
-	
+	private String bname;//书名
 	private String bcontent;//描述
 	private String bimg;//图片
 	private String bprice;//价格
