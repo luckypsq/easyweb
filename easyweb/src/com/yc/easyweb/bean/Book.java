@@ -13,6 +13,12 @@ public class Book {
 	private String bstate;//状态
 	private long btid;//类别
 	
+	public String getBname() {
+		return bname;
+	}
+	public void setBname(String bname) {
+		this.bname = bname;
+	}
 	private String btemp;//所属系列
 	
 	public String getBtemp() {
