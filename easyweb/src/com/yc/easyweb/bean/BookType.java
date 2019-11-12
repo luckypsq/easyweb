@@ -36,4 +36,10 @@ public class BookType {
 	public void setBttemp(String bttemp) {
 		this.bttemp = bttemp;
 	}
+	@Override
+	public String toString() {
+		return "BookType [btid=" + btid + ", btname=" + btname + ", btnamesecond=" + btnamesecond + ", btnamethird="
+				+ btnamethird + ", bttemp=" + bttemp + "]";
+	}
+	
 }

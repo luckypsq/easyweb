@@ -45,7 +45,7 @@ public class DbHelper {
 		return conn;*/
 		//创建JNDI上下文对象
 		Context context = new InitialContext();
-		DataSource dSource = (DataSource) context.lookup("java:comp/env/mysql/doubleball");
+		DataSource dSource = (DataSource) context.lookup("java:comp/env/mysql/easy");
 		conn = dSource.getConnection();
 		return conn;
 	}

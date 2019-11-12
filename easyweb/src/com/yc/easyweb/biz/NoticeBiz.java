@@ -3,6 +3,8 @@ package com.yc.easyweb.biz;
 import java.util.List;
 
 import com.yc.easyweb.bean.Notice;
+import com.yc.easyweb.dao.NoticeDao;
+
 
 /**
  * 操作Notice表的事务类
@@ -11,11 +13,12 @@ import com.yc.easyweb.bean.Notice;
  */
 public class NoticeBiz {
 
-	private Notice Notice = new Notice();
+	private NoticeDao dao = new NoticeDao();
 	
 	//查询所有
-		public List<Notice> selectAll(Notice notice){
-			return null;
+		public List<Notice> selectAll(Notice notice) throws Exception{
+			
+			return dao.selectAll(notice);
 			
 		}
 		//添加

@@ -3,6 +3,7 @@ package com.yc.easyweb.biz;
 import java.util.List;
 
 import com.yc.easyweb.bean.User;
+import com.yc.easyweb.dao.UserDao;
 
 /**
  * 操作User表的事务类
@@ -11,11 +12,11 @@ import com.yc.easyweb.bean.User;
  */
 public class UserBiz {
 
-	private User User = new User();
+	private UserDao dao = new UserDao();
 	
 	//查询所有
-		public List<User> selectAll(User user){
-			return null;
+		public List<User> selectAll(User user) throws Exception{
+			return dao.selectAll(user);
 			
 		}
 		//添加

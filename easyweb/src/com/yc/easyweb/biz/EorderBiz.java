@@ -3,6 +3,7 @@ package com.yc.easyweb.biz;
 import java.util.List;
 
 import com.yc.easyweb.bean.Eorder;
+import com.yc.easyweb.dao.EorderDao;
 
 /**
  * 操作Eorder表的事务类
@@ -11,11 +12,11 @@ import com.yc.easyweb.bean.Eorder;
  */
 public class EorderBiz {
 
-	private Eorder Eorder = new Eorder();
+	private EorderDao dao = new EorderDao();
 	
 	//查询所有
-		public List<Eorder> selectAll(Eorder eorder){
-			return null;
+		public List<Eorder> selectAll(Eorder eorder) throws Exception{
+			return dao.selectAll(eorder);
 			
 		}
 		//添加

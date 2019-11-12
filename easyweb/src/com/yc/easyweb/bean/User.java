@@ -3,14 +3,14 @@ package com.yc.easyweb.bean;
 public class User {
 	private int uid;//用户id
 	private String uname;//用户名
+	private String uphone;//用户电话
 	private String university;//用户所在大学
 	private String ucollege;//用户所在学院
 	private String umajor;//用户所在专业
 	private String upassword;//用户密码
-	private int ustate;//用户状态
-	private String uphone;//用户电话
-	
-	private int utype;//级别(用户，会员，钻石会员，普通管理员，超级管理员)
+	private int ustate;//用户状态（1.可用2.冻结3.删除）
+	private String utemp;//备用字段
+	private int utype;//级别(1用户，2会员，3钻石会员，4普通管理员，5超级管理员)
 	private String uemail;//邮箱
 	private String utime;//注册时间
 	private int usex;//性别(1.男2.女)
@@ -45,9 +45,6 @@ public class User {
 	public void setUage(int uage) {
 		this.uage = uage;
 	}
-	private String utemp;//备用字段
-	
-	
 	public int getUstate() {
 		return ustate;
 	}
@@ -102,4 +99,12 @@ public class User {
 	public void setUtemp(String utemp) {
 		this.utemp = utemp;
 	}
+	@Override
+	public String toString() {
+		return "User [uid=" + uid + ", uname=" + uname + ", uphone=" + uphone + ", university=" + university
+				+ ", ucollege=" + ucollege + ", umajor=" + umajor + ", upassword=" + upassword + ", ustate=" + ustate
+				+ ", utemp=" + utemp + ", utype=" + utype + ", uemail=" + uemail + ", utime=" + utime + ", usex=" + usex
+				+ ", uage=" + uage + "]";
+	}
+	
 }

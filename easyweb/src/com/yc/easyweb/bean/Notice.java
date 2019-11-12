@@ -7,8 +7,8 @@ public class Notice {
 	private String nnumber;//浏览量
 	private String nauthor;//发布者
 	private String ncontent;//内容
+	private int nstate;//状态（1.未过期2.已过期）
 	private String ntemp;//备用字段
-	private int nstate;//状态
 	public long getNid() {
 		return nid;
 	}
@@ -51,4 +51,10 @@ public class Notice {
 	public void setNstate(int nstate) {
 		this.nstate = nstate;
 	}
+	@Override
+	public String toString() {
+		return "Notice [nid=" + nid + ", ntime=" + ntime + ", nnumber=" + nnumber + ", nauthor=" + nauthor
+				+ ", ncontent=" + ncontent + ", nstate=" + nstate + ", ntemp=" + ntemp + "]";
+	}
+	
 }

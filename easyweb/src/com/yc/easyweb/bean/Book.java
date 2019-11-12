@@ -2,16 +2,19 @@ package com.yc.easyweb.bean;
 
 public class Book {
 	private long bid;//id
+	private String bname;//书名
 	private String buniversity;//书籍分类学校
 	private String bucollege;//书籍分类学院
 	private String bumajor;//书籍分类专业
 	private String bclass;//书籍分类年级
-	private String bname;//书名
+	
 	private String bcontent;//描述
 	private String bimg;//图片
 	private String bprice;//价格
-	private String bstate;//状态
-	private long btid;//类别
+	private int bstate;//状态(1可用，2.删除3.售罄)
+	private int btid;//类别
+	private String btemp;//所属系列
+	private String btemp1;//预留字段
 	
 	public String getBname() {
 		return bname;
@@ -19,7 +22,6 @@ public class Book {
 	public void setBname(String bname) {
 		this.bname = bname;
 	}
-	private String btemp;//所属系列
 	
 	public String getBtemp() {
 		return btemp;
@@ -33,17 +35,11 @@ public class Book {
 	public void setBprice(String bprice) {
 		this.bprice = bprice;
 	}
-	public String getBstate() {
+	public int getBstate() {
 		return bstate;
 	}
-	public void setBstate(String bstate) {
+	public void setBstate(int bstate) {
 		this.bstate = bstate;
-	}
-	public long getBtid() {
-		return btid;
-	}
-	public void setBtid(long btid) {
-		this.btid = btid;
 	}
 	public long getBid() {
 		return bid;
@@ -87,5 +83,25 @@ public class Book {
 	public void setBimg(String bimg) {
 		this.bimg = bimg;
 	}
+	public int getBtid() {
+		return btid;
+	}
+	public void setBtid(int btid) {
+		this.btid = btid;
+	}
+	public String getBtemp1() {
+		return btemp1;
+	}
+	public void setBtemp1(String btemp1) {
+		this.btemp1 = btemp1;
+	}
+	@Override
+	public String toString() {
+		return "Book [bid=" + bid + ", bname=" + bname + ", buniversity=" + buniversity + ", bucollege=" + bucollege
+				+ ", bumajor=" + bumajor + ", bclass=" + bclass + ", bcontent=" + bcontent + ", bimg=" + bimg
+				+ ", bprice=" + bprice + ", bstate=" + bstate + ", btid=" + btid + ", btemp=" + btemp + ", btemp1="
+				+ btemp1 + "]";
+	}
+	
 	
 }

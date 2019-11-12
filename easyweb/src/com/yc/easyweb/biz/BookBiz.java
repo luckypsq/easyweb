@@ -3,6 +3,7 @@ package com.yc.easyweb.biz;
 import java.util.List;
 
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.dao.BookDao;
 
 /**
  * 操作book表的事务类
@@ -11,12 +12,11 @@ import com.yc.easyweb.bean.Book;
  */
 public class BookBiz {
 
-	private Book book = new Book();
+	private BookDao dao = new BookDao();
 	
 	//查询所有
-		public List<Book> selectAll(Book book){
-			return null;
-			
+		public List<Book> selectAll(Book book) throws Exception{
+			return dao.selectAll(book);
 		}
 		//添加
 		public int insert(Book book){

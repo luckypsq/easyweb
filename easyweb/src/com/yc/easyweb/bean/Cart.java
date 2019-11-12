@@ -6,6 +6,7 @@ public class Cart {
 	private String eoid;//订单号
 	private String ctemp;//备用字段
 	private long uid;//用户id
+	
 	public long getCid() {
 		return cid;
 	}
@@ -30,4 +31,9 @@ public class Cart {
 	public void setUid(long uid) {
 		this.uid = uid;
 	}
+	@Override
+	public String toString() {
+		return "Cart [cid=" + cid + ", eoid=" + eoid + ", ctemp=" + ctemp + ", uid=" + uid + "]";
+	}
+	
 }

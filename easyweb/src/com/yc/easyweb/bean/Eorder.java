@@ -2,10 +2,10 @@ package com.yc.easyweb.bean;
 
 public class Eorder {
 	private String eoid;//订单id
+	private long uid;//用户id
+	private int eostate;//状态1.待付款2.已发货3.退款申请中4.退款成功5，5.订单取消
 	private String eotime;//下单时间
 	private String eotemp;//备用字段
-	private long uid;//用户id
-	private int eostate;//状态
 	private String uname;//用户名
 	private String eoaddr;//地址
 	private String eotype;//配送方式
@@ -56,6 +56,11 @@ public class Eorder {
 	}
 	public void setEostate(int eostate) {
 		this.eostate = eostate;
+	}
+	@Override
+	public String toString() {
+		return "Eorder [eoid=" + eoid + ", uid=" + uid + ", eostate=" + eostate + ", eotime=" + eotime + ", eotemp="
+				+ eotemp + ", uname=" + uname + ", eoaddr=" + eoaddr + ", eotype=" + eotype + "]";
 	}
 	
 }

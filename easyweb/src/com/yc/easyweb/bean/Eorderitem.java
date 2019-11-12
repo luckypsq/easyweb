@@ -5,7 +5,9 @@ public class Eorderitem {
 	private String itemid;//订单详情id
 	private int count;//数量
 	private long bid;//书id
-	private String eiod;//订单号
+	private String eoid;//订单号
+	private double total;//总价
+	private String eitemp;//预备字段
 	public String getItemid() {
 		return itemid;
 	}
@@ -24,10 +26,28 @@ public class Eorderitem {
 	public void setBid(long bid) {
 		this.bid = bid;
 	}
-	public String getEiod() {
-		return eiod;
+	public String getEoid() {
+		return eoid;
 	}
-	public void setEiod(String eiod) {
-		this.eiod = eiod;
+	public void setEoid(String eiod) {
+		this.eoid = eiod;
 	}
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	public String getEitemp() {
+		return eitemp;
+	}
+	public void setEitemp(String eitemp) {
+		this.eitemp = eitemp;
+	}
+	@Override
+	public String toString() {
+		return "Eorderitem [itemid=" + itemid + ", count=" + count + ", bid=" + bid + ", eoid=" + eoid + ", total="
+				+ total + ", eitemp=" + eitemp + "]";
+	}
+	
 }

@@ -1,3 +1,5 @@
+<%@page import="com.yc.easyweb.bean.*"%>
+<%@page import="com.yc.easyweb.biz.*"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.io.*"%>
 <%@page import="java.util.*"%>
@@ -56,7 +58,13 @@
 						<i class="icon-user"></i>
 					</div>
 					<div class="value">
-						<h1>34522</h1>
+					<%
+						UserBiz userBiz = new UserBiz();
+						User user = new User();
+						user.setUstate(1);
+						List<User> userList = userBiz.selectAll(user);
+					%>
+						<h1><%=userList.size() %></h1>
 						<p>书城用户</p>
 					</div>
 				</a> </section>
@@ -67,7 +75,13 @@
 					<i class="icon-tags"></i>
 				</div>
 				<div class="value">
-					<h1>140</h1>
+				<%
+					BookBiz bookBiz = new BookBiz();
+					Book book = new Book();
+					book.setBstate(1);
+					List<Book> bookList = bookBiz.selectAll(book);
+				%>
+					<h1><%=bookList.size() %></h1>
 					<p>书籍数量</p>
 				</div>
 				</section>
@@ -78,7 +92,15 @@
 					<i class="icon-shopping-cart"></i>
 				</div>
 				<div class="value">
-					<h1>345</h1>
+				<%
+					//1.查询本月的订单数
+					EorderBiz eorderBiz = new EorderBiz();
+					Eorder eorder = new Eorder();
+					//eorder.setEotime(dateStr[0]+"/"+dateStr[1]+"/"+dateStr[2]);
+					eorder.setEotime("2019/8/10");
+					List<Eorder> eorderList = eorderBiz.selectAll(eorder);
+				%>
+					<h1><%=eorderList.size() %></h1>
 					<p>书籍订单</p>
 				</div>
 				</section>
@@ -89,7 +111,28 @@
 					<i class="icon-bar-chart"></i>
 				</div>
 				<div class="value">
-					<h1>￥34,500</h1>
+				<%
+					double num = 0.0;
+					if(eorderList.size() != 0){
+						EorderitemBiz eorderitemBiz = new EorderitemBiz();
+						List<Eorderitem> eorderitemList = null;
+						Eorderitem  eorderitem ; 
+						//根据查询出来的订单存储订单id
+						for(Eorder e : eorderList){
+							eorderitem = new Eorderitem ();
+							eorderitem.setEoid(e.getEoid());
+							eorderitemList = eorderitemBiz.selectAll(eorderitem);
+							//根据查询出来的订单详情表的数据计算总和
+							if(eorderitemList.size() != 0 ){
+								for(Eorderitem eo : eorderitemList){
+									num = eo.getTotal() + num;
+								}
+							}
+						}
+					}
+					
+				%>
+					<h1>￥<%=num %></h1>
 					<p>交易金额</p>
 				</div>
 				</section>
