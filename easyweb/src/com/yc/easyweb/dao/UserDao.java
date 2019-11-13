@@ -18,7 +18,7 @@ public class UserDao {
 	//²éÑ¯ËùÓÐ
 	public List<User> selectAll(User user) throws Exception{
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select uid,uname,uphone,university,ucollege,umajor,upassword, "
+		sb.append(" select uid,uname,uminname,uphone,university,ucollege,umajor,upassword, "
 				+ " ustate,utemp,utype,uemail,utime,usex,uage "
 				+ " from user where 1=1 ");
 		if(user != null){
@@ -26,7 +26,7 @@ public class UserDao {
 				sb.append(" and uname like '%"+user.getUname()+"%'");
 			}
 			if(user.getUniversity() != null){
-				sb.append(" and university like '%"+user.getUphone()+"%'");
+				sb.append(" and university like '%"+user.getUniversity()+"%'");
 			}
 			
 			if(user.getUcollege() != null){

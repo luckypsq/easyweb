@@ -20,7 +20,7 @@ public class NoticeDao {
 		if(notice != null){
 			//按发布者查
 			if(notice.getNauthor() != null){
-				sb.append(" and nnauthor like %'" + notice.getNauthor()+"'%");
+				sb.append(" and nauthor like %'" + notice.getNauthor()+"'%");
 			}
 			//按时间查
 			if(notice.getNtime() != null){

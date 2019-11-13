@@ -113,10 +113,10 @@
 				<div class="value">
 				<%
 					double num = 0.0;
+					EorderitemBiz eorderitemBiz = new EorderitemBiz();
+					List<Eorderitem> eorderitemList = null;
+					Eorderitem  eorderitem ; 
 					if(eorderList.size() != 0){
-						EorderitemBiz eorderitemBiz = new EorderitemBiz();
-						List<Eorderitem> eorderitemList = null;
-						Eorderitem  eorderitem ; 
 						//根据查询出来的订单存储订单id
 						for(Eorder e : eorderList){
 							eorderitem = new Eorderitem ();
@@ -130,7 +130,6 @@
 							}
 						}
 					}
-					
 				%>
 					<h1>￥<%=num %></h1>
 					<p>交易金额</p>

@@ -221,10 +221,11 @@ public class DbHelper {
 	}
 	/**
 	 * 查询操作， 之返回一条记录
+	 * @param <T>
 	 * @return
 	 * @throws Exception 
 	 */
-	public static Map<String, Object> selectSingle(String sql,List<Object> params)
+	public static <T> T selectSingle(String sql,List<Object> params,Class<T> cls)
 			throws Exception{
 		Map<String, Object> map = null;
 		try {
@@ -232,7 +233,7 @@ public class DbHelper {
 			pstmt = conn.prepareStatement(sql);
 			//设置参数List
 			setParamsList(pstmt, params);
-		//	System.out.println(sql);
+			//System.out.println(sql);
 			rs = pstmt.executeQuery();
 			//获取所有的列
 			List<String> columNames = getColumnNames(rs);
@@ -265,7 +266,8 @@ public class DbHelper {
 		}finally {
 			closeAll(conn, pstmt, rs);
 		}
-		return map;
+		T t = DbHelper.populateMap(map, cls);
+		return t;
 		
 	}
 	/**
@@ -313,5 +315,22 @@ public class DbHelper {
 				}
 			}
 			return reList;
+		}
+	 /**
+	  * Map集合进行转换为实体类，
+	  * @param list
+	  * @param cls
+	 * @return 
+	  * @return
+	  */
+	 public static <T> T populateMap(Map<String,Object> map,Class<T> cls) {
+				T p;
+				try {
+					p = cls.newInstance();//等效于new T()
+					BeanUtils.populate(p, map);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			return p;
 		}
 }

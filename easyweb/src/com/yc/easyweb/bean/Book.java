@@ -15,7 +15,15 @@ public class Book {
 	private int btid;//类别
 	private String btemp;//所属系列
 	private String btemp1;//预留字段
+	private Long bnum;//库存
 	
+	
+	public Long getBnum() {
+		return bnum;
+	}
+	public void setBnum(Long bnum) {
+		this.bnum = bnum;
+	}
 	public String getBname() {
 		return bname;
 	}

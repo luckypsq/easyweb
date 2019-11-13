@@ -17,7 +17,7 @@ public class BookDao {
 	public List<Book> selectAll(Book book) throws Exception{
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
-				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1"
+				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1£¬bnum"
 				+ " from book where 1=1 ");
 		if(book != null){
 			if(book.getBname() != null){

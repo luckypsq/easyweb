@@ -15,6 +15,14 @@ public class User {
 	private String utime;//注册时间
 	private int usex;//性别(1.男2.女)
 	private int uage;//年龄
+	private String uminname;//昵称
+	
+	public String getUminname() {
+		return uminname;
+	}
+	public void setUminname(String uminname) {
+		this.uminname = uminname;
+	}
 	public int getUtype() {
 		return utype;
 	}

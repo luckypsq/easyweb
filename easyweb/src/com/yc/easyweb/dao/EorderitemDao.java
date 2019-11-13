@@ -23,7 +23,7 @@ public class EorderitemDao {
 				sb.append(" and bid="+eorderitem.getBid());
 			}
 			if(eorderitem.getEoid() != null){
-				sb.append(" and eoid like'%"+eorderitem.getBid()+"%'");
+				sb.append(" and eoid like'%"+eorderitem.getEoid() +"%'");
 			}
 			if(eorderitem.getItemid() != null){
 				sb.append(" and itemid like'%"+eorderitem.getItemid()+"%'");
