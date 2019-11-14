@@ -1,25 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/style.css"/>       
-        <link href="assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/ace.min.css" />
-        <link rel="stylesheet" href="font/css/font-awesome.min.css" />
+ <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="js/jquery-1.9.1.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/js/typeahead-bs2.min.js"></script>           	
-		<script src="assets/js/jquery.dataTables.min.js"></script>
-		<script src="assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="assets/laydate/laydate.js" type="text/javascript"></script>
+		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>           	
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
 <title>支付配置</title>
 </head>
 
@@ -44,7 +46,7 @@
        <label><input name="form-field-radio" type="radio" class="ace" onclick="closes(this,'213')"><span class="lbl">关闭</span></label>     
        </td>      
        <td>在线支付是指卖方与买方通过因特网上的电子商务网站进行交易时，银行为其提供网上资金结算服务的一种业务。它为企业和个人提供了一个安全、快捷、方便的电... </td>
-        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
        <tr>
        <td>在线支付（预存）</td>
@@ -53,7 +55,7 @@
        <label><input name="form-field-radio4" type="radio" class="ace" onclick="closes(this,'214')"><span class="lbl">关闭</span></label>     
        </td>      
        <td>在线支付是指卖方与买方通过因特网上的电子商务网站进行交易时，银行为其提供网上资金结算服务的一种业务。它为企业和个人提供了一个安全、快捷、方便的电... </td>
-        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
        <tr><td>货到付款</td>
        <td>
@@ -62,7 +64,7 @@
        </td>
        
        <td>在线支付是指卖方与买方通过因特网上的电子商务网站进行交易时，银行为其提供网上资金结算服务的一种业务。它为企业和个人提供了一个安全、快捷、方便的电... </td>
-        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
        <tr>
        <td>第三方在线支付</td>
@@ -71,7 +73,7 @@
        <label><input name="form-field-radio2" type="radio" class="ace" onclick="closes(this,'216')"><span class="lbl">关闭</span></label>     
        </td>       
        <td>所谓第三方支付，就是一些和产品所在国家以及国内外各大银行签约、并具备一定实力和信誉保障的第三方独立机构提供的交易支持平台。在通过第三方支付平台的... </td>
-        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
         <tr>
        <td>线下支付</td>
@@ -80,7 +82,7 @@
        <label><input name="form-field-radio3" type="radio" class="ace" onclick="closes(this,'217')"><span class="lbl">关闭</span></label>     
        </td>       
        <td>所谓第三方支付，就是一些和产品所在国家以及国内外各大银行签约、并具备一定实力和信誉保障的第三方独立机构提供的交易支持平台。在通过第三方支付平台的... </td>
-        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
        </tbody>
       </table>

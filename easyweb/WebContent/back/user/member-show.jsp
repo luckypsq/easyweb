@@ -1,29 +1,31 @@
-<!DOCTYPE HTML>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/style.css"/>       
-        <link href="assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/ace.min.css" />
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+ <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
 		<!--[if IE 7]>
-		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome-ie7.min.css" />
 		<![endif]-->
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-			<script src="assets/js/jquery.min.js"></script>
+			<script src="<%=application.getContextPath() %>/back/assets/js/jquery.min.js"></script>
             <title>用户查看</title>
 </head>
 <body>
 <div class="member_show" >
 <div class="member_jbxx clearfix" >
-  <img class="img" src="images/user.png">
+  <img class="img" src="<%=application.getContextPath() %>/back/images/user.png">
   <dl  class="right_xxln">
   <dt><span class="">张三</span> <span class="">余额：40</span></dt>
   <dd class="" style="margin-left:0">这家伙很懒，什么也没有留下</dd>
@@ -44,4 +46,4 @@
 </div>
 </div>
 </body>
-</html>
+</html>      

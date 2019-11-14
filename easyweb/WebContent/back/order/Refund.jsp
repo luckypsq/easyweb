@@ -1,28 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/style.css"/>       
-        <link href="assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/ace.min.css" />
-        <link rel="stylesheet" href="font/css/font-awesome.min.css" />
+ <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="js/jquery-1.9.1.min.js"></script>
-		<script src="js/H-ui.js" type="text/javascript"></script>  
-        <script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/js/typeahead-bs2.min.js"></script>           	
-		<script src="assets/js/jquery.dataTables.min.js"></script>
-		<script src="assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="assets/laydate/laydate.js" type="text/javascript"></script>
+		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/js/H-ui.js" type="text/javascript"></script>  
+        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>           	
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
           
-        <script src="js/lrtk.js" type="text/javascript" ></script>
+        <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
 <title>退款管理</title>
 </head>
 
@@ -39,9 +41,9 @@
     </div>
  <div class="border clearfix">
        <span class="l_f">
-        <a href="javascript:ovid()" class="btn btn-success Order_form"><i class="fa fa-check-square-o"></i>&nbsp;已退款订单</a>
-        <a href="javascript:ovid()" class="btn btn-warning Order_form"><i class="fa fa-close"></i>&nbsp;未退款订单</a>
-        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;批量删除</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-success Order_form"><i class="fa fa-check-square-o"></i>&nbsp;已退款订单</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-warning Order_form"><i class="fa fa-close"></i>&nbsp;未退款订单</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;批量删除</a>
        </span>
        <span class="r_f">共：<b>2334</b>笔</span>
      </div>
@@ -67,7 +69,7 @@
            <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
      <td>20160705445622</td>
      <td class="order_product_name">
-      <a href="#">华圣 高原红富士苹果 6枚 1.2KG 自营水果</a>
+      <a href="<%=application.getContextPath() %>/back/#">华圣 高原红富士苹果 6枚 1.2KG 自营水果</a>
      </td>
      <td>456.5</td>    
      <td>2016-7-5</td>
@@ -76,16 +78,16 @@
       <td class="td-status"><span class="label label-success radius">待退款</span></td>
       <td>重复购买商品需退款一件</td>
      <td>
-     <a onClick="Delivery_Refund(this,'10001')"  href="javascript:;" title="退款"  class="btn btn-xs btn-success">退款</a> 
-     <a title="退款订单详细"  href="Refund_detailed.html"  class="btn btn-xs btn-info Refund_detailed" >详细</a> 
-     <a title="删除" href="javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" >删除</a>    
+     <a onClick="Delivery_Refund(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="退款"  class="btn btn-xs btn-success">退款</a> 
+     <a title="退款订单详细"  href="<%=application.getContextPath() %>/back/Refund_detailed.html"  class="btn btn-xs btn-info Refund_detailed" >详细</a> 
+     <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" >删除</a>    
      </td>
          </tr>
            <tr>
            <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
      <td>20160705445622</td>
      <td class="order_product_name">
-      <a href="#">华圣 高原红富士苹果 6枚 1.2KG 自营水果</a>
+      <a href="<%=application.getContextPath() %>/back/#">华圣 高原红富士苹果 6枚 1.2KG 自营水果</a>
      </td>
      <td>456.5</td>    
      <td>2016-7-5</td>
@@ -95,8 +97,8 @@
       <td>重复购买商品需退款一件</td>
      <td>
      
-     <a title="退款订单详细"  href="Refund_detailed.html"  class="btn btn-xs btn-info Refund_detailed" >详细</a> 
-     <a title="删除" href="javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" >删除</a>    
+     <a title="退款订单详细"  href="<%=application.getContextPath() %>/back/Refund_detailed.html"  class="btn btn-xs btn-info Refund_detailed" >详细</a> 
+     <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" >删除</a>    
      </td>
          </tr>
         </tbody>
@@ -131,7 +133,7 @@ jQuery(function($) {
 function Delivery_Refund(obj,id){
 			
 			 layer.confirm('是否退款当前商品价格！',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style=" display:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="已退款">退款</a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style=" display:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="已退款">退款</a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt  radius">已退款</span>');
 		$(obj).remove();
 		layer.msg('已退款!',{icon: 6,time:1000});

@@ -106,17 +106,17 @@
 													cid).ready();
 											$(".Current_page")
 													.attr('name', cid);
-											$(".Current_page").jsp(cname).css(
+											$(".Current_page").html(cname).css(
 													{
 														"color" : "#333333",
 														"cursor" : "default"
 													}).ready();
 											$("#parentIframe")
-													.jsp(
+													.html(
 															'<span class="parentIframe iframeurl"> </span>')
 													.css("display", "none")
 													.ready();
-											$("#parentIfour").jsp('').css(
+											$("#parentIfour").html('').css(
 													"display", "none").ready();
 										});
 
@@ -149,7 +149,7 @@
 				}
 
 				setInterval(function() {
-					$('#time').jsp(currentTime)
+					$('#time').html(currentTime)
 				}, 1000);
 				//修改密码
 				$('.change_Password').on(
@@ -212,7 +212,7 @@
 						btn : [ '是', '否' ],//按钮
 						icon : 2,
 					}, function() {
-						location.href = "login.jsp";
+						location.href = "<%=application.getContextPath() %>/join.jsp";
 
 					});
 				});
@@ -224,14 +224,14 @@
 		$("#Bcrumbs").attr("href", cid).ready();
 		$(".Current_page a").attr('href', cid).ready();
 		$(".Current_page").attr('name', cid);
-		$(".Current_page").jsp(cname).css({
+		$(".Current_page").html(cname).css({
 			"color" : "#333333",
 			"cursor" : "default"
 		}).ready();
 		$("#parentIframe")
-				.jsp('<span class="parentIframe iframeurl"> </span>').css(
+				.html('<span class="parentIframe iframeurl"> </span>').css(
 						"display", "none").ready();
-		$("#parentIfour").jsp('').css("display", "none").ready();
+		$("#parentIfour").html('').css("display", "none").ready();
 
 	}
 </script>
@@ -257,15 +257,16 @@
 			<div class="navbar-header pull-right" role="navigation">
 				<ul class="nav ace-nav">
 					<li class="light-blue"><a data-toggle="dropdown" href="#"
-						class="dropdown-toggle"> <span class="time"><em
-								id="time"></em></span><span class="user-info"><small>欢迎光临,</small>超级管理员</span>
+						class="dropdown-toggle">
+						 <span class="time"><em id="time"></em></span>
+							<span class="user-info"><small>欢迎光临,</small>超级管理员</span>
 							<i class="icon-caret-down"></i>
 					</a>
 						<ul
 							class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 							<li><a href="javascript:void(0" name="../system/Systems.jsp"
 								title="系统设置" class="iframeurl"><i class="icon-cog"></i>网站设置</a></li>
-							<li><a href="javascript:void(0)" name="../admin_info.jsp"
+							<li><a href="javascript:void(0)" name="../admin/admin_info.jsp"
 								title="个人信息" class="iframeurl"><i class="icon-user"></i>个人资料</a></li>
 							<li class="divider"></li>
 							<li><a href="javascript:ovid(0)" id="Exit_system"><i
@@ -277,20 +278,20 @@
 						<ul
 							class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
 							<li class="dropdown-header"><i class="icon-warning-sign"></i>8条通知</li>
-							<li><a href="#">
+							<li><a href="<%=application.getContextPath() %>/back/message/Guestbook.jsp">
 									<div class="clearfix">
 										<span class="pull-left"> <i
 											class="btn btn-xs no-hover btn-pink icon-comments-alt"></i>
-											最新消息
+											最新留言
 										</span> <span class="pull-right badge badge-info">+12</span>
 									</div>
 							</a></li>
 
-							<li><a href="#"> <i
+							<!-- <li><a href="#"> <i
 									class="btn btn-xs btn-primary icon-user"></i> 切换为编辑登录..
-							</a></li>
+							</a></li> -->
 
-							<li><a href="#">
+							<li><a href="<%=application.getContextPath()%>/back/order/Order_handling.jsp">
 									<div class="clearfix">
 										<span class="pull-left"> <i
 											class="btn btn-xs no-hover btn-success icon-shopping-cart"></i>
@@ -299,10 +300,10 @@
 									</div>
 							</a></li>
 
-							<li><a href="#">
+							<li><a href="<%=application.getContextPath() %>/back/message/Feedback.jsp">
 									<div class="clearfix">
 										<span class="pull-left"> <i
-											class="btn btn-xs no-hover btn-info icon-twitter"></i> 用户消息
+											class="btn btn-xs no-hover btn-info icon-twitter"></i> 用户反馈
 										</span> <span class="pull-right badge badge-info">+11</span>
 									</div>
 							</a></li>
@@ -365,17 +366,17 @@
 							name="home.jsp" class="iframeurl" title=""><i
 								class="icon-home"></i><span class="menu-text"> 系统首页 </span></a></li>
 						<li><a href="#" class="dropdown-toggle"><i
-								class="icon-desktop"></i><span class="menu-text"> 产品管理 </span><b
+								class="icon-desktop"></i><span class="menu-text"> 书籍管理 </span><b
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="Products_List.jsp" title="产品类表" class="iframeurl"><i
-										class="icon-double-angle-right"></i>产品类表</a></li>
-								<li class="home"><a href="javascript:void(0)"
+									name="<%=application.getContextPath() %>/back/book/Products_List.jsp" title="书籍类表" class="iframeurl"><i
+										class="icon-double-angle-right"></i>书籍类表</a></li>
+								<!-- <li class="home"><a href="javascript:void(0)"
 									name="Brand_Manage.jsp" title="品牌管理" class="iframeurl"><i
-										class="icon-double-angle-right"></i>品牌管理</a></li>
+										class="icon-double-angle-right"></i>品牌管理</a></li> -->
 								<li class="home"><a href="javascript:void(0)"
-									name="Category_Manage.jsp" title="分类管理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/book/Category_Manage.jsp" title="分类管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>分类管理</a></li>
 
 							</ul></li>
@@ -384,10 +385,10 @@
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="advertising.jsp" title="广告管理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/advertising/advertising.jsp" title="广告管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>广告管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Sort_ads.jsp" title="分类管理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/advertising/Sort_ads.jsp" title="分类管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>分类管理</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
@@ -395,54 +396,54 @@
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="transaction.jsp" title="交易信息" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/order/transaction.jsp" title="交易信息" class="iframeurl"><i
 										class="icon-double-angle-right"></i>交易信息</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Order_Chart.jsp" title="交易订单（图）" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/order/Order_Chart.jsp" title="交易订单（图）" class="iframeurl"><i
 										class="icon-double-angle-right"></i>交易订单(图)</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Orderform.jsp" title="订单管理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/order/Orderform.jsp" title="订单管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>订单管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Amounts.jsp" title="交易金额" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/order/Amounts.jsp" title="交易金额" class="iframeurl"><i
 										class="icon-double-angle-right"></i>交易金额</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Order_handling.jsp" title="订单处理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/order/Order_handling.jsp" title="订单处理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>订单处理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Refund.jsp" title="退款管理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/order/Refund.jsp" title="退款管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>退款管理</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-credit-card"></i><span class="menu-text">
 									支付管理 </span><b class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
-								<li class="home"><a href="javascript:void(0)"
+								<!-- <li class="home"><a href="javascript:void(0)"
 									name="Cover_management.jsp" title="账户管理" class="iframeurl"><i
-										class="icon-double-angle-right"></i>账户管理</a></li>
+										class="icon-double-angle-right"></i>账户管理</a></li> -->
 								<li class="home"><a href="javascript:void(0)"
-									name="payment_method.jsp" title="支付方式" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/pay/payment_method.jsp" title="支付方式" class="iframeurl"><i
 										class="icon-double-angle-right"></i>支付方式</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Payment_Configure.jsp" title="支付配置" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/pay/Payment_Configure.jsp" title="支付配置" class="iframeurl"><i
 										class="icon-double-angle-right"></i>支付配置</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
-								class="icon-user"></i><span class="menu-text"> 会员管理 </span><b
+								class="icon-user"></i><span class="menu-text"> 用户管理 </span><b
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="<%=application.getContextPath() %>/backuser/user_list.jsp" title="会员列表" class="iframeurl"><i
-										class="icon-double-angle-right"></i>会员列表</a></li>
+									name="<%=application.getContextPath() %>/back/user/user_list.jsp" title="用户列表" class="iframeurl"><i
+										class="icon-double-angle-right"></i>用户列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="member-Grading.jsp" title="等级管理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/user/member-Grading.jsp" title="等级管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>等级管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="integration.jsp" title="会员记录管理" class="iframeurl"><i
-										class="icon-double-angle-right"></i>会员记录管理</a></li>
+									name="<%=application.getContextPath() %>/back/user/integration.jsp" title="用户记录管理" class="iframeurl"><i
+										class="icon-double-angle-right"></i>用户记录管理</a></li>
 
 							</ul></li>
-						<li><a href="#" class="dropdown-toggle"><i
+						<!-- <li><a href="#" class="dropdown-toggle"><i
 								class="icon-laptop"></i><span class="menu-text"> 店铺管理 </span><b
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
@@ -453,42 +454,42 @@
 									name="Shops_Audit.jsp" title="店铺审核" class="iframeurl"><i
 										class="icon-double-angle-right"></i>店铺审核<span
 										class="badge badge-danger">5</span></a></li>
-							</ul></li>
+							</ul></li> -->
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-comments-alt"></i><span class="menu-text">
 									消息管理 </span><b class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="Guestbook.jsp" title="留言列表" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/message/Guestbook.jsp" title="留言列表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>留言列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Feedback.jsp" title="意见反馈" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/message/Feedback.jsp" title="意见反馈" class="iframeurl"><i
 										class="icon-double-angle-right"></i>意见反馈</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
-								class="icon-bookmark"></i><span class="menu-text"> 文章管理 </span><b
+								class="icon-bookmark"></i><span class="menu-text"> 公告管理 </span><b
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="article_list.jsp" title="文章列表" class="iframeurl"><i
-										class="icon-double-angle-right"></i>文章列表</a></li>
+									name="<%=application.getContextPath() %>/back/notice/article_list.jsp" title="文章列表" class="iframeurl"><i
+										class="icon-double-angle-right"></i>公告列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="article_Sort.jsp" title="分类管理" class="iframeurl"><i
-										class="icon-double-angle-right"></i>分类管理</a></li>
+									name="<%=application.getContextPath() %>/back/notice/article_Sort.jsp" title="分类管理" class="iframeurl"><i
+										class="icon-double-angle-right"></i>公告管理</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-cogs"></i><span class="menu-text"> 系统管理 </span><b
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="Systems.jsp" title="系统设置" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/system/Systems.jsp" title="系统设置" class="iframeurl"><i
 										class="icon-double-angle-right"></i>系统设置</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="System_section.jsp" title="系统栏目管理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/system/System_section.jsp" title="系统栏目管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>系统栏目管理</a></li>
 
 								<li class="home"><a href="javascript:void(0)"
-									name="System_Logs.jsp" title="系统日志" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/system/System_Logs.jsp" title="系统日志" class="iframeurl"><i
 										class="icon-double-angle-right"></i>系统日志</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
@@ -497,13 +498,13 @@
 							<ul class="submenu">
 
 								<li class="home"><a href="javascript:void(0)"
-									name="admin_Competence.jsp" title="权限管理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/admin/admin_Competence.jsp" title="权限管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>权限管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="administrator.jsp" title="管理员列表" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/admin/administrator.jsp" title="管理员列表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>管理员列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="admin_info.jsp" title="个人信息" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/admin/admin_info.jsp" title="个人信息" class="iframeurl"><i
 										class="icon-double-angle-right"></i>个人信息</a></li>
 							</ul></li>
 					</ul>

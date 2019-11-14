@@ -1,25 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/style.css"/>       
-        <link href="assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/ace.min.css" />
-        <link rel="stylesheet" href="font/css/font-awesome.min.css" />
+ <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="js/jquery-1.9.1.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/layer/layer.js" type="text/javascript" ></script>   
-        <script src="assets/js/ace-extra.min.js"></script>
-		<script src="assets/js/typeahead-bs2.min.js"></script>  
-        <script src="assets/dist/echarts.js"></script>		 
-        <script type="text/javascript" src="js/H-ui.js"></script>          	
+		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>   
+        <script src="<%=application.getContextPath() %>/back/assets/js/ace-extra.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>  
+        <script src="<%=application.getContextPath() %>/back/assets/dist/echarts.js"></script>		 
+        <script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.js"></script>          	
               
 <title>支付方式</title>
 </head>
@@ -30,7 +32,7 @@
   <div class="alert alert-danger"> <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>注：该支付方式启用并不能正常使用，需要开通支付功能才能使用相应的支付方式，</div>
     <div class="border clearfix">
      <span class="l_f">
-        <a href="javascript:ovid()" onclick="add_payment()" class="btn btn-primary Pay_add"><i class="fa fa-credit-card"></i>&nbsp;添加支付方式</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="add_payment()" class="btn btn-primary Pay_add"><i class="fa fa-credit-card"></i>&nbsp;添加支付方式</a>
        </span>
     </div>
     <!--支付列表-->
@@ -39,54 +41,54 @@
       <div class="defray_content clearfix">
        <ul class="defray_info">
        <li class="defray_name">支付宝</li>
-        <li class="name_logo"><img src="products/black/zhifb.jpg"  width="100%" height="150px;" /> </li>
+        <li class="name_logo"><img src="<%=application.getContextPath() %>/back/products/black/zhifb.jpg"  width="100%" height="150px;" /> </li>
         <li class="description">支付宝（中国）网络技术有限公司是国内领先的第三方支付平台，致力于提供“简单、安全、快速”的支付解决方案</li>
         <li class="select">
         <label><input name="form-field-radio" type="radio" class="ace" checked="checked"><span class="lbl">启用</span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <label><input name="form-field-radio" type="radio" class="ace"><span class="lbl">关闭</span></label>
         </li>
         <li class="operating">
-        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
-         <a href="javascript:ovid()" class="btn btn-success"><i class="fa  fa-edit "></i>&nbsp;设置</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
+         <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-success"><i class="fa  fa-edit "></i>&nbsp;设置</a>
         </li>
        </ul>
        <ul class="defray_info">
        <li class="defray_name">微信支付</li>
-        <li class="name_logo"><img src="products/black/weixin.jpg"  width="100%" height="150px;" /> </li>
+        <li class="name_logo"><img src="<%=application.getContextPath() %>/back/products/black/weixin.jpg"  width="100%" height="150px;" /> </li>
         <li class="description">微信支付是集成在微信客户端的支付功能，用户可以通过手机完成快速的支付流程。</li>
         <li class="select">
         <label><input name="form-field-radio1" type="radio" class="ace" checked="checked"><span class="lbl">启用</span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <label><input name="form-field-radio1" type="radio" class="ace"><span class="lbl">关闭</span></label>
         </li>
         <li class="operating">
-        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
-       <!-- <a href="javascript:ovid()" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>-->
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
+       <!-- <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>-->
         </li>
        </ul>
        <ul class="defray_info">
        <li class="defray_name">银联</li>
-        <li class="name_logo"><img src="products/black/yinglian.jpg"  width="100%" height="150px;" /> </li>
+        <li class="name_logo"><img src="<%=application.getContextPath() %>/back/products/black/yinglian.jpg"  width="100%" height="150px;" /> </li>
         <li class="description">中国银联是中国银行卡联合组织，通过银联跨行交易清算系统，实现商业银行系统间的互联互通和资源共享，保证银行卡跨行、跨地区和跨境的使用。</li>
         <li class="select">
         <label><input name="form-field-radio2" type="radio" class="ace" checked="checked"><span class="lbl">启用</span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <label><input name="form-field-radio2" type="radio" class="ace"><span class="lbl">关闭</span></label>
         </li>
         <li class="operating">
-        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
-        <a href="javascript:ovid()" name="Payment_details.html" title="银联支付详细" onclick="Paymentdetails('134')" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="Payment_details.html" title="银联支付详细" onclick="Paymentdetails('134')" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>
         </li>
        </ul>
         <ul class="defray_info">
        <li class="defray_name">怡宝支付</li>
-        <li class="name_logo"><img src="products/black/yozhif.jpg"  width="100%" height="150px;" /> </li>
+        <li class="name_logo"><img src="<%=application.getContextPath() %>/back/products/black/yozhif.jpg"  width="100%" height="150px;" /> </li>
         <li class="description">中国银联是中国银行卡联合组织，通过银联跨行交易清算系统，实现商业银行系统间的互联互通和资源共享，保证银行卡跨行、跨地区和跨境的使用。</li>
         <li class="select">
         <label><input name="form-field-radio3" type="radio" class="ace" checked="checked"><span class="lbl">启用</span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <label><input name="form-field-radio3" type="radio" class="ace"><span class="lbl">关闭</span></label>
         </li>
         <li class="operating">
-        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
-       <!-- <a href="javascript:ovid()" name="Payment_details.html" title="怡宝支付详细" onclick="Paymentdetails('234')" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>-->
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
+       <!-- <a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="Payment_details.html" title="怡宝支付详细" onclick="Paymentdetails('234')" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>-->
         </li>
        </ul>
       </div>
@@ -98,19 +100,19 @@
 <form id="payment_checkbox">
  <ul class="margin payment_list  clearfix">
   <li>
-  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'123')"><span class="lbl"><img src="products/black/yinglian.jpg"  width="120px" height="100%" /> </span></label>
+  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'123')"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/yinglian.jpg"  width="120px" height="100%" /> </span></label>
   </li>
   <li>
-  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'125')"><span class="lbl"><img src="products/black/yozhif.jpg"  width="120px" height="100%" /></label>
+  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'125')"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/yozhif.jpg"  width="120px" height="100%" /></label>
   </li>
   <li>
-  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'126')"><span class="lbl"><img src="products/black/caifut.jpg"  width="120px" height="100%" /></label>
+  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'126')"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/caifut.jpg"  width="120px" height="100%" /></label>
   </li>
   <li>
-  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'127')"><span class="lbl"><img src="products/black/weixin.jpg"  width="120px" height="100%" /></label>
+  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'127')"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/weixin.jpg"  width="120px" height="100%" /></label>
   </li>
    <li>
-  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'127')"><span class="lbl"><img src="products/black/zhifb.jpg"  width="120px" height="100%" /></label>
+  <label><input name="checkbox" type="checkbox" class="ace" id="checkbox" onclick="select_payment(this,'127')"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/zhifb.jpg"  width="120px" height="100%" /></label>
   </li>
  </ul>
  <div class="add_content clearfix">

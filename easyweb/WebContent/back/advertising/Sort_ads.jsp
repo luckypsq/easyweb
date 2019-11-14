@@ -1,25 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-         <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/style.css"/>       
-        <link href="assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/ace.min.css" />
-        <link rel="stylesheet" href="font/css/font-awesome.min.css" />
+         <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="js/jquery-1.9.1.min.js"></script>
-		<script src="assets/js/typeahead-bs2.min.js"></script>   
-        <script src="js/lrtk.js" type="text/javascript" ></script>		
-		<script src="assets/js/jquery.dataTables.min.js"></script>
-		<script src="assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="assets/layer/layer.js" type="text/javascript" ></script>                 
+		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>   
+        <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>		
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>                 
 <title>分类管理</title>
 </head>
 
@@ -28,8 +30,8 @@
  <div class="sort_style">
      <div class="border clearfix">
        <span class="l_f">
-        <a href="javascript:ovid()" id="sort_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加分类</a>
-        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" id="sort_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加分类</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
        </span>
        <span class="r_f">共：<b>5</b>类</span>
      </div>
@@ -57,10 +59,10 @@
        <td>2016-6-29 12:34</td>
        <td class="td-status"><span class="label label-success radius">显示</span></td>
       <td class="td-manage">
-        <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>   
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
-        <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
-        <a href="javascript:ovid()" name="Ads_list.html" class="btn btn-xs btn-pink ads_link" onclick="AdlistOrders('561');" title="幻灯片广告列表"><i class="fa  fa-bars  bigger-120"></i></a>
+        <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>   
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
+        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a href="javascript:ovid()" name="<%=application.getContextPath() %>/back/advertising/Ads_list.jsp" class="btn btn-xs btn-pink ads_link" onclick="AdlistOrders('561');" title="幻灯片广告列表"><i class="fa  fa-bars  bigger-120"></i></a>
        </td>
       </tr>
     </tbody>
@@ -141,7 +143,7 @@ function checkLength(which) {
 /*广告图片-停用*/
 function member_stop(obj,id){
 	layer.confirm('确认要关闭吗？',{icon:0,},function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="javascript:;" title="显示"><i class="fa fa-close bigger-120"></i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="显示"><i class="fa fa-close bigger-120"></i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已关闭</span>');
 		$(obj).remove();
 		layer.msg('关闭!',{icon: 5,time:1000});
@@ -150,7 +152,7 @@ function member_stop(obj,id){
 /*广告图片-启用*/
 function member_start(obj,id){
 	layer.confirm('确认要显示吗？',{icon:0,},function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="关闭"><i class="fa fa-check  bigger-120"></i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="关闭"><i class="fa fa-check  bigger-120"></i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">显示</span>');
 		$(obj).remove();
 		layer.msg('显示!',{icon: 6,time:1000});
@@ -178,7 +180,7 @@ $('.Order_form ,.ads_link').on('click', function(){
 	
 });
 function AdlistOrders(id){
-	window.location.href = "Ads_list.html?="+id;
+	window.location.href = "<%=application.getContextPath() %>/back/advertising/Ads_list.jsp?="+id;
 };
 </script>
 <script type="text/javascript">

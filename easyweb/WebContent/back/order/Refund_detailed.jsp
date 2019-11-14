@@ -1,23 +1,25 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/style.css"/>       
-        <link href="assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/ace.min.css" />
-        <link rel="stylesheet" href="font/css/font-awesome.min.css" />
+ <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="js/jquery-1.9.1.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/js/typeahead-bs2.min.js"></script> 
-        <script src="js/H-ui.js" type="text/javascript"></script>          	
-        <script src="assets/layer/layer.js" type="text/javascript" ></script>          
+		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script> 
+        <script src="<%=application.getContextPath() %>/back/js/H-ui.js" type="text/javascript"></script>          	
+        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
 <title>退款详细</title>
 </head>
 
@@ -88,9 +90,9 @@
     <div class="title_name">产品信息</div>
     <div class="Info_style clearfix">
       <div class="product_info clearfix">
-      <a href="#" class="img_link"><img src="products/p_3.jpg"></a>
+      <a href="<%=application.getContextPath() %>/back/#" class="img_link"><img src="<%=application.getContextPath() %>/back/products/p_3.jpg"></a>
       <span>
-      <a href="#" class="name_link">美果汇 美国进口嘎啦果苹果6粒装 加力果 姬娜果 伽利果 新鲜应季水果</a>
+      <a href="<%=application.getContextPath() %>/back/#" class="name_link">美果汇 美国进口嘎啦果苹果6粒装 加力果 姬娜果 伽利果 新鲜应季水果</a>
       <b>也称为姬娜果，饱满色艳，个头小</b>
       <p>编号：HY54567</p>
       <p>规格：500g/斤</p>
