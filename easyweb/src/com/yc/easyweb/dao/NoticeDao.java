@@ -15,7 +15,7 @@ public class NoticeDao {
 	//查询所有
 	public List<Notice> selectAll(Notice notice) throws Exception{
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select nid,ntime,nnumber,nauthor,ncontent,nstate,ntemp "
+		sb.append(" select nid,ntime,nnumber,nauthor,ncontent,nstate,ntemp,ntitle "
 				+ " from notice where 1=1 ");
 		if(notice != null){
 			//按发布者查

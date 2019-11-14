@@ -9,6 +9,14 @@ public class Notice {
 	private String ncontent;//内容
 	private int nstate;//状态（1.未过期2.已过期）
 	private String ntemp;//备用字段
+	private String ntitle;//标题
+	
+	public String getNtitle() {
+		return ntitle;
+	}
+	public void setNtitle(String ntitle) {
+		this.ntitle = ntitle;
+	}
 	public long getNid() {
 		return nid;
 	}

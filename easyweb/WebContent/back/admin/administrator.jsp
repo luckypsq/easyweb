@@ -1,28 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-         <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/style.css"/>       
-        <link href="assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/ace.min.css" />
-        <link rel="stylesheet" href="font/css/font-awesome.min.css" />
+         <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="js/jquery-1.9.1.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="Widget/Validform/5.3.2/Validform.min.js"></script>
-		<script src="assets/js/typeahead-bs2.min.js"></script>           	
-		<script src="assets/js/jquery.dataTables.min.js"></script>
-		<script src="assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="assets/layer/layer.js" type="text/javascript" ></script>          
-		<script src="js/lrtk.js" type="text/javascript" ></script>
-         <script src="assets/layer/layer.js" type="text/javascript"></script>	
-        <script src="assets/laydate/laydate.js" type="text/javascript"></script>
+		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/Validform/5.3.2/Validform.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>           	
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
+		<script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
+         <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript"></script>	
+        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
 <title>管理员</title>
 </head>
 
@@ -41,8 +43,8 @@
     <!--操作-->
      <div class="border clearfix">
        <span class="l_f">
-        <a href="javascript:ovid()" id="administrator_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加管理员</a>
-        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" id="administrator_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加管理员</a>
+        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
        </span>
        <span class="r_f">共：<b>5</b>人</span>
      </div>
@@ -56,11 +58,11 @@
          <div class="side_list"><div class="widget-header header-color-green2"><h4 class="lighter smaller">管理员分类列表</h4></div>
          <div class="widget-body">
            <ul class="b_P_Sort_list">
-           <li><i class="fa fa-users green"></i> <a href="#">全部管理员（13）</a></li>
-            <li><i class="fa fa-users orange"></i> <a href="#">超级管理员（1）</a></li>
-            <li><i class="fa fa-users orange"></i> <a href="#">普通管理员（5）</a></li>
-            <li><i class="fa fa-users orange"></i> <a href="#">产品编辑管理员（4）</a></li>
-            <li><i class="fa fa-users orange"></i> <a href="#">管理员（1）</a></li>
+           <li><i class="fa fa-users green"></i> <a href="<%=application.getContextPath() %>/back/#">全部管理员（13）</a></li>
+            <li><i class="fa fa-users orange"></i> <a href="<%=application.getContextPath() %>/back/#">超级管理员（1）</a></li>
+            <li><i class="fa fa-users orange"></i> <a href="<%=application.getContextPath() %>/back/#">普通管理员（5）</a></li>
+            <li><i class="fa fa-users orange"></i> <a href="<%=application.getContextPath() %>/back/#">产品编辑管理员（4）</a></li>
+            <li><i class="fa fa-users orange"></i> <a href="<%=application.getContextPath() %>/back/#">管理员（1）</a></li>
            </ul>
         </div>
        </div>
@@ -93,9 +95,9 @@
       <td>2016-6-29 12:34</td>
       <td class="td-status"><span class="label label-success radius">已启用</span></td>
       <td class="td-manage">
-        <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>  
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>       
-        <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>  
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>       
+        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
        </td>
      </tr>
        <tr>
@@ -108,9 +110,9 @@
       <td>2016-6-29 12:34</td>
       <td class="td-status"><span class="label label-success radius">已启用</span></td>
       <td class="td-manage">
-        <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>   
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
-        <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>   
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
+        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
        </td>
      </tr>    
     </tbody>
@@ -277,7 +279,7 @@ $(".table_menu_list").width($(window).width()-260);
 /*用户-停用*/
 function member_stop(obj,id){
 	layer.confirm('确认要停用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
 		$(obj).remove();
 		layer.msg('已停用!',{icon: 5,time:1000});
@@ -286,7 +288,7 @@ function member_stop(obj,id){
 /*用户-启用*/
 function member_start(obj,id){
 	layer.confirm('确认要启用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="fa fa-check  bigger-120"></i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="停用"><i class="fa fa-check  bigger-120"></i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
 		$(obj).remove();
 		layer.msg('已启用!',{icon: 6,time:1000});
@@ -338,4 +340,3 @@ $("#form-admin-add").Validform({
 		
 	});	
 </script>
-

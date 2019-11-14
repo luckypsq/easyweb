@@ -1,24 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/style.css"/>       
-        <link href="assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/ace.min.css" />
-        <link rel="stylesheet" href="Widget/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/Widget/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
         
 		<!--[if IE 7]>
-		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome-ie7.min.css" />
 		<![endif]-->
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-			<script src="assets/js/jquery.min.js"></script>
+			<script src="<%=application.getContextPath() %>/back/assets/js/jquery.min.js"></script>
 		<!-- <![endif]-->
 		<!--[if IE]>
-       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+       <script src="<%=application.getContextPath() %>/back/http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <![endif]-->
 		<!--[if !IE]> -->
 		<script type="text/javascript">
@@ -30,12 +32,12 @@
  window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
 </script>
 <![endif]-->
-        <script src="assets/js/ace-elements.min.js"></script>
-		<script src="assets/js/ace.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-		<script src="assets/js/typeahead-bs2.min.js"></script>
-        <script type="text/javascript" src="Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script> 
-        <script src="js/lrtk.js" type="text/javascript" ></script>
+        <script src="<%=application.getContextPath() %>/back/assets/js/ace-elements.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/ace.min.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>
+        <script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script> 
+        <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
 <title>分类管理</title>
 </head>
 
@@ -59,7 +61,7 @@
   </div>  
   </div>
 <!---->
- <iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO  SRC="product-category-add.html" class="page_right_style"></iframe>
+ <iframe ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO  src="<%=application.getContextPath() %>/back/book/product-category-add.jsp" class="page_right_style"></iframe>
  </div>
 </div>
 </body>

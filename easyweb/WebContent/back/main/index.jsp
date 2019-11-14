@@ -6,25 +6,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>易书网后台管理系统</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="<%=application.getContextPath() %>/backassets/css/bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<%=application.getContextPath() %>/backassets/css/font-awesome.min.css" />
+<link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
 <!--[if IE 7]>
 		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
 		<![endif]-->
-<link rel="stylesheet" href="<%=application.getContextPath() %>/backassets/css/ace.min.css" />
-<link rel="stylesheet" href="<%=application.getContextPath() %>/backassets/css/ace-rtl.min.css" />
-<link rel="stylesheet" href="<%=application.getContextPath() %>/backassets/css/ace-skins.min.css" />
-<link rel="stylesheet" href="<%=application.getContextPath() %>/backcss/style.css" />
+<link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+<link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css" />
 <!--[if lte IE 8]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 		<![endif]-->
-<script src="<%=application.getContextPath() %>/backassets/js/ace-extra.min.js"></script>
+<script src="<%=application.getContextPath() %>/back/assets/js/ace-extra.min.js"></script>
 <!--[if lt IE 9]>
-		<script src="<%=application.getContextPath() %>/backassets/js/html5shiv.js"></script>
-		<script src="<%=application.getContextPath() %>/backassets/js/respond.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/html5shiv.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/respond.min.js"></script>
 		<![endif]-->
 <!--[if !IE]> -->
-<script src="<%=application.getContextPath() %>/backjs/jquery-1.9.1.min.js"></script>
+<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
 <!-- <![endif]-->
 <!--[if IE]>
          <script type="text/javascript">window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"script>");</script>
@@ -32,19 +32,19 @@
 <script type="text/javascript">
 	if ("ontouchend" in document)
 		document
-				.write("<script src='<%=application.getContextPath() %>/backassets/js/jquery.mobile.custom.min.js'>"
+				.write("<script src='<%=application.getContextPath() %>/back/assets/js/jquery.mobile.custom.min.js'>"
 						+ "<"+"script>");
 </script>
-<script src="<%=application.getContextPath() %>/backassets/js/bootstrap.min.js"></script>
-<script src="<%=application.getContextPath() %>/backassets/js/typeahead-bs2.min.js"></script>
+<script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>
 <!--[if lte IE 8]>
-		  <script src="<%=application.getContextPath() %>/backassets/js/excanvas.min.js"></script>
+		  <script src="<%=application.getContextPath() %>/back/assets/js/excanvas.min.js"></script>
 		<![endif]-->
-<script src="<%=application.getContextPath() %>/backassets/js/ace-elements.min.js"></script>
-<script src="<%=application.getContextPath() %>/backassets/js/ace.min.js"></script>
-<script src="<%=application.getContextPath() %>/backassets/layer/layer.js" type="text/javascript"></script>
-<script src="<%=application.getContextPath() %>/backassets/laydate/laydate.js" type="text/javascript"></script>
-<script src="<%=application.getContextPath() %>/backjs/jquery.nicescroll.js" type="text/javascript"></script>
+<script src="<%=application.getContextPath() %>/back/assets/js/ace-elements.min.js"></script>
+<script src="<%=application.getContextPath() %>/back/assets/js/ace.min.js"></script>
+<script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript"></script>
+<script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
+<script src="<%=application.getContextPath() %>/back/js/jquery.nicescroll.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	$(function() {
@@ -106,17 +106,17 @@
 													cid).ready();
 											$(".Current_page")
 													.attr('name', cid);
-											$(".Current_page").html(cname).css(
+											$(".Current_page").jsp(cname).css(
 													{
 														"color" : "#333333",
 														"cursor" : "default"
 													}).ready();
 											$("#parentIframe")
-													.html(
+													.jsp(
 															'<span class="parentIframe iframeurl"> </span>')
 													.css("display", "none")
 													.ready();
-											$("#parentIfour").html('').css(
+											$("#parentIfour").jsp('').css(
 													"display", "none").ready();
 										});
 
@@ -149,7 +149,7 @@
 				}
 
 				setInterval(function() {
-					$('#time').html(currentTime)
+					$('#time').jsp(currentTime)
 				}, 1000);
 				//修改密码
 				$('.change_Password').on(
@@ -212,7 +212,7 @@
 						btn : [ '是', '否' ],//按钮
 						icon : 2,
 					}, function() {
-						location.href = "login.html";
+						location.href = "login.jsp";
 
 					});
 				});
@@ -224,14 +224,14 @@
 		$("#Bcrumbs").attr("href", cid).ready();
 		$(".Current_page a").attr('href', cid).ready();
 		$(".Current_page").attr('name', cid);
-		$(".Current_page").html(cname).css({
+		$(".Current_page").jsp(cname).css({
 			"color" : "#333333",
 			"cursor" : "default"
 		}).ready();
 		$("#parentIframe")
-				.html('<span class="parentIframe iframeurl"> </span>').css(
+				.jsp('<span class="parentIframe iframeurl"> </span>').css(
 						"display", "none").ready();
-		$("#parentIfour").html('').css("display", "none").ready();
+		$("#parentIfour").jsp('').css("display", "none").ready();
 
 	}
 </script>
@@ -247,7 +247,7 @@
 		<div class="navbar-container" id="navbar-container">
 			<div class="navbar-header pull-left">
 				<a href="#" class="navbar-brand"> <small> <img
-						src="<%=application.getContextPath() %>/backimages/logo.png" width="470px">
+						src="<%=application.getContextPath() %>/back/images/logo.png" width="470px">
 				</small>
 				</a>
 				<!-- /.brand -->
@@ -263,9 +263,9 @@
 					</a>
 						<ul
 							class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-							<li><a href="javascript:void(0" name="Systems.html"
+							<li><a href="javascript:void(0" name="../system/Systems.jsp"
 								title="系统设置" class="iframeurl"><i class="icon-cog"></i>网站设置</a></li>
-							<li><a href="javascript:void(0)" name="admin_info.html"
+							<li><a href="javascript:void(0)" name="../admin_info.jsp"
 								title="个人信息" class="iframeurl"><i class="icon-user"></i>个人资料</a></li>
 							<li class="divider"></li>
 							<li><a href="javascript:ovid(0)" id="Exit_system"><i
@@ -362,20 +362,20 @@
 				<div id="menu_style" class="menu_style">
 					<ul class="nav nav-list" id="nav_list">
 						<li class="home"><a href="javascript:void(0)"
-							name="home.html" class="iframeurl" title=""><i
+							name="home.jsp" class="iframeurl" title=""><i
 								class="icon-home"></i><span class="menu-text"> 系统首页 </span></a></li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-desktop"></i><span class="menu-text"> 产品管理 </span><b
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="Products_List.html" title="产品类表" class="iframeurl"><i
+									name="Products_List.jsp" title="产品类表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>产品类表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Brand_Manage.html" title="品牌管理" class="iframeurl"><i
+									name="Brand_Manage.jsp" title="品牌管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>品牌管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Category_Manage.html" title="分类管理" class="iframeurl"><i
+									name="Category_Manage.jsp" title="分类管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>分类管理</a></li>
 
 							</ul></li>
@@ -384,10 +384,10 @@
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="advertising.html" title="广告管理" class="iframeurl"><i
+									name="advertising.jsp" title="广告管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>广告管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Sort_ads.html" title="分类管理" class="iframeurl"><i
+									name="Sort_ads.jsp" title="分类管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>分类管理</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
@@ -395,22 +395,22 @@
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="transaction.html" title="交易信息" class="iframeurl"><i
+									name="transaction.jsp" title="交易信息" class="iframeurl"><i
 										class="icon-double-angle-right"></i>交易信息</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Order_Chart.html" title="交易订单（图）" class="iframeurl"><i
+									name="Order_Chart.jsp" title="交易订单（图）" class="iframeurl"><i
 										class="icon-double-angle-right"></i>交易订单(图)</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Orderform.html" title="订单管理" class="iframeurl"><i
+									name="Orderform.jsp" title="订单管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>订单管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Amounts.html" title="交易金额" class="iframeurl"><i
+									name="Amounts.jsp" title="交易金额" class="iframeurl"><i
 										class="icon-double-angle-right"></i>交易金额</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Order_handling.html" title="订单处理" class="iframeurl"><i
+									name="Order_handling.jsp" title="订单处理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>订单处理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Refund.html" title="退款管理" class="iframeurl"><i
+									name="Refund.jsp" title="退款管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>退款管理</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
@@ -418,13 +418,13 @@
 									支付管理 </span><b class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="Cover_management.html" title="账户管理" class="iframeurl"><i
+									name="Cover_management.jsp" title="账户管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>账户管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="payment_method.html" title="支付方式" class="iframeurl"><i
+									name="payment_method.jsp" title="支付方式" class="iframeurl"><i
 										class="icon-double-angle-right"></i>支付方式</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Payment_Configure.html" title="支付配置" class="iframeurl"><i
+									name="Payment_Configure.jsp" title="支付配置" class="iframeurl"><i
 										class="icon-double-angle-right"></i>支付配置</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
@@ -435,10 +435,10 @@
 									name="<%=application.getContextPath() %>/backuser/user_list.jsp" title="会员列表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>会员列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="member-Grading.html" title="等级管理" class="iframeurl"><i
+									name="member-Grading.jsp" title="等级管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>等级管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="integration.html" title="会员记录管理" class="iframeurl"><i
+									name="integration.jsp" title="会员记录管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>会员记录管理</a></li>
 
 							</ul></li>
@@ -447,10 +447,10 @@
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="Shop_list.html" title="店铺列表" class="iframeurl"><i
+									name="Shop_list.jsp" title="店铺列表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>店铺列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Shops_Audit.html" title="店铺审核" class="iframeurl"><i
+									name="Shops_Audit.jsp" title="店铺审核" class="iframeurl"><i
 										class="icon-double-angle-right"></i>店铺审核<span
 										class="badge badge-danger">5</span></a></li>
 							</ul></li>
@@ -459,10 +459,10 @@
 									消息管理 </span><b class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="Guestbook.html" title="留言列表" class="iframeurl"><i
+									name="Guestbook.jsp" title="留言列表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>留言列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="Feedback.html" title="意见反馈" class="iframeurl"><i
+									name="Feedback.jsp" title="意见反馈" class="iframeurl"><i
 										class="icon-double-angle-right"></i>意见反馈</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
@@ -470,10 +470,10 @@
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="article_list.html" title="文章列表" class="iframeurl"><i
+									name="article_list.jsp" title="文章列表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>文章列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="article_Sort.html" title="分类管理" class="iframeurl"><i
+									name="article_Sort.jsp" title="分类管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>分类管理</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
@@ -481,14 +481,14 @@
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
-									name="Systems.html" title="系统设置" class="iframeurl"><i
+									name="Systems.jsp" title="系统设置" class="iframeurl"><i
 										class="icon-double-angle-right"></i>系统设置</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="System_section.html" title="系统栏目管理" class="iframeurl"><i
+									name="System_section.jsp" title="系统栏目管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>系统栏目管理</a></li>
 
 								<li class="home"><a href="javascript:void(0)"
-									name="System_Logs.html" title="系统日志" class="iframeurl"><i
+									name="System_Logs.jsp" title="系统日志" class="iframeurl"><i
 										class="icon-double-angle-right"></i>系统日志</a></li>
 							</ul></li>
 						<li><a href="#" class="dropdown-toggle"><i
@@ -497,13 +497,13 @@
 							<ul class="submenu">
 
 								<li class="home"><a href="javascript:void(0)"
-									name="admin_Competence.html" title="权限管理" class="iframeurl"><i
+									name="admin_Competence.jsp" title="权限管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>权限管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="administrator.html" title="管理员列表" class="iframeurl"><i
+									name="administrator.jsp" title="管理员列表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>管理员列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="admin_info.html" title="个人信息" class="iframeurl"><i
+									name="admin_info.jsp" title="个人信息" class="iframeurl"><i
 										class="icon-double-angle-right"></i>个人信息</a></li>
 							</ul></li>
 					</ul>

@@ -1,27 +1,29 @@
-<!DOCTYPE HTML>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <!--[if lt IE 9]>
-<script type="text/javascript" src="js/html5.js"></script>
-<script type="text/javascript" src="js/respond.min.js"></script>
-<script type="text/javascript" src="js/PIE_IE678.js"></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/html5.js"></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/respond.min.js"></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/PIE_IE678.js"></script>
 <![endif]-->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css"/>       
-<link href="assets/css/codemirror.css" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/ace.min.css" />
-      <link rel="stylesheet" href="Widget/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
-<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+<link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+<link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+<link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+      <link rel="stylesheet" href="<%=application.getContextPath() %>/back/Widget/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
 <!--[if IE 7]>
-		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome-ie7.min.css" />
 		<![endif]-->
-<link href="Widget/icheck/icheck.css" rel="stylesheet" type="text/css" />
-<link href="Widget/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
+<link href="<%=application.getContextPath() %>/back/Widget/icheck/icheck.css" rel="stylesheet" type="text/css" />
+<link href="<%=application.getContextPath() %>/back/Widget/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 
 <title>新增图片</title>
 </head>
@@ -159,22 +161,22 @@
     </div>
 </div>
 </div>
-<script src="js/jquery-1.9.1.min.js"></script>   
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/typeahead-bs2.min.js"></script>
-<script src="assets/layer/layer.js" type="text/javascript" ></script>
-<script src="assets/laydate/laydate.js" type="text/javascript"></script>
-<script type="text/javascript" src="Widget/My97DatePicker/WdatePicker.js"></script> 
-<script type="text/javascript" src="Widget/icheck/jquery.icheck.min.js"></script> 
-<script type="text/javascript" src="Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script> 
-<script type="text/javascript" src="Widget/Validform/5.3.2/Validform.min.js"></script> 
-<script type="text/javascript" src="Widget/webuploader/0.1.5/webuploader.min.js"></script>
-<script type="text/javascript" src="Widget/ueditor/1.4.3/ueditor.config.js"></script>
-<script type="text/javascript" src="Widget/ueditor/1.4.3/ueditor.all.min.js"> </script>
-<script type="text/javascript" src="Widget/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script> 
-<script src="js/lrtk.js" type="text/javascript" ></script>
-<script type="text/javascript" src="js/H-ui.js"></script> 
-<script type="text/javascript" src="js/H-ui.admin.js"></script> 
+<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>   
+<script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>
+<script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>
+<script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/icheck/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/Validform/5.3.2/Validform.min.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script> 
+<script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.admin.js"></script> 
 <script>
 $(function() { 
 	$("#add_picture").fix({
@@ -506,7 +508,7 @@ $(function(){
 
             // 压根就没有安转。
             } else {
-                $wrap.html('<a href="http://www.adobe.com/go/getflashplayer" target="_blank" border="0"><img alt="get flash player" src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>');
+                $wrap.html('<a href="<%=application.getContextPath() %>/back/http://www.adobe.com/go/getflashplayer" target="_blank" border="0"><img alt="get flash player" src="<%=application.getContextPath() %>/back/http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>');
             }
 
             return;
@@ -636,7 +638,7 @@ $(function(){
                     }
 
                     if( isSupportBase64 ) {
-                        img = $('<img src="'+src+'">');
+                        img = $('<img src="<%=application.getContextPath() %>/back/'+src+'">');
                         $wrap.empty().append( img );
                     } else {
                         $.ajax('lib/webuploader/0.1.5/server/preview.php', {
@@ -783,7 +785,7 @@ $(function(){
                 stats = uploader.getStats();
                 if ( stats.uploadFailNum ) {
                     text = '已成功上传' + stats.successNum+ '张照片至XX相册，'+
-                        stats.uploadFailNum + '张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
+                        stats.uploadFailNum + '张照片上传失败，<a class="retry" href="<%=application.getContextPath() %>/back/#">重新上传</a>失败图片或<a class="ignore" href="<%=application.getContextPath() %>/back/#">忽略</a>'
                 }
 
             } else {

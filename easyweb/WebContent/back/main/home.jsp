@@ -93,11 +93,10 @@
 				</div>
 				<div class="value">
 				<%
-					//1.查询本月的订单数
+					//1.查询全部订单数
 					EorderBiz eorderBiz = new EorderBiz();
 					Eorder eorder = new Eorder();
 					//eorder.setEotime(dateStr[0]+"/"+dateStr[1]+"/"+dateStr[2]);
-					eorder.setEotime("2019/8/10");
 					List<Eorder> eorderList = eorderBiz.selectAll(eorder);
 				%>
 					<h1><%=eorderList.size() %></h1>
@@ -143,58 +142,97 @@
 				<div class="title_name">订单统计信息</div>
 				<table class="table table-bordered">
 					<tbody>
+					<%
+						//eorderList保存着全部订单
+						//状态1. 2.未处理3.代发货4.未处理5.交易失败6.交易失败7.已成交
+						//配送方式(1.送货上门2.自取)
+						long num1 = 0;//未处理订单eostate == 2 ||eostate == 4 && eotype==1
+						long num2 = 0;//待发货订单eostate == 3  && eotype==1
+						long num3 = 0;//待结算订单eotype==2
+						long num4 = 0;//已成交订单数eostate == 7
+						long num5 = 0;//交易失败eostate == 5 ||eostate == 6 && eotype==1
+						for(Eorder eo : eorderList){
+							if(eo.getEotype().equals("店面接取")){
+								num3 ++;
+							}else if(eo.getEostate() == 7){
+								num4++;
+							}else if((eo.getEostate() == 2 || eo.getEostate() == 4) && eo.getEotype().equals("网上配送")){
+								num1++;
+							}else if(eo.getEostate() == 3  && eo.getEotype().equals("网上配送")){
+								num2++;
+							}else if((eo.getEostate() == 5 || eo.getEostate() ==6) && eo.getEotype().equals("网上配送")){
+								num5++;
+							}
+						}
+					%>
 						<tr>
 							<td class="name">未处理订单：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">0</a>&nbsp;个</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num1 %></a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">待发货订单：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">10</a>&nbsp;个</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num2 %></a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">待结算订单：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">13</a>&nbsp;个</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num3 %></a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">已成交订单数：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">26</a>&nbsp;个</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num4 %></a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">交易失败：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">26</a>&nbsp;个</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num5 %></a>&nbsp;个</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="Order_Statistics">
-				<div class="title_name">商品统计信息</div>
+				<div class="title_name">书籍统计信息</div>
 				<table class="table table-bordered">
 					<tbody>
+					<%
+					//bookList存储所有书籍信息
+					// bstate;//状态(1可用，2.删除3.售罄)
+					long bnum1 = 0;
+					long bnum2 = 0;
+					long bnum3 = 0;
+					for(Book book1 : bookList){
+						if(book1.getBstate() == 3){
+							bnum1++;
+						}else if(book1.getBstate() == 1){
+							bnum2++;
+						}else if(book1.getBstate() == 2){
+							bnum3++;
+						}
+					}
+					%>
 						<tr>
-							<td class="name">商品总数：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">340</a>&nbsp;个</td>
+							<td class="name">书籍总数：</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp"><%=bookList.size() %></a>&nbsp;个</td>
 						</tr>
 						<tr>
-							<td class="name">回收站商品：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">10</a>&nbsp;个</td>
+							<td class="name">售罄书籍：</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp"><%=bnum1 %></a>&nbsp;个</td>
 						</tr>
 						<tr>
-							<td class="name">上架商品：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">13</a>&nbsp;个</td>
+							<td class="name">上架书籍：</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp"><%=bnum2 %></a>&nbsp;个</td>
 						</tr>
 						<tr>
-							<td class="name">下架商品：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">26</a>&nbsp;个</td>
+							<td class="name">下架书籍：</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp"><%=bnum3 %></a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">商品评论：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">21s6</a>&nbsp;条</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/#">2176</a>&nbsp;条</td>
 						</tr>
 
 					</tbody>
 				</table>
 			</div>
-			<div class="Order_Statistics">
+			<%-- <div class="Order_Statistics">
 				<div class="title_name">会员登录统计信息</div>
 				<table class="table table-bordered">
 					<tbody>
@@ -216,20 +254,32 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
+			</div> --%>
 			<!--<div class="t_Record">
                <div id="main" style="height:300px; overflow:hidden; width:100%; overflow:auto" ></div>     
               </div> -->
 			<div class="news_style">
 				<div class="title_name">最新公告</div>
-				<%
-				%>
 				<ul class="list">
-					<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/back/#">后台系统找那个是开通了。</a></li>
-					<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/back/#">6月共处理订单3451比，作废为...</a></li>
-					<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/back/#">后台系统找那个是开通了。</a></li>
-					<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/back/#">后台系统找那个是开通了。</a></li>
-					<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/back/#">后台系统找那个是开通了。</a></li>
+				<%
+					NoticeBiz noticeBiz = new NoticeBiz();
+					Notice notice = new Notice();
+					List<Notice> nList = noticeBiz.selectAll(notice);
+					if(nList.size() != 0){
+						for(int i=0; i<nList.size();i++){
+							if(i == 6){
+								break ;
+							}
+				%>
+				<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
+				<% 
+						}
+					}else{
+				%>
+				<li><i class="icon-bell red"></i>暂无新公告</li>
+				<%
+					}
+				%>
 				</ul>
 			</div>
 		</div>
@@ -237,34 +287,34 @@
 		<div class="clearfix">
 			<div class="home_btn">
 				<div>
-					<a href="<%=application.getContextPath() %>/back/picture-add.html" title="添加商品"
+					<a href="<%=application.getContextPath() %>/back/book/picture-add.jsp" title="添加书籍"
 						class="btn  btn-info btn-sm no-radius"> <i class="bigger-200"><img
 							src="<%=application.getContextPath() %>/back/images/icon-addp.png" /></i>
-						<h5 class="margin-top">添加商品</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/Category_Manage.html" title="产品分类"
+						<h5 class="margin-top">添加书籍</h5>
+					</a> <a href="<%=application.getContextPath() %>/back/book/Category_Manage.jsp" title="书籍分类"
 						class="btn  btn-primary btn-sm no-radius"> <i
 						class="bigger-200"><img src="<%=application.getContextPath() %>/back/images/icon-cpgl.png" /></i>
-						<h5 class="margin-top">产品分类</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/admin_info.html" title="个人信息"
+						<h5 class="margin-top">书籍分类</h5>
+					</a> <a href="<%=application.getContextPath() %>/back/admin/admin_info.jsp" title="个人信息"
 						class="btn  btn-success btn-sm no-radius"> <i
 						class="bigger-200"><img src="<%=application.getContextPath() %>/back/images/icon-grxx.png" /></i>
 						<h5 class="margin-top">个人信息</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/Systems.html" title="系统设置"
+					</a> <a href="<%=application.getContextPath() %>/back/system/Systems.jsp" title="系统设置"
 						class="btn  btn-info btn-sm no-radius"> <i class="bigger-200"><img
 							src="<%=application.getContextPath() %>/back/images/xtsz.png" /></i>
 						<h5 class="margin-top">系统设置</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/Order_handling.html" title="商品订单"
+					</a> <a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp" title="书籍订单"
 						class="btn  btn-purple btn-sm no-radius"> <i
 						class="bigger-200"><img src="<%=application.getContextPath() %>/back/images/icon-gwcc.png" /></i>
-						<h5 class="margin-top">商品订单</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/picture-add.html" title="添加广告"
+						<h5 class="margin-top">书籍订单</h5>
+					</a> <a href="<%=application.getContextPath() %>/back/book/picture-add.jsp" title="添加广告"
 						class="btn  btn-pink btn-sm no-radius"> <i class="bigger-200"><img
 							src="<%=application.getContextPath() %>/back/images/icon-ad.png" /></i>
 						<h5 class="margin-top">添加广告</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/article_add.html" title="添加文章"
+					</a> <a href="<%=application.getContextPath() %>/back/notice/article_add.jsp" title="添加公告"
 						class="btn  btn-info btn-sm no-radius"> <i class="bigger-200"><img
 							src="<%=application.getContextPath() %>/back/images/icon-addwz.png" /></i>
-						<h5 class="margin-top">添加文章</h5>
+						<h5 class="margin-top">添加公告</h5>
 					</a>
 				</div>
 			</div>

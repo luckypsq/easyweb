@@ -1,5 +1,7 @@
 package com.yc.easyweb.bean;
 
+import com.sun.net.httpserver.BasicAuthenticator;
+
 public class Book {
 	private long bid;//id
 	private String bname;//书名
@@ -16,8 +18,21 @@ public class Book {
 	private String btemp;//所属系列
 	private String btemp1;//预留字段
 	private Long bnum;//库存
+	private String bauthor ;//作者或出版社
+	private String bdate;//上传时间
 	
-	
+	public String getBdate() {
+		return bdate;
+	}
+	public void setBdate(String bdate) {
+		this.bdate = bdate;
+	}
+	public String getBauthor() {
+		return bauthor;
+	}
+	public void setBauthor(String bauthor) {
+		this.bauthor = bauthor;
+	}
 	public Long getBnum() {
 		return bnum;
 	}

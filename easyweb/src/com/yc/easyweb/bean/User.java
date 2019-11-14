@@ -7,6 +7,7 @@ public class User {
 	private String university;//用户所在大学
 	private String ucollege;//用户所在学院
 	private String umajor;//用户所在专业
+	private String uclass;//用户所在年级
 	private String upassword;//用户密码
 	private int ustate;//用户状态（1.可用2.冻结3.删除）
 	private String utemp;//备用字段
@@ -17,6 +18,12 @@ public class User {
 	private int uage;//年龄
 	private String uminname;//昵称
 	
+	public String getUclass() {
+		return uclass;
+	}
+	public void setUclass(String uclass) {
+		this.uclass = uclass;
+	}
 	public String getUminname() {
 		return uminname;
 	}

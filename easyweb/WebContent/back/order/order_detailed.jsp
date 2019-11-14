@@ -7,24 +7,24 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="../css/style.css"/>       
-        <link href="../assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="../assets/css/ace.min.css" />
-        <link rel="stylesheet" href="../font/css/font-awesome.min.css" />
+ <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
+        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="../../js/jquery-1.9.1.min.js"></script>
-        <script src="../../assets/js/bootstrap.min.js"></script>
-		<script src="../../assets/js/typeahead-bs2.min.js"></script> 
-        <script type="text/javascript" src="../../js/H-ui.js"></script>      	
-		<script src="../../assets/js/jquery.dataTables.min.js"></script>
-		<script src="../../assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="../../assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="../../assets/laydate/laydate.js" type="text/javascript"></script>
-        <script src="../../assets/js/jquery.easy-pie-chart.min.js"></script>
-        <script src="../../js/lrtk.js" type="text/javascript" ></script>
+		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script> 
+        <script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.js"></script>      	
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
+        <script src="<%=application.getContextPath() %>/back/assets/js/jquery.easy-pie-chart.min.js"></script>
+        <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
 <title>订单详细</title>
 </head>
 
@@ -60,9 +60,9 @@
     <div class="title_name">产品信息</div>
     <div class="Info_style clearfix">
       <div class="product_info clearfix">
-      <a href="../#" class="img_link"><img src="../../products/p_3.jpg" /></a>
+      <a href="<%=application.getContextPath() %>/back/#" class="img_link"><img src="<%=application.getContextPath() %>/back/products/p_3.jpg" /></a>
       <span>
-      <a href="../#" class="name_link">美果汇 美国进口嘎啦果苹果6粒装 加力果 姬娜果 伽利果 新鲜应季水果</a>
+      <a href="<%=application.getContextPath() %>/back/#" class="name_link">美果汇 美国进口嘎啦果苹果6粒装 加力果 姬娜果 伽利果 新鲜应季水果</a>
       <b>也称为姬娜果，饱满色艳，个头小</b>
       <p>规格：500g/斤</p>
       <p>数量：2kg</p>
@@ -71,9 +71,9 @@
       </span>
       </div>
       <div class="product_info clearfix">
-      <a href="../#" class="img_link"><img src="../../products/p_5.jpg" /></a>
+      <a href="<%=application.getContextPath() %>/back/#" class="img_link"><img src="<%=application.getContextPath() %>/back/products/p_5.jpg" /></a>
       <span>
-      <a href="../#" class="name_link">美果汇 美国进口嘎啦果苹果6粒装 加力果 姬娜果 伽利果 新鲜应季水果</a>
+      <a href="<%=application.getContextPath() %>/back/#" class="name_link">美果汇 美国进口嘎啦果苹果6粒装 加力果 姬娜果 伽利果 新鲜应季水果</a>
       <b>也称为姬娜果，饱满色艳，个头小</b>
       <p>规格：39.9/5kg</p>
       <p>数量：2</p>
@@ -82,9 +82,9 @@
       </span>
       </div>
        <div class="product_info clearfix">
-      <a href="../#" class="img_link"><img src="../../products/p_8.jpg"/></a>
+      <a href="<%=application.getContextPath() %>/back/#" class="img_link"><img src="<%=application.getContextPath() %>/back/products/p_8.jpg"/></a>
       <span>
-      <a href="../#" class="name_link">美果汇 美国进口嘎啦果苹果6粒装 加力果 姬娜果 伽利果 新鲜应季水果</a>
+      <a href="<%=application.getContextPath() %>/back/#" class="name_link">美果汇 美国进口嘎啦果苹果6粒装 加力果 姬娜果 伽利果 新鲜应季水果</a>
       <b>也称为姬娜果，饱满色艳，个头小</b>
       <p>规格：500g/斤</p>
       <p>数量：2kg</p>
@@ -124,7 +124,7 @@
     <!--物流信息-->
     <div class="Logistics_style clearfix">
      <div class="title_name">物流信息</div>
-      <!--<div class="prompt"><img src="../../images/meiyou.png" /><p>暂无物流信息！</p></div>-->
+      <!--<div class="prompt"><img src="<%=application.getContextPath() %>/back/images/meiyou.png" /><p>暂无物流信息！</p></div>-->
        <div data-mohe-type="kuaidi_new" class="g-mohe " id="mohe-kuaidi_new">
         <div id="mohe-kuaidi_new_nucom">
             <div class="mohe-wrap mh-wrap">
@@ -137,7 +137,7 @@
                                 <span class="before"></span><span class="after"></span><i class="mh-icon mh-icon-new"></i></li>
                             <li>
                                 <p>2015-04-28 07:38:44</p>
-                                <p>深圳市南油速递营销部安排投递（投递员姓名：蔡远发<a href="../tel:18718860573">18718860573</a>;联系电话：）</p>
+                                <p>深圳市南油速递营销部安排投递（投递员姓名：蔡远发<a href="<%=application.getContextPath() %>/back/tel:18718860573">18718860573</a>;联系电话：）</p>
                                 <span class="before"></span><span class="after"></span></li>
                             <li>
                                 <p>2015-04-28 05:08:00</p>
@@ -157,7 +157,7 @@
                                 <span class="before"></span><span class="after"></span></li>
                             <li>
                                 <p>2015-04-26 17:12:00</p>
-                                <p>泉州市速递物流分公司南区电子商务业务部已收件，（揽投员姓名：王晨光;联系电话：<a href="../tel:13774826403">13774826403</a>）</p>
+                                <p>泉州市速递物流分公司南区电子商务业务部已收件，（揽投员姓名：王晨光;联系电话：<a href="<%=application.getContextPath() %>/back/tel:13774826403">13774826403</a>）</p>
                                 <span class="before"></span><span class="after"></span></li>
                         </ul>
                     </div>

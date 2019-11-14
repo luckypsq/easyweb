@@ -17,7 +17,7 @@ public class BookDao {
 	public List<Book> selectAll(Book book) throws Exception{
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
-				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1£¬bnum"
+				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1,bnum,bauthor,bdate"
 				+ " from book where 1=1 ");
 		if(book != null){
 			if(book.getBname() != null){
@@ -37,6 +37,9 @@ public class BookDao {
 			
 			if(book.getBclass() != null){
 				sb.append(" and bclass like '%"+book.getBclass()+"%'");
+			}
+			if(book.getBauthor() != null){
+				sb.append(" and bauthor like '%"+book.getBauthor()+"%'");
 			}
 		}
 		sb.append(" order by  bid asc");

@@ -19,7 +19,7 @@ public class UserDao {
 	public List<User> selectAll(User user) throws Exception{
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select uid,uname,uminname,uphone,university,ucollege,umajor,upassword, "
-				+ " ustate,utemp,utype,uemail,utime,usex,uage "
+				+ " ustate,utemp,utype,uemail,utime,usex,uage,uclass "
 				+ " from user where 1=1 ");
 		if(user != null){
 			if(user.getUname() != null){
@@ -37,6 +37,9 @@ public class UserDao {
 			}
 			if(user.getUstate() != 0){
 				sb.append(" and ustate = "+user.getUstate());
+			}
+			if(user.getUclass() != null){
+				sb.append(" and uclass = '"+user.getUclass()+"'");
 			}
 		}
 		sb.append("  order by  uid asc");
