@@ -1,7 +1,7 @@
 package com.yc.easyweb.bean;
 
 public class User {
-	private int uid;//用户id
+	private long uid;//用户id
 	private String uname;//用户名
 	private String uphone;//用户电话
 	private String university;//用户所在大学
@@ -72,10 +72,11 @@ public class User {
 	public void setUphone(String uphone) {
 		this.uphone = uphone;
 	}
-	public int getUid() {
+	
+	public long getUid() {
 		return uid;
 	}
-	public void setUid(int uid) {
+	public void setUid(long uid) {
 		this.uid = uid;
 	}
 	public String getUname() {

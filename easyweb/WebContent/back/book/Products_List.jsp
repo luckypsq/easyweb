@@ -1,3 +1,7 @@
+<%@page import="com.yc.easyweb.bean.BookType"%>
+<%@page import="com.yc.easyweb.biz.BookTypeBiz"%>
+<%@page import="com.yc.easyweb.bean.Book"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -32,6 +36,15 @@
         <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
         <script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script> 
         <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
+<script type="text/javascript">
+	//查询
+	function select(){
+		
+	}
+
+</script>
+
+
 <title>产品列表</title>
 </head>
 <body>
@@ -40,25 +53,25 @@
     <div class="search_style">
      
       <ul class="search_content clearfix">
-       <li><label class="l_f">产品名称</label><input name="" type="text"  class="text_add" placeholder="输入品牌名称"  style=" width:250px"/></li>
+       <li><label class="l_f">书名</label><input name="" type="text"  class="text_add" placeholder="输入书名"  style=" width:250px"/></li>
        <li><label class="l_f">添加时间</label><input class="inline laydate-icon" id="start" style=" margin-left:10px;"></li>
-       <li style="width:90px;"><button type="button" class="btn_search"><i class="icon-search"></i>查询</button></li>
+       <li style="width:90px;"><button type="button" class="btn_search"><i class="icon-search" onclick="select()"></i>查询</button></li>
       </ul>
     </div>
      <div class="border clearfix">
        <span class="l_f">
-        <a href="<%=application.getContextPath() %>/back/picture-add.html" title="添加商品" class="btn btn-warning Order_form"><i class="icon-plus"></i>添加商品</a>
+        <a href="<%=application.getContextPath() %>/back/picture-add.html" title="添加商品" class="btn btn-warning Order_form"><i class="icon-plus"></i>添加书籍</a>
         <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>
        </span>
-       <span class="r_f">共：<b>2334</b>件商品</span>
+       <span class="r_f">共：<b>5</b>本书</span>
      </div>
-     <!--产品列表展示-->
+     <!--书籍列表展示-->
      <div class="h_products_list clearfix" id="products_list">
        <div id="scrollsidebar" class="left_Treeview">
         <div class="show_btn" id="rightArrow"><span></span></div>
         <div class="widget-box side_content" >
          <div class="side_title"><a title="隐藏" class="close_btn"><span></span></a></div>
-         <div class="side_list"><div class="widget-header header-color-green2"><h4 class="lighter smaller">产品类型列表</h4></div>
+         <div class="side_list"><div class="widget-header header-color-green2"><h4 class="lighter smaller">书籍类型列表</h4></div>
          <div class="widget-body">
           <div class="widget-main padding-8"><div id="treeDemo" class="ztree"></div></div>
         </div>
@@ -70,11 +83,11 @@
 		<thead>
 		 <tr>
 				<th width="25px"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
-				<th width="80px">产品编号</th>
-				<th width="250px">产品名称</th>
+				<th width="80px">书籍编号</th>
+				<th width="250px">书名</th>
 				<th width="100px">原价格</th>
 				<th width="100px">现价</th>
-                <th width="100px">所属地区/国家</th>				
+                <th width="100px">拥有者</th>				
 				<th width="180px">加入时间</th>
                 <th width="80px">审核状态</th>
 				<th width="70px">状态</th>                
@@ -82,6 +95,9 @@
 			</tr>
 		</thead>
 	<tbody>
+	<%
+	
+	%>
      <tr>
         <td width="25px"><label><input type="checkbox" class="ace" ><span class="lbl"></span></label></td>
         <td width="80px">45631</td>               
@@ -91,11 +107,11 @@
         <td width="100px">法国</td>         
         <td width="180px">2014-6-11 11:11:42</td>
         <td class="text-l">通过</td>
-        <td class="td-status"><span class="label label-success radius">已启用</span></td>
+        <td class="td-status"><span class="label label-success radius">已上架</span></td>
         <td class="td-manage">
-        <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a> 
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> 
-        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a>
+        <a onClick="member_stop(this,'10001')"  href="back/javascript:;" title="下架"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a> 
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> 
+        <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a>
        </td>
 	  </tr>
        <tr>
@@ -261,7 +277,6 @@
         <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a>
        </td>
 	  </tr>
-
     </tbody>
     </table>
     </div>     
@@ -270,6 +285,8 @@
 </div>
 </body>
 </html>
+
+
 <script>
 jQuery(function($) {
 		var oTable1 = $('#sample-table').dataTable( {
@@ -320,6 +337,11 @@ $(function() {
 	    spacingh:260,//设置显示时间距
 	});
 });
+<%
+	BookType bookType = new BookType();
+	BookTypeBiz bookTypeBiz = new BookTypeBiz();
+	List<BookType> bookTypes = bookTypeBiz.selectAll(bookType);
+%>
 </script>
 <script type="text/javascript">
 //初始化宽度、高度  
@@ -363,7 +385,7 @@ var setting = {
 };
 
 var zNodes =[
-	{ id:1, pId:0, name:"商城分类列表", open:true},
+	{ id:1, pId:0, name:"书籍分类列表", open:true},
 	{ id:11, pId:1, name:"蔬菜水果"},
 	{ id:111, pId:11, name:"蔬菜"},
 	{ id:112, pId:11, name:"苹果"},

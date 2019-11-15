@@ -18,20 +18,23 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import org.apache.commons.beanutils.BeanUtils;
+import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.Eorder;
+import com.yc.easyweb.bean.User;
 
 
 public class DbHelper {
 	private static Connection conn = null;
 	private static PreparedStatement pstmt =null;
 	private static ResultSet rs =null;
-	/*static {
+	static {
 		try {
 			Class.forName(MyProperties.getInstace().getProperty("driver"));
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 	/**
 	 * @return
 	 * @throws Naming
@@ -41,13 +44,13 @@ public class DbHelper {
 	
 	public static Connection getConn() throws Exception{
 	
-		/*conn = DriverManager.getConnection(MyProperties.getInstace().getProperty("url"),MyProperties.getInstace().getProperty("username"),MyProperties.getInstace().getProperty("password"));
-		return conn;*/
+		conn = DriverManager.getConnection(MyProperties.getInstace().getProperty("url"),MyProperties.getInstace().getProperty("username"),MyProperties.getInstace().getProperty("password"));
+		return conn;
 		//创建JNDI上下文对象
-		Context context = new InitialContext();
+		/*Context context = new InitialContext();
 		DataSource dSource = (DataSource) context.lookup("java:comp/env/mysql/easy");
 		conn = dSource.getConnection();
-		return conn;
+		return conn;*/
 	}
 	
 	public static  void closeAll(Connection conn,PreparedStatement pstmt,ResultSet rs) {
@@ -81,7 +84,7 @@ public class DbHelper {
 	 * @throws SQLException 
 	 * @throws Exception 
 	 */
-	public int update(List<String> sqls,List<List<Object>> params)
+	public static int update(List<String> sqls,List<List<Object>> params)
 			throws Exception {
 		int result  =0;
 		
@@ -270,32 +273,202 @@ public class DbHelper {
 		return t;
 		
 	}
+	public static Map<String, Object> selectSingle(String sql,List<Object> params)
+			throws Exception{
+		Map<String, Object> map = null;
+		try {
+			conn = getConn();
+			pstmt = conn.prepareStatement(sql);
+			//设置参数List
+			setParamsList(pstmt, params);
+		//	System.out.println(sql);
+			rs = pstmt.executeQuery();
+			//获取所有的列
+			List<String> columNames = getColumnNames(rs);
+			String typeName = null;
+			//System.out.println(rs.next());
+			if(rs.next()) {
+				map = new HashMap<String, Object>();
+				//循环列
+				for (String cname : columNames) {
+					Object obj =rs.getObject(cname);
+					if (obj != null) {
+						typeName = obj.getClass().getName();
+					}
+					//System.err.println(obj+"---"+typeName);
+					if ("oracle.sql.BLOB".equals(typeName)) {
+						Blob blob = (Blob)rs.getBlob(typeName);
+						InputStream in = blob.getBinaryStream();
+						//图片字节数组存储map中
+						byte [] bt = new byte[(int)blob.length()];
+						in.read(bt);
+						map.put(cname, bt);
+					}else{
+						map.put(cname, rs.getObject(cname));
+					}
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeAll(conn, pstmt, rs);
+		}
+		return map;
+	}
 	/**
 	 * 对从mysql数据库中查询到的数据分页
+	 * @param <T> 
 	 * @param page 从那一页开始
 	 * @param rows 每一页多少行数据
-	 * @param id	对查询的数据的限制条件(id : 期数)
+	 * @param chart操作的表名
+	 * @param t传的实体类
 	 * @return
 	 * @throws Exception
-	 *//*
-	 public static Page selectPageForMysql(int page, int rows,int id) throws Exception {
-	    	StringBuffer sb = new StringBuffer();
-	    	sb.append("select * from lottery");
-	    	if(id != 0){
-	    		sb.append(" where num="+id);
-	    	}
-	    	String sql = "select count(*) from("+sb.toString()+")b";
-	    	Map<String, Object> totalObj = DbHelper.selectSingle(sql, null);
-	    	long  total = 0;
-	    	if(totalObj != null){
-	    		total = Long.parseLong(totalObj.get("count(*)").toString());
-	    	}
-	    	int startRow = (page - 1 ) * rows;
-	    	String pageSql =  "select * from ("+sb.toString()+")a limit " + startRow + ", " + rows;
-	    	List<Lottery> data = DbHelper.selectAll(pageSql, null, Lottery.class);
-	        return new Page(data,total,page,rows);
-	    }*/
-	 
+	 */
+	//book表的分页
+	public static PageBook selectPageForMysql(int page, int rows,Book book) throws Exception {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append("select * from book where 1=1 ");
+    	if(book != null){
+			if(book.getBname() != null){
+				sb.append(" and bname like '%"+book.getBname()+"%'");
+			}
+			if(book.getBuniversity() != null){
+				sb.append(" and buniversity like '%"+book.getBuniversity()+"%'");
+			}
+			
+			if(book.getBucollege() != null){
+				sb.append(" and bucollege like '%"+book.getBucollege()+"%'");
+			}
+			
+			if(book.getBumajor() != null){
+				sb.append(" and bumajor like '%"+book.getBumajor()+"%'");
+			}
+			
+			if(book.getBclass() != null){
+				sb.append(" and bclass like '%"+book.getBclass()+"%'");
+			}
+			if(book.getBauthor() != null){
+				sb.append(" and bauthor like '%"+book.getBauthor()+"%'");
+			}
+			if(book.getBtid() != 0){
+				sb.append(" and btid = "+book.getBtid());
+			}
+			if(book.getBstate() != 0){
+				sb.append(" and bstate = "+book.getBstate());
+			}
+			if(book.getBtemp() != null){
+				sb.append(" and btemp like '%"+book.getBtemp() +"%'");
+			}
+			if(book.getBdate() != null){
+				sb.append(" and bdate like '%"+book.getBdate() +"%'");
+			}
+		}
+    	sb.append(" order by  bid asc");
+    	String sql = "select count(*) from("+sb.toString()+")b";
+    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, null);
+    	long  total = 0;
+    	if(totalObj != null){
+    		total = Long.parseLong(totalObj.get("count(*)").toString());
+    	}
+    	int startRow = (page - 1 ) * rows;
+    	String pageSql =  "select * from ("+sb.toString()+")a limit " + startRow + ", " + rows;
+    	List<Book> data = DbHelper.selectAll(pageSql, null, Book.class);
+        return new PageBook(data,total,page,rows);
+    }
+	//user表的分页
+	public static PageUser selectPageForMysql(int page, int rows,User user) throws Exception {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append("select * from user where 1=1 ");
+    	if(user != null){
+			if(user.getUminname() != null){
+				sb.append(" and uminname like '%"+user.getUminname()+"%'");
+			}
+			if(user.getUname() != null){
+				sb.append(" and uname like '%"+user.getUname()+"%'");
+			}
+			if(user.getUphone() != null){
+				sb.append(" and uphone like '%"+user.getUphone()+"%'");
+			}
+			if(user.getUniversity() != null){
+				sb.append(" and university like '%"+user.getUniversity()+"%'");
+			}
+			if(user.getUcollege() != null){
+				sb.append(" and ucollege like '%"+user.getUcollege()+"%'");
+			}
+			if(user.getUmajor() != null){
+				sb.append(" and umajor like '%"+user.getUmajor()+"%'");
+			}
+			if(user.getUstate() != 0){
+				sb.append(" and ustate = "+user.getUstate());
+			}
+			if(user.getUclass() != null){
+				sb.append(" and uclass = '"+user.getUclass()+"'");
+			}
+			if(user.getUtype() != 0){
+				sb.append(" and utype = "+user.getUtype());
+			}
+			if(user.getUage() != 0){
+				sb.append(" and uage = "+user.getUage());
+			}
+			if(user.getUsex() != 0){
+				sb.append(" and usex = "+user.getUsex());
+			}
+		}
+    	sb.append("  order by  uid asc");
+    	String sql = "select count(*) from("+sb.toString()+")b";
+    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, null);
+    	long  total = 0;
+    	if(totalObj != null){
+    		total = Long.parseLong(totalObj.get("count(*)").toString());
+    	}
+    	int startRow = (page - 1 ) * rows;
+    	String pageSql =  "select * from ("+sb.toString()+")a limit " + startRow + ", " + rows;
+    	List<User> data = DbHelper.selectAll(pageSql, null, User.class);
+        return new PageUser(data,total,page,rows);
+    }
+	/*public static void main(String[] args) throws Exception {
+		Eorder book = new Eorder();
+		PageEorder book1 = DbHelper.selectPageForMysql(1, 10, book);
+		System.out.println(book1.getTotal());
+	}*/
+	//Eorder表分页
+	public static PageEorder selectPageForMysql(int page, int rows,Eorder eorder) throws Exception {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append("select * from eorder where 1=1 ");
+    	if(eorder != null){
+			if(eorder.getUid() != 0){
+				sb.append(" and uid="+eorder.getUid());
+			}
+			if(eorder.getEotime() != null){
+				sb.append(" and eotime like '%"+eorder.getEotime()+"%'");
+			}
+			if(eorder.getUname() != null){
+				sb.append(" and uname like '%"+eorder.getUname()+"%'");
+			}
+			if(eorder.getEotype() != null){
+				sb.append(" and eotype like '%"+eorder.getEotype()+"%'");
+			}
+			if(eorder.getEostate() != 0){
+				sb.append(" and eostate = "+eorder.getEostate());
+			}
+			if(eorder.getEoaddr() != null){
+				sb.append(" and eoaddr like '%"+eorder.getEoaddr()+"%'");
+			}
+		}
+		sb.append("  order by  eoid asc");
+    	String sql = "select count(*) from("+sb.toString()+")b";
+    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, null);
+    	long  total = 0;
+    	if(totalObj != null){
+    		total = Long.parseLong(totalObj.get("count(*)").toString());
+    	}
+    	int startRow = (page - 1 ) * rows;
+    	String pageSql =  "select * from ("+sb.toString()+")a limit " + startRow + ", " + rows;
+    	List<Eorder> data = DbHelper.selectAll(pageSql, null, Eorder.class);
+        return new PageEorder(data,total,page,rows);
+    }
 	 /**
 	  * 将List集合中的Map集合进行转换为实体类，
 	  * @param list

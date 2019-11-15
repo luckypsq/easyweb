@@ -16,15 +16,15 @@
 <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
 <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
 <!--[if IE 7]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome-ie7.min.css" />
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
 		<![endif]-->
 <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 		<![endif]-->
-<script src="<%=application.getContextPath() %>/back/assets/js/ace-extra.min.js"></script>
+<script src="<%=application.getContextPath()%>/back/assets/js/ace-extra.min.js"></script>
 <!--[if lt IE 9]>
-		<script src="<%=application.getContextPath() %>/back/assets/js/html5shiv.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/respond.min.js"></script>
+		<script src="assets/js/html5shiv.js"></script>
+		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 <!--[if !IE]> -->
 <script src="<%=application.getContextPath() %>/back/assets/js/jquery.min.js"></script>
@@ -62,9 +62,15 @@
 						UserBiz userBiz = new UserBiz();
 						User user = new User();
 						user.setUstate(1);
-						List<User> userList = userBiz.selectAll(user);
+						user.setUtype(1);
+						List<User> userList1 = userBiz.selectAll(user);
+						user.setUtype(2);
+						List<User> userList2 = userBiz.selectAll(user);
+						user.setUtype(3);
+						List<User> userList3 = userBiz.selectAll(user);
+						long userNum = userList1.size()+userList2.size()+userList3.size();
 					%>
-						<h1><%=userList.size() %></h1>
+						<h1><%=userNum %></h1>
 						<p>书城用户</p>
 					</div>
 				</a> </section>
@@ -80,8 +86,9 @@
 					Book book = new Book();
 					book.setBstate(1);
 					List<Book> bookList = bookBiz.selectAll(book);
+					pageContext.setAttribute("bookList", bookList);
 				%>
-					<h1><%=bookList.size() %></h1>
+					<h1>${bookList.size() }</h1>
 					<p>书籍数量</p>
 				</div>
 				</section>
@@ -98,8 +105,9 @@
 					Eorder eorder = new Eorder();
 					//eorder.setEotime(dateStr[0]+"/"+dateStr[1]+"/"+dateStr[2]);
 					List<Eorder> eorderList = eorderBiz.selectAll(eorder);
+					pageContext.setAttribute("eorderList", eorderList);
 				%>
-					<h1><%=eorderList.size() %></h1>
+					<h1>${eorderList.size() }</h1>
 					<p>书籍订单</p>
 				</div>
 				</section>
@@ -167,11 +175,11 @@
 					%>
 						<tr>
 							<td class="name">未处理订单：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num1 %></a>&nbsp;个</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num1%></a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">待发货订单：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num2 %></a>&nbsp;个</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num2%></a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">待结算订单：</td>
@@ -210,7 +218,7 @@
 					%>
 						<tr>
 							<td class="name">书籍总数：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp"><%=bookList.size() %></a>&nbsp;个</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp">${bookList.size() }</a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">售罄书籍：</td>

@@ -1,6 +1,5 @@
 package com.yc.easyweb.bean;
 
-import com.sun.net.httpserver.BasicAuthenticator;
 
 public class Book {
 	private long bid;//id
@@ -12,7 +11,7 @@ public class Book {
 	
 	private String bcontent;//描述
 	private String bimg;//图片
-	private String bprice;//价格
+	private double bprice;//价格
 	private int bstate;//状态(1可用，2.删除3.售罄)
 	private int btid;//类别
 	private String btemp;//所属系列
@@ -21,6 +20,13 @@ public class Book {
 	private String bauthor ;//作者或出版社
 	private String bdate;//上传时间
 	
+	
+	public double getBprice() {
+		return bprice;
+	}
+	public void setBprice(double bprice) {
+		this.bprice = bprice;
+	}
 	public String getBdate() {
 		return bdate;
 	}
@@ -51,12 +57,6 @@ public class Book {
 	}
 	public void setBtemp(String btemp) {
 		this.btemp = btemp;
-	}
-	public String getBprice() {
-		return bprice;
-	}
-	public void setBprice(String bprice) {
-		this.bprice = bprice;
 	}
 	public int getBstate() {
 		return bstate;

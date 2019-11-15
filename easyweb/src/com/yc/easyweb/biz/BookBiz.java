@@ -19,8 +19,8 @@ public class BookBiz {
 			return dao.selectAll(book);
 		}
 		//Ìí¼Ó
-		public int insert(Book book){
-			return 0;
+		public int insert(Book book) throws Exception{
+			return dao.insert(book);
 			
 		}
 		//É¾³ý
