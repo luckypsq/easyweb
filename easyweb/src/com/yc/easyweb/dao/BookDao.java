@@ -58,7 +58,7 @@ public class BookDao {
 				sb.append(" and bdate like '%" + book.getBdate() + "%'");
 			}
 		}
-		sb.append(" order by  bid asc");
+		sb.append(" order by  bid desc");
 		List<Book> list = db.selectAll(sb.toString(), null, Book.class);
 		return list;
 	}

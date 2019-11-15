@@ -34,7 +34,7 @@ public class BookTypeDao {
 				sb.append(" and btid = "+bookType.getBtid() );
 			}
 		}
-		sb.append(" order by  btid asc");
+		sb.append(" order by  btid desc");
 		List<BookType> list = db.selectAll(sb.toString(), null, BookType.class);
 		return list;
 	}

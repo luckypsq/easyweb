@@ -30,7 +30,7 @@ public class CartDao {
 				sb.append(" and uid =" + cart.getUid());
 			}
 		}
-		sb.append(" order by  cid asc");
+		sb.append(" order by  cid desc");
 		List<Cart> list = DbHelper.selectAll(sb.toString(), null, Cart.class);
 		return list;
 	}

@@ -50,7 +50,7 @@
     <div class="side_title"><a title="隐藏" class="close_btn"><span></span></a></div>
      <div class="side_list">
       <div class="widget-header header-color-green2">
-          <h4 class="lighter smaller">产品类型列表</h4>
+          <h4 class="lighter smaller">书籍类型列表</h4>
       </div>
       <div class="widget-body">
           <div class="widget-main padding-8">
@@ -108,7 +108,7 @@ var setting = {
 				zTree.expandNode(treeNode);
 				return false;
 			} else {
-				demoIframe.attr("src",treeNode.file + ".html");
+				demoIframe.attr("src",treeNode.file + ".jsp");
 				return true;
 			}
 		}
@@ -116,22 +116,24 @@ var setting = {
 };
 
 var zNodes =[
-	{ id:1, pId:0, name:"商城分类列表", open:true},
-	{ id:11, pId:1, name:"蔬菜水果"},
-	{ id:111, pId:11, name:"蔬菜"},
-	{ id:112, pId:11, name:"苹果"},
-	{ id:113, pId:11, name:"大蒜"},
-	{ id:114, pId:11, name:"白菜"},
-	{ id:115, pId:11, name:"青菜"},
-	{ id:12, pId:1, name:"手机数码"},
-	{ id:121, pId:12, name:"手机 "},
-	{ id:122, pId:12, name:"照相机 "},
-	{ id:13, pId:1, name:"电脑配件"},
-	{ id:131, pId:13, name:"手机 "},
-	{ id:122, pId:13, name:"照相机 "},
-	{ id:14, pId:1, name:"服装鞋帽"},
-	{ id:141, pId:14, name:"手机 "},
-	{ id:42, pId:14, name:"照相机 "},
+	{ id:1, pId:0, name:"书籍分类列表", open:true},
+	{ id:11, pId:1, name:"教材区"},
+	{ id:111, pId:11, name:"成功励志"},
+	{ id:112, pId:11, name:"法律"},
+	{ id:113, pId:11, name:"管理"},
+	{ id:114, pId:11, name:"计算机与网络"},
+	{ id:115, pId:11, name:"教育考试"},
+	{ id:116, pId:11, name:"科技工程"},
+	{ id:117, pId:11, name:"生活时尚"},
+	{ id:118, pId:11, name:"文化历史"},
+	{ id:12, pId:1, name:"工具书区"},
+	{ id:121, pId:12, name:"英语四六级 "},
+	{ id:122, pId:12, name:"公务员资料 "},
+	{ id:123, pId:12, name:"考研资料 "},
+	{ id:124, pId:12, name:"雅思托福 "},
+	{ id:125, pId:12, name:"其他 "},
+	{ id:13, pId:1, name:"分享区"},
+	{ id:131, pId:13, name:"分享区"}
 ];
 		
 var code;

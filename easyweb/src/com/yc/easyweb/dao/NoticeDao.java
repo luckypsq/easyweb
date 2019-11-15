@@ -33,7 +33,7 @@ public class NoticeDao {
 				sb.append(" and nstate = " + notice.getNstate());
 			}
 		}
-		sb.append(" order by  ntime asc");
+		sb.append(" order by  ntime desc");
 		/*
 		 * System.out.println("notice数据库语句："+sb.toString());
 		 * System.out.println("notice实体类对象："+notice.toString());

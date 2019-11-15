@@ -42,7 +42,7 @@ public class EorderDao {
 				sb.append(" and eoaddr like '%" + eorder.getEoaddr() + "%'");
 			}
 		}
-		sb.append("  order by  eoid asc");
+		sb.append("  order by  eoid desc");
 		/*
 		 * System.out.println("eorder的数据库语句："+sb.toString());
 		 * System.out.println("eorder的实体类对象："+eorder.toString());

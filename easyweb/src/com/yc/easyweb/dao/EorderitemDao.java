@@ -30,7 +30,7 @@ public class EorderitemDao {
 				sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
 			}
 		}
-		sb.append("  order by  itemid asc");
+		sb.append("  order by  itemid desc");
 		/*System.out.println("eorderitem数据库语句："+sb.toString());
 		System.out.println("eorderitem实体类对象："+eorderitem.toString());*/
 		List<Eorderitem> list = db.selectAll(sb.toString(), null, Eorderitem.class);

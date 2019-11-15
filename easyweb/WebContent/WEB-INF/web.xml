@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>login</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>书籍BookServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.BookServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>书籍BookServlet</servlet-name>
+		<url-pattern>/book.s</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>书籍类型BookTypeServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.BookTypeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>书籍类型BookTypeServlet</servlet-name>
+		<url-pattern>/bookType.s</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>购物车CartServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.CartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>购物车CartServlet</servlet-name>
+		<url-pattern>/cart.s</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>订单EorderServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.EorderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>订单EorderServlet</servlet-name>
+		<url-pattern>/eorder.s</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>订单明细EorderitemServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.EorderitemServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>订单明细EorderitemServlet</servlet-name>
+		<url-pattern>/eorderitem.s</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>公告NoticeServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.NoticeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>公告NoticeServlet</servlet-name>
+		<url-pattern>/notice.s</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>用户UserServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>用户UserServlet</servlet-name>
+		<url-pattern>/user.s</url-pattern>
+	</servlet-mapping>
+</web-app>

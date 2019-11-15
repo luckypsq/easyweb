@@ -12,7 +12,7 @@ public class Book {
 	private String bcontent;//描述
 	private String bimg;//图片
 	private double bprice;//价格
-	private int bstate;//状态(1可用，2.删除3.售罄)
+	private int bstate;//状态(1已上架，2.已下架3.售罄4.审核不通过)
 	private int btid;//类别
 	private String btemp;//所属系列
 	private String btemp1;//预留字段

@@ -59,9 +59,9 @@ public class UserDao {
 				sb.append(" and usex = "+user.getUsex());
 			}
 		}
-		sb.append("  order by  uid asc");
-		System.out.println("User表查询语句："+sb.toString());
-		System.out.println("user对象的值："+user.toString());
+		sb.append("  order by  uid desc");
+		/*System.out.println("User表查询语句："+sb.toString());
+		System.out.println("user对象的值："+user.toString());*/
 		List<User> list = db.selectAll(sb.toString(), null, User.class);
 		return list;
 		

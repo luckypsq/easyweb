@@ -264,9 +264,9 @@
 					</a>
 						<ul
 							class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-							<li><a href="javascript:void(0" name="../system/Systems.jsp"
+							<li><a href="javascript:void(0)" name="<%=application.getContextPath() %>/back/system/system/Systems.jsp"
 								title="系统设置" class="iframeurl"><i class="icon-cog"></i>网站设置</a></li>
-							<li><a href="javascript:void(0)" name="../admin/admin_info.jsp"
+							<li><a href="javascript:void(0)" name="<%=application.getContextPath() %>/back/system/admin/admin_info.jsp"
 								title="个人信息" class="iframeurl"><i class="icon-user"></i>个人资料</a></li>
 							<li class="divider"></li>
 							<li><a href="javascript:ovid(0)" id="Exit_system"><i
@@ -387,10 +387,11 @@
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/advertising/advertising.jsp" title="广告管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>广告管理</a></li>
-								<li class="home"><a href="javascript:void(0)"
+								<%-- <li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/advertising/Sort_ads.jsp" title="分类管理" class="iframeurl"><i
-										class="icon-double-angle-right"></i>分类管理</a></li>
-							</ul></li>
+										class="icon-double-angle-right"></i>分类管理</a></li> --%>
+							</ul>
+						</li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-list"></i><span class="menu-text"> 交易管理 </span><b
 								class="arrow icon-angle-down"></b></a>
