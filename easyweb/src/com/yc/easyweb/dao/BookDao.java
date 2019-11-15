@@ -6,7 +6,7 @@ import java.util.List;
 import com.sun.javafx.binding.SelectBinding.AsBoolean;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.User;
-import com.yc.easyweb.util.DbHelper;
+import com.yc.easyweb.common.DbHelper;
 
 /**
  * 操作notice表的dao类

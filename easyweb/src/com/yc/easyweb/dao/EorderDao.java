@@ -7,7 +7,7 @@ import com.mysql.fabric.xmlrpc.base.Array;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.User;
-import com.yc.easyweb.util.DbHelper;
+import com.yc.easyweb.common.DbHelper;
 
 /**
  * 操作Eorder表的dao类

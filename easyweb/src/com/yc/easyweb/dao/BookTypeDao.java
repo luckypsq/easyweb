@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.BookType;
-import com.yc.easyweb.util.DbHelper;
+import com.yc.easyweb.common.DbHelper;
 
 /**
  * 操作BookType表的dao类

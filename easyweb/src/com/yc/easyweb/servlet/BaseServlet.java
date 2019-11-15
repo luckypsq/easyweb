@@ -18,17 +18,15 @@ public abstract class BaseServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		
-		// 通过op参数决定调用的方�?
+		// 通过op参数决定调用的方法
 		String op = request.getParameter("op");
-		
-		// 根据 op 来执�? 子类 �? 业务方法 �? java 反射：动态执行java方法
-		// 获取类对�?
+		// 根据 op 来执行 子类 的 业务方法 ， java 反射：动态执行java方法
+		// 获取类对象
 		Class<?> cls = this.getClass();
 		try {
 			// Method java 方法对象
 			Method m = cls.getMethod(op, HttpServletRequest.class, HttpServletResponse.class);
-			// 通过 java 的反射机制， 动�?�执行方�?
+			// 通过 java 的反射机制， 动态执行方法
 			m.invoke(this, request, response);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

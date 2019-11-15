@@ -1,4 +1,4 @@
-package com.yc.easyweb.util;
+package com.yc.easyweb.common;
 
 import java.io.*;
 import java.util.Properties;

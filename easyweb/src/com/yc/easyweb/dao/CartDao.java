@@ -6,7 +6,7 @@ import java.util.List;
 import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Cart;
-import com.yc.easyweb.util.DbHelper;
+import com.yc.easyweb.common.DbHelper;
 
 /**
  * 操作Cart表的dao类

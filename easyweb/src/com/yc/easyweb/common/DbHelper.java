@@ -1,4 +1,4 @@
-package com.yc.easyweb.util;
+package com.yc.easyweb.common;
 
 import java.io.InputStream;
 import java.sql.Blob;
@@ -21,6 +21,9 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.User;
+import com.yc.easyweb.util.PageBook;
+import com.yc.easyweb.util.PageEorder;
+import com.yc.easyweb.util.PageUser;
 
 
 public class DbHelper {

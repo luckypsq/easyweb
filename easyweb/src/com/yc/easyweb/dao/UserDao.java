@@ -6,7 +6,7 @@ import java.util.List;
 import com.mysql.fabric.xmlrpc.base.Array;
 import com.yc.easyweb.bean.Notice;
 import com.yc.easyweb.bean.User;
-import com.yc.easyweb.util.DbHelper;
+import com.yc.easyweb.common.DbHelper;
 
 import jdk.nashorn.internal.runtime.linker.LinkerCallSite;
 import sun.security.x509.URIName;

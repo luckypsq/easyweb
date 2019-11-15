@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.Eorderitem;
-import com.yc.easyweb.util.DbHelper;
+import com.yc.easyweb.common.DbHelper;
 
 /**
  * 操作Eorderitem表的dao类

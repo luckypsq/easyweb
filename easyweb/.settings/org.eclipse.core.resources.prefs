@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
-encoding//src/com/yc/easyweb/util/DbHelper.java=UTF-8
+encoding//src/com/yc/easyweb/common/DbHelper.java=UTF-8
+encoding//src/com/yc/easyweb/servlet/BaseServlet.java=UTF-8
 encoding//src/com/yc/easyweb/util/PageBook.java=UTF-8
 encoding//src/com/yc/easyweb/util/PageEorder.java=UTF-8
 encoding//src/com/yc/easyweb/util/PageUser.java=UTF-8
