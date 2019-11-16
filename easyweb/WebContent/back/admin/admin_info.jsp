@@ -34,7 +34,7 @@
       <div class="xinxi">
         <div class="form-group"><label class="col-sm-3 control-label no-padding-right" for="form-field-1">用户名： </label>
           <div class="col-sm-9"><input type="text" name="用户名" id="website-title" value="张小泉" class="col-xs-7 text_info" disabled="disabled">
-          &nbsp;&nbsp;&nbsp;<a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="change_Password()" class="btn btn-warning btn-xs">修改密码</a></div>
+          &nbsp;&nbsp;&nbsp;<a href="javascript:ovid()" onclick="change_Password()" class="btn btn-warning btn-xs">修改密码</a></div>
           
           </div>
           <div class="form-group"><label class="col-sm-3 control-label no-padding-right" for="form-field-1">性别： </label>

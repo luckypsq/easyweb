@@ -37,7 +37,7 @@
     </div>
     <div class="border clearfix">
        <span class="l_f">
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;批量删除</a>
+        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;批量删除</a>
        </span>
        <span class="r_f">共：<b>2345</b>条</span>
      </div>
@@ -59,36 +59,36 @@
         <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
         <td>4577566</td>
         <td>花海iatiant</td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="integration_history('23')">3434</a></td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="Browse_history('13')">3434</a></td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="Order_history('33')">34</a></td>
+        <td><a href="javascript:ovid()" onclick="integration_history('23')">3434</a></td>
+        <td><a href="javascript:ovid()" onclick="Browse_history('13')">3434</a></td>
+        <td><a href="javascript:ovid()" onclick="Order_history('33')">34</a></td>
         <td> <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
         </tr>
        <tr>
         <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
         <td>4543232</td>
         <td>花海iatiant</td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="integration_history('43')">45</a></td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="Browse_history('53')">11</a></td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="Order_history('23')">45</a></td>
+        <td><a href="javascript:ovid()" onclick="integration_history('43')">45</a></td>
+        <td><a href="javascript:ovid()" onclick="Browse_history('53')">11</a></td>
+        <td><a href="javascript:ovid()" onclick="Order_history('23')">45</a></td>
         <td> <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
         </tr>
         <tr>
         <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
         <td>4543232</td>
         <td>梅毒</td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="integration_history('5')">45</a></td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="Browse_history('4')">11</a></td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="Order_history('5')">45</a></td>
+        <td><a href="javascript:ovid()" onclick="integration_history('5')">45</a></td>
+        <td><a href="javascript:ovid()" onclick="Browse_history('4')">11</a></td>
+        <td><a href="javascript:ovid()" onclick="Order_history('5')">45</a></td>
         <td> <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'3')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
         </tr>
         <tr>
         <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
         <td>4543232</td>
         <td>张小泉</td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="integration_history('5')">245</a></td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="Browse_history('4')">131</a></td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="Order_history('7')">45</a></td>
+        <td><a href="javascript:ovid()" onclick="integration_history('5')">245</a></td>
+        <td><a href="javascript:ovid()" onclick="Browse_history('4')">131</a></td>
+        <td><a href="javascript:ovid()" onclick="Order_history('7')">45</a></td>
         <td> <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'5')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
         </tr>
         </tbody>    

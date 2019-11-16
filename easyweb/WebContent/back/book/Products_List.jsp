@@ -1,5 +1,4 @@
 <%@page import="com.yc.easyweb.common.DbHelper"%>
-<%@page import="com.yc.easyweb.util.PageBook"%>
 <%@page import="com.yc.easyweb.biz.*"%>
 <%@page import="com.yc.easyweb.bean.*"%>
 <%@page import="com.yc.easyweb.bean.*"%>
@@ -40,8 +39,8 @@
         <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
 <script type="text/javascript">
 	//查询
-	function select(){
-		
+	function book(){
+		alert(1);
 	}
 
 </script>
@@ -68,8 +67,8 @@
     </div>
      <div class="border clearfix">
        <span class="l_f">
-        <a href="<%=application.getContextPath() %>/back/picture-add.html" title="添加书籍" class="btn btn-warning Order_form"><i class="icon-plus"></i>添加书籍</a>
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>
+        <a href="<%=application.getContextPath() %>/back/book/picture-add.jsp" title="添加书籍" class="btn btn-warning Order_form"><i class="icon-plus"></i>添加书籍</a>
+        <a href="javascript:ovid()" class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>
        </span>
        <span class="r_f">共：<b>${bookList.size() }</b>本书</span>
      </div>
@@ -79,7 +78,7 @@
         <div class="show_btn" id="rightArrow"><span></span></div>
         <div class="widget-box side_content" >
          <div class="side_title"><a title="隐藏" class="close_btn"><span></span></a></div>
-         <div class="side_list"><div class="widget-header header-color-green2"><h4 class="lighter smaller">书籍类型列表</h4></div>
+         <div class="side_list"><div class="widget-header header-color-green2"><h4 class="lighter smaller" onclick="book()">书籍类型列表</h4></div>
          <div class="widget-body">
           <div class="widget-main padding-8"><div id="treeDemo" class="ztree"></div></div>
         </div>
@@ -290,13 +289,21 @@ function showCode(str) {
 $(document).ready(function(){
 	var t = $("#treeDemo");
 	t = $.fn.zTree.init(t, setting, zNodes);
+	
+	
 	demoIframe = $("#testIframe");
 	demoIframe.bind("load", loadReady);
 	var zTree = $.fn.zTree.getZTreeObj("tree");
-	zTree.selectNode(zTree.getNodeByParam("id",'11'));
+alert(	zTree.selectNode(zTree.getNodeByParam("id",'11')));
+  alert( zTree);
+/*	$("#treeDemo_2_ul>li").click(function(){
+		$
+	});*/
 });	
+
 /*产品-下架*/
 function member_stop(obj,id){
+	
 	var soldBook = null;
 	layer.confirm('确认要下架吗？',function(index){
 		/* if (xmlhttp != null) {

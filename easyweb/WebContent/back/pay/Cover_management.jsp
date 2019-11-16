@@ -39,7 +39,7 @@
     <!--操作--> 
      <div class="border clearfix">
        <span class="l_f">
-       <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-bar-chart"></i>&nbsp;图表展示</a>
+       <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-bar-chart"></i>&nbsp;图表展示</a>
        </span>
        <span class="r_f">共：<b>2334</b>个账户</span>
      </div>
@@ -73,7 +73,7 @@
           <td class="td-status"><span class="label label-success radius">启用</span></td>
           <td class="td-manage">
            <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="启用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>  
-          <a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="Account_Details.html" class="btn btn-xs  btn-warning Account_Details" onclick="generateOrders('511');" title="张奶奶账户详细" >
+          <a href="javascript:ovid()" name="Account_Details.html" class="btn btn-xs  btn-warning Account_Details" onclick="generateOrders('511');" title="张奶奶账户详细" >
           <i class="fa fa-list-ul bigger-120"></i></a>     
           </td>
         </tr>
@@ -89,7 +89,7 @@
           <td class="td-status"><span class="label label-success radius">启用</span></td>
           <td class="td-manage">
            <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="启用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>   
-           <a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="Account_Details.html" class="btn btn-xs  btn-warning Account_Details" onclick="generateOrders('561');" title="张小泉账户详细" >
+           <a href="javascript:ovid()" name="Account_Details.html" class="btn btn-xs  btn-warning Account_Details" onclick="generateOrders('561');" title="张小泉账户详细" >
            <i class="fa fa-list-ul bigger-120"></i></a>   
           </td>
         </tr>

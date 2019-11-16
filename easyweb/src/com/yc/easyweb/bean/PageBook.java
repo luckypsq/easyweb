@@ -1,4 +1,4 @@
-package com.yc.easyweb.util;
+package com.yc.easyweb.bean;
 
 import java.util.*;
 

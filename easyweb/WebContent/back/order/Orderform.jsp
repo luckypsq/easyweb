@@ -34,8 +34,8 @@
     <div class="top_style Order_form" id="Order_form_style">
       <div class="type_title">购物产品比例
       <div class="btn_style">  
-      <a href="<%=application.getContextPath() %>/back/javascript:ovid()"  class="xianshi_btn Statistic_btn">显示</a> 
-      <a href="<%=application.getContextPath() %>/back/javascript:ovid()"  class="yingchan_btn Statistic_btn b_n_btn">隐藏</a>
+      <a href="javascript:ovid()"  class="xianshi_btn Statistic_btn">显示</a> 
+      <a href="javascript:ovid()"  class="yingchan_btn Statistic_btn b_n_btn">隐藏</a>
       </div>
       </div>
         <div class="hide_style clearfix">

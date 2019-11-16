@@ -264,9 +264,9 @@
 					</a>
 						<ul
 							class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-							<li><a href="javascript:void(0)" name="<%=application.getContextPath() %>/back/system/system/Systems.jsp"
+							<li><a href="javascript:void(0)" name="<%=application.getContextPath() %>/back/system/Systems.jsp"
 								title="系统设置" class="iframeurl"><i class="icon-cog"></i>网站设置</a></li>
-							<li><a href="javascript:void(0)" name="<%=application.getContextPath() %>/back/system/admin/admin_info.jsp"
+							<li><a href="javascript:void(0)" name="<%=application.getContextPath() %>/back/admin/admin_info.jsp"
 								title="个人信息" class="iframeurl"><i class="icon-user"></i>个人资料</a></li>
 							<li class="divider"></li>
 							<li><a href="javascript:ovid(0)" id="Exit_system"><i
@@ -482,9 +482,9 @@
 								class="icon-cogs"></i><span class="menu-text"> 系统管理 </span><b
 								class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
-								<li class="home"><a href="javascript:void(0)"
+								<%-- <li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/system/Systems.jsp" title="系统设置" class="iframeurl"><i
-										class="icon-double-angle-right"></i>系统设置</a></li>
+										class="icon-double-angle-right"></i>系统设置</a></li> --%>
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/system/System_section.jsp" title="系统栏目管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>系统栏目管理</a></li>

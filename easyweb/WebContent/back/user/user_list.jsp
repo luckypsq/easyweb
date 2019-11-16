@@ -1,213 +1,287 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
-		<!--[if IE 7]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome-ie7.min.css" />
-		<![endif]-->
-        <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
-		<![endif]-->
-			<script src="<%=application.getContextPath() %>/back/assets/js/jquery.min.js"></script>
-
-		<!-- <![endif]-->
-
-		<!--[if IE]>
-<script src="<%=application.getContextPath() %>/back/http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<![endif]-->
-
-		<!--[if !IE]> -->
-
-		<script type="text/javascript">
-			window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
-		</script>
-
-		<!-- <![endif]-->
-
-		<!--[if IE]>
+<link
+	href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="<%=application.getContextPath() %>/back/css/style.css" />
+<link
+	href="<%=application.getContextPath() %>/back/assets/css/codemirror.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+<link rel="stylesheet"
+	href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
+<script
+	src="<%=application.getContextPath() %>/back/assets/js/jquery.min.js"></script>
 <script type="text/javascript">
- window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
-</script>
-<![endif]-->
-
-		<script type="text/javascript">
-			if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		window.jQuery || document.write("<script src='<%=application.getContextPath() %>/back/assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
 		</script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>
-		<!-- page specific plugin scripts -->
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.js"></script> 
-        <script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.admin.js"></script> 
-        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>
-        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
+<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='<%=application.getContextPath() %>/back/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+<script
+	src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+<script
+	src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>
+<script
+	src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
+<script
+	src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+<script type="text/javascript"
+	src="<%=application.getContextPath() %>/back/js/H-ui.js"></script>
+<script type="text/javascript"
+	src="<%=application.getContextPath() %>/back/js/H-ui.admin.js"></script>
+<script
+	src="<%=application.getContextPath() %>/back/assets/layer/layer.js"
+	type="text/javascript"></script>
+<script
+	src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js"
+	type="text/javascript"></script>
 <title>用户列表</title>
 </head>
 
 <body>
-<div class="page-content clearfix">
-    <div id="Member_Ratings">
-      <div class="d_Confirm_Order_style">
-    <div class="search_style">
-     
-      <ul class="search_content clearfix">
-       <li><label class="l_f">会员名称</label><input name="" type="text"  class="text_add" placeholder="输入会员名称、电话、邮箱"  style=" width:400px"/></li>
-       <li><label class="l_f">添加时间</label><input class="inline laydate-icon" id="start" style=" margin-left:10px;"></li>
-       <li style="width:90px;"><button type="button" class="btn_search"><i class="icon-search"></i>查询</button></li>
-      </ul>
-    </div>
-     <!---->
-     <div class="border clearfix">
-       <span class="l_f">
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" id="member_add" class="btn btn-warning"><i class="icon-plus"></i>添加用户</a>
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>
-       </span>
-       <span class="r_f">共：<b>2345</b>条</span>
-     </div>
-     <!---->
-     <div class="table_menu_list">
-       <table class="table table-striped table-bordered table-hover" id="sample-table">
-		<thead>
-		 <tr>
-				<th width="25"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
-				<th width="80">ID</th>
-				<th width="100">用户名</th>
-				<th width="80">性别</th>
-				<th width="120">手机</th>
-				<th width="150">邮箱</th>
-				<th width="">地址</th>
-				<th width="180">加入时间</th>
-                <th width="100">等级</th>
-				<th width="70">状态</th>                
-				<th width="250">操作</th>
-			</tr>
-		</thead>
-	<tbody>
-		<tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>1</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','member-show.html','10001','500','400')">张三</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>
-          <td class="text-l">北京市 海淀区</td>
-          <td>2014-6-11 11:11:42</td>
-          <td>普通用户</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a> 
-          <a title="编辑" onclick="member_edit('550')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> 
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-        <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>2</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张小泉','member-show.html','1031','500','400')">张小泉</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>
-          <td class="text-l">北京市 海淀区</td>
-          <td>2014-6-11 11:11:42</td>
-          <td>普通用户</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a> 
-          <a title="编辑" onclick="member_edit('310')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> 
-        
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-         <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>3</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张小泉','member-show.html','10301','500','400')">张小泉</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>
-          <td class="text-l">北京市 海淀区</td>
-          <td>2014-6-11 11:11:42</td>
-          <td>银牌用户</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a> 
-          <a title="编辑" onclick="member_edit(,'410')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> 
-         
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-         <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>4</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张小泉','member-show.html','10001','500','400')">张小泉</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>
-          <td class="text-l">北京市 海淀区</td>
-          <td>2014-6-11 11:11:42</td>
-          <td>银牌用户</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a> 
-          <a title="编辑" onclick="member_edit('560')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> 
-        
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-         <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>5</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张小泉','member-show.html','10001','500','400')">张小泉</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>
-          <td class="text-l">北京市 海淀区</td>
-          <td>2014-6-11 11:11:42</td>
-          <td>银牌用户</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a> 
-          <a title="编辑" onclick="member_edit('510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> 
-        
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-      </tbody>
-	</table>
-   </div>
-  </div>
- </div>
-</div>
-<!--添加用户图层-->
-<div class="add_menber" id="add_menber_style" style="display:none">
-  
-    <ul class=" page-content">
-     <li><label class="label_name">用&nbsp;&nbsp;户 &nbsp;名：</label><span class="add_name"><input value="" name="用户名" type="text"  class="text_add"/></span><div class="prompt r_f"></div></li>
-     <li><label class="label_name">真实姓名：</label><span class="add_name"><input name="真实姓名" type="text"  class="text_add"/></span><div class="prompt r_f"></div></li>
-     <li><label class="label_name">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label><span class="add_name">
-     <label><input name="form-field-radio" type="radio" checked="checked" class="ace"><span class="lbl">男</span></label>&nbsp;&nbsp;&nbsp;
-     <label><input name="form-field-radio" type="radio" class="ace"><span class="lbl">女</span></label>&nbsp;&nbsp;&nbsp;
-     <label><input name="form-field-radio" type="radio" class="ace"><span class="lbl">保密</span></label>
-     </span>
-     <div class="prompt r_f"></div>
-     </li>
-     <li><label class="label_name">固定电话：</label><span class="add_name"><input name="固定电话" type="text"  class="text_add"/></span><div class="prompt r_f"></div></li>
-     <li><label class="label_name">移动电话：</label><span class="add_name"><input name="移动电话" type="text"  class="text_add"/></span><div class="prompt r_f"></div></li>
-     <li><label class="label_name">电子邮箱：</label><span class="add_name"><input name="电子邮箱" type="text"  class="text_add"/></span><div class="prompt r_f"></div></li>
-     <li class="adderss"><label class="label_name">家庭住址：</label><span class="add_name"><input name="家庭住址" type="text"  class="text_add" style=" width:350px"/></span><div class="prompt r_f"></div></li>
-     <li><label class="label_name">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</label><span class="add_name">
-     <label><input name="form-field-radio1" type="radio" checked="checked" class="ace"><span class="lbl">开启</span></label>&nbsp;&nbsp;&nbsp;
-     <label><input name="form-field-radio1"type="radio" class="ace"><span class="lbl">关闭</span></label></span><div class="prompt r_f"></div></li>
-    </ul>
- </div>
+	<div class="page-content clearfix">
+		<div id="Member_Ratings">
+			<div class="d_Confirm_Order_style">
+				<div class="search_style">
+
+					<ul class="search_content clearfix">
+						<li><label class="l_f">会员名称</label><input name="" type="text"
+							class="text_add" placeholder="输入会员名称、电话、邮箱" style="width: 400px" /></li>
+						<li><label class="l_f">添加时间</label><input
+							class="inline laydate-icon" id="start" style="margin-left: 10px;"></li>
+						<li style="width: 90px;"><button type="button"
+								class="btn_search">
+								<i class="icon-search"></i>查询
+							</button></li>
+					</ul>
+				</div>
+				<!---->
+				<div class="border clearfix">
+					<span class="l_f"> <a
+						href="<%=application.getContextPath() %>/back/javascript:ovid()"
+						id="member_add" class="btn btn-warning"><i class="icon-plus"></i>添加用户</a>
+						<a
+						href="<%=application.getContextPath() %>/back/javascript:ovid()"
+						class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>
+					</span> <span class="r_f">共：<b>2345</b>条
+					</span>
+				</div>
+				<!---->
+				<div class="table_menu_list">
+					<table class="table table-striped table-bordered table-hover"
+						id="sample-table">
+						<thead>
+							<tr>
+								<th width="25"><label><input type="checkbox"
+										class="ace"><span class="lbl"></span></label></th>
+								<th width="80">ID</th>
+								<th width="100">用户名</th>
+								<th width="80">性别</th>
+								<th width="120">手机</th>
+								<th width="150">邮箱</th>
+								<th width="">地址</th>
+								<th width="180">加入时间</th>
+								<th width="100">等级</th>
+								<th width="70">状态</th>
+								<th width="250">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><label><input type="checkbox" class="ace"><span
+										class="lbl"></span></label></td>
+								<td>1</td>
+								<td><u style="cursor: pointer" class="text-primary"
+									onclick="member_show('张三','member-show.html','10001','500','400')">张三</u></td>
+								<td>男</td>
+								<td>13000000000</td>
+								<td>admin@mail.com</td>
+								<td class="text-l">北京市 海淀区</td>
+								<td>2014-6-11 11:11:42</td>
+								<td>普通用户</td>
+								<td class="td-status"><span
+									class="label label-success radius">已启用</span></td>
+								<td class="td-manage"><a
+									onClick="member_stop(this,'10001')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									title="停用" class="btn btn-xs btn-success"><i
+										class="icon-ok bigger-120"></i></a> <a title="编辑"
+									onclick="member_edit('550')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									class="btn btn-xs btn-info"><i class="icon-edit bigger-120"></i></a>
+									<a title="删除"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									onclick="member_del(this,'1')" class="btn btn-xs btn-warning"><i
+										class="icon-trash  bigger-120"></i></a></td>
+							</tr>
+							<tr>
+								<td><label><input type="checkbox" class="ace"><span
+										class="lbl"></span></label></td>
+								<td>2</td>
+								<td><u style="cursor: pointer" class="text-primary"
+									onclick="member_show('张小泉','member-show.html','1031','500','400')">张小泉</u></td>
+								<td>男</td>
+								<td>13000000000</td>
+								<td>admin@mail.com</td>
+								<td class="text-l">北京市 海淀区</td>
+								<td>2014-6-11 11:11:42</td>
+								<td>普通用户</td>
+								<td class="td-status"><span
+									class="label label-success radius">已启用</span></td>
+								<td class="td-manage"><a
+									onClick="member_stop(this,'10001')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									title="停用" class="btn btn-xs btn-success"><i
+										class="icon-ok bigger-120"></i></a> <a title="编辑"
+									onclick="member_edit('310')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									class="btn btn-xs btn-info"><i class="icon-edit bigger-120"></i></a>
+									<a title="删除"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									onclick="member_del(this,'1')" class="btn btn-xs btn-warning"><i
+										class="icon-trash  bigger-120"></i></a></td>
+							</tr>
+							<tr>
+								<td><label><input type="checkbox" class="ace"><span
+										class="lbl"></span></label></td>
+								<td>3</td>
+								<td><u style="cursor: pointer" class="text-primary"
+									onclick="member_show('张小泉','member-show.html','10301','500','400')">张小泉</u></td>
+								<td>男</td>
+								<td>13000000000</td>
+								<td>admin@mail.com</td>
+								<td class="text-l">北京市 海淀区</td>
+								<td>2014-6-11 11:11:42</td>
+								<td>银牌用户</td>
+								<td class="td-status"><span
+									class="label label-success radius">已启用</span></td>
+								<td class="td-manage"><a
+									onClick="member_stop(this,'10001')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									title="停用" class="btn btn-xs btn-success"><i
+										class="icon-ok bigger-120"></i></a> <a title="编辑"
+									onclick="member_edit(this,'410')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									class="btn btn-xs btn-info"><i class="icon-edit bigger-120"></i></a>
+									<a title="删除"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									onclick="member_del(this,'1')" class="btn btn-xs btn-warning"><i
+										class="icon-trash  bigger-120"></i></a></td>
+							</tr>
+							<tr>
+								<td><label><input type="checkbox" class="ace"><span
+										class="lbl"></span></label></td>
+								<td>4</td>
+								<td><u style="cursor: pointer" class="text-primary"
+									onclick="member_show('张小泉','member-show.html','10001','500','400')">张小泉</u></td>
+								<td>男</td>
+								<td>13000000000</td>
+								<td>admin@mail.com</td>
+								<td class="text-l">北京市 海淀区</td>
+								<td>2014-6-11 11:11:42</td>
+								<td>银牌用户</td>
+								<td class="td-status"><span
+									class="label label-success radius">已启用</span></td>
+								<td class="td-manage"><a
+									onClick="member_stop(this,'10001')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									title="停用" class="btn btn-xs btn-success"><i
+										class="icon-ok bigger-120"></i></a> <a title="编辑"
+									onclick="member_edit('560')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									class="btn btn-xs btn-info"><i class="icon-edit bigger-120"></i></a>
+									<a title="删除"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									onclick="member_del(this,'1')" class="btn btn-xs btn-warning"><i
+										class="icon-trash  bigger-120"></i></a></td>
+							</tr>
+							<tr>
+								<td><label><input type="checkbox" class="ace"><span
+										class="lbl"></span></label></td>
+								<td>5</td>
+								<td><u style="cursor: pointer" class="text-primary"
+									onclick="member_show('张小泉','member-show.html','10001','500','400')">张小泉</u></td>
+								<td>男</td>
+								<td>13000000000</td>
+								<td>admin@mail.com</td>
+								<td class="text-l">北京市 海淀区</td>
+								<td>2014-6-11 11:11:42</td>
+								<td>银牌用户</td>
+								<td class="td-status"><span
+									class="label label-success radius">已启用</span></td>
+								<td class="td-manage"><a
+									onClick="member_stop(this,'10001')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									title="停用" class="btn btn-xs btn-success"><i
+										class="icon-ok bigger-120"></i></a> <a title="编辑"
+									onclick="member_edit('510')"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									class="btn btn-xs btn-info"><i class="icon-edit bigger-120"></i></a>
+									<a title="删除"
+									href="<%=application.getContextPath() %>/back/javascript:;"
+									onclick="member_del(this,'1')" class="btn btn-xs btn-warning"><i
+										class="icon-trash  bigger-120"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--添加用户图层-->
+	<div class="add_menber" id="add_menber_style" style="display: none">
+
+		<ul class=" page-content">
+			<li><label class="label_name">用&nbsp;&nbsp;户 &nbsp;名：</label><span
+				class="add_name"><input value="" name="用户名" type="text"
+					class="text_add" /></span>
+				<div class="prompt r_f"></div></li>
+			<li><label class="label_name">真实姓名：</label><span
+				class="add_name"><input name="真实姓名" type="text"
+					class="text_add" /></span>
+				<div class="prompt r_f"></div></li>
+			<li><label class="label_name">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label><span
+				class="add_name"> <label><input
+						name="form-field-radio" type="radio" checked="checked" class="ace"><span
+						class="lbl">男</span></label>&nbsp;&nbsp;&nbsp; <label><input
+						name="form-field-radio" type="radio" class="ace"><span
+						class="lbl">女</span></label>&nbsp;&nbsp;&nbsp; <label><input
+						name="form-field-radio" type="radio" class="ace"><span
+						class="lbl">保密</span></label>
+			</span>
+				<div class="prompt r_f"></div></li>
+			<li><label class="label_name">固定电话：</label><span
+				class="add_name"><input name="固定电话" type="text"
+					class="text_add" /></span>
+				<div class="prompt r_f"></div></li>
+			<li><label class="label_name">移动电话：</label><span
+				class="add_name"><input name="移动电话" type="text"
+					class="text_add" /></span>
+				<div class="prompt r_f"></div></li>
+			<li><label class="label_name">电子邮箱：</label><span
+				class="add_name"><input name="电子邮箱" type="text"
+					class="text_add" /></span>
+				<div class="prompt r_f"></div></li>
+			<li class="adderss"><label class="label_name">家庭住址：</label><span
+				class="add_name"><input name="家庭住址" type="text"
+					class="text_add" style="width: 350px" /></span>
+				<div class="prompt r_f"></div></li>
+			<li><label class="label_name">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</label><span
+				class="add_name"> <label><input
+						name="form-field-radio1" type="radio" checked="checked"
+						class="ace"><span class="lbl">开启</span></label>&nbsp;&nbsp;&nbsp;
+					<label><input name="form-field-radio1" type="radio"
+						class="ace"><span class="lbl">关闭</span></label></span>
+				<div class="prompt r_f"></div></li>
+		</ul>
+	</div>
 </body>
 </html>
 <script>

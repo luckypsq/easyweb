@@ -48,28 +48,28 @@
    <div class="bank_style clearfix" id="Bank_operations">
       <div class="title_name">支持银行</div>
       <div class="operating">
-      <a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="modify()" class="btn btn-danger btn_delete"><i class="fa fa-trash"></i>&nbsp;删除操作</a>
-      <a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="Add_Bank()" class="btn btn-primary"><i class="fa fa-credit-card"></i>&nbsp;添加银行</a></div>
+      <a href="javascript:ovid()" onclick="modify()" class="btn btn-danger btn_delete"><i class="fa fa-trash"></i>&nbsp;删除操作</a>
+      <a href="javascript:ovid()" onclick="Add_Bank()" class="btn btn-primary"><i class="fa fa-credit-card"></i>&nbsp;添加银行</a></div>
       <div class="bank_list clearfix">
         <ul class="bank_logo clearfix">
          <li>
-          <div class="delete_bank"><a href="<%=application.getContextPath() %>/back/javascript:ovid()"  onclick="bank_del(this,'123')"class="fa fa-remove"></a></div>
+          <div class="delete_bank"><a href="javascript:ovid()"  onclick="bank_del(this,'123')"class="fa fa-remove"></a></div>
           <label><input name="form-field-checkbox" type="checkbox" class="ace"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/black1.png" width="160px;"/></span></label>
          </li>
          <li>
-          <div class="delete_bank"><a href="<%=application.getContextPath() %>/back/javascript:ovid()"  onclick="bank_del(this,'124')"class="fa fa-remove"></a></div>
+          <div class="delete_bank"><a href="javascript:ovid()"  onclick="bank_del(this,'124')"class="fa fa-remove"></a></div>
           <label><input name="form-field-checkbox" type="checkbox" class="ace"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/black2.png" width="160px;"/></span></label>
          </li>
          <li>
-          <div class="delete_bank"><a href="<%=application.getContextPath() %>/back/javascript:ovid()"  onclick="bank_del(this,'125')"class="fa fa-remove"></a></div>
+          <div class="delete_bank"><a href="javascript:ovid()"  onclick="bank_del(this,'125')"class="fa fa-remove"></a></div>
           <label><input name="form-field-checkbox" type="checkbox" class="ace"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/black3.png" width="160px;"/></span></label>
          </li>
          <li>
-          <div class="delete_bank"><a href="<%=application.getContextPath() %>/back/javascript:ovid()"  onclick="bank_del(this,'126')"class="fa fa-remove"></a></div>
+          <div class="delete_bank"><a href="javascript:ovid()"  onclick="bank_del(this,'126')"class="fa fa-remove"></a></div>
           <label><input name="form-field-checkbox" type="checkbox" class="ace"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/black4.png" width="160px;"/></span></label>
          </li>
          <li>
-          <div class="delete_bank"><a href="<%=application.getContextPath() %>/back/javascript:ovid()"  onclick="bank_del(this,'127')"class="fa fa-remove"></a></div>
+          <div class="delete_bank"><a href="javascript:ovid()"  onclick="bank_del(this,'127')"class="fa fa-remove"></a></div>
           <label><input name="form-field-checkbox" type="checkbox" class="ace"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/black5.png" width="160px;"/></span></label>
          </li>
          <li><label><input name="form-field-checkbox" type="checkbox" class="ace"><span class="lbl"><img src="<%=application.getContextPath() %>/back/products/black/black6.png" width="160px;"/></span></label></li>

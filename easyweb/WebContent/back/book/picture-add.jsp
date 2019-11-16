@@ -1,3 +1,6 @@
+<%@page import="java.util.*"%>
+<%@page import="com.yc.easyweb.biz.*"%>
+<%@page import="com.yc.easyweb.bean.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,24 +11,31 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<!--[if lt IE 9]>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/html5.js"></script>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/respond.min.js"></script>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/PIE_IE678.js"></script>
-<![endif]-->
 <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
 <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
 <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-      <link rel="stylesheet" href="<%=application.getContextPath() %>/back/Widget/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="<%=application.getContextPath() %>/back/Widget/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
-<!--[if IE 7]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome-ie7.min.css" />
-		<![endif]-->
 <link href="<%=application.getContextPath() %>/back/Widget/icheck/icheck.css" rel="stylesheet" type="text/css" />
 <link href="<%=application.getContextPath() %>/back/Widget/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
-
-<title>新增图片</title>
+<script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>
+<script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
+<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>   
+<script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/icheck/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/Validform/5.3.2/Validform.min.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script> 
+<script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.js"></script> 
+<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.admin.js"></script> 
+<title>新增书籍</title>
 </head>
 <body>
 <div class="clearfix" id="add_picture">
@@ -35,7 +45,7 @@
     <div class="side_title"><a title="隐藏" class="close_btn"><span></span></a></div>
      <div class="side_list">
       <div class="widget-header header-color-green2">
-          <h4 class="lighter smaller">选择产品类型</h4>
+          <h4 class="lighter smaller">选择书籍类型</h4>
       </div>
       <div class="widget-body">
           <div class="widget-main padding-8">
@@ -46,64 +56,130 @@
   </div>  
   </div>
    <div class="page_right_style">
-   <div class="type_title">添加商品</div>
+   <div class="type_title">添加书籍</div>
 	<form action="" method="post" class="form form-horizontal" id="form-article-add">
 		<div class="clearfix cl">
-         <label class="form-label col-2"><span class="c-red">*</span>图片标题：</label>
-		 <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name=""></div>
+         <label class="form-label col-2"><span class="c-red">*</span>书名：</label>
+		 <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="请输入至少两个字符至多五十的汉字" id="bname" name="bname" style="margin-left: 40px;"></div>
 		</div>
-		<div class=" clearfix cl">
-         <label class="form-label col-2">简略标题：</label>
+	<!-- 	<div class=" clearfix cl">
+         <label class="form-label col-2">：</label> 
 	     <div class="formControls col-10"><input type="text" class="input-text" value="" placeholder="" id="" name=""></div>
-		</div>
+		</div> -->
 		<div class=" clearfix cl">
+		<%
+		//从数据库中查询所有的大学，专业等信息
+			Book book = new Book();
+			BookBiz bizBook = new BookBiz();
+			List<Book> bookList_add = bizBook.selectAll(book);
 			
+			
+			HashSet<String> bookUniver = new HashSet<String>();
+			HashSet<String> bookUcollage = new HashSet<String>();
+			HashSet<String> bookUmagor = new HashSet<String>();
+			for(Book bookSet : bookList_add){
+				//System.out.println(bookSet.getBucollege());
+				if(null != bookSet.getBuniversity()){
+					if(!bookSet.getBuniversity().isEmpty() && !"".equals(bookSet.getBuniversity())){
+						bookUniver.add(bookSet.getBuniversity());
+					}
+				}
+				if(null != bookSet.getBucollege()){
+					if(!bookSet.getBucollege().isEmpty() && !"".equals(bookSet.getBucollege())){
+						bookUcollage.add(bookSet.getBucollege());
+					}
+				}
+				if(null != bookSet.getBumajor()){
+					if(!bookSet.getBumajor().isEmpty() && !"".equals(bookSet.getBumajor())){
+						bookUmagor.add(bookSet.getBumajor());
+					}
+				}
+			}
+		%>
 			<div class="Add_p_s">
-            <label class="form-label col-2">产品编号：</label>
-			<div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="" id="" name=""></div>
-            </div>
+            <label class="form-label col-2">所属大学:</label>
+			<div class="formControls col-2"><span class="select-box">
+					<select class="select"  name="buniversity">
+						<option>请选择</option>
+						<%
+							for(String str : bookUniver){
+						%>
+						<option value="<%=str %>"><%=str %></option>
+						<%} %>
+					</select>
+					</span></div>
+            </div> 
 			<div class="Add_p_s">
-             <label class="form-label col-2">产&nbsp;&nbsp;&nbsp;&nbsp;地：</label>	
-			 <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="" id="" name=""></div>
-			</div>
-            <div class="Add_p_s">
-             <label class="form-label col-2">材&nbsp;&nbsp;&nbsp;&nbsp;质：</label>	
-			 <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="" id="" name=""></div>
-			</div>
-            <div class="Add_p_s">
-             <label class="form-label col-2">品&nbsp;&nbsp;&nbsp;&nbsp;牌：</label>	
-			 <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="" id="" name=""></div>
-			</div>
-             <div class="Add_p_s">
-             <label class="form-label col-2">产品重量：</label>	
-			 <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="" id="" name="" >kg</div>
-			</div>
-             <div class="Add_p_s">
-             <label class="form-label col-2">单位：</label>	
+             <label class="form-label col-2">所属学院:</label>	
 			 <div class="formControls col-2"><span class="select-box">
-				<select class="select">
-					<option>请选择</option>
-					<option value="1">件</option>
-					<option value="2">斤</option>
-					<option value="3">KG</option>
-					<option value="4">吨</option>
-					<option value="5">套</option>
-				</select>
-				</span></div>
+					<select class="select"name="bcollege">
+						<option>请选择</option>
+						<%
+							for(String str : bookUcollage){
+						%>
+						<option value="<%=str %>"><%=str %></option>
+						<%} %>
+					</select>
+					</span></div>
 			</div>
             <div class="Add_p_s">
-             <label class="form-label col-2">展示价格：</label>	
-			 <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="" id="" name="" >元</div>
+             <label class="form-label col-2">所属专业:</label>	
+			 <div class="formControls col-2"><span class="select-box">
+					<select class="select"name="bmajor">
+						<option>请选择</option>
+						<%
+							for(String str : bookUmagor){
+						%>
+						<option value="<%=str %>"><%=str %></option>
+						<%} %>
+					</select>
+					</span></div>
 			</div>
             <div class="Add_p_s">
-             <label class="form-label col-2">市场价格：</label>	
-			 <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="" id="" name="" >元</div>
+             <label class="form-label col-2">所属年级:</label>	
+			 <div class="formControls col-2">
+			 <span class="select-box">
+					<select class="select">
+						<option>请选择</option>
+						<option value="大一">大一</option>
+						<option value="大二">大二</option>
+						<option value="大三">大三</option>
+						<option value="大四">大四</option>
+					</select>
+					</span>
+			 </div>
 			</div>
-           
+             <div class="Add_p_s">
+	             <label class="form-label col-2">所属系列:</label>	
+				 <div class="formControls col-2">
+				 <input type="text" class="input-text" value="" placeholder="请输入字符或汉字" id="btemp" name="btemp" >
+				 </div>
+			</div>
 			
+			<div class="Add_p_s">
+             <label class="form-label col-2">作&nbsp;&nbsp;&nbsp;&nbsp;者：</label>	
+			 <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="请输入字符或汉字" id="bauthor" name="bauthor" ></div>
+			</div>
+             <div class="Add_p_s">
+             <label class="form-label col-2">价&nbsp;&nbsp;&nbsp;&nbsp;格:</label>	
+			 <div class="formControls col-2"><input type="text" class="input-text" value="" placeholder="请输入数字" id="bprice" name="bprice" >元</div>
+			</div>
+           <div class="Add_p_s">
+             <label class="form-label col-2">库&nbsp;&nbsp;&nbsp;&nbsp;存:</label>	
+			 <div class="formControls col-2"><input type="number" class="input-text" value="" placeholder="" id="bnum" name="num" >本</div>
+			</div>
+			<div class="Add_p_s">
+             <label class="form-label col-2">上传时间:</label>	
+			 <div class="formControls col-2">
+			 <input class="inline laydate-icon" id="bdate" name="bdate"  type="date" style=" width:150px;">
+			 </div>
+			</div>
+			<div class="Add_p_s">
+             <span id="tishi" style="margin-left: 80px; font-size:20px;"></span>
+			</div>
 		</div>
 		
-		<div class="clearfix cl">
+		<!-- <div class="clearfix cl">
 			<label class="form-label col-2">关键词：</label>
 			<div class="formControls col-10">
 				<input type="text" class="input-text" value="" placeholder="" id="" name="">
@@ -115,7 +191,7 @@
 				<textarea name="" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)"></textarea>
 				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
 			</div>
-		</div>
+		</div> -->
 		
 		<div class="clearfix cl">
 			<label class="form-label col-2">图片上传：</label>
@@ -124,7 +200,7 @@
 					<div class="queueList">
 						<div id="dndArea" class="placeholder">
 							<div id="filePicker-2"></div>
-							<p>或将照片拖到这里，单次最多可选300张</p>
+							<p>或将照片拖到这里，单次最多可选1张</p>
 						</div>
 					</div>
 					<div class="statusBar" style="display:none;">
@@ -139,17 +215,17 @@
 			</div>
 		</div>
          <div class="clearfix cl">
-         <label class="form-label col-2">详细内容：</label>
+         <label class="form-label col-2">描述：</label>
 			<div class="formControls col-10">
 				<script id="editor" type="text/plain" style="width:100%;height:400px;"></script> 
              </div>
         </div>
-        <div class="clearfix cl">
+        <!-- <div class="clearfix cl">
          <label class="form-label col-2">允许评论：</label>
 			<div class="formControls col-2 skin-minimal">
 			 <div class="check-box" style=" margin-top:9px"><input type="checkbox" id="checkbox-1"><label for="checkbox-1">&nbsp;</label></div>
              </div>
-        </div>
+        </div> -->
 		<div class="clearfix cl">
 			<div class="Button_operation">
 				<button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="icon-save "></i>保存并提交审核</button>
@@ -160,24 +236,19 @@
 	</form>
     </div>
 </div>
-</div>
-<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>   
-<script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
-<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>
-<script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>
-<script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/My97DatePicker/WdatePicker.js"></script> 
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/icheck/jquery.icheck.min.js"></script> 
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script> 
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/Validform/5.3.2/Validform.min.js"></script> 
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/webuploader/0.1.5/webuploader.min.js"></script>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/ueditor.config.js"></script>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/ueditor.all.min.js"> </script>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script> 
-<script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.js"></script> 
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.admin.js"></script> 
 <script>
+$("#bname").on('blur',function(){
+	var bnameReg = /^[.{3,200}\u4e00-\u9fa5]{0,50}$/;
+	var bnameText = $('#bname').val();
+	document.getElementById("tishi").style.color = "red";
+    if((bnameText =='')){
+       document.getElementById("tishi").innerText = "请输入书名！！！";
+   }else if(!bnameReg.text(bnameText)){
+       document.getElementById("tishi").innerText = "请输入合法书名(至少两个字符或50个汉字)！！！";
+   }else{
+	   document.getElementById("tishi").innerText = "";
+   }
+})
 $(function() { 
 	$("#add_picture").fix({
 		float : 'left',
@@ -235,22 +306,24 @@ var setting = {
 };
 
 var zNodes =[
-	{ id:1, pId:0, name:"商城分类列表", open:true},
-	{ id:11, pId:1, name:"蔬菜水果"},
-	{ id:111, pId:11, name:"蔬菜"},
-	{ id:112, pId:11, name:"苹果"},
-	{ id:113, pId:11, name:"大蒜"},
-	{ id:114, pId:11, name:"白菜"},
-	{ id:115, pId:11, name:"青菜"},
-	{ id:12, pId:1, name:"手机数码"},
-	{ id:121, pId:12, name:"手机 "},
-	{ id:122, pId:12, name:"照相机 "},
-	{ id:13, pId:1, name:"电脑配件"},
-	{ id:131, pId:13, name:"手机 "},
-	{ id:122, pId:13, name:"照相机 "},
-	{ id:14, pId:1, name:"服装鞋帽"},
-	{ id:141, pId:14, name:"手机 "},
-	{ id:42, pId:14, name:"照相机 "},
+	{ id:1, pId:0, name:"书籍分类列表", open:true},
+	{ id:11, pId:1, name:"教材区"},
+	{ id:111, pId:11, name:"成功励志"},
+	{ id:112, pId:11, name:"法律"},
+	{ id:113, pId:11, name:"管理"},
+	{ id:114, pId:11, name:"计算机与网络"},
+	{ id:115, pId:11, name:"教育考试"},
+	{ id:116, pId:11, name:"科技工程"},
+	{ id:117, pId:11, name:"生活时尚"},
+	{ id:118, pId:11, name:"文化历史"},
+	{ id:12, pId:1, name:"工具书区"},
+	{ id:121, pId:12, name:"英语四六级 "},
+	{ id:122, pId:12, name:"公务员资料 "},
+	{ id:123, pId:12, name:"考研资料 "},
+	{ id:124, pId:12, name:"雅思托福 "},
+	{ id:125, pId:12, name:"其他 "},
+	{ id:13, pId:1, name:"分享区"},
+	{ id:131, pId:13, name:"分享区"}
 ];
 		
 var code;
@@ -723,25 +796,7 @@ $(function(){
                     });
                 } else {
                     $wrap.css( 'filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+ (~~((file.rotation/90)%4 + 4)%4) +')');
-                    // use jquery animate to rotation
-                    // $({
-                    //     rotation: rotation
-                    // }).animate({
-                    //     rotation: file.rotation
-                    // }, {
-                    //     easing: 'linear',
-                    //     step: function( now ) {
-                    //         now = now * Math.PI / 180;
-
-                    //         var cos = Math.cos( now ),
-                    //             sin = Math.sin( now );
-
-                    //         $wrap.css( 'filter', "progid:DXImageTransform.Microsoft.Matrix(M11=" + cos + ",M12=" + (-sin) + ",M21=" + sin + ",M22=" + cos + ",SizingMethod='auto expand')");
-                    //     }
-                    // });
                 }
-
-
             });
 
             $li.appendTo( $queue );
@@ -919,7 +974,6 @@ $(function(){
 
             }
         });
-
         uploader.onError = function( code ) {
             alert( 'Eroor: ' + code );
         };

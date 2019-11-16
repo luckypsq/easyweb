@@ -46,7 +46,7 @@
        <label><input name="form-field-radio" type="radio" class="ace" onclick="closes(this,'213')"><span class="lbl">关闭</span></label>     
        </td>      
        <td>在线支付是指卖方与买方通过因特网上的电子商务网站进行交易时，银行为其提供网上资金结算服务的一种业务。它为企业和个人提供了一个安全、快捷、方便的电... </td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
        <tr>
        <td>在线支付（预存）</td>
@@ -55,7 +55,7 @@
        <label><input name="form-field-radio4" type="radio" class="ace" onclick="closes(this,'214')"><span class="lbl">关闭</span></label>     
        </td>      
        <td>在线支付是指卖方与买方通过因特网上的电子商务网站进行交易时，银行为其提供网上资金结算服务的一种业务。它为企业和个人提供了一个安全、快捷、方便的电... </td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
        <tr><td>货到付款</td>
        <td>
@@ -64,7 +64,7 @@
        </td>
        
        <td>在线支付是指卖方与买方通过因特网上的电子商务网站进行交易时，银行为其提供网上资金结算服务的一种业务。它为企业和个人提供了一个安全、快捷、方便的电... </td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
        <tr>
        <td>第三方在线支付</td>
@@ -73,7 +73,7 @@
        <label><input name="form-field-radio2" type="radio" class="ace" onclick="closes(this,'216')"><span class="lbl">关闭</span></label>     
        </td>       
        <td>所谓第三方支付，就是一些和产品所在国家以及国内外各大银行签约、并具备一定实力和信誉保障的第三方独立机构提供的交易支持平台。在通过第三方支付平台的... </td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
         <tr>
        <td>线下支付</td>
@@ -82,7 +82,7 @@
        <label><input name="form-field-radio3" type="radio" class="ace" onclick="closes(this,'217')"><span class="lbl">关闭</span></label>     
        </td>       
        <td>所谓第三方支付，就是一些和产品所在国家以及国内外各大银行签约、并具备一定实力和信誉保障的第三方独立机构提供的交易支持平台。在通过第三方支付平台的... </td>
-        <td><a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="" title="在线支付配置">配置</a></td>
+        <td><a href="javascript:ovid()" name="" title="在线支付配置">配置</a></td>
        </tr>
        </tbody>
       </table>

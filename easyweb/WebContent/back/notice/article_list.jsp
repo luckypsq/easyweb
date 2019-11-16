@@ -40,15 +40,15 @@
       </div>
       <div class="widget-body">
          <ul class="b_P_Sort_list">
-             <li><i class="orange  fa fa-list "></i><a href="<%=application.getContextPath() %>/back/#">全部(235)</a></li>
-             <li><i class="fa fa-newspaper-o pink "></i> <a href="<%=application.getContextPath() %>/back/#">帮助中心(5)</a></li>
-             <li> <i class="fa fa-newspaper-o pink "></i> <a href="<%=application.getContextPath() %>/back/#">常见问题(3)</a> </li>
-             <li> <i class="fa fa-newspaper-o pink "></i> <a href="<%=application.getContextPath() %>/back/#">客服服务(3)</a></li>
-             <li> <i class="fa fa-newspaper-o pink "></i> <a href="<%=application.getContextPath() %>/back/#">购物指南(3)</a></li>
-             <li> <i class="fa fa-newspaper-o pink "></i> <a href="<%=application.getContextPath() %>/back/#">配送方式(33)</a></li>
-             <li> <i class="fa fa-newspaper-o pink "></i> <a href="<%=application.getContextPath() %>/back/#">支付方式(13)</a></li>
-             <li> <i class="fa fa-newspaper-o pink "></i> <a href="<%=application.getContextPath() %>/back/#">特色服务(23)</a></li>
-             <li><i class="fa fa-newspaper-o pink "></i> <a href="<%=application.getContextPath() %>/back/#">售后服务(6)</a></li>
+             <li><i class="orange  fa fa-list "></i><a href="#">全部(235)</a></li>
+             <li><i class="fa fa-newspaper-o pink "></i> <a href="#">帮助中心(5)</a></li>
+             <li> <i class="fa fa-newspaper-o pink "></i> <a href="#">常见问题(3)</a> </li>
+             <li> <i class="fa fa-newspaper-o pink "></i> <a href="#">客服服务(3)</a></li>
+             <li> <i class="fa fa-newspaper-o pink "></i> <a href="#">购物指南(3)</a></li>
+             <li> <i class="fa fa-newspaper-o pink "></i> <a href="#">配送方式(33)</a></li>
+             <li> <i class="fa fa-newspaper-o pink "></i> <a href="#">支付方式(13)</a></li>
+             <li> <i class="fa fa-newspaper-o pink "></i> <a href="#">特色服务(23)</a></li>
+             <li><i class="fa fa-newspaper-o pink "></i> <a href="#">售后服务(6)</a></li>
          </ul>
   </div>
   </div>
@@ -59,7 +59,7 @@
     <div class="border clearfix">
        <span class="l_f">
         <a href="<%=application.getContextPath() %>/back/article_add.html"  title="添加文章" id="add_page" class="btn btn-warning"><i class="fa fa-plus"></i> 添加文章</a>
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
+        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
        </span>
        <span class="r_f">共：<b>45</b>条文章</span>
      </div>

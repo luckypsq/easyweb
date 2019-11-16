@@ -50,9 +50,9 @@
          <td>2016-7-23</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
            <td class="td-manage">
-        <a onclick="member_stop(this,'10001')" href="<%=application.getContextPath() %>/back/javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
-        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a onclick="member_stop(this,'10001')" href="javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
+        <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
        </td>
         </tr>
            <tr>
@@ -64,9 +64,9 @@
          <td>2016-7-23</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
            <td class="td-manage">
-        <a onclick="member_stop(this,'1002')" href="<%=application.getContextPath() %>/back/javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
-        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a onclick="member_stop(this,'1002')" href="javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
+        <a title="删除" href="javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
        </td>
         </tr>
            <tr>
@@ -78,9 +78,9 @@
          <td>2016-7-23</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
            <td class="td-manage">
-        <a onclick="member_stop(this,'1002')" href="<%=application.getContextPath() %>/back/javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
-        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a onclick="member_stop(this,'1002')" href="javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
+        <a title="删除" href="javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
        </td>
         </tr>
          <tr>
@@ -92,9 +92,9 @@
          <td>2016-7-23</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
            <td class="td-manage">
-        <a onclick="member_stop(this,'1002')" href="<%=application.getContextPath() %>/back/javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
-        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a onclick="member_stop(this,'1002')" href="javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
+        <a title="删除" href="javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
        </td>
         </tr>
          <tr>
@@ -106,9 +106,9 @@
          <td>2016-7-23</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
            <td class="td-manage">
-        <a onclick="member_stop(this,'1002')" href="<%=application.getContextPath() %>/back/javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
-        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a onclick="member_stop(this,'1002')" href="javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
+        <a title="删除" href="javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
        </td>
         </tr>
          <tr>
@@ -120,9 +120,9 @@
          <td>2016-7-23</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
            <td class="td-manage">
-        <a onclick="member_stop(this,'1002')" href="<%=application.getContextPath() %>/back/javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
-        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a onclick="member_stop(this,'1002')" href="javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
+        <a title="删除" href="javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
        </td>
         </tr> <tr>
          <td>7</td>
@@ -133,9 +133,9 @@
          <td>2016-7-23</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
            <td class="td-manage">
-        <a onclick="member_stop(this,'1002')" href="<%=application.getContextPath() %>/back/javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
-        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
-        <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a onclick="member_stop(this,'1002')" href="javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
+        <a title="编辑" onclick="member_edit('编辑','member-add.html','4','','510')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a> 
+        <a title="删除" href="javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
        </td>
         </tr>
         </tbody>
@@ -168,7 +168,7 @@ $(function() {
 /*栏目-停用*/
 function member_stop(obj,id){
 	layer.confirm('确认要停用该栏目吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">停用</span>');
 		$(obj).remove();
 		layer.msg('停用!',{icon: 5,time:1000});
@@ -178,7 +178,7 @@ function member_stop(obj,id){
 /*栏目-启用*/
 function member_start(obj,id){
 	layer.confirm('确认要启用该栏目吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="停用"><i class="fa fa-check bigger-120"></i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="fa fa-check bigger-120"></i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">启用</span>');
 		$(obj).remove();
 		layer.msg('启用!',{icon: 6,time:1000});

@@ -20,24 +20,25 @@ import javax.sql.DataSource;
 import org.apache.commons.beanutils.BeanUtils;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Eorder;
+import com.yc.easyweb.bean.PageBook;
+import com.yc.easyweb.bean.PageEorder;
+import com.yc.easyweb.bean.PageUser;
 import com.yc.easyweb.bean.User;
-import com.yc.easyweb.util.PageBook;
-import com.yc.easyweb.util.PageEorder;
-import com.yc.easyweb.util.PageUser;
+
 
 
 public class DbHelper {
 	private static Connection conn = null;
 	private static PreparedStatement pstmt =null;
 	private static ResultSet rs =null;
-	static {
+	/*static {
 		try {
 			Class.forName(MyProperties.getInstace().getProperty("driver"));
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	/**
 	 * @return
 	 * @throws Naming
@@ -47,13 +48,13 @@ public class DbHelper {
 	
 	public static Connection getConn() throws Exception{
 	
-		conn = DriverManager.getConnection(MyProperties.getInstace().getProperty("url"),MyProperties.getInstace().getProperty("username"),MyProperties.getInstace().getProperty("password"));
-		return conn;
+	/*	conn = DriverManager.getConnection(MyProperties.getInstace().getProperty("url"),MyProperties.getInstace().getProperty("username"),MyProperties.getInstace().getProperty("password"));
+		return conn;*/
 		//创建JNDI上下文对象
-		/*Context context = new InitialContext();
+		Context context = new InitialContext();
 		DataSource dSource = (DataSource) context.lookup("java:comp/env/mysql/easy");
 		conn = dSource.getConnection();
-		return conn;*/
+		return conn;
 	}
 	
 	public static  void closeAll(Connection conn,PreparedStatement pstmt,ResultSet rs) {
@@ -335,25 +336,25 @@ public class DbHelper {
     	sb.append("select * from book where 1=1 ");
     	if(book != null){
 			if(book.getBname() != null){
-				sb.append(" and bname like '%"+book.getBname()+"%'");
+				sb.append(" and bname = '"+book.getBname()+"'");
 			}
 			if(book.getBuniversity() != null){
-				sb.append(" and buniversity like '%"+book.getBuniversity()+"%'");
+				sb.append(" and buniversity = '"+book.getBuniversity()+"'");
 			}
 			
 			if(book.getBucollege() != null){
-				sb.append(" and bucollege like '%"+book.getBucollege()+"%'");
+				sb.append(" and bucollege = '"+book.getBucollege()+"'");
 			}
 			
 			if(book.getBumajor() != null){
-				sb.append(" and bumajor like '%"+book.getBumajor()+"%'");
+				sb.append(" and bumajor = '"+book.getBumajor()+"'");
 			}
 			
 			if(book.getBclass() != null){
-				sb.append(" and bclass like '%"+book.getBclass()+"%'");
+				sb.append(" and bclass = '"+book.getBclass()+"'");
 			}
 			if(book.getBauthor() != null){
-				sb.append(" and bauthor like '%"+book.getBauthor()+"%'");
+				sb.append(" and bauthor = '"+book.getBauthor()+"'");
 			}
 			if(book.getBtid() != 0){
 				sb.append(" and btid = "+book.getBtid());
@@ -362,10 +363,10 @@ public class DbHelper {
 				sb.append(" and bstate = "+book.getBstate());
 			}
 			if(book.getBtemp() != null){
-				sb.append(" and btemp like '%"+book.getBtemp() +"%'");
+				sb.append(" and btemp = '"+book.getBtemp() +"'");
 			}
 			if(book.getBdate() != null){
-				sb.append(" and bdate like '%"+book.getBdate() +"%'");
+				sb.append(" and bdate = '"+book.getBdate() +"'");
 			}
 		}
     	sb.append(" order by  bid asc");
@@ -386,22 +387,22 @@ public class DbHelper {
     	sb.append("select * from user where 1=1 ");
     	if(user != null){
 			if(user.getUminname() != null){
-				sb.append(" and uminname like '%"+user.getUminname()+"%'");
+				sb.append(" and uminname = '"+user.getUminname()+"'");
 			}
 			if(user.getUname() != null){
-				sb.append(" and uname like '%"+user.getUname()+"%'");
+				sb.append(" and uname = '"+user.getUname()+"'");
 			}
 			if(user.getUphone() != null){
-				sb.append(" and uphone like '%"+user.getUphone()+"%'");
+				sb.append(" and uphone = '"+user.getUphone()+"'");
 			}
 			if(user.getUniversity() != null){
-				sb.append(" and university like '%"+user.getUniversity()+"%'");
+				sb.append(" and university ='"+user.getUniversity()+"'");
 			}
 			if(user.getUcollege() != null){
-				sb.append(" and ucollege like '%"+user.getUcollege()+"%'");
+				sb.append(" and ucollege = '"+user.getUcollege()+"'");
 			}
 			if(user.getUmajor() != null){
-				sb.append(" and umajor like '%"+user.getUmajor()+"%'");
+				sb.append(" and umajor = '"+user.getUmajor()+"'");
 			}
 			if(user.getUstate() != 0){
 				sb.append(" and ustate = "+user.getUstate());
@@ -445,19 +446,19 @@ public class DbHelper {
 				sb.append(" and uid="+eorder.getUid());
 			}
 			if(eorder.getEotime() != null){
-				sb.append(" and eotime like '%"+eorder.getEotime()+"%'");
+				sb.append(" and eotime = '"+eorder.getEotime()+"'");
 			}
 			if(eorder.getUname() != null){
-				sb.append(" and uname like '%"+eorder.getUname()+"%'");
+				sb.append(" and uname = '"+eorder.getUname()+"'");
 			}
 			if(eorder.getEotype() != null){
-				sb.append(" and eotype like '%"+eorder.getEotype()+"%'");
+				sb.append(" and eotype = '"+eorder.getEotype()+"'");
 			}
 			if(eorder.getEostate() != 0){
 				sb.append(" and eostate = "+eorder.getEostate());
 			}
 			if(eorder.getEoaddr() != null){
-				sb.append(" and eoaddr like '%"+eorder.getEoaddr()+"%'");
+				sb.append(" and eoaddr = '"+eorder.getEoaddr()+"'");
 			}
 		}
 		sb.append("  order by  eoid asc");

@@ -36,14 +36,14 @@
   <div class="tabbable">
 	<ul class="nav nav-tabs" id="myTab">
 	  <li class="active">
-		<a data-toggle="tab" href="<%=application.getContextPath() %>/back/#home"><i class="green fa fa-home bigger-110"></i>&nbsp;基本设置</a></li>
+		<a data-toggle="tab" href="#home"><i class="green fa fa-home bigger-110"></i>&nbsp;基本设置</a></li>
       <li class="">
-		<a data-toggle="tab" href="<%=application.getContextPath() %>/back/#profile">消息通知<span class="badge badge-danger">4</span></a></li>
+		<a data-toggle="tab" href="#profile">消息通知<span class="badge badge-danger">4</span></a></li>
       <li class="">
-		<a data-toggle="tab" data-toggle="dropdown" class="dropdown-toggle" href="<%=application.getContextPath() %>/back/#dropdown">底部菜单</a>
+		<a data-toggle="tab" data-toggle="dropdown" class="dropdown-toggle" href="#dropdown">底部菜单</a>
       </li>
         <li class="">
-		<a data-toggle="tab" data-toggle="dropdown" class="dropdown-toggle" href="<%=application.getContextPath() %>/back/#other">其他设置</a>
+		<a data-toggle="tab" data-toggle="dropdown" class="dropdown-toggle" href="#other">其他设置</a>
       </li>
 	</ul>
     <div class="tab-content">

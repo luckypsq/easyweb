@@ -32,7 +32,7 @@
   <div class="alert alert-danger"> <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>注：该支付方式启用并不能正常使用，需要开通支付功能才能使用相应的支付方式，</div>
     <div class="border clearfix">
      <span class="l_f">
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" onclick="add_payment()" class="btn btn-primary Pay_add"><i class="fa fa-credit-card"></i>&nbsp;添加支付方式</a>
+        <a href="javascript:ovid()" onclick="add_payment()" class="btn btn-primary Pay_add"><i class="fa fa-credit-card"></i>&nbsp;添加支付方式</a>
        </span>
     </div>
     <!--支付列表-->
@@ -48,8 +48,8 @@
          <label><input name="form-field-radio" type="radio" class="ace"><span class="lbl">关闭</span></label>
         </li>
         <li class="operating">
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
-         <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-success"><i class="fa  fa-edit "></i>&nbsp;设置</a>
+        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
+         <a href="javascript:ovid()" class="btn btn-success"><i class="fa  fa-edit "></i>&nbsp;设置</a>
         </li>
        </ul>
        <ul class="defray_info">
@@ -61,8 +61,8 @@
          <label><input name="form-field-radio1" type="radio" class="ace"><span class="lbl">关闭</span></label>
         </li>
         <li class="operating">
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
-       <!-- <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>-->
+        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
+       <!-- <a href="javascript:ovid()" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>-->
         </li>
        </ul>
        <ul class="defray_info">
@@ -74,8 +74,8 @@
          <label><input name="form-field-radio2" type="radio" class="ace"><span class="lbl">关闭</span></label>
         </li>
         <li class="operating">
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="Payment_details.html" title="银联支付详细" onclick="Paymentdetails('134')" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>
+        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
+        <a href="javascript:ovid()" name="Payment_details.html" title="银联支付详细" onclick="Paymentdetails('134')" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>
         </li>
        </ul>
         <ul class="defray_info">
@@ -87,8 +87,8 @@
          <label><input name="form-field-radio3" type="radio" class="ace"><span class="lbl">关闭</span></label>
         </li>
         <li class="operating">
-        <a href="<%=application.getContextPath() %>/back/javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
-       <!-- <a href="<%=application.getContextPath() %>/back/javascript:ovid()" name="Payment_details.html" title="怡宝支付详细" onclick="Paymentdetails('234')" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>-->
+        <a href="javascript:ovid()" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;删除</a>
+       <!-- <a href="javascript:ovid()" name="Payment_details.html" title="怡宝支付详细" onclick="Paymentdetails('234')" class="btn btn-success details_btn"><i class="fa  fa-newspaper-o "></i>&nbsp;详细</a>-->
         </li>
        </ul>
       </div>
