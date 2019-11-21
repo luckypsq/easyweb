@@ -31,14 +31,14 @@ public class DbHelper {
 	private static Connection conn = null;
 	private static PreparedStatement pstmt =null;
 	private static ResultSet rs =null;
-	/*static {
+	static {
 		try {
 			Class.forName(MyProperties.getInstace().getProperty("driver"));
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 	/**
 	 * @return
 	 * @throws Naming
@@ -48,13 +48,13 @@ public class DbHelper {
 	
 	public static Connection getConn() throws Exception{
 	
-	/*	conn = DriverManager.getConnection(MyProperties.getInstace().getProperty("url"),MyProperties.getInstace().getProperty("username"),MyProperties.getInstace().getProperty("password"));
-		return conn;*/
+	conn = DriverManager.getConnection(MyProperties.getInstace().getProperty("url"),MyProperties.getInstace().getProperty("username"),MyProperties.getInstace().getProperty("password"));
+		return conn;
 		//创建JNDI上下文对象
-		Context context = new InitialContext();
+		/*Context context = new InitialContext();
 		DataSource dSource = (DataSource) context.lookup("java:comp/env/mysql/easy");
 		conn = dSource.getConnection();
-		return conn;
+		return conn;*/
 	}
 	
 	public static  void closeAll(Connection conn,PreparedStatement pstmt,ResultSet rs) {

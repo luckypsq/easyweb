@@ -20,9 +20,15 @@ public class Result {
 		result.msg = msg;
 		return result;
 	}
-	
+	public static Result success(String msg,Object data){
+		Result result = new Result();
+		result.code = 1;
+		result.msg = msg;
+		result.data = data;
+		return result;
+	}
 	/**
-	 * 默认成功的结果对象
+	 * 默认失败的结果对象
 	 * @param msg
 	 * @return
 	 */

@@ -1,5 +1,9 @@
 package com.yc.easyweb.util;
 
+import java.util.Scanner;
+
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+
 public class StrUtil {
 
 	/*

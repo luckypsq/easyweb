@@ -18,7 +18,7 @@ public class BookTypeDao {
 	//²éÑ¯ËùÓÐ
 	public List<BookType> selectAll(BookType bookType) throws Exception{
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select btid,btname,btnamesecond,btnamethird "
+		sb.append(" select btid,btname,btnamesecond,btnamethird,btstate "
 				+ " from booktype where 1=1 ");
 		if(bookType != null){
 			if(bookType.getBtname() != null){
@@ -32,6 +32,9 @@ public class BookTypeDao {
 			}
 			if(bookType.getBtid() != 0){
 				sb.append(" and btid = "+bookType.getBtid() );
+			}
+			if(bookType.getBtstate() != 0){
+				sb.append(" and btstate = "+bookType.getBtstate() );
 			}
 		}
 		sb.append(" order by  btid desc");
@@ -64,6 +67,9 @@ public class BookTypeDao {
 		if(bookType.getBtid() != 0){
 			sb.append(" and btid = "+bookType.getBtid() );
 		}
+		if(bookType.getBtstate() != 0){
+			sb.append(" and btstate = "+bookType.getBtstate() );
+		}
 		return db.update(sb.toString(), null);
 	}
 	
@@ -89,6 +95,9 @@ public class BookTypeDao {
 			if(b.getBtid() != 0){
 				sb.append(" and btid = "+b.getBtid() );
 			}
+			if(b.getBtstate() != 0){
+				sb.append(" and btstate = "+b.getBtstate() );
+			}
 			sqList.add(sb.toString());
 		}
 		return db.update(sqList, null);
@@ -109,8 +118,8 @@ public class BookTypeDao {
 		if(bookTypeNew.getBtnamethird() != null){
 			sb.append(" ,btnamethird ='"+bookTypeNew.getBtnamethird()+"'");
 		}
-		if(bookTypeNew.getBtid() != 0){
-			sb.append(" ,btid = "+bookTypeNew.getBtid() );
+		if(bookTypeNew.getBtstate() != 0){
+			sb.append(" , btstate = "+bookTypeNew.getBtstate() );
 		}
 		sb.append(" where 1=1 ");
 		if(bookTypeOld.getBtname() != null){
@@ -121,6 +130,9 @@ public class BookTypeDao {
 		}
 		if(bookTypeOld.getBtnamethird() != null){
 			sb.append(" and btnamethird ='"+bookTypeOld.getBtnamethird()+"'");
+		}
+		if(bookTypeOld.getBtstate() != 0){
+			sb.append(" and btstate = "+bookTypeOld.getBtstate() );
 		}
 		if(bookTypeOld.getBtid() != 0){
 			sb.append(" and btid = "+bookTypeOld.getBtid() );

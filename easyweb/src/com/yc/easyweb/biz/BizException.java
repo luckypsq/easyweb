@@ -1,7 +1,6 @@
 package com.yc.easyweb.biz;
 
 /**
- * 业务异常(代码全部使用eclipse生成)
  * @author Administrator
  *
  */

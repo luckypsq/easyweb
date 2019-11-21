@@ -6,6 +6,14 @@ public class BookType {
 	private String btnamesecond;//类别名二
 	private String btnamethird;//类别名三
 	private String bttemp;// 备用字段
+	private int btstate;//状态
+	
+	public int getBtstate() {
+		return btstate;
+	}
+	public void setBtstate(int btstate) {
+		this.btstate = btstate;
+	}
 	public long getBtid() {
 		return btid;
 	}

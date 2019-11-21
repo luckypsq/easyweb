@@ -83,8 +83,9 @@
 				<!--操作-->
 				<div class="border clearfix">
 					<span class="l_f"> <a href="javascript:ovid()"
-						id="administrator_add" class="btn btn-warning"><i
-							class="fa fa-plus"></i> 添加管理员</a> <a href="javascript:ovid()"
+						id="administrator_add" class="btn btn-warning">
+						<i class="fa fa-plus"></i> 添加管理员</a>
+				 <a href="javascript:ovid()"
 						class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
 					</span> <span class="r_f">共：<b><%=userList1.size()%></b>人
 					</span>
