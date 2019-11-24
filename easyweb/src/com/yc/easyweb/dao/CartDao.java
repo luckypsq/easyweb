@@ -81,7 +81,7 @@ public class CartDao {
 			}
 			sqList.add(sb.toString());
 		}
-		return DbHelper.update(sqList, null);
+		return DbHelper.update(sqList);
 	}
 
 	// ¸üÐÂ

@@ -29,19 +29,12 @@
 <link
 	href="<%=application.getContextPath()%>/back/Widget/icheck/icheck.css"
 	rel="stylesheet" type="text/css" />
-<!--[if IE 7]>
-		  <link rel="stylesheet" href="<%=application.getContextPath()%>/back/assets/css/font-awesome-ie7.min.css" />
-		<![endif]-->
-<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath()%>/back/assets/css/ace-ie.min.css" />
-		<![endif]-->
 <script
 	src="<%=application.getContextPath()%>/back/js/jquery-1.9.1.min.js"></script>
 <script
 	src="<%=application.getContextPath()%>/back/assets/js/bootstrap.min.js"></script>
 <script
 	src="<%=application.getContextPath()%>/back/assets/js/typeahead-bs2.min.js"></script>
-<!-- page specific plugin scripts -->
 <script
 	src="<%=application.getContextPath()%>/back/assets/js/jquery.dataTables.min.js"></script>
 <script
@@ -64,30 +57,42 @@
 </head>
 <body>
 	<%
-	request.setCharacterEncoding("utf-8");
-	response.setContentType("text/html;charset=utf-8");
-		String bauthor =request.getParameter("bname");
-		String btime =request.getParameter("btime");
-		String btid = request.getParameter("btid");
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String bauthor =null;
+		String btime =null;
+		String btid = null;
 		BookBiz bookBiz = new BookBiz();
 		Book book = new Book();
-		if(bauthor != null ){
-			if(!bauthor.isEmpty()){
-				book.setBauthor(bauthor);
-			}
+		if(request.getParameter("bname") != null && !request.getParameter("bname").isEmpty()){
+			bauthor =request.getParameter("bname");	
+			book.setBauthor(bauthor);
 		}
-		if(btime != null ){
-			if(!btime.isEmpty()){
-				book.setBdate(btime);
-			}
+		if(request.getParameter("btime") != null && !request.getParameter("btime").isEmpty() ){
+			btime =request.getParameter("btime");
+			book.setBdate(btime);
 		}
-		if(btid != null){
-			if(!btid.isEmpty()){
-				book.setBtid(Integer.parseInt(btid));
+		if (request.getParameter("btid") != null && !request.getParameter("btid").isEmpty()) {
+			btid = request.getParameter("btid");
+			book.setBtid(Long.parseLong(request.getParameter("btid")));
+		}
+		//查询类别
+		BookType bookType = new BookType();
+		bookType.setBtstate(1);
+		BookTypeBiz btBiz = new BookTypeBiz();
+		List<BookType> btList = btBiz.selectAll(bookType);
+		Map<Long,String> btType = new HashMap<Long,String>();
+		for(BookType bt : btList){
+			if(bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()){
+				btType.put(bt.getBtid(),bt.getBtnamethird());
+				
+			}else if(bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()){
+				btType.put(bt.getBtid(),bt.getBtnamesecond());
+			}else{
+				btType.put(bt.getBtid(),bt.getBtname());
 			}
 		}
 		List<Book> bookList = bookBiz.selectAll(book);
-		pageContext.setAttribute("bookList", bookList);
 	%>
 	<div class=" page-content clearfix">
 		<div id="products_style">
@@ -144,6 +149,7 @@
 								<th width="80px">书籍编号</th>
 								<th width="250px">书名</th>
 								<th width="100px">价格</th>
+								<th width="100px">所属类别</th>
 								<th width="100px">所属系列</th>
 								<th width="100px">作者</th>
 								<th width="180px">库存</th>
@@ -156,6 +162,7 @@
 							<%
 								String checkState = null;
 								String state = null;
+								String type= null;
 								for (Book bookShow : bookList) {
 									pageContext.setAttribute("bookShow", bookShow);
 									if (bookShow.getBstate() == 3) {
@@ -172,6 +179,7 @@
 									} else if (bookShow.getBstate() == 4) {
 										checkState = "审核不通过";
 									}
+									type = btType.get(bookShow.getBtid());
 							%>
 							<tr>
 								<td width="25px"><label><input type="checkbox"
@@ -180,6 +188,7 @@
 								<td width="250px"><u style="cursor: pointer"
 									class="text-primary" onclick="">${bookShow.bname }</u></td>
 								<td width="100px">${bookShow.bprice }</td>
+								<td width="100px"><%=type == null? "":type %></td>
 								<td width="100px">${bookShow.btemp == null ? "":bookShow.btemp }</td>
 								<td width="100px">${bookShow.bauthor }</td>
 								<td width="180px">${bookShow.bnum}</td>
@@ -193,7 +202,7 @@
 								</td>
 								<td class="td-manage">
 								<% if(state.equals("已上架")) {%>
-										<a onClick="member_stop(this,${bookShow.bid })" href="javascript:;"
+										<a onClick="member_stop(this,${bookShow.bid })" 
 										title="下架" class="btn btn-xs btn-success">
 										<i class="icon-ok bigger-120"></i></a> 
 									<%}else{ %>
@@ -201,8 +210,8 @@
 										<i class="icon-ok bigger-120"></i></a>
 									<% }%>
 									<a title="编辑"
-									onclick="member_edit('编辑','<%=application.getContextPath()%>/back/book/bookEdit.jsp',${bookShow.bid },'','300')"
-									href="javascript:;" class="btn btn-xs btn-info"><i
+									onclick="member_edit('编辑','<%=application.getContextPath()%>/back/book/bookEdit.jsp?bid=${bookShow.bid }','','300')"
+									 class="btn btn-xs btn-info"><i
 										class="icon-edit bigger-120"></i></a> <a title="删除"
 									href="javascript:;" onclick="member_del(this,${bookShow.bid })"
 									class="btn btn-xs btn-warning"><i
@@ -222,6 +231,8 @@
 
 
 <script type="text/javascript">
+//全选
+var sbox = -1;
 	//操作table表格
 	jQuery(function($) {
 		var oTable1 = $('#sample-table').dataTable({
@@ -235,16 +246,25 @@
 			} // 制定列不参与排序
 			]
 		});
+		//设置全选
 		$('table th input:checkbox').on(
 				'click',
 				function() {
+					sbox=1;
 					var that = this;
-					$(this).closest('table').find(
-							'tr > td:first-child input:checkbox').each(
+					$(this).closest('table').find('tr > td:first-child input:checkbox').each(
 							function() {
 								this.checked = that.checked;
 								$(this).closest('tr').toggleClass('selected');
 							});
+				});
+		$('table tr input:checkbox').on(
+				'click',
+				function() {
+					var that = this;
+					this.checked = that.checked;
+					$(this).closest('tr').toggleClass('selected');
+							
 				});
 		$('[data-rel="tooltip"]').tooltip({
 			placement : tooltip_placement
@@ -277,31 +297,72 @@
 			spacingh : 260,//设置显示时间距
 		});
 	});
+	var xmlhttp;
+	// ajax 
+	try {
+		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (e) {
+			try {
+				xmlhttp = new XMLHttpRequest();
+			} catch (e) {
+			}
+		}
+	}
 function selectDelete(){
-	var table = $('#sample-table').dataTable();//获取表格
+	if(sbox != 1){
+		var table = $('#sample-table').dataTable();//获取表格
 		var nTrs = table.fnGetNodes();//fnGetNodes获取表格所有行，nTrs[i]表示第i行tr对象
-		var arrBid  = new Array(nTrs.length);//定义选中的bid数组
 		for (var i = 0; i < nTrs.length; i++) {
 			if ($(nTrs[i]).hasClass('selected')) {
 				var bid = table.fnGetData(nTrs[i]);//fnGetData获取一行的数据
-				arrBid[i] = bid[1];
+				 sbox =sbox +"/"+ bid[1];
 			}
 		}
-		$.ajax({
-		url : '<%=application.getContextPath()%>/book.s?op=delete', 
-        type:'post',
-        data: {"bid":arrBid},
-        contentType: false,
-        processData: false,
-        traditional:true,
-        success:function(result){
-        	if(result.code == 1){
-        		alert(result.msg);
-			} else {
-				alert(result.msg);
+	}
+	if(sbox == -1){
+		layer.msg("请选择要删除的书籍！！！", {
+			icon : 7,
+			time : 1000
+			});
+	}
+	if (xmlhttp != null) {
+		// 定义请求地址
+		var url = "<%=application.getContextPath()%>/book.s?op=delete&bid="+sbox;
+		// 以 POST 方式 开启连接
+		// POST 请求 更安全（编码）  提交的数据大小没有限制
+		xmlhttp.open("POST", url, true);
+		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+		// 每次的状态改变都会调用该方法
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var msg = xmlhttp.responseText.replace(/\s/gi, "");
+				if(msg == "删除成功！"){
+					layer.msg(msg, {
+						icon : 6,
+						time : 1000
+						});
+					window.location.href='<%=application.getContextPath()%>/back/book/Products_List.jsp';
+					
+				}else{
+					layer.msg(msg, {
+						icon : 5,
+						time : 1000
+						});
+				}
 			}
-        }
-    });
+		};
+		// 发送请求
+		xmlhttp.send(null);
+	} else {
+		layer.msg("不能创建XMLHttpRequest对象实例", {
+			icon : 2,
+			time : 1000
+			});
+	}
+		
 }
 </script>
 <script type="text/javascript">
@@ -340,7 +401,7 @@ function selectDelete(){
 					zTree.expandNode(treeNode);
 					return false;
 				} else {
-					bookType = treeNode.btid;
+					window.location.href="<%=application.getContextPath()%>/back/book/Products_List.jsp?btid="+treeNode.btid;
 					return true;
 				}
 			}
@@ -458,7 +519,7 @@ function selectDelete(){
 	function query(){
 		var bname = $("#queryName").val().replace(/\ +/g,"");
 		var booktime = $("#start").val().replace(/\ +/g,"");
-		window.location.href="Products_List.jsp?bname="+bname+"&btime="+booktime+"&btid="+bookType;
+		window.location.href="<%=application.getContextPath()%>/back/book/Products_List.jsp?bname="+bname+"&btime="+booktime;
 	}
 	var xmlhttp;
 	// ajax
@@ -492,14 +553,14 @@ function selectDelete(){
 						if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 							// 替换空格
 							var msg = xmlhttp.responseText.replace(/\s/gi,"");
-							if(msg != '0'){
+							if(msg == '0'){
 								layer.msg('修改失败!', {
 									icon : 5,
 									time : 1000
 									});
 							}else if(msg == '-1'){
 								layer.msg('该条数据不能修改!', {
-									icon : 5,
+									icon : 2,
 									time : 1000
 									});
 							}else{
@@ -512,10 +573,10 @@ function selectDelete(){
 								.parents("tr")
 								.find(".td-status")
 								.html(
-								'<span class="label label-defaunt radius">已停用</span>');
+								'<span class="label label-defaunt radius">已下架</span>');
 								$(obj).remove();
 								layer.msg('已下架!', {
-									icon : 5,
+									icon : 1,
 									time : 1000
 									});
 							}
@@ -525,7 +586,7 @@ function selectDelete(){
 					xmlhttp.send(null);
 				}else{
 					layer.msg('不能创建XMLHttpRequest对象实例', {
-						icon : 5,
+						icon : 2,
 						time : 1000
 						});
 				} 
@@ -534,7 +595,7 @@ function selectDelete(){
 
 	/*产品-上架*/
 	function member_start(obj, id) {
-		layer.confirm('确认要启用吗？',function(index) {
+		layer.confirm('确认要上架吗？',function(index) {
 			if(xmlhttp!=null){
 				// 定义请求地址
 				var url ="<%=application.getContextPath()%>/book.s?op=update&bstate=1&bid="+id;
@@ -554,7 +615,7 @@ function selectDelete(){
 								});
 						} else if(msg == '-1'){
 							layer.msg('该条数据不能修改!', {
-								icon : 5,
+								icon : 2,
 								time : 1000
 								});
 						}else{
@@ -567,10 +628,10 @@ function selectDelete(){
 									.parents("tr")
 									.find(".td-status")
 									.html(
-											'<span class="label label-success radius">已启用</span>');
+											'<span class="label label-success radius">已上架</span>');
 							$(obj).remove();
-							layer.msg('已启用!', {
-								icon : 6,
+							layer.msg('已上架!', {
+								icon : 1,
 								time : 1000
 							});
 									
@@ -582,7 +643,7 @@ function selectDelete(){
 				xmlhttp.send(null);
 			}else{
 				layer.msg('不能创建XMLHttpRequest对象实例', {
-					icon : 5,
+					icon : 2,
 					time : 1000
 					});
 			} 
@@ -590,7 +651,7 @@ function selectDelete(){
 		});
 	}
 	/*产品-编辑*/
-	function member_edit(title, url, id, w, h) {
+	function member_edit(title, url, w, h) {
 		layer_show(title, url, w, h);
 	}
 
@@ -627,7 +688,7 @@ function selectDelete(){
 				xmlhttp.send(null);
 			}else{
 				layer.msg('不能创建XMLHttpRequest对象实例', {
-					icon : 5,
+					icon :2,
 					time : 1000
 					});
 			} 

@@ -6,8 +6,7 @@ public class BookType {
 	private String btnamesecond;//类别名二
 	private String btnamethird;//类别名三
 	private String bttemp;// 备用字段
-	private int btstate;//状态
-	
+	private int btstate;//状态(1.正在使用2.未使用3.已删除)
 	public int getBtstate() {
 		return btstate;
 	}

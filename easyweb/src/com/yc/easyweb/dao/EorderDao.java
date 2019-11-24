@@ -117,7 +117,7 @@ public class EorderDao {
 			}
 			sqList.add(sb.toString());
 		}
-		return DbHelper.update(sqList, null);
+		return DbHelper.update(sqList);
 	}
 
 	// ¸üÐÂ

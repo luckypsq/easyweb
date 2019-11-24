@@ -13,7 +13,7 @@ public class Book {
 	private String bimg;//图片
 	private double bprice;//价格
 	private int bstate;//状态(1已上架，2.已下架3.售罄4.审核不通过5.未审核6.已删除)
-	private int btid;//类别
+	private Long btid;//类别
 	private String btemp;//所属系列
 	private String btemp1;//预留字段
 	private Long bnum;//库存
@@ -106,10 +106,11 @@ public class Book {
 	public void setBimg(String bimg) {
 		this.bimg = bimg;
 	}
-	public int getBtid() {
+	
+	public Long getBtid() {
 		return btid;
 	}
-	public void setBtid(int btid) {
+	public void setBtid(Long btid) {
 		this.btid = btid;
 	}
 	public String getBtemp1() {
@@ -123,8 +124,9 @@ public class Book {
 		return "Book [bid=" + bid + ", bname=" + bname + ", buniversity=" + buniversity + ", bucollege=" + bucollege
 				+ ", bumajor=" + bumajor + ", bclass=" + bclass + ", bcontent=" + bcontent + ", bimg=" + bimg
 				+ ", bprice=" + bprice + ", bstate=" + bstate + ", btid=" + btid + ", btemp=" + btemp + ", btemp1="
-				+ btemp1 + "]";
+				+ btemp1 + ", bnum=" + bnum + ", bauthor=" + bauthor + ", bdate=" + bdate + "]";
 	}
+	
 	
 	
 }

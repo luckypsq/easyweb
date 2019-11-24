@@ -24,19 +24,42 @@ public class BookTypeBiz {
 			return null;
 		}
 		//添加
-		public int insert(BookType bookType){
+		public int insert(BookType bookType) throws BizException{
+			if(bookType ==null){
+				throw new BizException("请填写类型信息！！！");
+			}
+			try {
+				return book.insert(bookType);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return 0;
 			
 		}
 		//删除
-		public int delete(BookType bookType){
+		public int delete(BookType bookType)throws BizException{
+			if(bookType ==null){
+				throw new BizException("请填写类型信息！！！");
+			}
+			try {
+				return book.delete(bookType);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return 0;
 			
 		}
 		//更新
-		public  int update (BookType bookType) {
+		public  int update (BookType bookTypeNew,BookType bookTypeOld)throws BizException {
+			if(bookTypeOld ==null){
+				throw new BizException("请填写类型信息！！！");
+			}
+			try {
+				return book.update(bookTypeNew, bookTypeOld);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return 0;
-			
 		}
 		//其他
 }

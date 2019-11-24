@@ -23,38 +23,44 @@ public class BookDao {
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
 				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1,bnum,bauthor,bdate" + " from book where 1=1 ");
 		if (book != null) {
-			if (book.getBname() != null) {
+			if (book.getBname() != null && !book.getBname().isEmpty()) {
 				sb.append(" and bname like '%" + book.getBname() + "%'");
 			}
-			if (book.getBuniversity() != null) {
+			if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
 				sb.append(" and buniversity like '%" + book.getBuniversity() + "%'");
 			}
-
-			if (book.getBucollege() != null) {
+			if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
 				sb.append(" and bucollege like '%" + book.getBucollege() + "%'");
 			}
-
-			if (book.getBumajor() != null) {
+			if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
 				sb.append(" and bumajor like '%" + book.getBumajor() + "%'");
 			}
-
-			if (book.getBclass() != null) {
+			if (book.getBclass() != null && !book.getBclass().isEmpty()) {
 				sb.append(" and bclass like '%" + book.getBclass() + "%'");
 			}
-
-			if (book.getBauthor() != null) {
+			
+			if(book.getBnum() != null && !book.getBnum().toString().isEmpty()){
+				sb.append(" and bnum =" + book.getBnum());
+			}
+			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
 				sb.append(" and bauthor like '%" + book.getBauthor() + "%'");
 			}
-			if (book.getBtid() != 0) {
+			if (book.getBtid() != null) {
 				sb.append(" and btid = " + book.getBtid());
+			}
+			if(book.getBprice() != 0){
+				sb.append(" and bprice = " + book.getBprice());
 			}
 			if (book.getBstate() != 0) {
 				sb.append(" and bstate = " + book.getBstate());
 			}
-			if (book.getBtemp() != null) {
+			if (book.getBtemp() != null && !book.getBtemp().isEmpty()) {
 				sb.append(" and btemp like '%" + book.getBtemp() + "%'");
 			}
-			if (book.getBdate() != null) {
+			if (book.getBid() != 0) {
+				sb.append(" and bid = " + book.getBid());
+			}
+			if (book.getBdate() != null && !book.getBdate().isEmpty()) {
 				sb.append(" and bdate like '%" + book.getBdate() + "%'");
 			}
 		}
@@ -69,38 +75,44 @@ public class BookDao {
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
 				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1,bnum,bauthor,bdate" + " from book where 1=1 ");
 		if (book != null) {
-			if (book.getBname() != null) {
+			if (book.getBname() != null && !book.getBname().isEmpty()) {
 				sb.append(" and bname like '%" + book.getBname() + "%'");
 			}
-			if (book.getBuniversity() != null) {
+			if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
 				sb.append(" and buniversity like '%" + book.getBuniversity() + "%'");
 			}
-
-			if (book.getBucollege() != null) {
+			if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
 				sb.append(" and bucollege like '%" + book.getBucollege() + "%'");
 			}
-
-			if (book.getBumajor() != null) {
+			if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
 				sb.append(" and bumajor like '%" + book.getBumajor() + "%'");
 			}
-
-			if (book.getBclass() != null) {
+			if (book.getBclass() != null && !book.getBclass().isEmpty()) {
 				sb.append(" and bclass like '%" + book.getBclass() + "%'");
 			}
-
-			if (book.getBauthor() != null) {
+			
+			if(book.getBnum() != null && !book.getBnum().toString().isEmpty()){
+				sb.append(" and bnum =" + book.getBnum());
+			}
+			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
 				sb.append(" and bauthor like '%" + book.getBauthor() + "%'");
 			}
-			if (book.getBtid() != 0) {
+			if (book.getBtid() != null) {
 				sb.append(" and btid = " + book.getBtid());
+			}
+			if(book.getBprice() != 0){
+				sb.append(" and bprice = " + book.getBprice());
 			}
 			if (book.getBstate() != 0) {
 				sb.append(" and bstate = " + book.getBstate());
 			}
-			if (book.getBtemp() != null) {
+			if (book.getBtemp() != null && !book.getBtemp().isEmpty()) {
 				sb.append(" and btemp like '%" + book.getBtemp() + "%'");
 			}
-			if (book.getBdate() != null) {
+			if (book.getBid() != 0) {
+				sb.append(" and bid = " + book.getBid());
+			}
+			if (book.getBdate() != null && !book.getBdate().isEmpty()) {
 				sb.append(" and bdate like '%" + book.getBdate() + "%'");
 			}
 		}
@@ -122,46 +134,49 @@ public class BookDao {
 	// 删除
 	public int delete(Book book) throws Exception {
 		StringBuffer sb = new StringBuffer();
-		
 		sb.append("delete from book where 1=1 ");
 		if (book != null) {
-			if (book.getBname() != null) {
-				sb.append(" and bname =  '" + book.getBname() + "'");
+			if (book.getBname() != null && !book.getBname().isEmpty()) {
+				sb.append(" and bname ='" + book.getBname() + "'");
 			}
-			if (book.getBuniversity() != null) {
-				sb.append(" and buniversity =  '" + book.getBuniversity() + "'");
+			if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
+				sb.append(" and buniversity ='"  + book.getBuniversity() + "'");
 			}
-
-			if (book.getBucollege() != null) {
-				sb.append(" and bucollege =  '" + book.getBucollege() + "'");
+			if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
+				sb.append(" and bucollege ='"  + book.getBucollege() + "'");
 			}
-
-			if (book.getBumajor() != null) {
-				sb.append(" and bumajor =  '" + book.getBumajor() + "'");
+			if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
+				sb.append(" and bumajor ='"  + book.getBumajor() + "'");
 			}
-			if (book.getBclass() != null) {
-				sb.append(" and bclass =  '" + book.getBclass() + "'");
+			if (book.getBclass() != null && !book.getBclass().isEmpty()) {
+				sb.append(" and bclass ='"  + book.getBclass() + "'");
 			}
-			if (book.getBauthor() != null) {
-				sb.append(" and bauthor =  '" + book.getBauthor() + "'");
+			
+			if(book.getBnum() != null && !book.getBnum().toString().isEmpty()){
+				sb.append(" and bnum =" + book.getBnum());
 			}
-			if (book.getBtid() != 0) {
+			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
+				sb.append(" and bauthor ='"  + book.getBauthor() + "'");
+			}
+			if (book.getBtid() != null) {
 				sb.append(" and btid = " + book.getBtid());
+			}
+			if(book.getBprice() != 0){
+				sb.append(" and bprice = " + book.getBprice());
 			}
 			if (book.getBstate() != 0) {
 				sb.append(" and bstate = " + book.getBstate());
 			}
-			if (book.getBtemp() != null) {
-				sb.append(" and btemp = '" + book.getBtemp() + "'");
-			}
-			if (book.getBdate() != null) {
-				sb.append(" and bdate = '" + book.getBdate() + "'");
+			if (book.getBtemp() != null && !book.getBtemp().isEmpty()) {
+				sb.append(" and btemp ='"  + book.getBtemp() + "'");
 			}
 			if (book.getBid() != 0) {
 				sb.append(" and bid = " + book.getBid());
 			}
+			if (book.getBdate() != null && !book.getBdate().isEmpty()) {
+				sb.append(" and bdate ='"  + book.getBdate() + "'");
+			}
 		}
-		
 		return db.update(sb.toString(), null);
 	}
 
@@ -175,46 +190,18 @@ public class BookDao {
 		List<String> sqList = new ArrayList<String>();
 		for (Book book : list) {
 			sb = new StringBuffer();
-			sb.append("delete from book where 1=1");
-			if (book.getBname() != null) {
-				sb.append(" and bname =  '" + book.getBname() + "'");
+			sb.append("delete from book where 1=1 ");
+			if (book != null) {
+				if (book.getBid() != 0) {
+					sb.append(" and bid = " + book.getBid());
+				}
+				if (book.getBdate() != null && !book.getBdate().isEmpty()) {
+					sb.append(" and bdate ='"  + book.getBdate() + "'");
+				}
+				sqList.add(sb.toString());
 			}
-			if (book.getBuniversity() != null) {
-				sb.append(" and buniversity =  '" + book.getBuniversity() + "'");
-			}
-
-			if (book.getBucollege() != null) {
-				sb.append(" and bucollege =  '" + book.getBucollege() + "'");
-			}
-
-			if (book.getBumajor() != null) {
-				sb.append(" and bumajor =  '" + book.getBumajor() + "'");
-			}
-
-			if (book.getBclass() != null) {
-				sb.append(" and bclass =  '" + book.getBclass() + "'");
-			}
-			if (book.getBauthor() != null) {
-				sb.append(" and bauthor =  '" + book.getBauthor() + "'");
-			}
-			if (book.getBtid() != 0) {
-				sb.append(" and btid = " + book.getBtid());
-			}
-			if (book.getBstate() != 0) {
-				sb.append(" and bstate = " + book.getBstate());
-			}
-			if (book.getBtemp() != null) {
-				sb.append(" and btemp = '" + book.getBtemp() + "'");
-			}
-			if (book.getBdate() != null) {
-				sb.append(" and bdate = '" + book.getBdate() + "'");
-			}
-			if (book.getBid() != 0) {
-				sb.append(" and bid = " + book.getBid());
-			}
-			sqList.add(sb.toString());
 		}
-		return db.update(sqList, null);
+		return db.update(sqList);
 	}
 
 	// 更新
@@ -224,75 +211,71 @@ public class BookDao {
 			return 0;
 		}
 		sb.append("update book set btemp1='' ");
-		if (bookNew.getBname() != null) {
+		if (bookNew.getBname() != null && !bookNew.getBname().isEmpty()) {
 			sb.append(" ,bname = '" + bookNew.getBname() + "'");
 		}
-		if (bookNew.getBuniversity() != null) {
+		if (bookNew.getBuniversity() != null && !bookNew.getBuniversity().isEmpty()) {
 			sb.append(" ,buniversity =  '" + bookNew.getBuniversity() + "'");
 		}
-		if (bookNew.getBucollege() != null) {
+		if (bookNew.getBucollege() != null && !bookNew.getBucollege().isEmpty()) {
 			sb.append(" ,bucollege =  '" + bookNew.getBucollege() + "'");
 		}
-		if (bookNew.getBumajor() != null) {
+		if (bookNew.getBumajor() != null && !bookNew.getBumajor().isEmpty()) {
 			sb.append(" ,bumajor =  '" + bookNew.getBumajor() + "'");
 		}
-		if (bookNew.getBclass() != null) {
+		if (bookNew.getBclass() != null && !bookNew.getBclass().isEmpty()) {
 			sb.append(" ,bclass =  '" + bookNew.getBclass() + "'");
 		}
 
-		if (bookNew.getBauthor() != null) {
+		if (bookNew.getBtid() != null && bookNew.getBtid() != 0 ) {
+			sb.append(" ,btid = " + bookNew.getBtid());
+		}
+		if (bookNew.getBtemp() != null && !bookNew.getBtemp().isEmpty()) {
+			sb.append(" ,btemp = '" + bookNew.getBtemp() + "'");
+		}
+		if (bookNew.getBauthor() != null && !bookNew.getBauthor().isEmpty()) {
 			sb.append(" ,bauthor =  '" + bookNew.getBauthor() + "'");
 		}
-		if (bookNew.getBtid() != 0) {
-			sb.append(" ,btid = " + bookNew.getBtid());
+		//价格
+		if(bookNew.getBprice()!=0){
+			sb.append(" ,bprice = " + bookNew.getBprice());
+		}
+		//库存
+		if(bookNew.getBnum()!=null && !bookNew.getBnum().toString().isEmpty()){
+			sb.append(" ,bnum = " + bookNew.getBnum());
+		}
+		//图片
+		if(bookNew.getBimg()!=null && !bookNew.getBimg().isEmpty()){
+			sb.append(" ,bimg = '" + bookNew.getBimg()+"'");
+		}
+		//内容
+		if(bookNew.getBcontent()!=null && !bookNew.getBcontent().isEmpty()){
+			sb.append(" ,bcontent = '" + bookNew.getBcontent()+"'");
 		}
 		if (bookNew.getBstate() != 0) {
 			sb.append(" ,bstate = " + bookNew.getBstate());
 		}
-		if (bookNew.getBtemp() != null) {
-			sb.append(" ,btemp = '" + bookNew.getBtemp() + "'");
+		if (bookNew.getBdate() != null && !bookNew.getBdate().isEmpty()) {
+			sb.append(" ,bdate = '" + bookNew.getBdate()+"'");
 		}
-		if (bookNew.getBdate() != null) {
-			sb.append(" ,bdate =  '" + bookNew.getBdate() + "'");
-		}
+		
 		sb.append(" where 1=1 ");
-		if (bookOld.getBname() != null) {
+		
+		if (bookOld.getBname() != null && !bookOld.getBname().isEmpty()) {
 			sb.append(" and bname =  '" + bookOld.getBname() + "'");
 		}
-		if (bookOld.getBuniversity() != null) {
-			sb.append(" and buniversity =  '" + bookOld.getBuniversity() + "'");
-		}
-
-		if (bookOld.getBucollege() != null) {
-			sb.append(" and bucollege =  '" + bookOld.getBucollege() + "'");
-		}
-
-		if (bookOld.getBumajor() != null) {
-			sb.append(" and bumajor =  '" + bookOld.getBumajor() + "'");
-		}
-
-		if (bookOld.getBclass() != null) {
-			sb.append(" and bclass =  '" + bookOld.getBclass() + "'");
-		}
-		if (bookOld.getBauthor() != null) {
+		if (bookOld.getBauthor() != null && !bookOld.getBauthor().isEmpty()) {
 			sb.append(" and bauthor =  '" + bookOld.getBauthor() + "'");
 		}
-		if (bookOld.getBtid() != 0) {
+		if (bookOld.getBtid() != null) {
 			sb.append(" and btid = " + bookOld.getBtid());
 		}
 		if (bookOld.getBstate() != 0) {
 			sb.append(" and bstate = " + bookOld.getBstate());
 		}
-		if (bookOld.getBtemp() != null) {
-			sb.append(" and btemp = '" + bookOld.getBtemp() + "'");
-		}
-		if (bookOld.getBdate() != null) {
-			sb.append(" and bdate = '" + bookOld.getBdate() + "'");
-		}
 		if (bookOld.getBid() != 0) {
 			sb.append(" and bid = " + bookOld.getBid());
 		}
-		System.out.println(sb.toString());
 		return db.update(sb.toString(), null);
 
 	}

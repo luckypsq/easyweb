@@ -88,17 +88,15 @@ public class DbHelper {
 	 * @throws SQLException 
 	 * @throws Exception 
 	 */
-	public static int update(List<String> sqls,List<List<Object>> params)
+	public static int update(List<String> sqls)
 			throws Exception {
 		int result  =0;
-		
 		try {
 			conn = getConn();
 			conn.setAutoCommit(false);
 			for (int i = 0; i <sqls.size(); i++) {
 				pstmt = conn.prepareStatement(sqls.get(i));
-				List<Object> param = params.get(i);
-				setParamsList(pstmt, param);
+				setParamsList(pstmt, null);
 				result = pstmt.executeUpdate();
 				if(result <= 0){
 					conn.rollback();

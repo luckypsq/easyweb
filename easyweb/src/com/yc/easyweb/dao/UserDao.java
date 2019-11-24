@@ -168,7 +168,7 @@ public class UserDao {
 			}
 			sqList.add(sb.toString());
 		}
-		return db.update(sqList, null);
+		return db.update(sqList);
 	}
 	//¸üÐÂ
 	public  int update (User userNew,User userOld) throws Exception {

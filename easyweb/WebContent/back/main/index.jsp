@@ -376,7 +376,7 @@
 									name="Brand_Manage.jsp" title="品牌管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>品牌管理</a></li> -->
 								<li class="home"><a href="javascript:void(0)"
-									name="<%=application.getContextPath() %>/back/book/Category_Manage.jsp" title="分类管理" class="iframeurl"><i
+									name="<%=application.getContextPath() %>/back/book/product-category-add.jsp" title="分类管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>分类管理</a></li>
 
 							</ul></li>
