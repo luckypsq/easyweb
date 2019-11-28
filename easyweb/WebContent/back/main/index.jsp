@@ -403,11 +403,11 @@
 									name="<%=application.getContextPath() %>/back/order/Order_Chart.jsp" title="交易订单（图）" class="iframeurl"><i
 										class="icon-double-angle-right"></i>交易订单(图)</a></li>
 								<li class="home"><a href="javascript:void(0)"
-									name="<%=application.getContextPath() %>/back/order/Orderform.jsp" title="订单管理" class="iframeurl"><i
-										class="icon-double-angle-right"></i>订单管理</a></li>
-								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/order/Amounts.jsp" title="交易金额" class="iframeurl"><i
 										class="icon-double-angle-right"></i>交易金额</a></li>
+								<li class="home"><a href="javascript:void(0)"
+									name="<%=application.getContextPath() %>/back/order/Orderform.jsp" title="订单管理" class="iframeurl"><i
+										class="icon-double-angle-right"></i>订单管理</a></li>
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/order/Order_handling.jsp" title="订单处理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>订单处理</a></li>

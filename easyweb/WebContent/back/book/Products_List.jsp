@@ -64,6 +64,7 @@
 		String btid = null;
 		BookBiz bookBiz = new BookBiz();
 		Book book = new Book();
+		//获取查询条件
 		if(request.getParameter("bname") != null && !request.getParameter("bname").isEmpty()){
 			bauthor =request.getParameter("bname");	
 			book.setBauthor(bauthor);
@@ -93,6 +94,7 @@
 			}
 		}
 		List<Book> bookList = bookBiz.selectAll(book);
+		pageContext.setAttribute("bookList", bookList);
 	%>
 	<div class=" page-content clearfix">
 		<div id="products_style">
@@ -250,7 +252,11 @@ var sbox = -1;
 		$('table th input:checkbox').on(
 				'click',
 				function() {
-					sbox=1;
+					if(sbox == "/"){
+						sbox=-1;
+					}else{
+						sbox = "/";
+					}
 					var that = this;
 					$(this).closest('table').find('tr > td:first-child input:checkbox').each(
 							function() {
@@ -258,6 +264,7 @@ var sbox = -1;
 								$(this).closest('tr').toggleClass('selected');
 							});
 				});
+		//设置单选
 		$('table tr input:checkbox').on(
 				'click',
 				function() {
@@ -312,7 +319,8 @@ var sbox = -1;
 		}
 	}
 function selectDelete(){
-	if(sbox != 1){
+	layer.confirm('确认要删除吗？', function(index) {
+	if(sbox != "/"){
 		var table = $('#sample-table').dataTable();//获取表格
 		var nTrs = table.fnGetNodes();//fnGetNodes获取表格所有行，nTrs[i]表示第i行tr对象
 		for (var i = 0; i < nTrs.length; i++) {
@@ -321,12 +329,19 @@ function selectDelete(){
 				 sbox =sbox +"/"+ bid[1];
 			}
 		}
+	}else{
+		layer.msg("不能进行此操作！！！", {
+			icon : 2,
+			time : 1000
+			});
+		return;
 	}
 	if(sbox == -1){
 		layer.msg("请选择要删除的书籍！！！", {
 			icon : 7,
 			time : 1000
 			});
+		return;
 	}
 	if (xmlhttp != null) {
 		// 定义请求地址
@@ -345,7 +360,11 @@ function selectDelete(){
 						time : 1000
 						});
 					window.location.href='<%=application.getContextPath()%>/back/book/Products_List.jsp';
-					
+				}else if(msg == 0){
+					layer.msg("不能进行此操作！！！", {
+						icon : 2,
+						time : 1000
+						});
 				}else{
 					layer.msg(msg, {
 						icon : 5,
@@ -362,7 +381,7 @@ function selectDelete(){
 			time : 1000
 			});
 	}
-		
+	});
 }
 </script>
 <script type="text/javascript">

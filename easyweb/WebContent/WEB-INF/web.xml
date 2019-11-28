@@ -75,4 +75,12 @@
 		<servlet-name>用户UserServlet</servlet-name>
 		<url-pattern>/user.s</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>权限ControlServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.ControlServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>权限ControlServlet</servlet-name>
+		<url-pattern>/control.s</url-pattern>
+	</servlet-mapping>
 </web-app>

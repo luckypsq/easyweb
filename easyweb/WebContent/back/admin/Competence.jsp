@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@page import="com.yc.easyweb.bean.*"%>
+<%@page import="com.yc.easyweb.biz.*"%>
+<%@page import="java.io.*"%>
+<%@page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,9 +16,6 @@
         <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
         <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
         <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
-        <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
-		<![endif]-->
 		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
         <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
 		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>           	
@@ -27,33 +28,60 @@
 </head>
 
 <body>
+<%
+String admin_uid = null;
+if(request.getParameter("uid")!=null &&!request.getParameter("uid").isEmpty()){
+	admin_uid = request.getParameter("uid");
+}
+	       	UserBiz userBiz = new UserBiz();
+			User user = new User();
+			user.setUtype(5);
+			List<User> userList1 = userBiz.selectAll(user);//保存所有的管理员
+			user.setUtype(1);
+			List<User> userList2 = userBiz.selectAll(user);
+			for (User u : userList2) {
+				userList1.add(u);
+			}
+			//查询所有的权限
+			Control control_com = new Control();//查询所有的条件对象
+			control_com.setConstate(1);//为1时是系统全部存在的功能
+			ControlBiz cBiz = new ControlBiz();
+			List<Control> conShow = cBiz.selectAll(control_com);//保存所有的权限项目
+			HashSet<String> conType = new HashSet<String>(); 
+			for(Control con : conShow){
+				if(con.getConamesecond()== null){
+					conType.add(con.getConame());
+				}
+			}
+			
+       %>
 <div class="Competence_add_style clearfix">
   <div class="left_Competence_add">
    <div class="title_name">添加权限</div>
     <div class="Competence_add">
-     <div class="form-group"><label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 权限名称 </label>
-       <div class="col-sm-9"><input type="text" id="form-field-1" placeholder=""  name="权限名称" class="col-xs-10 col-sm-5"></div>
+     <div class="form-group"><label class="col-sm-2 control-label no-padding-right" > 父栏目名:</label>
+       <div class="col-sm-9"><input type="text" id="form-field-name" name="coname" class="col-xs-10 col-sm-5"></div>
 	</div>
-     <div class="form-group"><label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 权限描述 </label>
-      <div class="col-sm-9"><textarea name="权限描述" class="form-control" id="form_textarea" placeholder="" onkeyup="checkLength(this);"></textarea><span class="wordage">剩余字数：<span id="sy" style="color:Red;">200</span>字</span></div>
+	<div class="form-group"><label class="col-sm-2 control-label no-padding-right" > 子栏目名: </label>
+       <div class="col-sm-9"><input type="text" id="form-field-namesecond" name="conamesecond" class="col-xs-10 col-sm-5"></div>
 	</div>
+     <!-- <div class="form-group"><label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 管理子栏目名称 </label>
+      <div class="col-sm-9"><textarea name="权限描述" class="form-control" id="form_textarea" placeholder="" onkeyup="checkLength(this);"></textarea><span class="wordage">剩余字数：<span id="sy" style="color:Red;">10</span>字</span></div>
+	</div> -->
     <div class="form-group"><label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 用户选择 </label>
        <div class="col-sm-9">
-       <label class="middle"><input class="ace" type="checkbox" id="id-disable-check"><span class="lbl"> sm123456</span></label>
-       <label class="middle"><input class="ace" type="checkbox" id="id-disable-check"><span class="lbl"> admin</span></label>
-       <label class="middle"><input class="ace" type="checkbox" id="id-disable-check"><span class="lbl"> admin123456</span></label>
-       <label class="middle"><input class="ace" type="checkbox" id="id-disable-check"><span class="lbl"> style_name</span></label>
-       <label class="middle"><input class="ace" type="checkbox" id="id-disable-check"><span class="lbl"> username</span></label>
-       <label class="middle"><input class="ace" type="checkbox" id="id-disable-check"><span class="lbl"> adminname</span></label>
-       <label class="middle"><input class="ace" type="checkbox" id="id-disable-check"><span class="lbl"> sm12345</span></label>
-       <label class="middle"><input class="ace" type="checkbox" id="id-disable-check"><span class="lbl"> 天使的行</span></label>
+       <% for(User userCom : userList1){%>
+       <label class="middle"><input class="ace" type="checkbox" id="id-user" value="<%=userCom.getUid() %>"><span class="lbl"><%=userCom.getUname() %></span></label>
+      <%} %>
 	</div>   
    </div>
+   	<input id="uid_damin_show" value="<%=admin_uid == null?"":admin_uid %>" style="display:none;">
+	
    <!--按钮操作-->
    <div class="Button_operation">
-				<button onclick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="fa fa-save "></i> 保存并提交</button>
-				<button onclick="article_save();" class="btn btn-secondary  btn-warning" type="button"><i class="fa fa-reply"></i> 返回上一步</button>
-				<button onclick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+				<button onclick="type_save();" class="btn btn-primary radius" type="button"><i class="fa fa-save "></i> 保存并提交</button>
+				<button onclick="type_add();"class="btn btn-secondary  btn-warning" type="button">分配权限</button>
+				<button  onclick="window.location.href='<%=application.getContextPath() %>/back/admin/admin_Competence.jsp'"class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
    </div>
    </div>
@@ -61,11 +89,20 @@
    <div class="Assign_style">
       <div class="title_name">权限分配</div>
       <div class="Select_Competence">
+      <%
+      		//确定父标题
+      		for(String connameFrist : conType){
+      %>
       <dl class="permission-list">
-		<dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl">产品管理</span></label></dt>
+		<dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl"><%=connameFrist %></span></label></dt>
 		<dd>
+			<%
+				for(Control conShowType : conShow){ 
+					if(connameFrist.equals(conShowType.getConame())){
+						if(conShowType.getConamesecond()!= null){
+			%>
 		 <dl class="cl permission-list2">
-		 <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-0" id="id-disable-check"><span class="lbl">产品列表</span></label></dt>
+		 <dt><label class="middle"><input type="checkbox"  class="ace"  name="user-Character-0-0" id="id-disable-check" value="<%=conShowType.getConid()%>"><span class="lbl"><%=conShowType.getConamesecond() %></span></label></dt>
          <dd>
 		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
 		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
@@ -74,127 +111,12 @@
 		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
 		</dd>
 		</dl>
-	     <dl class="cl permission-list2">
-		  <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-1" id="user-Character-0-1"> <span class="lbl">品牌管理</span></label></dt>
-		  <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-		 </dd>
-		</dl>
-        <dl class="cl permission-list2">
-		  <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-1" id="user-Character-0-1"> <span class="lbl">分类管理</span></label></dt>
-		  <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		 </dd>
-		</dl>
+			<%
+				}}
+			} %>
 		</dd>
 	    </dl> 
-        <!--图片管理-->
-         <dl class="permission-list">
-		<dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl">图片管理</span></label></dt>
-		<dd>
-		 <dl class="cl permission-list2">
-		 <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-0" id="id-disable-check"><span class="lbl">广告管理</span></label></dt>
-         <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-
-		</dd>
-		</dl>
-	     <dl class="cl permission-list2">
-		  <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-1" id="user-Character-0-1"> <span class="lbl">广告分类</span></label></dt>
-		  <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-		 </dd>
-		</dl>
-        </dd>
-	    </dl> 
-        <!--交易管理--> 
-        <dl class="permission-list">
-		<dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl">交易管理</span></label></dt>
-		<dd>
-		 <dl class="cl permission-list2">
-		 <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-0" id="id-disable-check"><span class="lbl">交易信息</span></label></dt>
-         <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-		</dd>
-		</dl>
-	     <dl class="cl permission-list2">
-		  <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-1" id="user-Character-0-1"> <span class="lbl">订单管理</span></label></dt>
-		  <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-		 </dd>
-		</dl> 
-             <dl class="cl permission-list2">
-		  <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-1" id="user-Character-0-1"> <span class="lbl">退款操作</span></label></dt>
-		  <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-		 </dd>
-		</dl>  
-        </dd>
-		</dl> 
-        
-          <!--会员管理--> 
-        <dl class="permission-list">
-		<dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl">会员管理</span></label></dt>
-		<dd>
-		 <dl class="cl permission-list2">
-		 <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-0" id="id-disable-check"><span class="lbl">会员信息</span></label></dt>
-         <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-		</dd>
-		</dl>
-	     <dl class="cl permission-list2">
-		  <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-1" id="user-Character-0-1"> <span class="lbl">登记管理</span></label></dt>
-		  <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-		 </dd>
-		</dl> 
-             <dl class="cl permission-list2">
-		  <dt><label class="middle"><input type="checkbox" value="" class="ace"  name="user-Character-0-1" id="user-Character-0-1"> <span class="lbl">会员积分</span></label></dt>
-		  <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-		 </dd>
-		</dl>  
-        </dd>
-		</dl> 
+	    <%} %>
       </div> 
   </div>
 </div>
@@ -202,12 +124,11 @@
 </html>
 <script type="text/javascript">
 //初始化宽度、高度  
- $(".left_Competence_add,.Competence_add_style").height($(window).height()).val();; 
- $(".Assign_style").width($(window).width()-500).height($(window).height()).val();
- $(".Select_Competence").width($(window).width()-500).height($(window).height()-40).val();
-  //当文档窗口发生改变时 触发  
-    $(window).resize(function(){
-	
+$(".left_Competence_add,.Competence_add_style").height($(window).height()).val();; 
+$(".Assign_style").width($(window).width()-500).height($(window).height()).val();
+$(".Select_Competence").width($(window).width()-500).height($(window).height()-40).val();
+ //当文档窗口发生改变时 触发  
+   $(window).resize(function(){
 	$(".Assign_style").width($(window).width()-500).height($(window).height()).val();
 	$(".Select_Competence").width($(window).width()-500).height($(window).height()-40).val();
 	$(".left_Competence_add,.Competence_add_style").height($(window).height()).val();;
@@ -220,7 +141,7 @@ function checkLength(which) {
 	   icon:2,
 	   title:'提示框',
 	   content:'您出入的字数超多限制!',	
-    });
+   });
 		// 超过限制的字数了就将 文本框中的内容按规定的字数 截取
 		which.value = which.value.substring(0,maxChars);
 		return false;
@@ -230,6 +151,7 @@ function checkLength(which) {
 		return true;
 	}
 };
+
 /*按钮选择*/
 $(function(){
 	$(".permission-list dt input:checkbox").click(function(){
@@ -253,5 +175,122 @@ $(function(){
 		
 	});
 });
-
+</script>
+<script>
+var xmlhttp;
+//ajax
+try {
+	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+	try {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new XMLHttpRequest();
+		} catch (e) {
+		}
+	}
+}
+/*添加权限*/
+function type_save(){
+	var cname = document.getElementById("form-field-name").value.trim();
+	var cnamesecond = document.getElementById("form-field-namesecond").value.trim();
+	if(cname == ""){
+		layer.msg("请填写栏目名称", {
+			icon : 2,
+			time : 1000
+			});
+		return;
+	}
+	if(xmlhttp!=null){
+		// 定义请求地址
+		var url ="<%=application.getContextPath()%>/control.s?op=add&name="+cname+"&namesecond="+cnamesecond;
+		// 以 POST 方式 开启连接
+		// POST 请求 更安全（编码）  提交的数据大小没有限制
+		xmlhttp.open("POST",url,true);
+		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+		// 每次的状态改变都会调用该方法
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				// 替换空格
+				var msg = xmlhttp.responseText.replace(/\s/gi,"");
+				if(msg == 1){
+					layer.msg('添加成功！！！', {
+						icon : 6,
+						time : 1000
+						});
+				}else {
+					layer.msg('添加失败！！！', {
+						icon : 5,
+						time : 1000
+						});
+				}
+			}
+		};
+		// 发送请求
+		xmlhttp.send(null);
+	}else{
+		alert('不能创建XMLHttpRequest对象实例')
+	} 
+}
+/*给角色添加权限*/
+function type_add(){
+  //jquery获取复选框值    
+    var uid_val =[];//定义一个获取uid的数组    
+    $('input[id="id-user"]:checked').each(function(){//遍历每一个名字为id-disable-check的复选框，其中选中的执行函数    
+   			uid_val.push($(this).val());//将选中的值添加到数组chk_value中    
+    });
+    var uid_show;
+    uid_show = uid_val.join('/');//该字符串为所有选中的管理员id-disable-check
+    if(uid_show ==""){
+    	layer.msg("请选择管理员", {
+			icon : 2,
+			time : 1000
+			});
+		return;
+    }
+    var control_val =[];//定义一个获取权限的数组    
+    $('input[id="id-disable-check"]:checked').each(function(){//遍历每一个名字为id-disable-check的复选框，其中选中的执行函数    
+   			control_val.push($(this).val());//将选中的值添加到数组中    
+    });
+    var control_show;
+    control_show = control_val.join('/');//该字符串为所有选中的权限
+    if(control_show ==""){
+    	layer.msg("请选择添加的权限", {
+			icon : 2,
+			time : 1000
+			});
+		return;
+    }
+    if(xmlhttp!=null){
+		// 定义请求地址
+		var url ="<%=application.getContextPath()%>/control.s?op=addUserControl&uid="+uid_show+"&type="+control_show;
+		// 以 POST 方式 开启连接
+		// POST 请求 更安全（编码）  提交的数据大小没有限制
+		xmlhttp.open("POST",url,true);
+		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+		// 每次的状态改变都会调用该方法
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				// 替换空格
+				var msg = xmlhttp.responseText.replace(/\s/gi,"");
+				if(msg == 1){
+					layer.msg('添加成功！！！', {
+						icon : 6,
+						time : 1000
+						});
+				}else {
+					layer.msg('添加失败！！！', {
+						icon : 5,
+						time : 1000
+						});
+				}
+			}
+		};
+		// 发送请求
+		xmlhttp.send(null);
+	}else{
+		alert('不能创建XMLHttpRequest对象实例')
+	} 
+}
 </script>

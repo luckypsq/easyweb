@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.jspsmart.upload.Files;
 import com.jspsmart.upload.SmartUpload;
 import com.jspsmart.upload.SmartUploadException;
+import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.biz.BizException;
@@ -105,17 +106,23 @@ public class BookServlet extends BaseServlet {
 
 	// É¾³ý
 	public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] bid = request.getParameter("bid").split("/");
+		
 		PrintWriter out = response.getWriter();
 		Book book2;
 		List<Book> list = new ArrayList<Book>();
 		int i;
 		if (request.getParameter("bid") != null && !request.getParameter("bid").toString().isEmpty()) {
-			for (String string : bid) {
-				book2 = new Book();
-				if (!string.equals("-1") && !string.isEmpty()) {
-					book2.setBid(Long.parseLong(string));
-					list.add(book2);
+			if(request.getParameter("bid").equals("all")){
+				out.print(0);
+				return;
+			}else{
+				String[] bid = request.getParameter("bid").split("/");
+				for (String string : bid) {
+					book2 = new Book();
+					if (!string.equals("-1") && !string.isEmpty() && string != null) {
+						book2.setBid(Long.parseLong(string));
+						list.add(book2);
+					}
 				}
 			}
 		} else {
@@ -135,18 +142,17 @@ public class BookServlet extends BaseServlet {
 		} catch (BizException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	// ¸üÐÂ×´Ì¬
 	public void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
 		Book bookNew = new Book();
 		Book bookOld = new Book();
 		PrintWriter out = response.getWriter();
 		if (request.getParameter("bid") != null && !request.getParameter("bid").isEmpty()) {
 			bookOld.setBid(Long.parseLong(request.getParameter("bid").toString()));
+		}else{
+			
 		}
 		if (request.getParameter("bstate") != null && !request.getParameter("bstate").isEmpty()) {
 			bookNew.setBstate(Integer.parseInt(request.getParameter("bstate").toString()));

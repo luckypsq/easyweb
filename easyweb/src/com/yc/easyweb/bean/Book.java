@@ -19,8 +19,14 @@ public class Book {
 	private Long bnum;//库存
 	private String bauthor ;//作者或出版社
 	private String bdate;//上传时间
+	private long uid;//上传者
 	
-	
+	public long getUid() {
+		return uid;
+	}
+	public void setUid(long uid) {
+		this.uid = uid;
+	}
 	public double getBprice() {
 		return bprice;
 	}

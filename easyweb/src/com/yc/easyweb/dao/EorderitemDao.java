@@ -17,11 +17,14 @@ public class EorderitemDao {
 	//查询所有
 	public List<Eorderitem> selectAll(Eorderitem eorderitem) throws Exception{
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select itemid,count,bid,eoid,total,eitemp"
+		sb.append(" select itemid,count,bid,eoid,total,eitemp,uid"
 				+ " from eorderitem where 1=1 ");
 		if(eorderitem != null){
 			if(eorderitem.getBid() != 0){
 				sb.append(" and bid="+eorderitem.getBid());
+			}
+			if(eorderitem.getUid() != 0){
+				sb.append(" and uid="+eorderitem.getUid());
 			}
 			if(eorderitem.getEoid() != null){
 				sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
@@ -31,18 +34,16 @@ public class EorderitemDao {
 			}
 		}
 		sb.append("  order by  itemid desc");
-		/*System.out.println("eorderitem数据库语句："+sb.toString());
-		System.out.println("eorderitem实体类对象："+eorderitem.toString());*/
 		List<Eorderitem> list = db.selectAll(sb.toString(), null, Eorderitem.class);
 		return list;
 		
 	}
 	//添加
 	public int insert(Eorderitem eorderitem) throws Exception{
-		String sql = "insert into eorderitem(itemid,count,bid,eoid,total,eitemp) " 
-					+ " values(?,?,?,?,?,?);";
+		String sql = "insert into eorderitem(itemid,count,bid,eoid,total,eitemp,uid) " 
+					+ " values(?,?,?,?,?,?,?);";
 		return DbHelper.update(sql, eorderitem.getItemid(),eorderitem.getCount(),
-				eorderitem.getBid(),eorderitem.getEoid(),eorderitem.getTotal(),eorderitem.getEitemp());
+				eorderitem.getBid(),eorderitem.getEoid(),eorderitem.getTotal(),eorderitem.getEitemp(),eorderitem.getUid());
 	}
 	//删除
 	public int delete(Eorderitem eorderitem) throws Exception{
@@ -56,6 +57,9 @@ public class EorderitemDao {
 		}
 		if(eorderitem.getEoid() != null){
 			sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
+		}
+		if(eorderitem.getUid() != 0){
+			sb.append(" and uid="+eorderitem.getUid());
 		}
 		if(eorderitem.getItemid() != null){
 			sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
@@ -81,6 +85,9 @@ public class EorderitemDao {
 			if(eorderitem.getItemid() != null){
 				sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
 			}
+			if(eorderitem.getUid() != 0){
+				sb.append(" and uid="+eorderitem.getUid());
+			}
 			sqList.add(sb.toString());
 		}
 		return DbHelper.update(sqList);
@@ -96,11 +103,11 @@ public class EorderitemDao {
 		if(eoNew.getBid() != 0){
 			sb.append(" , bid="+eoNew.getBid());
 		}
-		if(eoNew.getEoid() != null){
-			sb.append(" , eoid ='"+eoNew.getEoid() +"'");
+		if(eoNew.getCount() != 0){
+			sb.append(" , count ="+eoNew.getCount());
 		}
-		if(eoNew.getItemid() != null){
-			sb.append(" , itemid ='"+eoNew.getItemid()+"'");
+		if(eoNew.getTotal() != 0){
+			sb.append(" , total ="+eoNew.getTotal());
 		}
 		sb.append(" where 1=1 ");
 		if(eoOld.getBid() != 0){
@@ -111,6 +118,9 @@ public class EorderitemDao {
 		}
 		if(eoOld.getItemid() != null){
 			sb.append(" and itemid ='"+eoOld.getItemid()+"'");
+		}
+		if(eoOld.getUid() != 0){
+			sb.append(" and uid="+eoOld.getUid());
 		}
 		return DbHelper.update(sb.toString(), null);
 	}

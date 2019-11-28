@@ -23,9 +23,6 @@
 	href="<%=application.getContextPath()%>/back/assets/css/ace.min.css" />
 <link rel="stylesheet"
 	href="<%=application.getContextPath()%>/back/font/css/font-awesome.min.css" />
-<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath()%>/back/assets/css/ace-ie.min.css" />
-		<![endif]-->
 <script
 	src="<%=application.getContextPath()%>/back/js/jquery-1.9.1.min.js"></script>
 <script
@@ -55,26 +52,39 @@
 <body>
 	<div class="page-content clearfix">
 		<div class="administrator">
-			<div class="d_Confirm_Order_style">
+				<div class="d_Confirm_Order_style">
 				<div class="search_style">
 					<%
 						UserBiz userBiz = new UserBiz();
 						User user = new User();
-						user.setUstate(1);
-						user.setUtype(4);
-						List<User> userList1 = userBiz.selectAll(user);
+						String userName = null;
+						String userPhone = null;
+						int userType = 0;
+						if(request.getParameter("name") != null && !request.getParameter("name").toString().isEmpty()){
+							user.setUname(request.getParameter("name"));
+							userName = request.getParameter("name");
+						}
+						if(request.getParameter("phone") != null && !request.getParameter("phone").toString().isEmpty()){
+							user.setUphone(request.getParameter("phone"));
+							userPhone = request.getParameter("phone");
+						}
+						if(request.getParameter("type") != null && !request.getParameter("type").toString().isEmpty()){
+							userType = Integer.parseInt(request.getParameter("type"));
+						}
 						user.setUtype(5);
+						List<User> userList1 = userBiz.selectAll(user);
+						user.setUtype(1);
 						List<User> userList2 = userBiz.selectAll(user);
 						for (User user2 : userList2) {
 							userList1.add(user2);
 						}
 					%>
 					<ul class="search_content clearfix">
-						<li><label class="l_f">管理员名称</label><input name=""
-							type="text" class="text_add" placeholder="" style="width: 400px" /></li>
-						<li><label class="l_f">添加时间</label><input
-							class="inline laydate-icon" id="start" style="margin-left: 10px;"></li>
-						<li style="width: 90px;"><button type="button"
+						<li><label class="l_f">管理员名称</label><input name="adminName"id="adminName" value="<%=userName == null ? "":userName %>"
+							type="text" class="text_add"  style="width: 400px" /></li>
+						<li><label class="l_f">管理员电话</label><input style=" margin-left:10px;" name="adminType"id="adminType"
+							type="text" class="text_add"  style="width: 400px" value="<%=userPhone == null ? "":userPhone %>"/></li>
+						<li style="width: 90px;"><button type="button" onclick="selectAdmin();"
 								class="btn_search">
 								<i class="fa fa-search"></i>查询
 							</button></li>
@@ -82,10 +92,8 @@
 				</div>
 				<!--操作-->
 				<div class="border clearfix">
-					<span class="l_f"> <a href="javascript:ovid()"
-						id="administrator_add" class="btn btn-warning">
-						<i class="fa fa-plus"></i> 添加管理员</a>
-				 <a href="javascript:ovid()"
+					<span class="l_f"><a href="<%=application.getContextPath()%>/back/admin/userAdd.jsp" id="administrator_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加管理员</a>
+				 <a onclick="selectDelete();"
 						class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
 					</span> <span class="r_f">共：<b><%=userList1.size()%></b>人
 					</span>
@@ -107,15 +115,13 @@
 									</div>
 									<div class="widget-body">
 										<ul class="b_P_Sort_list">
-											<li><i class="fa fa-users green"></i> <a href="#">全部管理员(<%=userList1.size()%>)
+											<li><i class="fa fa-users green"></i> <a href="<%=application.getContextPath()%>/back/admin/administrator.jsp">全部管理员(<%=userList1.size()%>)
 											</a></li>
-											<li><i class="fa fa-users orange"></i> <a href="#">超级管理员(<%=userList2.size()%>)
+											<li><i class="fa fa-users orange"></i> <a href="<%=application.getContextPath()%>/back/admin/administrator.jsp?type=1">超级管理员(<%=userList2.size()%>)
 											</a></li>
-											<li><i class="fa fa-users orange"></i> <a href="#">普通管理员(<%=userList1.size() - userList2.size()%>)
+											<li><i class="fa fa-users orange"></i> <a href="<%=application.getContextPath()%>/back/admin/administrator.jsp?type=5">普通管理员(<%=userList1.size() - userList2.size()%>)
 											</a></li>
-											<!--    <li><i class="fa fa-users orange"></i> <a href="#">产品编辑管理员（4）</a></li>
-            <li><i class="fa fa-users orange"></i> <a href="#">管理员（1）</a></li> -->
-										</ul>
+									</ul>
 									</div>
 								</div>
 							</div>
@@ -141,15 +147,18 @@
 							<tbody>
 								<%
 									String adminState = "";
-									for (User userAdmin : userList1) {
-										if (userAdmin.getUstate() == 1) {
+									for (User userAdmin_show : userList1) {
+										if (userAdmin_show.getUstate() == 1) {
 											adminState = "已启用";
-										} else if (userAdmin.getUstate() == 2) {
+										} else if (userAdmin_show.getUstate() == 2) {
 											adminState = "已停用";
 										} else {
 											adminState = "已删除";
 										}
-										pageContext.setAttribute("admin", userAdmin);
+										if(userType != 0 && userAdmin_show.getUtype() != userType){
+											continue;
+										}
+										pageContext.setAttribute("admin", userAdmin_show);
 								%>
 								<tr>
 									<td><label><input type="checkbox" class="ace"><span
@@ -158,18 +167,40 @@
 									<td>${admin.uname }</td>
 									<td>${admin.uphone }</td>
 									<td>${admin.uemail }</td>
-									<td>${admin.utype == 4 ? "普通管理员" :"超级管理员" }</td>
+									<td>${admin.utype == 5 ? "普通管理员" :"超级管理员" }</td>
 									<td>${admin.utime }</td>
-									<td class="td-status"><span
-										class="label label-success radius"><%=adminState%></span></td>
-									<td class="td-manage"><a
-										onClick="member_stop(this,'10001')" href="javascript:;"
-										title="停用" class="btn btn-xs btn-success"><i
-											class="fa fa-check  bigger-120"></i></a> <a title="编辑"
-										onclick="member_edit('编辑','member-add.html','4','','510')"
-										href="javascript:;" class="btn btn-xs btn-info"><i
+									<%
+									if(userAdmin_show.getUstate() == 1){
+								%>
+								<td class="td-status">
+									<span class="label label-success radius">已启用</span>
+								</td>
+								<%}else if(userAdmin_show.getUstate() == 2){%>
+									<td class="td-status">
+										<span class="label label-defaunt radius">已冻结</span>
+									</td>
+								<% }else if(userAdmin_show.getUstate() == 3){%>
+									<td class="td-status">
+									<span class="label label-defaunt radius">已删除</span>
+									</td>
+								<%}%>
+									<td class="td-manage">
+									<%
+									if(userAdmin_show.getUstate() == 1){
+								%>
+								<a
+									onClick="member_stop(this,'${admin.uid }')"
+									href="javascript:;"
+									title="停用" class="btn btn-xs btn-success"><i
+									class="fa fa-check  bigger-120"></i></a>
+								<%}else{%>
+									<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,${admin.uid })" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>
+								<%}%>
+										<a title="编辑"
+										href="<%=application.getContextPath()%>/back/admin/userAdd.jsp?uid=${admin.uid }"
+										class="btn btn-xs btn-info"><i
 											class="fa fa-edit bigger-120"></i></a> <a title="删除"
-										href="javascript:;" onclick="member_del(this,'1')"
+										href="javascript:;" onclick="member_del(this,${admin.uid })"
 										class="btn btn-xs btn-warning"><i
 											class="fa fa-trash  bigger-120"></i></a></td>
 								</tr>
@@ -182,107 +213,11 @@
 				</div>
 			</div>
 		</div>
-		<!--添加管理员-->
-		<div id="add_administrator_style" class="add_menber"
-			style="display: none">
-			<form action="" method="post" id="form-admin-add">
-				<div class="form-group">
-					<label class="form-label"><span class="c-red">*</span>管理员姓名:</label>
-					<div class="formControls">
-						<input type="text" class="input-text" value="" placeholder=""
-							id="user-name" name="user-name" datatype="*2-16"
-							nullmsg="用户名不能为空">
-					</div>
-					<div class="col-4">
-						<span class="Validform_checktip"></span>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="form-label"><span class="c-red">*</span>初始密码：</label>
-					<div class="formControls">
-						<input type="password" placeholder="密码" name="userpassword"
-							autocomplete="off" value="" class="input-text" datatype="*6-20"
-							nullmsg="密码不能为空">
-					</div>
-					<div class="col-4">
-						<span class="Validform_checktip"></span>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="form-label "><span class="c-red">*</span>确认密码：</label>
-					<div class="formControls ">
-						<input type="password" placeholder="确认新密码" autocomplete="off"
-							class="input-text Validform_error" errormsg="您两次输入的新密码不一致！"
-							datatype="*" nullmsg="请再输入一次新密码！" recheck="userpassword"
-							id="newpassword2" name="newpassword2">
-					</div>
-					<div class="col-4">
-						<span class="Validform_checktip"></span>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="form-label "><span class="c-red">*</span>性别：</label>
-					<div class="formControls  skin-minimal">
-						<label><input name="form-field-radio" type="radio"
-							class="ace" checked="checked"><span class="lbl" value="0">保密</span></label>&nbsp;&nbsp;
-						<label><input name="form-field-radio" type="radio"
-							class="ace"><span class="lbl" value="1">男</span></label>&nbsp;&nbsp;
-						<label><input name="form-field-radio" type="radio"
-							class="ace"><span class="lbl" value="2">女</span></label>
-					</div>
-					<div class="col-4">
-						<span class="Validform_checktip"></span>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="form-label "><span class="c-red">*</span>手机：</label>
-					<div class="formControls ">
-						<input type="text" class="input-text" value="" placeholder=""
-							id="user-tel" name="user-tel" datatype="m" nullmsg="手机不能为空">
-					</div>
-					<div class="col-4">
-						<span class="Validform_checktip"></span>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="form-label"><span class="c-red">*</span>邮箱：</label>
-					<div class="formControls ">
-						<input type="text" class="input-text" placeholder="@" name="email"
-							id="email" datatype="e" nullmsg="请输入邮箱！">
-					</div>
-					<div class="col-4">
-						<span class="Validform_checktip"></span>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="form-label">角色：</label>
-					<div class="formControls ">
-						<span class="select-box" style="width: 150px;"> <select
-							class="select" name="admin-role" size="1">
-								<option value="5">超级管理员</option>
-								<option value="4">普通管理员</option>
-								<!-- 	<option value="2">栏目主辑</option>
-					<option value="3">栏目编辑</option> -->
-						</select>
-						</span>
-					</div>
-				</div>
-				<!-- <div class="form-group">
-			<label class="form-label">备注：</label>
-			<div class="formControls">
-				<textarea name="" cols="" rows="" class="textarea" placeholder="说点什么...100个字符以内" dragonfly="true" onkeyup="checkLength(this);"></textarea>
-				<span class="wordage">剩余字数：<span id="sy" style="color:Red;">100</span>字</span>
-			</div>
-			<div class="col-4"> </div>
-		</div> -->
-				<input class="btn btn-primary radius" type="submit"
-					id="Add_Administrator" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="adminSave()">
-			</form>
-		</div>
 	</div>
 </body>
 </html>
 	<script type="text/javascript">
+	var sbox = "";
 	jQuery(function($) {
 		var oTable1 = $('#sample_table').dataTable({
 			"aaSorting" : [ [ 1, "desc" ] ],//默认第几个排序
@@ -299,6 +234,11 @@
 		$('table th input:checkbox').on(
 				'click',
 				function() {
+					if(sbox == "/"){
+						sbox = "";
+					}else{
+						sbox = "/";
+					}
 					var that = this;
 					$(this).closest('table').find(
 							'tr > td:first-child input:checkbox').each(
@@ -308,10 +248,18 @@
 							});
 
 				});
-
+		//设置单选
+		$('table tr input:checkbox').on(
+		'click',
+		function() {
+			var that = this;
+			this.checked = that.checked;
+			$(this).closest('tr').toggleClass('selected');
+		});
 		$('[data-rel="tooltip"]').tooltip({
 			placement : tooltip_placement
 		});
+		
 		function tooltip_placement(context, source) {
 			var $source = $(source);
 			var $parent = $source.closest('table')
@@ -336,6 +284,22 @@
 			spacingh : 270,//设置显示时间距
 		});
 	});
+	
+	
+	var xmlhttp;
+	//ajax
+	try {
+		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (e) {
+			try {
+				xmlhttp = new XMLHttpRequest();
+			} catch (e) {
+			}
+		}
+	}
 	//字数限制
 	function checkLength(which) {
 		var maxChars = 100; //
@@ -368,52 +332,118 @@
 		elem : '#start',
 		event : 'focus'
 	});
-
+	
+	
+	function selectAdmin(){
+		var adminName = document.getElementById("adminName").value.trim();
+		var adminType = document.getElementById("adminType").value.trim();
+		var reg = /^[0-9]{11}$/;
+		if(!reg.test(adminType) && adminType != ""){
+			layer.msg('请输入合法的电话！！!', {
+				icon : 2,
+				time : 1000
+			});
+			return ;
+		}
+		if(adminName == "" && adminType == ""){
+			window.location.href="<%=application.getContextPath()%>/back/admin/administrator.jsp";
+		}else{
+			window.location.href="<%=application.getContextPath()%>/back/admin/administrator.jsp?name="+adminName+"&phone="+adminType;
+		}
+	}
+	
+	
 	/*用户-停用*/
-	function member_stop(obj, id) {
-		layer
-				.confirm(
-						'确认要停用吗？',
-						function(index) {
-							$(obj)
-									.parents("tr")
-									.find(".td-manage")
-									.prepend(
-											'<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
-							$(obj)
-									.parents("tr")
-									.find(".td-status")
-									.html(
-											'<span class="label label-defaunt radius">已停用</span>');
-							$(obj).remove();
-							layer.msg('已停用!', {
+	function member_stop(obj, id){
+		layer.confirm('确认要停用吗？',function(index){
+			if(xmlhttp!=null){
+				// 定义请求地址
+				var url ="<%=application.getContextPath()%>/user.s?op=updateState&ustate=2&uid="+id;
+				// 以 POST 方式 开启连接
+				// POST 请求 更安全（编码）  提交的数据大小没有限制
+				xmlhttp.open("POST",url,true);
+				// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+				// 每次的状态改变都会调用该方法
+				xmlhttp.onreadystatechange=function(){
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						// 替换空格
+						var msg = xmlhttp.responseText.replace(/\s/gi,"");
+						if(msg == 0){
+							layer.msg('停用失败!', {
 								icon : 5,
 								time : 1000
+								});
+						}else if(msg == 2){
+							layer.msg('信息填写不完整!!!', {
+								icon : 2,
+								time : 1000
+								});
+						}else{
+							$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,${admin.uid })" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
+							$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
+							$(obj).remove();
+							layer.msg('已停用!', {
+								icon : 1,
+								time : 1000
 							});
-						});
+						}
+					}
+				};
+				// 发送请求
+				xmlhttp.send(null);
+			}else{
+				layer.msg('不能创建XMLHttpRequest对象实例', {
+					icon : 2,
+					time : 1000
+					});
+			} 
+		});
 	}
 	/*用户-启用*/
 	function member_start(obj, id) {
-		layer
-				.confirm(
-						'确认要启用吗？',
-						function(index) {
-							$(obj)
-									.parents("tr")
-									.find(".td-manage")
-									.prepend(
-											'<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="fa fa-check  bigger-120"></i></a>');
-							$(obj)
-									.parents("tr")
-									.find(".td-status")
-									.html(
-											'<span class="label label-success radius">已启用</span>');
+		layer.confirm('确认要启用吗？',function(index) {
+			if(xmlhttp!=null){
+				// 定义请求地址
+				var url ="<%=application.getContextPath()%>/user.s?op=updateState&ustate=1&uid="+id;
+				// 以 POST 方式 开启连接
+				// POST 请求 更安全（编码）  提交的数据大小没有限制
+				xmlhttp.open("POST",url,true);
+				// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+				// 每次的状态改变都会调用该方法
+				xmlhttp.onreadystatechange=function(){
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						// 替换空格
+						var msg = xmlhttp.responseText.replace(/\s/gi,"");
+						if(msg == 0){
+							layer.msg('修改失败!', {
+								icon : 5,
+								time : 1000
+								});
+						}else if(msg == 2){
+							layer.msg('信息填写不完整!!!', {
+								icon : 2,
+								time : 1000
+								});
+						}else{
+							$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,${admin.uid })" href="javascript:;" title="停用"><i class="fa fa-check  bigger-120"></i></a>');
+							$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
 							$(obj).remove();
 							layer.msg('已启用!', {
 								icon : 6,
 								time : 1000
 							});
-						});
+								}
+							}
+				};
+				// 发送请求
+				xmlhttp.send(null);
+			}else{
+				layer.msg('不能创建XMLHttpRequest对象实例', {
+					icon : 2,
+					time : 1000
+					});
+			} 
+		});
 	}
 	/*产品-编辑*/
 	function member_edit(title, url, id, w, h) {
@@ -423,61 +453,114 @@
 	/*产品-删除*/
 	function member_del(obj, id) {
 		layer.confirm('确认要删除吗？', function(index) {
-			$(obj).parents("tr").remove();
-			layer.msg('已删除!', {
-				icon : 1,
-				time : 1000
-			});
+			if(xmlhttp!=null){
+				// 定义请求地址
+				var url ="<%=application.getContextPath()%>/user.s?op=delete&uid="+id;
+				// 以 POST 方式 开启连接
+				// POST 请求 更安全（编码）  提交的数据大小没有限制
+				xmlhttp.open("POST",url,true);
+				// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+				// 每次的状态改变都会调用该方法
+				xmlhttp.onreadystatechange=function(){
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						// 替换空格
+						var msg = xmlhttp.responseText.replace(/\s/gi,"");
+						if(msg == 0){
+							layer.msg('删除失败!', {
+								icon : 5,
+								time : 1000
+								});
+						}else if(msg == 2){
+							layer.msg('不能进行删除操作!!!', {
+								icon : 2,
+								time : 1000
+								});
+						}else{
+							$(obj).parents("tr").remove();
+							layer.msg('已删除!', {
+								icon : 1,
+								time : 1000
+							});
+						}
+					}
+				};
+				// 发送请求
+				xmlhttp.send(null);
+			}else{
+				layer.msg('不能创建XMLHttpRequest对象实例', {
+					icon : 2,
+					time : 1000
+					});
+			} 
 		});
 	}
-	/*添加管理员*/
-	$('#administrator_add').on('click', function() {
-		layer.open({
-			type : 1,
-			title : '添加管理员',
-			area : [ '700px', '' ],
-			shadeClose : false,
-			content : $('#add_administrator_style'),
-
-		});
-	})
-	//表单验证提交
-	function adminSave() {
-		var addMsg;
-		var formData = new FormData($('#form-admin-add')[0]);
-		$.ajax({
-			url : 'user.s?op=add',
-			type : 'post',
-			data : formData,
-			contentType : false,
-			processData : false,
-			success : function(result) {
-				//eval("var result = " + json);
-				if (result.code == 1) {
-					addMsg = 1;
-				} else {
-					addMsg = 0;
+	/*用户-批量删除*/
+	function selectDelete(){
+		layer.confirm('确认要删除吗？',function(index){
+			if(sbox != "/"){
+				var table = $('#sample_table').dataTable();//获取表格
+				var nTrs = table.fnGetNodes();//fnGetNodes获取表格所有行，nTrs[i]表示第i行tr对象
+				for (var i = 0; i < nTrs.length; i++) {
+					if ($(nTrs[i]).hasClass('selected')) {
+						var bid = table.fnGetData(nTrs[i]);//fnGetData获取一行的数据
+						 sbox =sbox +"/"+ bid[1];
+					}
 				}
+			}else{
+				layer.msg("不能进行该操作！！！", {
+					icon : 2,
+					time : 1000
+					});
+				return ;
 			}
-		})
-		$("#form-admin-add").Validform({
-			tiptype : 2,
-			callback : function(addMsg) {
-				if (addMsg == 1) {
-					layer.msg("添加成功！！！", {
-						icon : addMsg,
-						time : 1000
-					}, function() {
-						location.reload();//刷新页面 
+			if(sbox == ""){
+				layer.msg("请选择要删除的用户！！！", {
+					icon : 7,
+					time : 1000
 					});
-				} else {
-					layer.msg("添加失败！！！", {
-						icon : addMsg,
-						time : 3000
+				return ;
+			}
+			if (xmlhttp != null) {
+				// 定义请求地址
+				var url = "<%=application.getContextPath()%>/user.s?op=delete&uid="+sbox;
+				// 以 POST 方式 开启连接
+				// POST 请求 更安全（编码）  提交的数据大小没有限制
+				xmlhttp.open("POST", url, true);
+				// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+				// 每次的状态改变都会调用该方法
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						var msg = xmlhttp.responseText.replace(/\s/gi, "");
+						if(msg == 1){
+							sbox = "";
+							layer.msg("删除成功！！！", {
+								icon : 6,
+								time : 1000
+								});
+							window.location.href='<%=application.getContextPath()%>/back/admin/administrator.jsp';
+						}else if(msg == 2){
+							sbox = "";
+							layer.msg("不能进行此操作！！！", {
+								icon : 2,
+								time : 1000
+								});
+						}else{
+							sbox = "";
+							layer.msg("删除失败!!!", {
+								icon : 5,
+								time : 1000
+								});
+						}
+					}
+				};
+				// 发送请求
+				xmlhttp.send(null);
+			} else {
+				sbox = "";
+				layer.msg("不能创建XMLHttpRequest对象实例", {
+					icon : 2,
+					time : 1000
 					});
-				}
-				var index = parent.$("#iframe").attr("src");
-				parent.layer.close(index);
 			}
 		});
 	}

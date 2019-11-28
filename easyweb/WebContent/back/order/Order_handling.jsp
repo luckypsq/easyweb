@@ -25,7 +25,9 @@
         <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
 <title>订单处理</title>
 </head>
-
+<%
+	
+%>
 <body>
 <div class="clearfix">
  <div class="handling_style" id="order_hand">
@@ -62,10 +64,13 @@
 		 <tr>
 				<th width="25px"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
 				<th width="120px">订单编号</th>
-				<th width="250px">产品名称</th>
-				<th width="100px">交易金额</th>				
+				<th width="250px">书籍名称</th>
+				<th width="80px">交易金额</th>				
                 <th width="100px">交易时间</th>				
-				<th width="180px">所属分类</th>
+				<th width="100px">配送方式</th>
+				<th width="180px">配送地区</th>
+				<th width="100px">联系电话</th>
+				<th width="100px">卖家姓名</th>
                 <th width="80px">数量</th>
 				<th width="70px">状态</th>
                 <th width="100px">说明</th>                
@@ -112,24 +117,6 @@
      <td>2</td>
       <td class="td-status"><span class="label label-success radius">已发货</span></td>
       <td></td>
-     <td>
-     <a title="订单详细"  href="<%=application.getContextPath() %>/back/order_detailed.html"  class="btn btn-xs btn-info order_detailed" ><i class="fa fa-list bigger-120"></i></a> 
-     <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>    
-     </td>
-     </tr>
-      <tr>
-     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-     <td>20160705445622</td>
-     <td class="order_product_name">
-      <a href="<%=application.getContextPath() %>/back/#" class="product_Display"><img src="<%=application.getContextPath() %>/back/products/p_1.jpg"  title="产品名称"/>
-     
-     </td>
-     <td>456.5</td>    
-     <td>2016-7-5</td>
-     <td>食品</td>
-     <td>2</td>
-      <td class="td-status"><span class="label label-success radius">失败</span></td>
-      <td>支付失败</td>
      <td>
      <a title="订单详细"  href="<%=application.getContextPath() %>/back/order_detailed.html"  class="btn btn-xs btn-info order_detailed" ><i class="fa fa-list bigger-120"></i></a> 
      <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>    

@@ -11,7 +11,7 @@ public class User {
 	private String upassword;//用户密码
 	private int ustate;//用户状态（1.可用2.冻结3.删除）
 	private String utemp;//备用字段
-	private int utype;//级别(1用户，2会员，3钻石会员，4普通管理员，5超级管理员)
+	private int utype;//级别(2用户，3会员，4钻石会员，1普通管理员，0超级管理员)
 	private String uemail;//邮箱
 	private String utime;//注册时间
 	private int usex;//性别(1.男2.女)

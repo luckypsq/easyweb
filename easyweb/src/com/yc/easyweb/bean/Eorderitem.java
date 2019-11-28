@@ -8,6 +8,13 @@ public class Eorderitem {
 	private String eoid;//订单号
 	private double total;//总价
 	private String eitemp;//预备字段
+	private long uid;//用户名
+	public long getUid() {
+		return uid;
+	}
+	public void setUid(long uid) {
+		this.uid = uid;
+	}
 	public String getItemid() {
 		return itemid;
 	}

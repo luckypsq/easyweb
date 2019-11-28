@@ -27,7 +27,7 @@
 //统计
 	        require.config({
             paths: {
-                echarts: './assets/dist'
+                echarts: '<%=application.getContextPath() %>/back/assets/dist'
             }
         });
         require(

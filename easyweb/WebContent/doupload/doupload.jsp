@@ -95,7 +95,7 @@
 			} */
 			if(string.length == 11){
 				book = new Book();
-				book.setBtid(Integer.parseInt(string[0]));
+				book.setBtid(Long.parseLong(string[0]));
 				book.setBimg(string[2]);
 				book.setBname(string[3]);
 				book.setBuniversity(string[4]);
@@ -109,7 +109,7 @@
 				list.add(book);
 			} else if(string.length == 8){
 				book = new Book();
-				book.setBtid(Integer.parseInt(string[0]));
+				book.setBtid(Long.parseLong(string[0]));
 				book.setBimg(string[2]);
 				book.setBname(string[3]);
 				book.setBcontent(string[3]+" "+string[4]);

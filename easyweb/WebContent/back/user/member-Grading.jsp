@@ -13,9 +13,6 @@
         <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
         <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
         <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
-        <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
-		<![endif]-->
 		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
 		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>   
         <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>		
@@ -40,16 +37,16 @@
       </div>
       <div class="widget-body">
          <ul class="b_P_Sort_list">
-             <li><i class="orange  fa fa-user-secret"></i><a href="<%=application.getContextPath() %>/back/#">全部(235)</a></li>
-             <li><i class="fa fa-diamond pink "></i> <a href="<%=application.getContextPath() %>/back/#">普通会员(235)</a></li>
-             <li> <i class="fa fa-diamond pink "></i> <a href="<%=application.getContextPath() %>/back/#">铁牌会员(2215)</a> </li>
-             <li> <i class="fa fa-diamond pink "></i> <a href="<%=application.getContextPath() %>/back/#">铜牌会员(3456)</a></li>
-             <li><i class="fa fa-diamond pink "></i> <a href="<%=application.getContextPath() %>/back/#">银牌会员(4332)</a></li>
-             <li><i class="fa fa-diamond pink "></i> <a href="<%=application.getContextPath() %>/back/#">金牌会员(1332)</a></li>
-             <li> <i class="fa fa-diamond grey"></i> <a href="<%=application.getContextPath() %>/back/#">钻石会员(4543)</a></li>
-             <li> <i class="fa fa-diamond red"></i> <a href="<%=application.getContextPath() %>/back/#">红钻会员(343)</a></li>
-             <li> <i class="fa fa-diamond blue"></i> <a href="<%=application.getContextPath() %>/back/#">蓝钻会员(2343)</a></li>
-             <li> <i class="fa fa-diamond grey"></i> <a href="<%=application.getContextPath() %>/back/#">黑钻2(53)</a></li>
+             <li><i class="orange  fa fa-user-secret"></i><a href="#">全部(235)</a></li>
+             <li><i class="fa fa-diamond pink "></i> <a href="#">普通会员(235)</a></li>
+             <li> <i class="fa fa-diamond pink "></i> <a href="#">铁牌会员(2215)</a> </li>
+             <li> <i class="fa fa-diamond pink "></i> <a href="#">铜牌会员(3456)</a></li>
+             <li><i class="fa fa-diamond pink "></i> <a href="#">银牌会员(4332)</a></li>
+             <li><i class="fa fa-diamond pink "></i> <a href="#">金牌会员(1332)</a></li>
+             <li> <i class="fa fa-diamond grey"></i> <a href="#">钻石会员(4543)</a></li>
+             <li> <i class="fa fa-diamond red"></i> <a href="#">红钻会员(343)</a></li>
+             <li> <i class="fa fa-diamond blue"></i> <a href="#">蓝钻会员(2343)</a></li>
+             <li> <i class="fa fa-diamond grey"></i> <a href="#">黑钻会员(53)</a></li>
             </ul>
   </div>
   </div>
@@ -98,8 +95,8 @@
           <td class="text-l">345</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
           <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a> 
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a> 
+          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
           </td>
 		</tr>
         <tr>
@@ -114,8 +111,8 @@
            <td class="text-l">1345</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
           <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a>       
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a>       
+          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
           </td>
 		</tr>
          <tr>
@@ -130,8 +127,8 @@
            <td class="text-l">645</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
           <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a>         
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a>         
+          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
           </td>
 		</tr>
          <tr>
@@ -146,8 +143,8 @@
            <td class="text-l">645</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
           <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a>       
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a>       
+          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
           </td>
 		</tr>
          <tr>
@@ -162,8 +159,8 @@
            <td class="text-l">345</td>
           <td class="td-status"><span class="label label-success radius">已启用</span></td>
           <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>        
-          <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>        
+          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
           </td>
 		</tr>
       </tbody>
@@ -209,7 +206,7 @@ function member_show(title,url,id,w,h){
 /*用户-停用*/
 function member_stop(obj,id){
 	layer.confirm('确认要停用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
 		$(obj).remove();
 		layer.msg('已停用!',{icon: 5,time:1000});
@@ -218,7 +215,7 @@ function member_stop(obj,id){
 /*用户-启用*/
 function member_start(obj,id){
 	layer.confirm('确认要启用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="停用"><i class="fa fa-check  bigger-120"></i></a>');
+		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="fa fa-check  bigger-120"></i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
 		$(obj).remove();
 		layer.msg('已启用!',{icon: 6,time:1000});
@@ -239,7 +236,7 @@ function member_start(obj,id){
 /**************/
      require.config({
             paths: {
-                echarts: './assets/dist'
+                echarts: '<%=application.getContextPath() %>/back/assets/dist'
             }
         });
         require(
@@ -350,4 +347,4 @@ $(function($) {
 					return 'left';
 				}
 			});
-</script>   
+</script>

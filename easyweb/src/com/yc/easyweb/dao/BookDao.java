@@ -21,7 +21,7 @@ public class BookDao {
 	public List<Book> selectAll(Book book) throws Exception {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
-				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1,bnum,bauthor,bdate" + " from book where 1=1 ");
+				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1,bnum,bauthor,bdate,uid" + " from book where 1=1 ");
 		if (book != null) {
 			if (book.getBname() != null && !book.getBname().isEmpty()) {
 				sb.append(" and bname like '%" + book.getBname() + "%'");
@@ -51,6 +51,9 @@ public class BookDao {
 			if(book.getBprice() != 0){
 				sb.append(" and bprice = " + book.getBprice());
 			}
+			if(book.getUid() != 0){
+				sb.append(" and uid = " + book.getUid());
+			}
 			if (book.getBstate() != 0) {
 				sb.append(" and bstate = " + book.getBstate());
 			}
@@ -73,7 +76,7 @@ public class BookDao {
 	public Book selectSingle(Book book) throws Exception {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
-				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1,bnum,bauthor,bdate" + " from book where 1=1 ");
+				+ " bcontent,bimg,bprice,bstate,btid,btemp,uid,btemp1,bnum,bauthor,bdate" + " from book where 1=1 ");
 		if (book != null) {
 			if (book.getBname() != null && !book.getBname().isEmpty()) {
 				sb.append(" and bname like '%" + book.getBname() + "%'");
@@ -90,7 +93,9 @@ public class BookDao {
 			if (book.getBclass() != null && !book.getBclass().isEmpty()) {
 				sb.append(" and bclass like '%" + book.getBclass() + "%'");
 			}
-			
+			if(book.getUid() != 0){
+				sb.append(" and uid = " + book.getUid());
+			}
 			if(book.getBnum() != null && !book.getBnum().toString().isEmpty()){
 				sb.append(" and bnum =" + book.getBnum());
 			}
@@ -124,11 +129,11 @@ public class BookDao {
 	// 添加
 	public int insert(Book book) throws Exception {
 		String sql = "insert into book(bid,bname,buniversity,bucollege," + "bumajor,bclass,bcontent,bimg,bprice,btid,"
-				+ "btemp,bnum,bauthor,bdate) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				+ "btemp,bnum,bauthor,bdate,uid) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
 		return DbHelper.update(sql, book.getBname(), book.getBuniversity(), book.getBucollege(), book.getBumajor(),
 				book.getBclass(), book.getBcontent(), book.getBimg(), book.getBprice(), book.getBtid(), book.getBtemp(),
-				book.getBnum(), book.getBauthor(), book.getBdate());
+				book.getBnum(), book.getBauthor(), book.getBdate(),book.getUid());
 	}
 
 	// 删除
@@ -160,6 +165,9 @@ public class BookDao {
 			}
 			if (book.getBtid() != null) {
 				sb.append(" and btid = " + book.getBtid());
+			}
+			if (book.getUid() != 0) {
+				sb.append(" and uid = " + book.getUid());
 			}
 			if(book.getBprice() != 0){
 				sb.append(" and bprice = " + book.getBprice());
@@ -277,8 +285,7 @@ public class BookDao {
 			sb.append(" and bid = " + bookOld.getBid());
 		}
 		return db.update(sb.toString(), null);
-
+		
 	}
-	//更新多条
 	// 其他
 }
