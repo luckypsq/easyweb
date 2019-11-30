@@ -62,13 +62,12 @@
 						UserBiz userBiz = new UserBiz();
 						User user = new User();
 						user.setUstate(1);
-						user.setUtype(1);
 						List<User> userList1 = userBiz.selectAll(user);
-						user.setUtype(2);
+						user.setUtype(1);
 						List<User> userList2 = userBiz.selectAll(user);
-						user.setUtype(3);
+						user.setUtype(5);
 						List<User> userList3 = userBiz.selectAll(user);
-						long userNum = userList1.size()+userList2.size()+userList3.size();
+						long userNum = userList1.size()-userList3.size()-userList2.size();
 					%>
 						<h1><%=userNum %></h1>
 						<p>书城用户</p>
@@ -102,9 +101,8 @@
 				<%
 					//1.查询全部订单数
 					EorderBiz eorderBiz = new EorderBiz();
-					Eorder eorder = new Eorder();
-					//eorder.setEotime(dateStr[0]+"/"+dateStr[1]+"/"+dateStr[2]);
-					List<Eorder> eorderList = eorderBiz.selectAll(eorder);
+					OrderDetial eorder = new OrderDetial();
+					List<OrderDetial> eorderList = eorderBiz.selectDetail(eorder);
 					pageContext.setAttribute("eorderList", eorderList);
 				%>
 					<h1>${eorderList.size() }</h1>
@@ -120,21 +118,9 @@
 				<div class="value">
 				<%
 					double num = 0.0;
-					EorderitemBiz eorderitemBiz = new EorderitemBiz();
-					List<Eorderitem> eorderitemList = null;
-					Eorderitem  eorderitem ; 
 					if(eorderList.size() != 0){
-						//根据查询出来的订单存储订单id
-						for(Eorder e : eorderList){
-							eorderitem = new Eorderitem ();
-							eorderitem.setEoid(e.getEoid());
-							eorderitemList = eorderitemBiz.selectAll(eorderitem);
-							//根据查询出来的订单详情表的数据计算总和
-							if(eorderitemList.size() != 0 ){
-								for(Eorderitem eo : eorderitemList){
-									num = eo.getTotal() + num;
-								}
-							}
+						for(OrderDetial oShow : eorderList){
+							num = num+oShow.getTotal();
 						}
 					}
 				%>
@@ -152,23 +138,23 @@
 					<tbody>
 					<%
 						//eorderList保存着全部订单
-						//状态1. 2.未处理3.代发货4.未处理5.交易失败6.交易失败7.已成交
+						//状态1.待付款2.待发货3.已发货4.退货申请中5.退款成功6.已接收7.退货失败
 						//配送方式(1.送货上门2.自取)
-						long num1 = 0;//未处理订单eostate == 2 ||eostate == 4 && eotype==1
-						long num2 = 0;//待发货订单eostate == 3  && eotype==1
-						long num3 = 0;//待结算订单eotype==2
-						long num4 = 0;//已成交订单数eostate == 7
-						long num5 = 0;//交易失败eostate == 5 ||eostate == 6 && eotype==1
-						for(Eorder eo : eorderList){
-							if(eo.getEotype().equals("店面接取")){
+						long num1 = 0;//未处理订单eostate == 4 
+						long num2 = 0;//待发货订单eostate == 2 
+						long num3 = 0;//待结算订单eotype==1
+						long num4 = 0;//已成交订单数eostate == 6
+						long num5 = 0;//交易失败eostate == 5 
+						for(OrderDetial eo : eorderList){
+							if(eo.getEostate() == 1){
 								num3 ++;
-							}else if(eo.getEostate() == 7){
-								num4++;
-							}else if((eo.getEostate() == 2 || eo.getEostate() == 4) && eo.getEotype().equals("网上配送")){
-								num1++;
-							}else if(eo.getEostate() == 3  && eo.getEotype().equals("网上配送")){
+							}else if(eo.getEostate() == 2){
 								num2++;
-							}else if((eo.getEostate() == 5 || eo.getEostate() ==6) && eo.getEotype().equals("网上配送")){
+							}else if(eo.getEostate() == 4 ){
+								num1++;
+							}else if(eo.getEostate() == 6 ){
+								num4++;
+							}else if(eo.getEostate() == 5 ){
 								num5++;
 							}
 						}
@@ -191,7 +177,7 @@
 						</tr>
 						<tr>
 							<td class="name">交易失败：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num5 %></a>&nbsp;个</td>
+							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Refund.jsp"><%=num5 %></a>&nbsp;个</td>
 						</tr>
 					</tbody>
 				</table>

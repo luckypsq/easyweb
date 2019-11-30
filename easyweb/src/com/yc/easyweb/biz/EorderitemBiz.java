@@ -19,20 +19,25 @@ public class EorderitemBiz {
 			return dao.selectAll(eorderitem);
 			
 		}
+		public Eorderitem selectSingle(Eorderitem eorderitem) throws Exception{
+			return dao.selectSingle(eorderitem);
+		}
 		//添加
-		public int insert(Eorderitem eorderitem){
-			return 0;
+		public int insert(Eorderitem eorderitem) throws Exception{
+			return dao.insert(eorderitem);
+		}
+		//删除
+		public int delete(Eorderitem eorderitem) throws Exception{
+			return dao.delete(eorderitem);
 			
 		}
 		//删除
-		public int delete(Eorderitem eorderitem){
-			return 0;
-			
-		}
+				public int delete(List<Eorderitem> list) throws Exception{
+					return dao.delete(list);
+				}
 		//更新
-		public  int update (Eorderitem eorderitem) {
-			return 0;
-			
+		public  int update (Eorderitem eoNew, Eorderitem eoOld) throws Exception {
+			return dao.update(eoNew, eoOld);
 		}
 		//其他
 }

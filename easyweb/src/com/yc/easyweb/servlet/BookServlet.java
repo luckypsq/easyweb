@@ -127,6 +127,7 @@ public class BookServlet extends BaseServlet {
 			}
 		} else {
 			out.print("É¾³ýÊ§°Ü£¡");
+			return;
 		}
 		try {
 			if (list.size() != 0) {
@@ -151,8 +152,6 @@ public class BookServlet extends BaseServlet {
 		PrintWriter out = response.getWriter();
 		if (request.getParameter("bid") != null && !request.getParameter("bid").isEmpty()) {
 			bookOld.setBid(Long.parseLong(request.getParameter("bid").toString()));
-		}else{
-			
 		}
 		if (request.getParameter("bstate") != null && !request.getParameter("bstate").isEmpty()) {
 			bookNew.setBstate(Integer.parseInt(request.getParameter("bstate").toString()));

@@ -17,7 +17,7 @@ public class EorderitemDao {
 	//查询所有
 	public List<Eorderitem> selectAll(Eorderitem eorderitem) throws Exception{
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select itemid,count,bid,eoid,total,eitemp,uid"
+		sb.append(" select itemid,count,bid,eoid,total,eitemp,uid,cartstate"
 				+ " from eorderitem where 1=1 ");
 		if(eorderitem != null){
 			if(eorderitem.getBid() != 0){
@@ -25,6 +25,9 @@ public class EorderitemDao {
 			}
 			if(eorderitem.getUid() != 0){
 				sb.append(" and uid="+eorderitem.getUid());
+			}
+			if(eorderitem.getCartstate() != 0){
+				sb.append(" and cartstate="+eorderitem.getCartstate());
 			}
 			if(eorderitem.getEoid() != null){
 				sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
@@ -38,6 +41,33 @@ public class EorderitemDao {
 		return list;
 		
 	}
+	//查询单个
+		public Eorderitem selectSingle(Eorderitem eorderitem) throws Exception{
+			StringBuffer sb = new StringBuffer();
+			sb.append(" select itemid,count,bid,eoid,total,eitemp,uid,cartstate"
+					+ " from eorderitem where 1=1 ");
+			if(eorderitem != null){
+				if(eorderitem.getBid() != 0){
+					sb.append(" and bid="+eorderitem.getBid());
+				}
+				if(eorderitem.getUid() != 0){
+					sb.append(" and uid="+eorderitem.getUid());
+				}
+				if(eorderitem.getEoid() != null){
+					sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
+				}
+				if(eorderitem.getItemid() != null){
+					sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
+				}
+				if(eorderitem.getCartstate() != 0){
+					sb.append(" and cartstate="+eorderitem.getCartstate());
+				}
+			}
+			sb.append("  order by  itemid desc");
+			return db.selectSingle(sb.toString(), null, Eorderitem.class);
+			
+			
+		}
 	//添加
 	public int insert(Eorderitem eorderitem) throws Exception{
 		String sql = "insert into eorderitem(itemid,count,bid,eoid,total,eitemp,uid) " 
@@ -108,6 +138,9 @@ public class EorderitemDao {
 		}
 		if(eoNew.getTotal() != 0){
 			sb.append(" , total ="+eoNew.getTotal());
+		}
+		if(eoNew.getCartstate() != 0){
+			sb.append(" , cartstate="+eoNew.getCartstate());
 		}
 		sb.append(" where 1=1 ");
 		if(eoOld.getBid() != 0){

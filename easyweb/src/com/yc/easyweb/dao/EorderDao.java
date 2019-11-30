@@ -6,6 +6,7 @@ import java.util.List;
 import com.mysql.fabric.xmlrpc.base.Array;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Eorder;
+import com.yc.easyweb.bean.OrderDetial;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.common.DbHelper;
 
@@ -21,7 +22,7 @@ public class EorderDao {
 	// 查询所有
 	public List<Eorder> selectAll(Eorder eorder) throws Exception {
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype " + " from eorder where 1=1 ");
+		sb.append(" select eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype,eoespress,eopaytypeid " + " from eorder where 1=1 ");
 		if (eorder != null) {
 			if (eorder.getUid() != 0) {
 				sb.append(" and uid=" + eorder.getUid());
@@ -44,18 +45,87 @@ public class EorderDao {
 			if (eorder.getEoaddr() != null) {
 				sb.append(" and eoaddr like '%" + eorder.getEoaddr() + "%'");
 			}
+			if (eorder.getEoespress() != null) {
+				sb.append(" and eoespress like '%" + eorder.getEoespress() + "%'");
+			}
+			if (eorder.getEopaytypeid() != 0) {
+				sb.append(" and eopaytypeid = " + eorder.getEopaytypeid());
+			}
 		}
 		sb.append("  order by  eoid desc");
 		List<Eorder> list = db.selectAll(sb.toString(), null, Eorder.class);
 		return list;
 	}
-
+	// 查询所有订单详细信息
+		public List<OrderDetial> selectAllDetail(OrderDetial  detial) throws Exception {
+			StringBuffer sb = new StringBuffer();
+			sb.append(" select e.eoid,bname,u.uid,b.bid,total,eotime,eotype,eoaddr,uphone,e.uname,count,eostate,eoespress,eopayname,bimg "
+					+ " from eorder e,book b,eorderitem eo,user u,paytype pay "
+					+ " where  e.eoid = eo.eoid and b.bid = eo.bid  and pay.eopaytypeid = e.eopaytypeid "
+					+ " and u.uid = e.uid and 1=1 ");
+			if(detial != null){
+				if(detial.getEoid() != null){
+					sb.append(" and e.eoid = '" + detial.getEoid() + "'");
+				}
+				if(detial.getEotime() != null){
+					sb.append(" and eotime = '" + detial.getEotime() + "'");
+				}
+				if(detial.getEostate() != 0){
+					sb.append(" and eostate = " + detial.getEostate());
+				}
+				if(detial.getUid() != 0){
+					sb.append(" and u.uid = " + detial.getUid());
+				}
+				if(detial.getBid() != 0){
+					sb.append(" and b.bid = " + detial.getBid());
+				}
+			}
+			sb.append("  order by  e.eoid desc");
+			return db.selectAll(sb.toString(), null, OrderDetial.class);
+		
+		}
+	// 查询单个
+		public Eorder selectSingle(Eorder eorder) throws Exception {
+			StringBuffer sb = new StringBuffer();
+			sb.append(" select eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype " + " from eorder where 1=1 ");
+			if (eorder != null) {
+				if (eorder.getUid() != 0) {
+					sb.append(" and uid=" + eorder.getUid());
+				}
+				if (eorder.getEoid() != null) {
+					sb.append(" and eoid='" + eorder.getEoid()+"'");
+				}
+				if (eorder.getEotime() != null) {
+					sb.append(" and eotime like '%" + eorder.getEotime() + "%'");
+				}
+				if (eorder.getUname() != null) {
+					sb.append(" and uname like '%" + eorder.getUname() + "%'");
+				}
+				if (eorder.getEotype() != null) {
+					sb.append(" and eotype like '%" + eorder.getEotype() + "%'");
+				}
+				if (eorder.getEostate() != 0) {
+					sb.append(" and eostate = " + eorder.getEostate());
+				}
+				if (eorder.getEoaddr() != null) {
+					sb.append(" and eoaddr like '%" + eorder.getEoaddr() + "%'");
+				}
+				if (eorder.getEoespress() != null) {
+					sb.append(" and eoespress like '%" + eorder.getEoespress() + "%'");
+				}
+				if (eorder.getEopaytypeid() != 0) {
+					sb.append(" and eopaytypeid = " + eorder.getEopaytypeid());
+				}
+			}
+			sb.append("  order by  eoid desc");
+			return db.selectSingle(sb.toString(), null, Eorder.class);
+		}
 	// 添加
 	public int insert(Eorder eorder) throws Exception {
-		String sql = "insert into eorder(eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype ) "
+		String sql = "insert into eorder(eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype,eoespress,eopaytypeid  ) "
 				+ " values(?,?,?,?,?,?,?,?);";
 		return DbHelper.update(sql, eorder.getEoid(), eorder.getUid(), eorder.getEostate(), eorder.getEotime(),
-				eorder.getEotemp(), eorder.getUname(), eorder.getEoaddr(), eorder.getEotype());
+				eorder.getEotemp(), eorder.getUname(), eorder.getEoaddr(), eorder.getEotype(),eorder.getEoespress(),eorder.getEopaytypeid());
 	}
 
 	// 删除
@@ -72,19 +142,19 @@ public class EorderDao {
 			sb.append(" and eoid='" + eorder.getEoid()+"'");
 		}
 		if (eorder.getEotime() != null) {
-			sb.append(" and eotime like '%" + eorder.getEotime() + "%'");
+			sb.append(" and eotime = '" + eorder.getEotime() + "'");
 		}
 		if (eorder.getUname() != null) {
-			sb.append(" and uname like '%" + eorder.getUname() + "%'");
+			sb.append(" and uname = '" + eorder.getUname() + "'");
 		}
 		if (eorder.getEotype() != null) {
-			sb.append(" and eotype like '%" + eorder.getEotype() + "%'");
+			sb.append(" and eotype = '" + eorder.getEotype() + "'");
 		}
 		if (eorder.getEostate() != 0) {
 			sb.append(" and eostate = " + eorder.getEostate());
 		}
 		if (eorder.getEoaddr() != null) {
-			sb.append(" and eoaddr like '%" + eorder.getEoaddr() + "%'");
+			sb.append(" and eoaddr = '" + eorder.getEoaddr() + "'");
 		}
 		return DbHelper.update(sb.toString(), null);
 	}
@@ -106,19 +176,19 @@ public class EorderDao {
 				sb.append(" and eoid='" + eorder.getEoid()+"'");
 			}
 			if (eorder.getEotime() != null) {
-				sb.append(" and eotime like '%" + eorder.getEotime() + "%'");
+				sb.append(" and eotime = '" + eorder.getEotime() + "'");
 			}
 			if (eorder.getUname() != null) {
-				sb.append(" and uname like '%" + eorder.getUname() + "%'");
+				sb.append(" and uname = " + eorder.getUname() + "'");
 			}
 			if (eorder.getEotype() != null) {
-				sb.append(" and eotype like '%" + eorder.getEotype() + "%'");
+				sb.append(" and eotype = '" + eorder.getEotype() + "'");
 			}
 			if (eorder.getEostate() != 0) {
 				sb.append(" and eostate = " + eorder.getEostate());
 			}
 			if (eorder.getEoaddr() != null) {
-				sb.append(" and eoaddr like '%" + eorder.getEoaddr() + "%'");
+				sb.append(" and eoaddr = '" + eorder.getEoaddr() + "'");
 			}
 			sqList.add(sb.toString());
 		}
@@ -153,6 +223,12 @@ public class EorderDao {
 		if (eorderNew.getEotemp() != null) {
 			sb.append(" , eotemp ='" + eorderNew.getEotemp() + "'");
 		}
+		if (eorderNew.getEoespress() != null) {
+			sb.append(" , eoespress = '" + eorderNew.getEoespress() + "'");
+		}
+		if (eorderNew.getEopaytypeid() != 0) {
+			sb.append(" , eopaytypeid = " + eorderNew.getEopaytypeid());
+		}
 		sb.append(" where 1=1 ");
 		if (eorderOld.getUid() != 0) {
 			sb.append(" and uid=" + eorderOld.getUid());
@@ -171,6 +247,9 @@ public class EorderDao {
 		}
 		if (eorderOld.getEoaddr() != null) {
 			sb.append(" and eoaddr ='" + eorderOld.getEoaddr() + "'");
+		}
+		if (eorderOld.getEoid() != null) {
+			sb.append(" and eoid ='" + eorderOld.getEoid() + "'");
 		}
 		return db.update(sb.toString(), null);
 	}
