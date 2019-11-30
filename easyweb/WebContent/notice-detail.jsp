@@ -9,42 +9,14 @@
 	<title>Document</title>
 </head>
 <body >
-
-<div class="top" id="item4">
-	<div class="container clearfix">
-		<ul class="clearfix fr">
-			<li><a href="join.html#tologin" >登录</a></li>
-			<li><a href="join.html#toregister" >注册</a></li>
-			<li><a href="member.html" style="border: none">个人中心</a></li>
-		</ul>
-	</div>
-</div>
-
-<div class="header">
-	<div class="container clearfix">
-		<div class="logo fl">
-			<a href="index.html"><img src="images/logo4.png" alt=""/></a>
-		</div>
-		<div class="seacher fl">
-			<form action="" method="post">
-				<input type="text" placeholder="小伙伴，你想找什么?"/><input type="submit" value="搜 索"/>
-			</form>
-			<p>热门搜索：<a href="#">自行车</a> <a href="#">笔记本</a> <a href="#">散热器</a> <a href="#">考研资料</a> <a href="#">摩托车</a> <a href="#">手机</a> <a href="#">轮滑鞋</a> <a href="#">显示器</a> <a href="#">显示器</a> <a href="#">显示器</a> <a href="#">显示器</a></p>
-		</div>
-		<div class="mm fr clearfix">
-			<a href="list.html">我要买</a>
-			<a href="publish.html">我要卖</a>
-		</div>
-	</div>
-</div>
-
+<jsp:include page="/common/header.jsp"></jsp:include>
 <div class="mainbody" style="background: #FFF url(images/bodybg.png) repeat-x;">
 	<div class="container clearfix" style="background-color: white">
 		<div class="mainbody_topbg"></div>
 		<div class="bread">当前位置：
-			<a href="index.html">首页</a> >
-			<a href="notice.html">公告</a> >
-			<a href="notice-detail.html">公告详情</a>
+			<a href="<%=application.getContextPath() %>/lhoption/index.jsp">首页</a> >
+			<a href="<%=application.getContextPath() %>/lhoption/notice.jsp">公告</a> >
+			<a href="<%=application.getContextPath() %>/notice-detail.jsp">公告详情</a>
 		</div>
 		<div class="maincontent fl">
 			<div class="post">
@@ -144,52 +116,6 @@
 		<div class="mainbody_bottombg"></div>
 	</div>
 </div>
-
-
-
-
-<div class="foot">
-	<div class="container">
-		<div class="zhinan">
-			<ul class="clearfix">
-				<li class="item-li">关于我们
-					<ul>
-						<li><a href="help.html">自我介绍</a></li>
-						<li><a href="help.html">联系我们</a></li>
-						<li><a href="help.html">网站公告</a></li>
-					</ul>
-				</li>
-				<li class="item-li">新手指南
-					<ul>
-						<li><a href="help.html">如何买书</a></li>
-						<li><a href="help.html">如何卖书</a></li>
-						<li><a href="help.html">修改密码</a></li>
-					</ul>
-				</li>
-				<li class="item-li">配送方式
-					<ul>
-						<li><a href="help.html">配送范围</a></li>
-						<li><a href="help.html">配送时间</a></li>
-					</ul>
-				</li>
-				<li class="item-li">售后服务
-					<ul>
-						<li><a href="help.html">退款申请</a></li>
-						<li><a href="help.html">退换货处理</a></li>
-						<li><a href="help.html">退换货政策</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<div class="line"></div>
-
-		<div class="bottom">
-			<p>友情链接：<a href="#">安工在线</a>&nbsp;&nbsp;<a href="#">万林强-前端在线简历</a></p>
-			<p>本站所有信息均为用户自由发布，本站不对信息的真实性负任何责任，交易时请注意识别信息的真假如有网站内容侵害了您的权益请联系我们删除，举报电话：15068718875</p>
-			<p>技术支持：万林强 &nbsp;&nbsp;商务QQ:584845663 &nbsp;&nbsp;邮箱：584845663@qq.com</p>
-		</div>
-	</div>
-</div>
-
+<jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>

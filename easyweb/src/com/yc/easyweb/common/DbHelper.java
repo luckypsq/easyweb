@@ -19,9 +19,13 @@ import javax.sql.DataSource;
 
 import org.apache.commons.beanutils.BeanUtils;
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.Bought;
 import com.yc.easyweb.bean.Eorder;
+import com.yc.easyweb.bean.Notice;
 import com.yc.easyweb.bean.PageBook;
+import com.yc.easyweb.bean.PageCart;
 import com.yc.easyweb.bean.PageEorder;
+import com.yc.easyweb.bean.PageNotice;
 import com.yc.easyweb.bean.PageUser;
 import com.yc.easyweb.bean.User;
 
@@ -508,4 +512,78 @@ public class DbHelper {
 				}
 			return p;
 		}
+	 
+	//Eorder表分页
+			public static PageCart selectPageForMysql(int page, int rows,Long uid) throws Exception {
+
+				String sql1 = "select bucollege,bumajor,bclass,bname,bprice,eotime,eostate,bimg,itemid,e.eoid,count,total,eoaddr,eotype "
+						+ " from book b,eorderitem eo,eorder e  "
+						+ " where eo.eoid=e.eoid and eo.bid=b.bid and e.uid=?";
+		    	String sql = "select count(*) from("+sql1+")b";
+		    	List<Object> params =new ArrayList<>();
+		    	params.add(uid);
+		    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, params);
+		    	long  total = 0;
+		    	if(totalObj != null){
+		    		total = Long.parseLong(totalObj.get("count(*)").toString());
+		    	}
+		    	int startRow = (page - 1 ) * rows;
+		    	String pageSql =  "select * from ("+sql1+")a limit " + startRow + ", " + rows;
+		    	List<Bought> data = DbHelper.selectAll(pageSql, params, Bought.class);
+		        return new PageCart(data,total,page,rows);
+
+		    }
+			public static PageEorder selectPageForMysql2(int page, int rows,Long uid) throws Exception {
+
+				String sql1 = "select * from eorder where uid=?";
+		    	String sql = "select count(*) from("+sql1+")b";
+		    	List<Object> params =new ArrayList<>();
+		    	params.add(uid);
+		    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, params);
+		    	long  total = 0;
+		    	if(totalObj != null){
+		    		total = Long.parseLong(totalObj.get("count(*)").toString());
+		    	}
+		    	int startRow = (page - 1 ) * rows;
+		    	String pageSql =  "select * from ("+sql1+")a limit " + startRow + ", " + rows;
+		    	List<Eorder> data = DbHelper.selectAll(pageSql, params, Eorder.class);
+		        return new PageEorder(data,total,page,rows);
+
+		    }
+			public static PageNotice selectPageForMysql(int page, int rows,Notice notice) throws Exception  {
+				StringBuffer sb = new StringBuffer();
+		    	sb.append("select * from notice where 1=1 ");
+				if(notice != null) {
+					if(notice.getNtime() !=null) {
+						sb.append(" and ntime like '%" + notice.getNtime() + " %' ");
+					}
+					if(notice.getNnumber()!=null) {
+						sb.append(" and nnumber = "+notice.getNnumber());
+					}
+					if(notice.getNauthor()!=null) {
+						sb.append(" and nauthor like '%" + notice.getNauthor() +" %'");
+					}
+					if(notice.getNcontent()!=null) {
+						sb.append(" and ncontent like '%" + notice.getNcontent() +" %'");
+					}
+					if(notice.getNstate()!=0) {
+						sb.append("and nstate =" +notice.getNstate());
+					}
+					if(notice.getNtitle() !=null) {
+						sb.append(" and ntitle like'%" + notice.getNtitle() +" %'");
+					}
+					sb.append("  order by  nid asc");
+					String sql = "select count(*) from("+sb.toString()+")b";
+			    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, null);
+			    	long  total = 0;
+			    	if(totalObj != null){
+			    		total = Long.parseLong(totalObj.get("count(*)").toString());
+			    	}
+			    	int startRow = (page - 1 ) * rows;
+			    	String pageSql =  "select * from ("+sb.toString()+")a limit " + startRow + ", " + rows;
+			    	List<Notice> data = DbHelper.selectAll(pageSql, null, Notice.class);
+			        return new PageNotice(data,total,page,rows);
+				}
+				return null;
+			}
 }

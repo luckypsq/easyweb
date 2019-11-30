@@ -1,3 +1,8 @@
+<%@page import="java.util.*"%>
+<%@page import="com.yc.easyweb.dao.lyw.*"%>
+<%@page import="com.yc.easyweb.bean.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -5,6 +10,19 @@
 	<link rel="stylesheet" href="css/index.css"/>
 	<script src="js/main.js"></script>
 	<title>Document</title>
+	
+	<%
+	
+	User user =(User)session.getAttribute("loginedUser");
+	pageContext.setAttribute("user", user);
+	System.out.print(user);
+	UserDaoLyw dao=new UserDaoLyw();
+	List<Object> params=new ArrayList<Object>();
+	System.out.print(user);
+	params.add(user.getUid());
+	user=dao.selectAll(params);
+	pageContext.setAttribute("user", user);
+	%>
 </head>
 <style>
 	.help-main p {
@@ -16,9 +34,9 @@
 <div class="top" id="item4">
 	<div class="container clearfix">
 		<ul class="clearfix fr">
-			<li><a href="join.html#tologin" >登录</a></li>
-			<li><a href="join.html#toregister" >注册</a></li>
-			<li><a href="member.html" style="border: none">个人中心</a></li>
+			<li><a href="join.jsp#tologin" >登录</a></li>
+			<li><a href="join.jsp#toregister" >注册</a></li>
+			<li><a href="member.jsp" style="border: none">个人中心</a></li>
 		</ul>
 	</div>
 </div>
@@ -45,8 +63,8 @@
 	<div class="container clearfix">
 		<div class="bread">当前位置：
 			<a href="index.html">首页</a> >
-			<a href="member.html">个人中心</a> >
-			<a href="member.html">个人信息</a>
+			<a href="member.jsp">个人中心</a> >
+			<a href="member.jsp">个人信息</a>
 		</div>
 		<div class="help-l fl">
 			<div class="help-item">
@@ -55,8 +73,8 @@
 				</div>
 				<div class="help-item-list">
 					<ul>
-						<li><a href="member.html">个人信息</a></li>
-						<li><a href="password.html">修改密码</a></li>
+						<li><a href="member.jsp">个人信息</a></li>
+						<li><a href="password.jsp">修改密码</a></li>
 					</ul>
 				</div>
 			</div>
@@ -67,7 +85,7 @@
 				<div class="help-item-list">
 					<ul>
 						<li><a href="published.html">已发布</a></li>
-						<li><a href="bought.html">已买书籍</a></li>
+						<li><a href="bought.jsp">已买书籍</a></li>
 						<li><a href="publish.html">发布书籍</a></li>
 					</ul>
 				</div>
@@ -76,18 +94,32 @@
 		<div class="help-r fr">
 			<div class="help-item-title">个人信息</div>
 			<div class="help-main">
-				<form action="">
-					<p><span class="nice">用户名：</span><span>2078140086</span></p>
-					<p><span class="nice">昵称：</span><input type="text" value="快到碗里来"><span class="nice">联系电话：</span><input type="text" value="18219443899"></p>
-					<p><span class="nice">学校：</span><input type="text" value="江西师范大学"><span class="nice">学院：</span><input type="text" value="传播学院"></p>
-					<p><span class="nice">专业：</span><input type="text" value="教育技术学"><span class="nice">年级：</span><input type="text" value="大一"></p>
+				
+				<form action="user.s?op=remember"
+						method="post" novalidate="novalidate" >
+					<p><span class="nice">用户名：</span><span>${user.uname}</span></p>
+					<p><span class="nice">昵称：</span><input type="text" id="uminname" name="uminname" value="${user.uminname}">
+					<span class="nice">联系电话：</span><input type="text" id="uphone" name="uphone" value="${user.uphone}"></p>
+					<p><span class="nice">学校：</span><input type="text" id="university" name="university" value="${user.university}">
+					<span class="nice">学院：</span><input type="text" id="ucollege" name="ucollege" value="${user.ucollege}"></p>
+					<p><span class="nice">专业：</span><input type="text" id="umajor" name="umajor" value="${user.umajor}">
+					<span class="nice">年级：</span><input type="text" id="uclass" name="uclass" value="${user.uclass}"></p>
 					<input class="save" type="submit" value="修改"/>
+					
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-
+<%
+     Object result = request.getAttribute("result");
+     if(result!=null && !"".equals(result)){
+ 
+  %>
+      <script type="text/javascript">
+          alert('<%=result%>');
+     </script>
+  <%} %>
 
 
 

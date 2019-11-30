@@ -1,5 +1,16 @@
-<!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<%@page import="com.yc.easyweb.biz.BookTypeBiz"%>
+<%@page import="com.yc.easyweb.bean.BookType"%>
+<%@ page import="com.yc.easyweb.biz.BookBiz"%>
+<%@ page import="com.yc.easyweb.bean.Book"%>
+<%@ page import ="com.yc.easyweb.dao.BookDao"%>
+<%@ page import ="com.yc.easyweb.common.DbHelper" %>
+<%@ page import = "java.lang.*"%>
+<%@ page import ="java.util.*" %>
+<%@ page import ="com.yc.easyweb.servlet.BookServlet" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="css/index.css"/>
@@ -63,6 +74,10 @@
 			param.top = Math.round((maxHeight - param.height) / 2);
 			return param;
 		}
+		function upload(){
+			location.href='upload.jsp';
+		}
+		
 	</script>
 	<title>易书网</title>
 </head>
@@ -74,42 +89,15 @@
 		padding: 3px 10px;
 	}
 </style>
-<body >
-
-<div class="top" id="item4">
-	<div class="container clearfix">
-		<ul class="clearfix fr">
-			<li><a href="join.html#tologin" >登录</a></li>
-			<li><a href="join.html#toregister" >注册</a></li>
-			<li><a href="member.html" style="border: none">个人中心</a></li>
-		</ul>
-	</div>
-</div>
-
-<div class="header">
-	<div class="container clearfix">
-		<div class="logo fl">
-			<a href="index.html"><img src="images/logo4.png" alt=""/></a>
-		</div>
-		<div class="seacher fl">
-			<form action="" method="post">
-				<input type="text" placeholder="小伙伴，你想找什么?"/><input type="submit" value="搜 索"/>
-			</form>
-			<p>热门搜索：<a href="#">自行车</a> <a href="#">笔记本</a> <a href="#">散热器</a> <a href="#">考研资料</a> <a href="#">摩托车</a> <a href="#">手机</a> <a href="#">轮滑鞋</a> <a href="#">显示器</a> <a href="#">显示器</a> <a href="#">显示器</a> <a href="#">显示器</a></p>
-		</div>
-		<div class="mm fr clearfix">
-			<a href="list.html">我要买</a>
-			<a href="publish.html">我要卖</a>
-		</div>
-	</div>
-</div>
+<body>
+<jsp:include page="/common/header.jsp"></jsp:include>
 
 <div class="help-wrap">
 	<div class="container clearfix">
 		<div class="bread">当前位置：
-			<a href="index.html">首页</a> >
-			<a href="member.html">个人中心</a> >
-			<a href="edit.html">编辑发布</a>
+			<a href="index.jsp">首页</a> >
+			<a href="member.jsp">个人中心</a> >
+			<a href="bought.jsp">发布书籍</a>
 		</div>
 		<div class="help-l fl">
 			<div class="help-item">
@@ -118,8 +106,8 @@
 				</div>
 				<div class="help-item-list">
 					<ul>
-						<li><a href="member.html">个人信息</a></li>
-						<li><a href="password.html">修改密码</a></li>
+						<li><a href="member.jsp">个人信息</a></li>
+						<li><a href="password.jsp">修改密码</a></li>
 					</ul>
 				</div>
 			</div>
@@ -129,9 +117,9 @@
 				</div>
 				<div class="help-item-list">
 					<ul>
-						<li><a href="published.html">已发布</a></li>
-						<li><a href="bought.html">已买书籍</a></li>
-						<li><a href="publish.html">发布书籍</a></li>
+						<li><a href="published.jsp">已发布</a></li>
+						<li><a href="bought.jsp">已买书籍</a></li>
+						<li><a href="publish.jsp">发布书籍</a></li>
 					</ul>
 				</div>
 			</div>
@@ -139,19 +127,74 @@
 		<div class="help-r fr">
 			<div class="help-item-title">发布书籍</div>
 			<div class="help-main">
-				<form action="" method="post">
+				<form action="doupload.jsp" method="post" enctype="multipart/form-data">
 					<div class="product-edit-item clearfix">
 						<div class="product-edit-item-l fl">
 							<div class="fr"><i class="middle">*</i>图书分类1：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name=""  >
-								<option value="">图书所属学校</option>
-								<option value="">江西师范大学</option>
-								<option value="">清华大学</option>
-								<option value="">北京大学</option>
-								<option value="">南开大学</option>
-							</select>
+						<% 
+						
+						BookBiz biz = new BookBiz();
+						Book book = null;
+						List<Book> list = biz.selectAll(book);
+						HashSet set =  new HashSet();
+						for(int i = 0;i<list.size();i++){
+							for(Book s : list){
+								
+								set.add(s.getBuniversity());
+							}
+							
+						}
+						set.remove(null);
+						set.remove("");
+						HashSet set1 =  new HashSet();
+						for(int i = 0;i<list.size();i++){
+							
+							for(Book s : list){
+								
+								set1.add(s.getBucollege());
+							}
+						}
+						set1.remove(null);
+						set1.remove("");
+						HashSet set2 =  new HashSet();
+						for(int i = 0;i<list.size();i++){
+							for(Book s : list){
+								set2.add(s.getBumajor());
+							}
+						}
+						set2.remove(null);
+						set2.remove("");
+						HashSet set3 =  new HashSet();
+						for(int i = 0;i<list.size();i++){
+							for(Book s : list){
+								
+								set3.add(s.getBtemp());
+								
+							}
+						}
+						set3.remove(null);
+						set3.remove("");
+						BookTypeBiz biz1 = new BookTypeBiz();
+						BookType type = null;
+						List<BookType> list1 = biz1.selectAll(type);
+						System.out.println(list1.size());
+						for(int j =0;j<list1.size();j++){
+							if(list1.get(j).getBtnamesecond()==null){
+								list1.remove(j);
+								j--;
+							}
+						}
+						
+						%>
+						<select style="width: 150px" name="buniversity" >
+							<option>图书所属学校</option>
+							<% for(Iterator it = set.iterator();it.hasNext(); ){%>
+							<option  ><%=it.next()%></option>
+							<%} %>
+						</select>
+							
 						</div>
 					</div>
 					<div class="product-edit-item clearfix">
@@ -159,12 +202,11 @@
 							<div class="fr"><i class="middle">*</i>图书分类2：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name=""  >
-								<option value="">图书所属学院</option>
-								<option value="">传播学院</option>
-								<option value="">文学院</option>
-								<option value="">外国语学院</option>
-								<option value="">软件学院</option>
+							<select name="bucollege" style="width: 150px" >
+							<option>图书所属学院</option>
+							<% for(Iterator it = set1.iterator();it.hasNext(); ){%>
+							<option ><%=it.next()%></option>
+							<%} %>
 							</select>
 						</div>
 					</div>
@@ -173,12 +215,11 @@
 							<div class="fr"><i class="middle">*</i>图书分类3：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name=""  >
-								<option value="">图书所属专业</option>
-								<option value="">教育技术学</option>
-								<option value="">传播学</option>
-								<option value="">广告学</option>
-								<option value="">艺术学</option>
+							<select name="bumajor" style="width: 150px">
+							<option>图书所属专业</option>
+							<% for(Iterator it = set2.iterator();it.hasNext(); ){%>
+							<option ><%=it.next()%></option>
+							<%} %>
 							</select>
 						</div>
 					</div>
@@ -187,21 +228,50 @@
 							<div class="fr"><i class="middle">*</i>图书分类4：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name=""  >
-								<option value="">图书所属年级</option>
-								<option value="">大一</option>
-								<option value="">大二</option>
-								<option value="">大三</option>
-								<option value="">大四</option>
+							<select name="btemp" style="width: 150px" >
+							<option value="">图书所属系列</option>
+							<% for(Iterator it = set3.iterator();it.hasNext(); ){%>
+							<option ><%=it.next()%></option>
+							<%} %>
 							</select>
 						</div>
 					</div>
+					<div class="product-edit-item clearfix">
+						<div class="product-edit-item-l fl">
+							<div class="fr"><i class="middle">*</i>图书分类5：</div>
+						</div>
+						<div class="product-edit-item-r fl">
+							<select name="bclass" style="width: 150px" >
+								<option >图书所属年级</option>
+								<option >大一</option>
+								<option >大二</option>
+								<option >大三</option>
+								<option >大四</option>
+							</select>
+						</div>
+					</div>
+					<div class="product-edit-item clearfix">
+						<div class="product-edit-item-l fl">
+							<div class="fr"><i class="middle">*</i>图书分类6：</div>
+						</div>
+						<div class="product-edit-item-r fl">
+							<select name="btid" style="width: 150px" >
+								<option value="">图书所属类型</option>
+								<option value="3">分享</option>
+								<%for(BookType t : list1){ %>
+								<option value="<%=t.getBtid()%>"><%=t.getBtnamesecond() %></option>
+								<%} %>
+								
+							</select>
+						</div>
+					</div>
+					
 					<div class="product-edit-item clearfix">
 						<div class="product-edit-item-l fl clearfixc">
 							<div class="fr"><i class="middle">*</i>图书名称：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<input type="text" value="福尔摩斯探案全集" style="width: 410px">
+							<input type="text" value="" name="bname"style="width: 200px">
 							<p >图书标题名称长度至少3个字符，最长50个汉字</p>
 						</div>
 					</div>
@@ -210,8 +280,7 @@
 							<div class="fr"><i class="middle">*</i>图书价格：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<input type="text" value="150.00" style="width: 60px"><em class="add-on"><i class="icon-renminbi"></i></em>
-							<p >价格必须是0.01~9999999之间的数字，且不能高于市场价。<br>此价格为图书实际销售价格，如果图书存在规格，该价格显示最低价格。</p>
+							<input type="text" value="" name="bprice"style="width: 200px">
 						</div>
 					</div>
 					<div class="product-edit-item clearfix">
@@ -219,7 +288,7 @@
 							<div class="fr"><i class="middle">*</i>图书描述：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<textarea name=""  cols="30" rows="10"></textarea>
+							<textarea name="bcontent"  cols="30" rows="10"></textarea>
 							<p >请如实描述你所发布书籍的详细情况，以方便其他会员购买！</p>
 						</div>
 					</div>
@@ -229,9 +298,9 @@
 						</div>
 						<div class="product-edit-item-r fl">
 							<div id="preview">
-								<img id="imghead" border=0 src="images/book.jpg" />
+								<img id="imghead" border=0 src="" />
 							</div>
-							<input type="file" onchange="previewImage(this)" />
+							<input type="file" name="img" onchange="previewImage(this)" />
 							<p >请上传图书封面，尽量保持图片清晰</p>
 						</div>
 					</div>
@@ -241,11 +310,8 @@
 						<div class="product-edit-item-r fl" style="border: none;border-top:1px solid #E6E6E6">
 						</div>
 					</div>
-					<div class="upload"><label><input type="submit" value="点击保存"></label></div>
+					<div class="upload"><label><input type="submit" value="点击发布""></label></div>
 				</form>
-
-
-
 
 
 			</div>
@@ -256,48 +322,10 @@
 
 
 
-<div class="foot">
-	<div class="container">
-		<div class="zhinan">
-			<ul class="clearfix">
-				<li class="item-li">关于我们
-					<ul>
-						<li><a href="help.html">自我介绍</a></li>
-						<li><a href="help.html">联系我们</a></li>
-						<li><a href="help.html">网站公告</a></li>
-					</ul>
-				</li>
-				<li class="item-li">新手指南
-					<ul>
-						<li><a href="help.html">如何买书</a></li>
-						<li><a href="help.html">如何卖书</a></li>
-						<li><a href="help.html">修改密码</a></li>
-					</ul>
-				</li>
-				<li class="item-li">配送方式
-					<ul>
-						<li><a href="help.html">配送范围</a></li>
-						<li><a href="help.html">配送时间</a></li>
-					</ul>
-				</li>
-				<li class="item-li">售后服务
-					<ul>
-						<li><a href="help.html">退款申请</a></li>
-						<li><a href="help.html">退换货处理</a></li>
-						<li><a href="help.html">退换货政策</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<div class="line"></div>
 
-		<div class="bottom">
-			<p>友情链接：<a href="#">安工在线</a>&nbsp;&nbsp;<a href="#">万林强-前端在线简历</a></p>
-			<p>本站所有信息均为用户自由发布，本站不对信息的真实性负任何责任，交易时请注意识别信息的真假如有网站内容侵害了您的权益请联系我们删除，举报电话：15068718875</p>
-			<p>技术支持：万林强 &nbsp;&nbsp;商务QQ:584845663 &nbsp;&nbsp;邮箱：584845663@qq.com</p>
-		</div>
-	</div>
-</div>
 
+
+
+<jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>
