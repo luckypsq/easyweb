@@ -1,56 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@page import="com.yc.easyweb.bean.*"%>
+<%@page import="com.yc.easyweb.biz.*"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.io.*"%>
+<%@page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/index.css"/>
-	<script src="js/main.js"></script>
-	<title>Document</title>
+<link rel="stylesheet" href="<%=application.getContextPath() %>/css/index.css"/>
+	<script src="<%=application.getContextPath() %>/js/main.js"></script>
+	<title>公告详情</title>
 </head>
 <body >
 <jsp:include page="/common/header.jsp"></jsp:include>
 <div class="mainbody" style="background: #FFF url(images/bodybg.png) repeat-x;">
+<%
+		NoticeBiz noticeBiz = new NoticeBiz();
+		Notice notice = new Notice();
+		List<Notice> nList = noticeBiz.selectAll(notice);
+		if(request.getParameter("nid") != null && !request.getParameter("nid").isEmpty()){
+			notice.setNid(Long.parseLong(request.getParameter("nid")));
+		}
+		Notice noticeShow = noticeBiz.selectSingle(notice);
+%>
 	<div class="container clearfix" style="background-color: white">
 		<div class="mainbody_topbg"></div>
 		<div class="bread">当前位置：
 			<a href="<%=application.getContextPath() %>/lhoption/index.jsp">首页</a> >
 			<a href="<%=application.getContextPath() %>/lhoption/notice.jsp">公告</a> >
-			<a href="<%=application.getContextPath() %>/notice-detail.jsp">公告详情</a>
+			<a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=noticeShow.getNid()%>">公告详情</a>
 		</div>
 		<div class="maincontent fl">
 			<div class="post">
-				<h2><a href="notice-detail.html">华南地区因暴雨天气部分订单推迟配送</a></h2>
+				<h2><a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=noticeShow.getNid()%>"">华南地区因暴雨天气部分订单推迟配送</a></h2>
 				<div class="postdata">
-					<div class="date">六月 30th, 2014</div>
+					<div class="date"><%=noticeShow.getNtime()%></div>
 					<div class="cate">发表于 <a href="#">公告</a> | </div>
-					<div class="cate">浏览量: <span>98</span>次</div>
+					<div class="cate">浏览量: <span><%=noticeShow.getNnumber()%></span>次</div>
 				</div>
 				<div class="content">
-					<p>亲爱的易书网顾客，您好：</p>
-					<p style="text-indent: 2em;"><strong>天津：</strong>受天津地区突发事件的影响，发往滨海新区（塘沽）的订单会有延迟配送的情况，如果您订购的商品未能及时送达，请先耐心等待！感谢大家的理解，惟愿平安！</p>
-					<p style="text-indent: 2em;"><strong>福建：</strong>受暴雨天气影响，8月19日易书网在福建地区的配送服务将无法正常进行，受影响的订单预计推迟1天配送，如果您订购的商品未能及时送达，请先耐心等待。</p>
-					<p style="text-indent: 2em;"><strong>江苏：</strong>受暴雨天气影响，8月19日至8月20日期间，易书网在江苏地区的配送服务将无法正常进行，受影响的订单预计推迟1天配送，如果您订购的商品未能及时送达，请先耐心等待。</p>
-					<p style="text-indent: 2em;"><strong>湖北、湖南、广西：</strong>受暴雨天气影响，8月18日至8月19日期间，易书网在湖北、湖南、广西部分地区的配送服务将无法正常进行，受影响的订单预计于暴雨过后推迟1天配送,如果您订购的商品未能及时送达，千万别着急，暴雨过后，我们一定会快马加鞭，马不停蹄地为您配。</p>
-					<p style="text-indent: 2em;"><strong>云南、贵州、四川：</strong>受暴雨天气影响，8月20日至8月21日期间，易书网在云南、贵州、四川部分地区的配送服务将无法正常进行，受影响的订单预计于暴雨过后推迟1天配送,如果您订购的商品未能及时送达，千万别着急，暴雨过后，我们一定会快马加鞭，马不停蹄地为您配。</p>
-					<p style="text-indent: 2em;">给亲爱的造成的不便，请谅解！祝您生活愉快！</p>
-					<p style="text-align: right;">易书网客服中心<br />2015年8月19日</p>
+					<p><%=noticeShow.getNcontent()%></p>
+					<p style="text-align: right;"><%=noticeShow.getNauthor()%><br /><%=noticeShow.getNtime()%></p>
 				</div>
 			</div>
-
 		</div>
 		<div class="sidebar fr">
 			<ul>
 				<li>
 					<h2>最新公告</h2>
 					<ul>
-						<li><a href="notice-detail.html">部分地区订单推迟配送 </a></li>
-						<li><a href="notice-detail.html">购爱星期三，平安信用卡支付选银联，购减二重礼 </a></li>
-						<li><a href="notice-detail.html">自营家居约惠七夕满300减150，满200减80 </a></li>
-						<li><a href="notice-detail.html">北京银行暂停业务通知 </a></li>
-						<li><a href="notice-detail.html">部分地区订单推迟配送 </a></li>
-						<li><a href="notice-detail.html">关于北京地区快件实行实名收寄的公告 </a></li>
-					</ul>
+					<%
+					if(nList.size() != 0){
+						for(int i=0; i<nList.size();i++){
+							if(i == 6){
+								break ;
+							}
+				%>
+				<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
+				<% 
+						}
+					}else{
+				%>
+				<li><i class="icon-bell red"></i>暂无新公告</li>
+				<%
+					}
+				%>
+				</ul>
 				</li>
 				<li>
 					<h2>公告存档</h2>

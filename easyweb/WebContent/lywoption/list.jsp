@@ -9,9 +9,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<link rel="stylesheet" href="css/index.css"/>
-	<script src="js/jquery-1.7.2.min.js"></script>
-	<script src="js/main.js"></script>
+    <title>主页</title>
+	<link rel="stylesheet" href="<%=application.getContextPath()%>/css/index.css"/>
+	<script src="<%=application.getContextPath()%>/js/jquery-1.7.2.min.js"></script>
+	<script src="<%=application.getContextPath()%>/js/main.js"></script>
 	<title>Document</title>
 	<script type="text/javascript">
 		$(function(){
@@ -25,37 +26,12 @@
 	</script>
 </head>
 <body >
-
-<div class="top" id="item4">
-	<div class="container clearfix">
-		<ul class="clearfix fr">
-			<li><a href="join.html#tologin" >登录</a></li>
-			<li><a href="join.html#toregister" >注册</a></li>
-			<li><a href="member.html" style="border: none">个人中心</a></li>
-		</ul>
-	</div>
-</div>
-
-<div class="header">
-	<div class="container clearfix">
-		<div class="logo fl">
-			<a href="index.html"><img src="images/logo4.png" alt=""/></a>
-		</div>
-		<div class="seacher fl">
-			<form action="" method="post">
-				<input type="text" placeholder="小伙伴，你想找什么?"/><input type="submit" value="搜 索"/>
-			</form>
-			<p>热门搜索：<a href="#">自行车</a> <a href="#">笔记本</a> <a href="#">散热器</a> <a href="#">考研资料</a> <a href="#">摩托车</a> <a href="#">手机</a> <a href="#">轮滑鞋</a> <a href="#">显示器</a> <a href="#">显示器</a> <a href="#">显示器</a> <a href="#">显示器</a></p>
-		</div>
-		<div class="mm fr clearfix">
-			<a href="list.jsp">我要买</a>
-			<a href="publish.jsp">我要卖</a>
-		</div>
-	</div>
-</div>
-
+<jsp:include page="/common/header.jsp"></jsp:include>
 <div class="list-main">
+
 <% 
+request.setCharacterEncoding("utf-8");
+response.setCharacterEncoding("utf-8");
 					 			String buniversity =request.getParameter("buniversity");
 								String bucollege =request.getParameter("bucollege");
 								String bumajor =request.getParameter("bumajor");
@@ -90,21 +66,20 @@
 					%>
 	<div class="container">
 		<div class="bread" style="margin-bottom: 0;">当前位置：
-			<a href="index.html">首页</a> >
-			<a href="list.html">列表</a>
+			<a href="<%=application.getContextPath()%>/lhoption/index.jsp">首页</a> >
+			<a href="<%=application.getContextPath()%>/lywoption/list.jsp">列表</a>
 		</div>
 		<ul class="select">
 			<li class="select-list">
 				<dl id="select1">
 					<dt>学校：</dt>
 					<%if(buniversity != null && !buniversity.isEmpty()){ %>
-					<dd class="select-all "><a href="list.jsp?<%=condition1%>&<%=condition2%>&<%=condition3%>">全部</a></dd>
+					<dd class="select-all "><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition1%>&<%=condition2%>&<%=condition3%>">全部</a></dd>
 					<% }else {%>
-					<dd class="select-all selected"><a href="list.jsp?<%=condition1%>&<%=condition2%>&<%=condition3%>">全部</a></dd>
+					<dd class="select-all selected"><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition1%>&<%=condition2%>&<%=condition3%>">全部</a></dd>
 					<%} %>
 
 					<%	
-						Book book =new Book();
 						PageBookDao dao =new PageBookDao();
 						HashSet<String> set =new HashSet<String>();
 						List<Book> list =dao.selectbuniversity();
@@ -117,7 +92,7 @@
 					 			String cls = s.equals(request.getParameter("buniversity"))? "selected": "";
 					 		%>
 					 			
-					 			<dd class="<%=cls%>"><a  href="list.jsp?buniversity=<%=s%>&<%=condition1%>&<%=condition2%>&<%=condition2%>"><%=s%></a></dd>
+					 			<dd class="<%=cls%>"><a  href="<%=application.getContextPath()%>/lywoption/list.jsp?buniversity=<%=s%>&<%=condition1%>&<%=condition2%>&<%=condition2%>"><%=s%></a></dd>
 					 	<% 	}
 					 		
 					   }%>   
@@ -127,9 +102,9 @@
 				<dl id="select2">
 					<dt>学院：</dt>
 					<%if(bucollege != null && !bucollege.isEmpty()){ %>
-					<dd class="select-all "><a href="list.jsp?<%=condition%>&<%=condition2%>&<%=condition3%>">全部</a></dd>
+					<dd class="select-all "><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition%>&<%=condition2%>&<%=condition3%>">全部</a></dd>
 					<% }else {%>
-					<dd class="select-all selected"><a href="list.jsp?<%=condition%>&<%=condition2%>&<%=condition3%>">全部</a></dd>
+					<dd class="select-all selected"><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition%>&<%=condition2%>&<%=condition3%>">全部</a></dd>
 					<%} %>
 					<%	
 
@@ -146,7 +121,7 @@
 					 			
 					 		%>
 					 			
-					 			<dd class="<%=cls%>"><a href="list.jsp?<%=condition %>&bucollege=<%=s%>&<%=condition2%>&<%=condition3%>"><%=s%></a></dd>
+					 			<dd class="<%=cls%>"><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition %>&bucollege=<%=s%>&<%=condition2%>&<%=condition3%>"><%=s%></a></dd>
 					 	<% 	}
 					 		
 					   }%> 
@@ -156,9 +131,9 @@
 				<dl id="select3">
 					<dt>专业：</dt>
 					<%if(bumajor != null && !bumajor.isEmpty()){ %>
-					<dd class="select-all "><a href="list.jsp?<%=condition%>&<%=condition1%>&<%=condition3%>">全部</a></dd>
+					<dd class="select-all "><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition%>&<%=condition1%>&<%=condition3%>">全部</a></dd>
 					<% }else {%>
-					<dd class="select-all selected"><a href="list.jsp?<%=condition%>&<%=condition1%>&<%=condition3%>">全部</a></dd>
+					<dd class="select-all selected"><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition%>&<%=condition1%>&<%=condition3%>">全部</a></dd>
 					<%} %>
 					
 					<%	
@@ -175,7 +150,7 @@
 					 			String cls = s.equals(request.getParameter("bumajor"))? "selected": "";
 					 			
 					 		%>
-					 			<dd class="<%=cls%>"><a href="list.jsp?<%=condition %>&<%=condition1 %>&bumajor=<%=s%>&<%=condition3%>"><%=s%></a></dd>
+					 			<dd class="<%=cls%>"><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition %>&<%=condition1 %>&bumajor=<%=s%>&<%=condition3%>"><%=s%></a></dd>
 					 	<% 	}
 					 		
 					   }%>
@@ -185,13 +160,12 @@
 				<dl id="select4">
 					<dt>年级：</dt>
 					<%if(bclass != null && !bclass.isEmpty()){ %>
-					<dd class="select-all "><a href="list.jsp?<%=condition%>&<%=condition1%>&<%=condition2%>">全部</a></dd>
+					<dd class="select-all "><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition%>&<%=condition1%>&<%=condition2%>">全部</a></dd>
 					<% }else {%>
 					
-					<dd class="select-all selected"><a href="list.jsp?<%=condition%>&<%=condition1%>&<%=condition2%>">全部</a></dd>
+					<dd class="select-all selected"><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition%>&<%=condition1%>&<%=condition2%>">全部</a></dd>
 					<%} %>
 					<%	
-
 						HashSet<String> set3 =new HashSet<String>();
 						List<Book> list3 =dao.selectbclass();
 						for(Book s  : list3){
@@ -204,7 +178,7 @@
 					 			String cls = s.equals(request.getParameter("bclass"))? "selected": "";
 					 			
 					 		%>
-					 			<dd class="<%=cls%>"><a href="list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&bclass=<%=s%>"><%=s%></a></dd>
+					 			<dd class="<%=cls%>"><a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&bclass=<%=s%>"><%=s%></a></dd>
 					 	<% 	}
 					 		
 					   }%>
@@ -220,6 +194,8 @@
 		<div class="tabs book clearfix">
 			
 				<%			
+							
+							Book book =new Book();
 							DbHelper dbHelper =new DbHelper();
 							if(buniversity != null && !buniversity.isEmpty()){
 								book.setBuniversity(buniversity);
@@ -234,94 +210,55 @@
 								book.setBclass(bclass);
 							}
 							// 第几页
-							String pageParam = request.getParameter("Page");
+							String pageParam = null; 
+							if(request.getParameter("Page") != null && !request.getParameter("Page").isEmpty()){
+								pageParam = request.getParameter("Page");
+							}
 							int ipage = pageParam == null ? 1 : Integer.parseInt(pageParam);
 							// 每页行数
-							int rows = 12;			
+							int rows = 12;		
 							PageBook Page = dbHelper.selectPageForMysql(ipage, rows, book);
-							System.out.print(Page.getData().size());
-
 							for(Book book2 : Page.getData()){
 						%>
 							<dl>
-								<dt><a href="detail.jsp?bid=<%=book2.getBid()%>"><img src="<%=book2.getBimg()%>" alt=""/></a></dt>
+								<dt><a href="<%=application.getContextPath()%>/detail.jsp?bid=<%=book2.getBid()%>"><img src="<%=book2.getBimg()%>" alt=""/></a></dt>
 								<dd>
-									<p><a href="detail.jsp?bid=<%=book2.getBid()%>"><%=book2.getBname()%></a></p>
+									<p><a href="<%=application.getContextPath()%>/detail.jsp?bid=<%=book2.getBid()%>"><%=book2.getBname()%></a></p>
 									<p>数量：<%=book2.getBnum()%></p>
 									<p>价格：<%=book2.getBprice()%></p> 	
 								</dd>	
 							</dl>
 						<%}%>
 					<dl>
-				
-
 			</dl>
 			<div class="clearfix"></div>
 			<div class="page clearfix">
-				<a href="list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=Page.getFirstPage()%>">首页</a>
-				<a href="list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=Page.getPreviousPage()%>">上一页</a>
-				<%for(int i=1; i<=Page.getLastPage() ; i++){ %>
-					
-						<%if(Page.getPage()==i){ %>
+				<a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=Page.getFirstPage()%>">首页</a>
+				<a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=Page.getPreviousPage()%>">上一页</a>
+				<%
+					int countPage = 0;
+					int i=Page.getPage();
+				for(; i<=Page.getLastPage() ; i++){ 
+					if(countPage > 8){
+						countPage= 0;
+						break;
+					}
+					countPage++;
+					if(Page.getPage()==i){ %>
 							<span class="currentPage"><%=i%></span>
 						<%} else { %>
-							<a href="list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=i%>"><%=i%></a>
+							<a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=i%>"><%=i%></a>
 						<%} %>
 				
 					<%} %>
-				<a href="list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=Page.getNextPage()%>">下一页</a>
-				<a href="list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=Page.getLastPage()%>">尾页</a>
+				<a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=Page.getNextPage()%>">下一页</a>
+				<a href="<%=application.getContextPath()%>/lywoption/list.jsp?<%=condition %>&<%=condition1 %>&<%=condition2 %>&<%=condition3 %>&Page=<%=Page.getLastPage()%>">尾页</a>
 				第<%=Page.getPage() %>/<%=Page.getLastPage()%>页
 			</div>
 		</div>
 
 	</div>
 </div>
-
-
-
-<div class="foot">
-	<div class="container">
-		<div class="zhinan">
-			<ul class="clearfix">
-				<li class="item-li">关于我们
-					<ul>
-						<li><a href="help.html">自我介绍</a></li>
-						<li><a href="help.html">联系我们</a></li>
-						<li><a href="help.html">网站公告</a></li>
-					</ul>
-				</li>
-				<li class="item-li">新手指南
-					<ul>
-						<li><a href="help.html">如何买书</a></li>
-						<li><a href="help.html">如何卖书</a></li>
-						<li><a href="help.html">修改密码</a></li>
-					</ul>
-				</li>
-				<li class="item-li">配送方式
-					<ul>
-						<li><a href="help.html">配送范围</a></li>
-						<li><a href="help.html">配送时间</a></li>
-					</ul>
-				</li>
-				<li class="item-li">售后服务
-					<ul>
-						<li><a href="help.html">退款申请</a></li>
-						<li><a href="help.html">退换货处理</a></li>
-						<li><a href="help.html">退换货政策</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<div class="line"></div>
-
-		<div class="bottom">
-			<p>友情链接：<a href="#">安工在线</a>&nbsp;&nbsp;<a href="#">万林强-前端在线简历</a></p>
-			<p>本站所有信息均为用户自由发布，本站不对信息的真实性负任何责任，交易时请注意识别信息的真假如有网站内容侵害了您的权益请联系我们删除，举报电话：15068718875</p>
-			<p>技术支持：万林强 &nbsp;&nbsp;商务QQ:584845663 &nbsp;&nbsp;邮箱：584845663@qq.com</p>
-		</div>
-	</div>
-</div>
-
+<jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>

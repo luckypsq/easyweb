@@ -14,7 +14,13 @@
 			<%} %>
 		</li>
 			<li><a href="<%=application.getContextPath() %>/join.jsp" >注册</a></li>
-			<li><a href="<%=application.getContextPath() %>/lywoption/member.jsp" style="border: none">个人中心</a></li>
+			
+			
+			<%if(session.getAttribute("loginedUser")==null){ %>
+				<li><a href="" style="border: none">个人中心</a></li>
+			<%}else{%>
+				<li><a href="<%=application.getContextPath() %>/lywoption/member.jsp" style="border: none">个人中心</a></li>
+			<%} %>
 		</ul>
 	</div>
 </div>

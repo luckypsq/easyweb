@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.UserBiz;
+import com.yc.easyweb.dao.lyw.UserDaoLyw;
 
 public class UserServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	UserBiz userBiz = new UserBiz();
-
+	private UserDaoLyw dao =new UserDaoLyw();
 	// 添加
 	public void add(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, InvocationTargetException {
@@ -331,4 +332,28 @@ public class UserServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 	}
+	public void remember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User user =(User)request.getSession().getAttribute("loginedUser");
+		String uminname = request.getParameter("uminname");
+		String uphone = request.getParameter("uphone");
+		String university = request.getParameter("university");
+		String ucollege = request.getParameter("ucollege");
+		String umajor = request.getParameter("umajor");
+		String uclass = request.getParameter("uclass");
+		Long uid = user.getUid();
+		String url = "/lywoption/member.jsp";
+		try {
+			int i=dao.update(uminname,uphone,university,ucollege,umajor,uclass,uid);
+			if(i==1){
+				request.setAttribute("result","个人信息修改成功");
+				request.getRequestDispatcher(url).forward(request, response);
+				
+            }else{
+                request.setAttribute("result","个人信息修改失败");
+                request.getRequestDispatcher(url).forward(request, response);
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 }

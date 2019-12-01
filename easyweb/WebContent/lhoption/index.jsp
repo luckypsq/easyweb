@@ -124,8 +124,6 @@
 			}
 			
 		}
-		
-		
 		String paramNumber = request.getParameter("page");
 		String btid = request.getParameter("btid");
 		long id;
@@ -140,8 +138,6 @@
 		int iPage = paramNumber == null ? 1 : Integer.parseInt(paramNumber);
 		PageBook pPage = DbHelper.selectPageForMysql(iPage, 12, book);
 		//教材区书籍展示
-		
-		
 		%>
 		<div class="list fl">
 			<ul class="one">
@@ -272,7 +268,6 @@
 	</div>
 
 </div>
-
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <script type="text/javascript">
 	Qfast.add('widgets', { path: "<%=application.getContextPath() %>/js/terminator2.2.min.js", type: "js", requires: ['fx'] });

@@ -20,9 +20,7 @@
 	总价：<input id="total" name="total" value="<%=total%>">
 	地址：<input id="eoaddr" name="eoaddr" value="<%=eoaddr%>">
 	配送方式：<input id="eotype" name="eotype" value="<%=eotype%>">
-	
 	<input type="button" value="付款" >
-
 	</div>
 </body>
 </html>

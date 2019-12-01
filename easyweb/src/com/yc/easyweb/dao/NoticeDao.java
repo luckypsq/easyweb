@@ -34,14 +34,32 @@ public class NoticeDao {
 			}
 		}
 		sb.append(" order by  ntime desc");
-		/*
-		 * System.out.println("notice数据库语句："+sb.toString());
-		 * System.out.println("notice实体类对象："+notice.toString());
-		 */
 		List<Notice> list = db.selectAll(sb.toString(), null, Notice.class);
 		return list;
 	}
 
+	// 查询所有
+		public Notice selectSingle(Notice notice) throws Exception {
+			StringBuffer sb = new StringBuffer();
+			sb.append(" select nid,ntime,nnumber,nauthor,ncontent,nstate,ntemp,ntitle " + " from notice where 1=1 ");
+			if (notice != null) {
+				// 按发布者查
+				if (notice.getNauthor() != null) {
+					sb.append(" and nauthor like %'" + notice.getNauthor() + "'%");
+				}
+				// 按时间查
+				if (notice.getNtime() != null) {
+					sb.append(" and ntime like %'" + notice.getNtime() + "'%");
+				}
+				// 按状态查
+				if (notice.getNstate() != 0) {
+					sb.append(" and nstate = " + notice.getNstate());
+				}
+			}
+			sb.append(" order by  ntime desc");
+			return db.selectSingle(sb.toString(), null, Notice.class);
+		}
+	
 	// 添加
 	public int insert(User user) {
 		return 0;

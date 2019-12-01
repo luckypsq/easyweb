@@ -358,11 +358,14 @@ public class DbHelper {
 			if(book.getBauthor() != null){
 				sb.append(" and bauthor = '"+book.getBauthor()+"'");
 			}
-			if(book.getBtid() != 0){
+			if(book.getBtid() != null){
 				sb.append(" and btid = "+book.getBtid());
 			}
 			if(book.getBstate() != 0){
 				sb.append(" and bstate = "+book.getBstate());
+			}
+			if(book.getUid() != 0){
+				sb.append(" and uid = "+book.getUid());
 			}
 			if(book.getBtemp() != null){
 				sb.append(" and btemp = '"+book.getBtemp() +"'");
@@ -513,12 +516,11 @@ public class DbHelper {
 			return p;
 		}
 	 
-	//Eorder表分页
+	//购物车
 			public static PageCart selectPageForMysql(int page, int rows,Long uid) throws Exception {
-
-				String sql1 = "select bucollege,bumajor,bclass,bname,bprice,eotime,eostate,bimg,itemid,e.eoid,count,total,eoaddr,eotype "
-						+ " from book b,eorderitem eo,eorder e  "
-						+ " where eo.eoid=e.eoid and eo.bid=b.bid and e.uid=?";
+				String sql1 = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eoid,total,eitemp,eo.uid,cartstate,carttime"
+						+ " from book b,eorderitem eo"
+						+ " where eo.bid=b.bid and eo.uid=? and cartstate = 1";
 		    	String sql = "select count(*) from("+sql1+")b";
 		    	List<Object> params =new ArrayList<>();
 		    	params.add(uid);
@@ -533,8 +535,8 @@ public class DbHelper {
 		        return new PageCart(data,total,page,rows);
 
 		    }
+			
 			public static PageEorder selectPageForMysql2(int page, int rows,Long uid) throws Exception {
-
 				String sql1 = "select * from eorder where uid=?";
 		    	String sql = "select count(*) from("+sql1+")b";
 		    	List<Object> params =new ArrayList<>();

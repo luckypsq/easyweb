@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<style>
+	#itemid{
+		display:none;
+	}
+	
+</style>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>编辑</title>
 <script type="text/javascript">
-	
 	var xmlhttp;
 	// ajax 验证原密码是否正确
 	try {
@@ -23,25 +28,20 @@
 	}
 	function boughtupdate(){
 		var count = document.getElementById("count").value;
-		var total = document.getElementById("total").value;
-		var itemid = document.getElementById("itemid").getAttribute("value");
+		var itemid = document.getElementById("itemid").value;
 		if(xmlhttp!=null){
 			// 定义请求地址
-			var url ="doboughtupdate.jsp?itemid="+itemid
-					+ "&total=" + total
+			var url ="<%=application.getContextPath()%>/lywoption/doboughtupdate.jsp?itemid="+itemid
 					+ "&count=" + count;
 			xmlhttp.open("POST",url,true);
 			xmlhttp.onreadystatechange=function(){
 				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 					var json = xmlhttp.responseText.replace(/\s/gi,"");
-					eval("var b = " + json);
-					console.info(b);
-					if(b.code==1){
-
-						alert(b.msg);
-						location.href="bought.jsp";
+					if(json==1){
+						alert("修改成功！！！");
+						location.href="<%=application.getContextPath()%>/lywoption/bought.jsp";
 					}else{
-						alert(b.msg);  // msg 时扩展的 属性	
+						alert("修改失败！！！");  // msg 时扩展的 属性	
 					}
 				}
 			};
@@ -57,13 +57,11 @@
 </head>
 <body>
 	<%
-	String count=request.getParameter("count");
-	String total=request.getParameter("total");
-	String itemid=request.getParameter("itemid");
+		String itemid=request.getParameter("itemid");
 	%>
-	<div id="itemid" name="itemid"  value="<%=itemid%>">
-	数量：<input id="count" name="count" value="<%=count%>" >
-	总价：<input id="total" name="total" value="<%=total%>">
+	<input id="itemid" value="<%=itemid%>" ></input>
+	<div >
+	数量：<input id="count" name="count" >
 	<input type="button" value="修改" onclick="boughtupdate()">
 
 	</div>

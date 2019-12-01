@@ -12,8 +12,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>易书网</title>
-<link rel="stylesheet" type="text/css" href="css/index.css" />
-<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+<link rel="stylesheet" type="text/css" href="<%=application.getContextPath() %>/css/index.css" />
+<link rel="stylesheet" type="text/css" href="<%=application.getContextPath() %>/css/animate-custom.css" />
 </head>
 <body style="background: #fff url(images/bg.jpg) repeat top left;">
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

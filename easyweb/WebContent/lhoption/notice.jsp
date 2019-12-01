@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import= "com.yc.easyweb.bean.Notice" %>
 <%@page import= "com.yc.easyweb.biz.NoticeBiz" %>
 <%@page import="com.yc.easyweb.biz.NoticeBiz"%>
@@ -9,11 +10,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<link rel="stylesheet" href="css/index.css"/>
+	<link rel="stylesheet" href="<%=application.getContextPath()%>/css/index.css"/>
 	<script src="js/main.js"></script>
 	<title>Document</title>
-	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="ckeditor/config.js"></script>
+	<script type="text/javascript" src="<%=application.getContextPath()%>/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="<%=application.getContextPath()%>/ckeditor/config.js"></script>
 </head>
 <body >
 
@@ -23,8 +24,8 @@
 	<div class="container clearfix" style="background-color: white">
 		<div class="mainbody_topbg"></div>
 		<div class="bread">当前位置：
-			<a href="index.html">首页</a> >
-			<a href="notice.html">公告</a>
+			<a href="<%=application.getContextPath()%>/lhoption/index.jsp">首页</a> >
+			<a href="<%=application.getContextPath()%>/lhoption/notice.jsp">公告</a>
 		</div>
 		<div class="maincontent fl">
 		<%
@@ -37,7 +38,7 @@
 		%>
 		<%for(Notice t : pPage.getData()){%>
 			<div class="post">
-				<h2><a href="notice-detail.jsp?nid=">华南地区因暴雨天气部分订单推迟配送</a></h2>
+				<h2><a href="<%=application.getContextPath()%>/notice-detail.jsp?nid=">华南地区因暴雨天气部分订单推迟配送</a></h2>
 				<div class="postdata">
 					<div class="date"><%=t.getNtime() %></div>
 					<div class="cate">发表于 <a href="notice-detail.html">公告</a> | </div>
@@ -57,10 +58,10 @@
 			
 			<div id="ball_footer" class="ball_footer">
 					
-					<a class="firstPage" href="notice.jsp?page=1">首页</a>
-					<a class="previousPage" href="notice.jsp?page=<%=pPage.getPreviousPage()%>">上一页</a>
-					<a class="nextPage" href="notice.jsp?page=<%=pPage.getNextPage()%>">下一页</a>
-					<a class="lastPage" href="notice.jsp?page=<%=pPage.getLastPage()%>">尾页</a>
+					<a class="firstPage" href="<%=application.getContextPath()%>/lhoption/notice.jsp?page=1">首页</a>
+					<a class="previousPage" href="<%=application.getContextPath()%>/lhoption/notice.jsp?page=<%=pPage.getPreviousPage()%>">上一页</a>
+					<a class="nextPage" href="<%=application.getContextPath()%>/lhoption/notice.jsp?page=<%=pPage.getNextPage()%>">下一页</a>
+					<a class="lastPage" href="<%=application.getContextPath()%>/lhoption/notice.jsp?page=<%=pPage.getLastPage()%>">尾页</a>
 					第<%=pPage.getPage()%>/<%=pPage.getLastPage()%>
 				
 			</div>	
@@ -70,13 +71,25 @@
 				<li>
 					<h2>最新公告</h2>
 					<ul>
-						<li><a href="notice-detail.html">部分地区订单推迟配送 </a></li>
-						<li><a href="notice-detail.html">购爱星期三，平安信用卡支付选银联，购减二重礼 </a></li>
-						<li><a href="notice-detail.html">自营家居约惠七夕满300减150，满200减80 </a></li>
-						<li><a href="notice-detail.html">北京银行暂停业务通知 </a></li>
-						<li><a href="notice-detail.html">部分地区订单推迟配送 </a></li>
-						<li><a href="notice-detail.html">关于北京地区快件实行实名收寄的公告 </a></li>
-					</ul>
+					<%
+					NoticeBiz noticeBiz = new NoticeBiz();
+					Notice noticer = new Notice();
+					List<Notice> nList = noticeBiz.selectAll(noticer);
+					if(nList.size() != 0){
+						for(int i=0; i<nList.size();i++){
+							if(i == 6){
+								break ;
+							}
+				%>
+				<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
+				<% 
+						}
+					}else{
+				%>
+				<li><i class="icon-bell red"></i>暂无新公告</li>
+				<%
+					}
+				%></ul>
 				</li>
 				<li>
 					<h2>公告存档</h2>
@@ -142,52 +155,6 @@
 		<div class="mainbody_bottombg"></div>
 	</div>
 </div>
-
-
-
-
-<div class="foot">
-	<div class="container">
-		<div class="zhinan">
-			<ul class="clearfix">
-				<li class="item-li">关于我们
-					<ul>
-						<li><a href="help.html">自我介绍</a></li>
-						<li><a href="help.html">联系我们</a></li>
-						<li><a href="help.html">网站公告</a></li>
-					</ul>
-				</li>
-				<li class="item-li">新手指南
-					<ul>
-						<li><a href="help.html">如何买书</a></li>
-						<li><a href="help.html">如何卖书</a></li>
-						<li><a href="help.html">修改密码</a></li>
-					</ul>
-				</li>
-				<li class="item-li">配送方式
-					<ul>
-						<li><a href="help.html">配送范围</a></li>
-						<li><a href="help.html">配送时间</a></li>
-					</ul>
-				</li>
-				<li class="item-li">售后服务
-					<ul>
-						<li><a href="help.html">退款申请</a></li>
-						<li><a href="help.html">退换货处理</a></li>
-						<li><a href="help.html">退换货政策</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<div class="line"></div>
-
-		<div class="bottom">
-			<p>友情链接：<a href="#">安工在线</a>&nbsp;&nbsp;<a href="#">万林强-前端在线简历</a></p>
-			<p>本站所有信息均为用户自由发布，本站不对信息的真实性负任何责任，交易时请注意识别信息的真假如有网站内容侵害了您的权益请联系我们删除，举报电话：15068718875</p>
-			<p>技术支持：万林强 &nbsp;&nbsp;商务QQ:584845663 &nbsp;&nbsp;邮箱：584845663@qq.com</p>
-		</div>
-	</div>
-</div>
-
+<jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>

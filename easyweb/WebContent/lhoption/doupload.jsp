@@ -1,3 +1,4 @@
+<%@page import="com.yc.easyweb.bean.User"%>
 <%@page import="com.yc.easyweb.biz.BookBiz"%>
 <%@page import="com.yc.easyweb.bean.Book"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,77 +8,75 @@
 <%@page import="java.io.*"%>
 <%@page import="java.util.*"%>
 <%
-	
-	//创建文件上传对象
-	SmartUpload su = new SmartUpload();
-	//初始化，传入页面上下文对象
-	su.initialize(pageContext);
-	//设置上传的配置信息
-	//限定文件后缀
-	su.setAllowedFilesList("jpg,png,gif,bmp");
-	//限定大小
-	su.setMaxFileSize(1024 * 1024 * 10);
-	//执行上传
-	
-	su.upload();
-	
-	
-	Files files = su.getFiles();
-	su.getRequest().getParameter("bname");
-	String filename = null;//文件名
-	String diskPath = null;//磁盘路径
-	String realName = null;//文件路径
-	String	path = null;
-	
-	ArrayList<String> fileList = new ArrayList<String>();
-	
-	for(int i =0;i<files.getCount();i++){
-		
-		filename = files.getFile(i).getFileName();
-		//使用application(应用上下文对象) web路径转换成磁盘路径
-		//upload ==>d:dev/tomcat/webapps/damai/upload
-		
-		diskPath = application.getRealPath("/upload");
-	
-		
-		files.getFile(i).saveAs(diskPath + "/" + filename);
-		
-		realName = diskPath + "/" + filename;
-		//将文件真实路径添加到list集合中
-		fileList.add(realName);
-	} 
-		String buniversity = su.getRequest().getParameter("buniversity");	
-		String bucollege =su.getRequest().getParameter("bucollege");
-		String bumajor = su.getRequest().getParameter("bumajor");		
-		String bclass =  su.getRequest().getParameter("bclass");	
-		String btemp =  su.getRequest().getParameter("btemp");
-		long btid =Integer.parseInt(su.getRequest().getParameter("btid")) ;
-		String bcontent = su.getRequest().getParameter("bcontent");
-		String bname = su.getRequest().getParameter("bname");
-		String bimg = realName; 
-		
-		
-		
-		Book book = new Book();
-		book.setBuniversity(buniversity);
-		book.setBucollege(bucollege);
-		book.setBumajor(bumajor);
-		book.setBclass(bclass);
-		book.setBtemp(btemp);
-		book.setBtid(btid);
-		book.setBcontent(bcontent);
-		book.setBname(bname);
-		book.setBimg(bimg); 
-		
+request.setCharacterEncoding("utf-8");
+response.setContentType("text/html;charset=utf-8");
+String path = this.getServletContext().getContextPath();
+String url = null;
+Book book = new Book();
+		String buniversity = request.getParameter("buniversity");	
+		String bucollege =request.getParameter("bucollege");
+		String bumajor = request.getParameter("bumajor");		
+		String bclass =  request.getParameter("bclass");	
+		String btemp =  request.getParameter("btemp");
+		long btid =0  ;
+		String bcontent = request.getParameter("bcontent");
+		String bname = request.getParameter("bname");
+		String bimg = request.getParameter("img_path");
+		User user = (User)session.getAttribute("loginedUser");
+		Book bookOld = new Book();
+		if(buniversity  != null && !buniversity.isEmpty()){
+			book.setBuniversity(buniversity);
+		}
+		if(bucollege  != null && !bucollege.isEmpty()){
+			book.setBucollege(bucollege);
+		}
+		if(bumajor  != null && !bumajor.isEmpty()){
+			book.setBumajor(bumajor);
+		}
+		if(bclass  != null && !bclass.isEmpty()){
+			book.setBclass(bclass);
+		}
+		if(btemp  != null && !btemp.isEmpty()){
+			book.setBtemp(btemp);
+		}
+		if(request.getParameter("btid")  != null && !request.getParameter("btid").isEmpty()){
+			btid = Integer.parseInt(request.getParameter("btid"));
+			book.setBtid(btid);
+		}
+		if(request.getParameter("bprice")  != null && !request.getParameter("bprice").isEmpty()){
+			book.setBprice(Double.parseDouble(request.getParameter("bprice")));
+		}
+		if(bcontent  != null && !bcontent.isEmpty()){
+			book.setBcontent(bcontent);
+		}
+		if(bname  != null && !bname.isEmpty()){
+			book.setBname(bname);
+		}
+		if(bimg != null && !bimg.isEmpty()){
+			book.setBimg(bimg); 
+		}
+		if(user.getUid() != 0){
+			book.setUid(user.getUid());
+		}
+		if(request.getParameter("bid")  != null && !request.getParameter("bid").isEmpty()){
+			bookOld.setBid(Long.parseLong(request.getParameter("bid")));
+		}
 		BookBiz biz = new BookBiz();
-		int i = biz.insert(book);
-		
-		
+		if(bookOld.getBid() != 0){
+			int j = biz.update(book, bookOld);
+			if (j > 0) {
+				url = path + "/lhoption/publish.jsp?msg=" +2;
+			} else {
+				url = path + "/lhoption/publish.jsp?msg=" + 3;
+			}
+			response.sendRedirect(url);
+		}else{
+			int i = biz.insert(book);
+				if (i > 0) {
+					url = path + "/lhoption/publish.jsp?msg=" + 1;
+				} else {
+					url = path + "/lhoption/publish.jsp?msg=" + 0;
+				}
+				response.sendRedirect(url);
+		}
 %>
-<%if(i>0){ %>
-	 图书上传成功!!!
-<%}else{ %>
-	图书上传失败!!!
-<%} %>
-<input type="button" value="返回"
-		onclick="window.location.href = 'publish.jsp'" />

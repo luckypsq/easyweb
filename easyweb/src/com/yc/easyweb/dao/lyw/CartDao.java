@@ -1,28 +1,53 @@
 package com.yc.easyweb.dao.lyw;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.el.ArrayELResolver;
+
 import com.yc.easyweb.bean.Bought;
 import com.yc.easyweb.common.DbHelper;
 
 public class CartDao {
 
 	public List<Bought> selectbAll(List<Object> params) throws Exception {
-		String sql = "select bucollege,bumajor,bclass,bname,bprice,eotime,eostate,bimg,itemid,e.eoid,count,total from book b,eorderitem eo,eorder e  where eo.eoid=e.eoid and eo.bid=b.bid and e.uid=?";
+		String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
+				+ " eo.uid,cartstate,carttime "
+				+ " from book b,eorderitem eo,eorder e  where eo.eoid=e.eoid and eo.bid=b.bid and e.uid=?";
 		List<Bought> list = DbHelper.selectAll(sql,params,Bought.class);
-		System.out.println(list);
 		return  list;
 	}
+	//²éÑ¯µ¥¸ö
+	public Bought selectSingle(List<Object> params) throws Exception {
+		String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,"
+				+ " total,eitemp,eo.uid,cartstate,carttime "
+				+ " from book b,eorderitem eo,eorder e  where eo.eoid=e.eoid and eo.bid=b.bid and e.uid=?";
+		return  DbHelper.selectSingle(sql,params,Bought.class);
+	}
+	
+	
 	public int update(int eostate,String itemid) throws Exception {
-		String sql = "update eorderitem set eostate=? where itemid =?";
+		String sql = "update eorderitem set cartstate=? where itemid =?";
 		return DbHelper.update(sql,eostate,itemid);
 	}
 	public int updateall(String itemid) throws Exception {
 		String sql = "delete from eorderitem where itemid  =?";
-		System.out.println(sql);
 		return DbHelper.update(sql, itemid);
 	}
-	public int updatebj(String count,String total,String itemid) throws Exception {
+	public int updatebj(String count,String itemid) throws Exception {
+		CartDao dao =new CartDao();
+		List<Object> params = new ArrayList<Object>();
+		params.add(itemid);
+		Bought bought = dao.selectSingle(params);
+		double price = 0;
+		if(bought != null){
+			if(bought.getBprice() != 0){
+				price = bought.getBprice();
+			}
+		}
+		price = price * Integer.parseInt(count);
+		System.out.println(price+"===" + count );
 		String sql = "update eorderitem set count=?,total=? where itemid =?";
-		return DbHelper.update(sql,count,total,itemid);
+		return DbHelper.update(sql,count,price,itemid);
 	}
 }
