@@ -2,6 +2,7 @@ package com.yc.easyweb.dao.lyw;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.el.ArrayELResolver;
 
@@ -25,6 +26,12 @@ public class CartDao {
 		return  DbHelper.selectSingle(sql,params,Bought.class);
 	}
 	
+	//²éÑ¯µ¥¸ö
+		public Map<String, Object> selectById(List<Object> params) throws Exception {
+			String sql = "select bname,bprice,bimg,itemid,count,eo.bid,total"
+					+ " from book b,eorderitem eo  where eo.bid=b.bid and itemid=?";
+			return  DbHelper.selectSingle(sql, params);
+		}
 	
 	public int update(int eostate,String itemid) throws Exception {
 		String sql = "update eorderitem set cartstate=? where itemid =?";
@@ -46,7 +53,6 @@ public class CartDao {
 			}
 		}
 		price = price * Integer.parseInt(count);
-		System.out.println(price+"===" + count );
 		String sql = "update eorderitem set count=?,total=? where itemid =?";
 		return DbHelper.update(sql,count,price,itemid);
 	}

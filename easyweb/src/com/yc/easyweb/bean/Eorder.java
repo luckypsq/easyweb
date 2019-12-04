@@ -11,15 +11,6 @@ public class Eorder {
 	private String eotype;//配送方式(在线支付 ，货到付款 店面接取)
 	private String eoespress;//快递名字
 	private long eopaytypeid;//支付类型
-	private String carttime;//加入购物车时间
-	
-	
-	public String getCarttime() {
-		return carttime;
-	}
-	public void setCarttime(String carttime) {
-		this.carttime = carttime;
-	}
 	public String getEoespress() {
 		return eoespress;
 	}

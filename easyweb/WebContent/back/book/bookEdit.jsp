@@ -282,11 +282,11 @@
 				<div style="display:none;">
 					<input type="text" id="img_path" name="img_path" >
 				</div>
-				<div >
+			</div>
+			<div >
 					<span id="tishi"
 						style="margin-left: 80px; font-size: 18px; width: 300px;"></span>
 				</div>
-			</div>
 			<div class="clearfix cl">
 				<label class="form-label col-2">图片上传：</label>
 				<div class="formControls col-10">

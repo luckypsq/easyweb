@@ -117,9 +117,9 @@ public class UserDao {
 	// Ìí¼Ó
 	public int insert(User user) throws Exception {
 		String sql = "insert into user(uid,uname,uminname,uphone,university,ucollege,umajor,uclass,upassword,"
-				+ " ustate,utemp,utype,uemail,utime,usex,uage) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				+ " utemp,utype,uemail,utime,usex,uage) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		return DbHelper.update(sql, user.getUname(), user.getUminname(), user.getUphone(), user.getUniversity(),
-				user.getUcollege(), user.getUmajor(), user.getUclass(), user.getUpassword(), user.getUstate(),
+				user.getUcollege(), user.getUmajor(), user.getUclass(), user.getUpassword(), 
 				user.getUtemp(), user.getUtype(), user.getUemail(), user.getUtime(), user.getUsex(), user.getUage());
 	}
 

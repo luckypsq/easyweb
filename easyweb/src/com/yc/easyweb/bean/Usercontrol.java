@@ -22,6 +22,7 @@ public class Usercontrol {
 	public void setConid(long conid) {
 		this.conid = conid;
 	}
+	
 	@Override
 	public String toString() {
 		return "Usercontrol [ucon=" + ucon + ", uid=" + uid + ", conid=" + conid + "]";

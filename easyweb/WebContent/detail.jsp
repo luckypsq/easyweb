@@ -15,7 +15,6 @@
 	<title>书籍详情</title>
 </head>
 <body>
-
 <%
 			  request.setCharacterEncoding("utf-8");
 			  response.setContentType("text/html;charset=utf-8");
@@ -48,8 +47,8 @@
 				<p>所属学院：<span><%=book.getBucollege()== null? "暂无信息" : book.getBucollege()%></span></p>
 				<p>所属专业：<span><%=book.getBumajor()== null? "暂无信息" : book.getBumajor()%></span></p>
 				<p>所属年级：<span><%=book.getBclass()== null? "暂无信息" : book.getBclass()%></span></p>
-				<a  class="pay">立即购买</a>
-				<a  class="pay">加入购物车</a>
+				<a  class="pay" href="<%=application.getContextPath()%>/lywoption/buy.jsp?bid=<%=book.getBid()%>">立即购买</a>
+				<a  class="pay" onclick="addCart(<%=book.getBid() %>);">加入购物车</a>
 			</div>
 			<div class="clearfix"></div>
 			<div class="description clearfix">
@@ -70,7 +69,6 @@
                    int i=0;
 			       for(Book btype:list){
 			%>
-				
 					<li class="fore1" > <div class="p-img">  
 					<a href="<%=application.getContextPath()%>/detail.jsp?bid=<%=btype.getBid()%>">  
 					<img height="150" width="auto"  src="<%=btype.getBimg() %>" class="img"></a>                
@@ -88,7 +86,7 @@
 </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 
-<div class="full hide">
+<!-- <div class="full hide">
 	<div class="select-book">
 		<div class="clearfix">
 			<button class="select">&nbsp;</button>
@@ -116,6 +114,45 @@
 			<a href="#">取消</a>
 		</div>
 	</div>
-</div>
+</div> -->
+<script type="text/javascript">
+var xmlhttp;
+// ajax 验证用户名是否存在//是否为空//
+try {
+	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+	try {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new XMLHttpRequest();
+		} catch (e) {
+		}
+	}
+
+}
+function addCart(id){
+	alert(id);
+	if (xmlhttp != null) {
+		var url = "<%=application.getContextPath()%>/eorderitem.s?op=add&bid="+id;
+		xmlhttp.open("POST", url, true);
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var msg = xmlhttp.responseText.replace(/\s/gi, "");
+				if(msg == 1){
+					alert("添加成功！！！");
+				}else if(msg = 2){
+					alert("信息不足无法添加！！！");
+				}else{
+					alert("添加失败!!!");
+				}
+			}
+		};
+		xmlhttp.send(null);
+	} else {
+		alert("不能创建XMLHttpRequest对象实例");
+	}
+}
+</script>
 </body>
 </html>

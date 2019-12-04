@@ -95,10 +95,10 @@ public class ControlDao {
 
 	// Ìí¼Ó
 	public int insert(Control control) throws Exception {
-		String sql = "insert into Control(conid,coname,conamesecond,uid,constate,contemp) "
-				+ " values(null,?,?,?,?,?);";
+		String sql = "insert into Control(conid,coname,conamesecond,uid,contemp) "
+				+ " values(null,?,?,?,?);";
 		return DbHelper.update(sql, control.getConame(), control.getConamesecond(), control.getUid(),
-				control.getConstate(), control.getContemp());
+				 control.getContemp());
 	}
 
 	// É¾³ý

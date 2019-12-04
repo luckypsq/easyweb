@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
  * 过滤器也是服务器组件
  * 过滤器的配置： web.xml 注解
  */
-@WebFilter("/LoginFilter")
 public class JoinFilter implements Filter {
 
  

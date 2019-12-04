@@ -17,7 +17,7 @@ public class EorderitemDao {
 	//查询所有
 	public List<Eorderitem> selectAll(Eorderitem eorderitem) throws Exception{
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select itemid,count,bid,eoid,total,eitemp,uid,cartstate"
+		sb.append(" select itemid,count,bid,eoid,total,eitemp,uid,cartstate,carttime"
 				+ " from eorderitem where 1=1 ");
 		if(eorderitem != null){
 			if(eorderitem.getBid() != 0){
@@ -44,7 +44,7 @@ public class EorderitemDao {
 	//查询单个
 		public Eorderitem selectSingle(Eorderitem eorderitem) throws Exception{
 			StringBuffer sb = new StringBuffer();
-			sb.append(" select itemid,count,bid,eoid,total,eitemp,uid,cartstate"
+			sb.append(" select itemid,count,bid,eoid,total,eitemp,uid,cartstate,carttime"
 					+ " from eorderitem where 1=1 ");
 			if(eorderitem != null){
 				if(eorderitem.getBid() != 0){
@@ -70,10 +70,11 @@ public class EorderitemDao {
 		}
 	//添加
 	public int insert(Eorderitem eorderitem) throws Exception{
-		String sql = "insert into eorderitem(itemid,count,bid,eoid,total,eitemp,uid) " 
+		String sql = "insert into eorderitem(itemid,bid,count,total,eitemp,uid,carttime) " 
 					+ " values(?,?,?,?,?,?,?);";
-		return DbHelper.update(sql, eorderitem.getItemid(),eorderitem.getCount(),
-				eorderitem.getBid(),eorderitem.getEoid(),eorderitem.getTotal(),eorderitem.getEitemp(),eorderitem.getUid());
+		return DbHelper.update(sql, eorderitem.getItemid(),eorderitem.getBid(),eorderitem.getCount(),
+				eorderitem.getTotal(),eorderitem.getEitemp()
+				,eorderitem.getUid(),eorderitem.getCarttime());
 	}
 	//删除
 	public int delete(Eorderitem eorderitem) throws Exception{
@@ -141,6 +142,9 @@ public class EorderitemDao {
 		}
 		if(eoNew.getCartstate() != 0){
 			sb.append(" , cartstate="+eoNew.getCartstate());
+		}
+		if(eoNew.getCarttime() != null){
+			sb.append(" , carttime ='"+eoOld.getCarttime() +"'");
 		}
 		sb.append(" where 1=1 ");
 		if(eoOld.getBid() != 0){

@@ -1,3 +1,8 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="com.yc.easyweb.biz.UsercontrolBiz"%>
+<%@page import="com.yc.easyweb.bean.Usercontrol"%>
+<%@page import="com.yc.easyweb.bean.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -259,7 +264,31 @@
 					<li class="light-blue"><a data-toggle="dropdown" href="#"
 						class="dropdown-toggle">
 						 <span class="time"><em id="time"></em></span>
-							<span class="user-info"><small>欢迎光临,</small>超级管理员</span>
+						 <%
+						 	User loginUser = (User)session.getAttribute("loginedUser");
+							 String adminType = null; 
+							 Usercontrol usercontrolOld = new Usercontrol();
+							 List<Usercontrol> controlList = null;
+							 List<Long> conList = new ArrayList<Long>();
+							 UsercontrolBiz usercontrolBiz = new UsercontrolBiz();
+						 	if(loginUser != null){
+						 		if(loginUser.getUtype() == 1){
+						 			adminType = "超级管理员";
+						 		}else{
+						 			adminType = "普通管理员";
+						 		}
+						 		if(loginUser.getUid() != 0){
+						 			usercontrolOld.setUid(loginUser.getUid());
+						 			controlList = usercontrolBiz.selectAll(usercontrolOld);
+						 		}
+						 	}
+						 	if(controlList != null){
+						 		for(Usercontrol ucon : controlList){
+						 			conList.add(ucon.getConid());
+						 		}
+						 	}
+						 %>
+							<span class="user-info"><small>欢迎光临,</small><%=adminType == null ? "管理员":adminType %></span>
 							<i class="icon-caret-down"></i>
 					</a>
 						<ul
@@ -275,10 +304,11 @@
 					<li class="purple"><a data-toggle="dropdown"
 						class="dropdown-toggle" href="#"><i class="icon-bell-alt"></i><span
 							class="badge badge-important">8</span></a>
-						<ul
-							class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+						<ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
 							<li class="dropdown-header"><i class="icon-warning-sign"></i>8条通知</li>
-							<li><a href="<%=application.getContextPath() %>/back/message/Guestbook.jsp">
+							<li>
+							<a name="<%=application.getContextPath() %>/back/message/Guestbook.jsp"
+							href="javascript:void(0)" class="iframeurl">
 									<div class="clearfix">
 										<span class="pull-left"> <i
 											class="btn btn-xs no-hover btn-pink icon-comments-alt"></i>
@@ -286,12 +316,8 @@
 										</span> <span class="pull-right badge badge-info">+12</span>
 									</div>
 							</a></li>
-
-							<!-- <li><a href="#"> <i
-									class="btn btn-xs btn-primary icon-user"></i> 切换为编辑登录..
-							</a></li> -->
-
-							<li><a href="<%=application.getContextPath()%>/back/order/Order_handling.jsp">
+							<li><a name="<%=application.getContextPath()%>/back/order/Order_handling.jsp"
+									href="javascript:void(0)" class="iframeurl">
 									<div class="clearfix">
 										<span class="pull-left"> <i
 											class="btn btn-xs no-hover btn-success icon-shopping-cart"></i>
@@ -300,7 +326,9 @@
 									</div>
 							</a></li>
 
-							<li><a href="<%=application.getContextPath() %>/back/message/Feedback.jsp">
+							<li><a name="<%=application.getContextPath() %>/back/message/Feedback.jsp"
+							href="javascript:void(0)" class="iframeurl"
+							>
 									<div class="clearfix">
 										<span class="pull-left"> <i
 											class="btn btn-xs no-hover btn-info icon-twitter"></i> 用户反馈
@@ -308,21 +336,13 @@
 									</div>
 							</a></li>
 
-							<li><a href="#"> 查看所有通知 <i class="icon-arrow-right"></i>
+							<li><a name="<%=application.getContextPath() %>/back/notice/article_list.jsp"
+							href="javascript:void(0)" class="iframeurl"> 查看所有通知 <i class="icon-arrow-right"></i>
 							</a></li>
 						</ul></li>
 
 
 				</ul>
-				<!-- <div class="right_info">
-                 
-                   <div class="get_time" ><span id="time" class="time"></span>欢迎光临,管理员</span></div>
-					<ul class="nav ace-nav">	
-						<li><a href="javascript:ovid(0)" class="change_Password">修改密码</a></li>
-                        <li><a href="javascript:ovid(0)" id="Exit_system">退出系统</a></li>
-                       
-					</ul>
-				</div>-->
 			</div>
 		</div>
 	</div>
@@ -368,7 +388,10 @@
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-desktop"></i><span class="menu-text"> 书籍管理 </span><b
 								class="arrow icon-angle-down"></b></a>
-							<ul class="submenu">
+								<%
+									if(conList.contains(Long.parseLong("1"))){
+									%>
+										<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/book/Products_List.jsp" title="书籍类表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>书籍类表</a></li>
@@ -379,11 +402,28 @@
 									name="<%=application.getContextPath() %>/back/book/product-category-add.jsp" title="分类管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>分类管理</a></li>
 
-							</ul></li>
+							</ul>
+								<%	}else{%>
+										<ul class="submenu">
+								<li class="home"><a href="javascript:void(0)"
+									title="书籍类表" class="iframeurl"><i
+										class="icon-double-angle-right"></i>书籍类表</a></li>
+								<!-- <li class="home"><a href="javascript:void(0)"
+									name="Brand_Manage.jsp" title="品牌管理" class="iframeurl"><i
+										class="icon-double-angle-right"></i>品牌管理</a></li> -->
+								<li class="home"><a href="javascript:void(0)"
+									 class="iframeurl"><i
+										class="icon-double-angle-right"></i>分类管理</a></li>
+							</ul>
+								<% }%>
+						</li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-picture "></i><span class="menu-text"> 图片管理 </span><b
 								class="arrow icon-angle-down"></b></a>
-							<ul class="submenu">
+							<%
+								if(conList.contains(Long.parseLong("4"))){
+							%>
+								<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/advertising/advertising.jsp" title="广告管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>广告管理</a></li>
@@ -391,6 +431,14 @@
 									name="<%=application.getContextPath() %>/back/advertising/Sort_ads.jsp" title="分类管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>分类管理</a></li> --%>
 							</ul>
+							<%	}else{%>
+							<ul class="submenu">
+								<li class="home"><a href="javascript:void(0)"
+									title="广告管理" class="iframeurl"><i
+										class="icon-double-angle-right"></i>广告管理</a></li>
+							</ul>
+							<% }%>
+							
 						</li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-list"></i><span class="menu-text"> 交易管理 </span><b
@@ -414,11 +462,13 @@
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/order/Refund.jsp" title="退款管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>退款管理</a></li>
-							</ul></li>
+							</ul>
+						</li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-credit-card"></i><span class="menu-text">
 									支付管理 </span><b class="arrow icon-angle-down"></b></a>
-							<ul class="submenu">
+									<%if(conList.contains(Long.parseLong("6"))){%>
+										<ul class="submenu">
 								<!-- <li class="home"><a href="javascript:void(0)"
 									name="Cover_management.jsp" title="账户管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>账户管理</a></li> -->
@@ -428,11 +478,24 @@
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/pay/Payment_Configure.jsp" title="支付配置" class="iframeurl"><i
 										class="icon-double-angle-right"></i>支付配置</a></li>
-							</ul></li>
+							</ul>
+								<%	}else{%>
+								<ul class="submenu">
+								<li class="home"><a href="javascript:void(0)"
+									title="支付方式" class="iframeurl"><i
+										class="icon-double-angle-right"></i>支付方式</a></li>
+								<li class="home"><a href="javascript:void(0)"
+									title="支付配置" class="iframeurl"><i
+										class="icon-double-angle-right"></i>支付配置</a></li>
+							</ul>
+								<% }%>
+							
+						</li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-user"></i><span class="menu-text"> 用户管理 </span><b
 								class="arrow icon-angle-down"></b></a>
-							<ul class="submenu">
+								<%if(conList.contains(Long.parseLong("9"))){%>
+									<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/user/user_list.jsp" title="用户列表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>用户列表</a></li>
@@ -442,8 +505,23 @@
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/user/integration.jsp" title="用户记录管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>用户记录管理</a></li>
+									</ul>
+								<%	}else{%>
+									<ul class="submenu">
+								<li class="home"><a href="javascript:void(0)"
+									 title="用户列表" class="iframeurl"><i
+										class="icon-double-angle-right"></i>用户列表</a></li>
+								<li class="home"><a href="javascript:void(0)"
+									 title="等级管理" class="iframeurl"><i
+										class="icon-double-angle-right"></i>等级管理</a></li>
+								<li class="home"><a href="javascript:void(0)"
+									title="用户记录管理" class="iframeurl"><i
+										class="icon-double-angle-right"></i>用户记录管理</a></li>
 
-							</ul></li>
+							</ul>
+								<% }%>
+							
+						</li>
 						<!-- <li><a href="#" class="dropdown-toggle"><i
 								class="icon-laptop"></i><span class="menu-text"> 店铺管理 </span><b
 								class="arrow icon-angle-down"></b></a>
@@ -459,29 +537,55 @@
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-comments-alt"></i><span class="menu-text">
 									消息管理 </span><b class="arrow icon-angle-down"></b></a>
-							<ul class="submenu">
-								<li class="home"><a href="javascript:void(0)"
-									name="<%=application.getContextPath() %>/back/message/Guestbook.jsp" title="留言列表" class="iframeurl"><i
-										class="icon-double-angle-right"></i>留言列表</a></li>
-								<li class="home"><a href="javascript:void(0)"
-									name="<%=application.getContextPath() %>/back/message/Feedback.jsp" title="意见反馈" class="iframeurl"><i
-										class="icon-double-angle-right"></i>意见反馈</a></li>
-							</ul></li>
+							<%if(conList.contains(Long.parseLong("13"))){%>
+								<ul class="submenu">
+									<li class="home"><a href="javascript:void(0)"
+										name="<%=application.getContextPath() %>/back/message/Guestbook.jsp" title="留言列表" class="iframeurl"><i
+											class="icon-double-angle-right"></i>留言列表</a></li>
+									<li class="home"><a href="javascript:void(0)"
+										name="<%=application.getContextPath() %>/back/message/Feedback.jsp" title="意见反馈" class="iframeurl"><i
+											class="icon-double-angle-right"></i>意见反馈</a></li>
+								</ul>
+							<%	}else{%>
+									<ul class="submenu">
+									<li class="home"><a href="javascript:void(0)"
+										title="留言列表" class="iframeurl"><i
+											class="icon-double-angle-right"></i>留言列表</a></li>
+									<li class="home"><a href="javascript:void(0)"
+										title="意见反馈" class="iframeurl"><i
+											class="icon-double-angle-right"></i>意见反馈</a></li>
+								</ul>
+							<% }%>
+							
+						</li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-bookmark"></i><span class="menu-text"> 公告管理 </span><b
 								class="arrow icon-angle-down"></b></a>
-							<ul class="submenu">
+							<%if(conList.contains(Long.parseLong("16"))){%>
+									<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/notice/article_list.jsp" title="文章列表" class="iframeurl"><i
 										class="icon-double-angle-right"></i>公告列表</a></li>
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/notice/article_Sort.jsp" title="分类管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>公告管理</a></li>
-							</ul></li>
+							</ul>
+							<%	}else{%>
+								<ul class="submenu">
+								<li class="home"><a href="javascript:void(0)"
+									title="文章列表" class="iframeurl"><i
+										class="icon-double-angle-right"></i>公告列表</a></li>
+								<li class="home"><a href="javascript:void(0)"
+									title="分类管理" class="iframeurl"><i
+										class="icon-double-angle-right"></i>公告管理</a></li>
+								</ul>
+							<% }%>
+						</li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-cogs"></i><span class="menu-text"> 系统管理 </span><b
 								class="arrow icon-angle-down"></b></a>
-							<ul class="submenu">
+							<%if(conList.contains(Long.parseLong("19"))){%>
+								<ul class="submenu">
 								<%-- <li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/system/Systems.jsp" title="系统设置" class="iframeurl"><i
 										class="icon-double-angle-right"></i>系统设置</a></li> --%>
@@ -492,12 +596,24 @@
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/system/System_Logs.jsp" title="系统日志" class="iframeurl"><i
 										class="icon-double-angle-right"></i>系统日志</a></li>
-							</ul></li>
+							</ul>
+								<%	}else{%>
+								<ul class="submenu">
+								<li class="home"><a href="javascript:void(0)"
+									class="iframeurl"><i
+										class="icon-double-angle-right"></i>系统栏目管理</a></li>
+								<li class="home"><a href="javascript:void(0)"
+										 title="系统日志" class="iframeurl"><i
+										class="icon-double-angle-right"></i>系统日志</a></li>
+							</ul>
+								<% }%>
+							
+						</li>
 						<li><a href="#" class="dropdown-toggle"><i
 								class="icon-group"></i><span class="menu-text"> 管理员管理 </span><b
 								class="arrow icon-angle-down"></b></a>
-							<ul class="submenu">
-
+							<%if(conList.contains(Long.parseLong("22"))){%>
+								<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/admin/admin_Competence.jsp" title="权限管理" class="iframeurl"><i
 										class="icon-double-angle-right"></i>权限管理</a></li>
@@ -507,7 +623,22 @@
 								<li class="home"><a href="javascript:void(0)"
 									name="<%=application.getContextPath() %>/back/admin/admin_info.jsp" title="个人信息" class="iframeurl"><i
 										class="icon-double-angle-right"></i>个人信息</a></li>
-							</ul></li>
+							</ul>
+							<%	}else{%>
+							<ul class="submenu">
+								<li class="home"><a href="javascript:void(0)"
+									 title="权限管理" class="iframeurl"><i
+										class="icon-double-angle-right"></i>权限管理</a></li>
+								<li class="home"><a href="javascript:void(0)"
+									 title="管理员列表" class="iframeurl"><i
+										class="icon-double-angle-right"></i>管理员列表</a></li>
+								<li class="home"><a href="javascript:void(0)"
+									class="iframeurl"><i
+									class="icon-double-angle-right"></i>个人信息</a></li>
+							</ul>
+							<% }%>
+							
+					</li>
 					</ul>
 				</div>
 				<script type="text/javascript">

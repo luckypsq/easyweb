@@ -58,6 +58,11 @@
 	.help-main p {
 		line-height: 50px;
 	}
+	#buyA{
+		text-decoration:none ;
+		out-line: none;
+	}
+	
 </style>
 <body >
 <jsp:include page="/common/header.jsp"></jsp:include>
@@ -127,6 +132,21 @@
 					long uid=user.getUid();
 					PageCart Page = dbHelper.selectPageForMysql(ipage, rows,uid);
 						for(Bought bought1 : Page.getData()){
+							String state = null;
+							 switch (bought1.getCartstate()) {
+						  	  case 1:
+						  		state="待下单";
+							   break;
+							  case 2:
+							    state="已购买";
+							   break;
+							  case 3:
+								state="已删除";
+							   break;
+							  }
+							 String itemid1=bought1.getItemid();
+							 long count1=bought1.getCount();
+							 double total1=bought1.getTotal();
 					%>
 				<div class="pro">
 					<div class="product-attr">
@@ -144,31 +164,10 @@
 								<li><%=bought1.getBprice() %></li>
 								<li><%=bought1.getCarttime()%></li>
 								<li class="edit" style="width: 110px">
-								<%
-								String state = null;
-								 switch (bought1.getCartstate()) {
-							  	  case 1:
-							  		state="待下单";
-								   break;
-								  case 2:
-								    state="已购买";
-								   break;
-								  case 3:
-									state="已删除";
-								   break;
-								  }
-								 String itemid1=bought1.getItemid();
-								 long count1=bought1.getCount();
-								 double total1=bought1.getTotal(); 
-								%>
-									<span class="sell"><%=state%></span>
+								<span class="sell"><%=state%></span>
 								</li>
 								<li  class="edit1" style="width: 50px" >
-								<form action="<%=application.getContextPath()%>/lywoption/buy.jsp?itemid=<%=itemid1%>"
-									method="post" novalidate="novalidate"
-									>
-									<input type="submit" value="购买" >
-								</form>
+									<a id="buyA" href="<%=application.getContextPath()%>/lywoption/buy.jsp?itemid=<%=itemid1%>">购买</a>
 								</li>
 								<li class="edit2" style="width: 50px" >
 								<form action="<%=application.getContextPath()%>/lywoption/boughtupdate.jsp?itemid=<%=itemid1%>"
@@ -180,12 +179,12 @@
 								<li class="edit3" style="width: 50px" >
 									<input type="button" value="删除" onclick="deleteone(<%=itemid1%>)">
 								</li>
+							
 							</ul>
 						</div>
 					</div>
 				</div>
-					
-					<%} %>
+				<%} %>
 				
 				<div class="page clearfix">
 					<a href="<%=application.getContextPath()%>/lywoption/bought.jsp?Page=<%=Page.getFirstPage()%>">首页</a>

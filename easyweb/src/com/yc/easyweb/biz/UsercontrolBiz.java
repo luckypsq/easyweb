@@ -16,8 +16,13 @@ public class UsercontrolBiz {
 	private UsercontrolDao dao = new UsercontrolDao();
 	
 	//查询所有
-		public List<Usercontrol> selectAll(Usercontrol usercontrol) throws Exception{
-			return dao.selectAll(usercontrol);
+		public List<Usercontrol> selectAll(Usercontrol usercontrol){
+			try {
+				return dao.selectAll(usercontrol);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
 			
 		}
 		//查询单个

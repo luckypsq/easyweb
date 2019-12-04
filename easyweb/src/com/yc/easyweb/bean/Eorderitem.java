@@ -10,6 +10,17 @@ public class Eorderitem {
 	private String eitemp;// 预备字段
 	private long uid;// 用户名
 	private int cartstate;// 状态
+	private String carttime;
+	
+	
+
+	public String getCarttime() {
+		return carttime;
+	}
+
+	public void setCarttime(String carttime) {
+		this.carttime = carttime;
+	}
 
 	public int getCartstate() {
 		return cartstate;

@@ -22,7 +22,7 @@ public class EorderDao {
 	// 查询所有
 	public List<Eorder> selectAll(Eorder eorder) throws Exception {
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype,eoespress,eopaytypeid,carttime " + " from eorder where 1=1 ");
+		sb.append(" select eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype,eoespress,eopaytypeid " + " from eorder where 1=1 ");
 		if (eorder != null) {
 			if (eorder.getUid() != 0) {
 				sb.append(" and uid=" + eorder.getUid());
@@ -87,7 +87,7 @@ public class EorderDao {
 	// 查询单个
 		public Eorder selectSingle(Eorder eorder) throws Exception {
 			StringBuffer sb = new StringBuffer();
-			sb.append(" select eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype,carttime " + " from eorder where 1=1 ");
+			sb.append(" select eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype " + " from eorder where 1=1 ");
 			if (eorder != null) {
 				if (eorder.getUid() != 0) {
 					sb.append(" and uid=" + eorder.getUid());
@@ -122,9 +122,9 @@ public class EorderDao {
 		}
 	// 添加
 	public int insert(Eorder eorder) throws Exception {
-		String sql = "insert into eorder(eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype,eoespress,eopaytypeid  ) "
-				+ " values(?,?,?,?,?,?,?,?);";
-		return DbHelper.update(sql, eorder.getEoid(), eorder.getUid(), eorder.getEostate(), eorder.getEotime(),
+		String sql = "insert into eorder(eoid,uid,eotime,eotemp,uname,eoaddr,eotype,eoespress,eopaytypeid  ) "
+				+ " values(?,?,?,?,?,?,?,?,?);";
+		return DbHelper.update(sql, eorder.getEoid(), eorder.getUid(),  eorder.getEotime(),
 				eorder.getEotemp(), eorder.getUname(), eorder.getEoaddr(), eorder.getEotype(),eorder.getEoespress(),eorder.getEopaytypeid());
 	}
 

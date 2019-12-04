@@ -122,7 +122,6 @@ public class BookDao {
 			}
 		}
 		sb.append(" order by  bid desc");
-		System.out.println(sb.toString());
 		return db.selectSingle(sb.toString(), null, Book.class);	
 	}
 	
