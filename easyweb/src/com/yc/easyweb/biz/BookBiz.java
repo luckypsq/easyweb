@@ -1,5 +1,7 @@
 package com.yc.easyweb.biz;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.yc.easyweb.biz.BizException;
@@ -17,83 +19,49 @@ public class BookBiz {
 	private BookDao dao = new BookDao();
 
 	// 查询所有
-	public List<Book> selectAll(Book book) throws BizException {
-		if (book == null) {
-			throw new BizException("请填写书籍信息！");
-		}
-		try {
-			return dao.selectAll(book);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public List<Book> selectAll(Book book) throws  IOException {
+		return dao.selectAll(book);
 	}
-
 	// 查询单条
-	public Book selectSingle(Book book) throws BizException {
+	public Book selectSingle(Book book) throws BizException, IOException {
 		if (book == null) {
 			throw new BizException("请填写书籍信息！");
 		}
-		try {
-			return dao.selectSingle(book);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		return dao.selectSingle(book);
 	}
-
 	// 添加
-	public int insert(Book book) throws BizException {
+	public int insert(Book book) throws BizException, SQLException {
 		if (book == null) {
 			throw new BizException("请填写书籍信息！");
 		}
-		try {
 			return dao.insert(book);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
 	}
 
 	// 删除
-	public int delete(Book book) throws BizException {
+	public int delete(Book book) throws BizException, SQLException {
 		if (book == null) {
 			throw new BizException("请填写书籍信息！");
 		}
-		try {
 			return dao.delete(book);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
-
 	}
 
 	// 删除多条
-	public int deleteMore(List<Book> list) throws BizException {
+	public int deleteMore(List<Book> list) throws BizException, SQLException {
 		if (list.size() == 0) {
 			throw new BizException("请填写书籍信息！");
 		}
-		try {
 			return dao.delete(list);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
 	}
 
 	// 更新
-	public int update(Book newBook, Book oldBook) throws BizException {
-		if (newBook == null || oldBook == null) {
-			throw new BizException("请填写需要需改的书籍信息！");
+	public int update(Book newBook, Book oldBook) throws BizException, SQLException {
+		if (newBook == null ) {
+			throw new BizException("请填写需要修改的信息！");
 		}
-		try {
+		if (oldBook == null ) {
+			throw new BizException("请填写需要修改的书籍！");
+		}
 			return dao.update(newBook, oldBook);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
-
 	}
 	// 其他
 }

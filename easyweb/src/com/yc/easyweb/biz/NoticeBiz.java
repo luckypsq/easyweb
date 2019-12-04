@@ -1,5 +1,6 @@
 package com.yc.easyweb.biz;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.yc.easyweb.bean.Notice;
@@ -16,14 +17,15 @@ public class NoticeBiz {
 	private NoticeDao dao = new NoticeDao();
 
 	// 查询所有
-	public List<Notice> selectAll(Notice notice) throws Exception {
-
+	public List<Notice> selectAll(Notice notice) throws IOException  {
 		return dao.selectAll(notice);
-
 	}
 
 	// 查询所有
-	public Notice selectSingle(Notice notice) throws Exception {
+	public Notice selectSingle(Notice notice) throws BizException, IOException  {
+		if(notice == null){
+			throw new BizException("请填写公告信息");
+		}
 		return dao.selectSingle(notice);
 	}
 

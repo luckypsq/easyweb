@@ -1,5 +1,7 @@
 package com.yc.easyweb.biz;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.yc.easyweb.bean.Control;
@@ -7,40 +9,62 @@ import com.yc.easyweb.dao.ControlDao;
 
 /**
  * 操作Control表的事务类
+ * 
  * @author psq
  *
  */
 public class ControlBiz {
 
 	private ControlDao dao = new ControlDao();
-	
-	//查询所有
-		public List<Control> selectAll(Control control) throws Exception{
-			return dao.selectAll(control);
-			
+
+	// 查询所有
+	public List<Control> selectAll(Control control) throws BizException,  IOException {
+		return dao.selectAll(control);
+	}
+	// 查询单个
+	public Control selectSingle(Control control) throws IOException, BizException {
+		if(control == null){
+			throw new BizException("请填写管理权限信息");
 		}
-		public Control selectSingle(Control control) throws Exception{
-			return dao.selectSingle(control);
+		return dao.selectSingle(control);
+	}
+
+	// 添加
+	public int insert(Control control) throws SQLException, BizException {
+		if(control == null){
+			throw new BizException("请填写管理权限信息");
 		}
-		
-		//添加
-		public int insert(Control control) throws Exception{
-			return dao.insert(control);
-			
+		return dao.insert(control);
+
+	}
+
+	// 删除
+	public int delete(Control control) throws SQLException, BizException {
+		if(control == null){
+			throw new BizException("请填写管理权限信息");
 		}
-		//删除
-		public int delete(Control control) throws Exception{
-			return dao.delete(control);
-			
+		return dao.delete(control);
+
+	}
+
+	// 删除
+	public int deleteAll(List<Control> list) throws SQLException, BizException {
+		if(list.size() == 0){
+			throw new BizException("请填写管理权限信息");
 		}
-		//删除
-				public int deleteAll(List<Control> list) throws Exception{
-					return dao.delete(list);
-					
-				}
-		//更新
-		public  int update (Control controlNew,Control controlOld) throws Exception {
-			return dao.update(controlNew, controlOld);
+		return dao.delete(list);
+
+	}
+
+	// 更新
+	public int update(Control controlNew, Control controlOld) throws SQLException, BizException {
+		if(controlNew == null){
+			throw new BizException("请填写修改的管理权限信息");
 		}
-		//其他
+		if(controlOld == null){
+			throw new BizException("请填写需要的管理权限");
+		}
+		return dao.update(controlNew, controlOld);
+	}
+	// 其他
 }
