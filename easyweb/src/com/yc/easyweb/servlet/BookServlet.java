@@ -2,6 +2,7 @@ package com.yc.easyweb.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,8 +32,7 @@ public class BookServlet extends BaseServlet {
 
 	// ²éÑ¯
 	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
+	
 
 	}
 
@@ -90,15 +90,19 @@ public class BookServlet extends BaseServlet {
 			bookNew.setBimg(request.getParameter("img_path"));
 		}
 		try {
-			int code = bookBiz.insert(bookNew);
-			String url = null;
-			if (code > 0) {
-				url = path + "/back/book/picture-add.jsp?msg=" + 1;
-			} else {
-				url = path + "/back/book/picture-add.jsp?msg=" + 0;
+			int code;
+			try {
+				code = bookBiz.insert(bookNew);
+				String url = null;
+				if (code > 0) {
+					url = path + "/back/book/picture-add.jsp?msg=" + 1;
+				} else {
+					url = path + "/back/book/picture-add.jsp?msg=" + 0;
+				}
+				response.sendRedirect(url);
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			response.sendRedirect(url);
-
 		} catch (BizException e) {
 			e.printStackTrace();
 		}
@@ -142,6 +146,9 @@ public class BookServlet extends BaseServlet {
 			}
 		} catch (BizException e) {
 			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -168,7 +175,11 @@ public class BookServlet extends BaseServlet {
 			}
 		} catch (BizException e) {
 			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 
 	// ÉÏ´«Í¼Æ¬
@@ -286,6 +297,9 @@ public class BookServlet extends BaseServlet {
 			response.sendRedirect(url);
 
 		} catch (BizException e) {
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

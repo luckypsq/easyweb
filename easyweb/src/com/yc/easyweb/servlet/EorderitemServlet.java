@@ -2,6 +2,7 @@ package com.yc.easyweb.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class EorderitemServlet extends BaseServlet {
 		
 	}
 	//Ìí¼Ó
-	public void  add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void  add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		Eorderitem eod = new Eorderitem();
 		PrintWriter out = response.getWriter();
 		if(request.getParameter("bid") != null && !request.getParameter("bid").isEmpty()){
@@ -43,6 +44,7 @@ public class EorderitemServlet extends BaseServlet {
 					return ;
 				}
 			} catch (BizException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
@@ -76,7 +78,11 @@ public class EorderitemServlet extends BaseServlet {
 			}else{
 				out.print(0);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

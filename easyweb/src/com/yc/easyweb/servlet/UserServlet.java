@@ -3,6 +3,7 @@ package com.yc.easyweb.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yc.easyweb.bean.User;
+import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.UserBiz;
 import com.yc.easyweb.dao.lyw.UserDaoLyw;
 
@@ -42,7 +44,8 @@ public class UserServlet extends BaseServlet {
 						request.getRequestDispatcher(url).forward(request, response);
 						return;
 					}
-				} catch (Exception e) {
+				}  catch (BizException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
@@ -101,7 +104,11 @@ public class UserServlet extends BaseServlet {
 				}
 				request.getRequestDispatcher(url).forward(request, response);
 				return;
-			} catch (Exception e) {
+			}  catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BizException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -115,7 +122,11 @@ public class UserServlet extends BaseServlet {
 				url = url + "&msg=" + 0;
 			}
 			request.getRequestDispatcher(url).forward(request, response);
-		} catch (Exception e) {
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -139,7 +150,7 @@ public class UserServlet extends BaseServlet {
 							out.print(2);
 							return;
 						}
-					} catch (Exception e) {
+					}  catch (BizException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -168,7 +179,10 @@ public class UserServlet extends BaseServlet {
 			} else {
 				out.print(0);
 			}
-		} catch (Exception e) {
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BizException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -201,7 +215,11 @@ public class UserServlet extends BaseServlet {
 			} else {
 				out.print(0);
 			}
-		} catch (Exception e) {
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -233,7 +251,8 @@ public class UserServlet extends BaseServlet {
 						request.getRequestDispatcher(url).forward(request, response);
 						return;
 					}
-				} catch (Exception e) {
+				}  catch (BizException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
@@ -315,7 +334,11 @@ public class UserServlet extends BaseServlet {
 				}
 				request.getRequestDispatcher(url).forward(request, response);
 				return;
-			} catch (Exception e) {
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BizException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -328,7 +351,11 @@ public class UserServlet extends BaseServlet {
 				url = url + "&msg=" + 0;
 			}
 			request.getRequestDispatcher(url).forward(request, response);
-		} catch (Exception e) {
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -352,7 +379,8 @@ public class UserServlet extends BaseServlet {
                 request.setAttribute("result","个人信息修改失败");
                 request.getRequestDispatcher(url).forward(request, response);
             }
-		} catch (Exception e) {
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

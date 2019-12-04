@@ -2,6 +2,7 @@ package com.yc.easyweb.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +15,7 @@ import com.mysql.fabric.xmlrpc.base.Array;
 import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 import com.yc.easyweb.bean.Control;
 import com.yc.easyweb.bean.Usercontrol;
+import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.ControlBiz;
 import com.yc.easyweb.biz.UsercontrolBiz;
 
@@ -37,14 +39,19 @@ public class ControlServlet extends BaseServlet {
 		if (request.getParameter("namesecond") != null && !request.getParameter("namesecond").isEmpty()) {
 			control.setConamesecond(request.getParameter("namesecond"));
 		}
+		int i;
 		try {
-			int i = controlBiz.insert(control);
+			i = controlBiz.insert(control);
 			if (i > 0) {
 				out.print(1);
 			} else {
 				out.print(0);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -79,7 +86,6 @@ public class ControlServlet extends BaseServlet {
 					userm.setUid(Long.parseLong(suid));
 					for (Integer i : listType) {
 						userm.setConid(i);
-
 						Usercontrol userS = userc.selectSingle(userm);
 						if (userS.getConid() == 0) {
 							int j = userc.insert(userm);
@@ -92,7 +98,11 @@ public class ControlServlet extends BaseServlet {
 					}
 				}
 				out.print(1);
-			} catch (Exception e) {
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BizException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

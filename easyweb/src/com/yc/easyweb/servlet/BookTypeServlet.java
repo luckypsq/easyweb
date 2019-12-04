@@ -2,6 +2,7 @@ package com.yc.easyweb.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -166,6 +167,9 @@ public class BookTypeServlet extends BaseServlet {
 			}
 		} catch (BizException e) {
 			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -187,6 +191,9 @@ public class BookTypeServlet extends BaseServlet {
 				out.print("É¾³ýÊ§°Ü£¡£¡£¡");
 			}
 		} catch (BizException e) {
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -252,6 +259,9 @@ public class BookTypeServlet extends BaseServlet {
 				}
 			}
 		} catch (BizException e) {
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

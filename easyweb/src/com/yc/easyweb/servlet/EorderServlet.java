@@ -2,6 +2,7 @@ package com.yc.easyweb.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -97,7 +98,11 @@ public class EorderServlet extends BaseServlet {
 					return;
 				}
 				eodReal = eBiz.selectSingle(eod);
-			} catch (Exception e) {
+			}  catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BizException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else if (request.getParameter("itemid") != null && !request.getParameter("itemid").toString().isEmpty()) {
@@ -119,7 +124,11 @@ public class EorderServlet extends BaseServlet {
 					eodReal = eBiz.selectSingle(eod);
 					bid = eodReal.getBid();
 				}
-			} catch (Exception e) {
+			}  catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BizException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
@@ -138,7 +147,11 @@ public class EorderServlet extends BaseServlet {
 					response.sendRedirect(url);
 					return;
 				}
-			} catch (Exception e) {
+			}  catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BizException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -193,7 +206,11 @@ public class EorderServlet extends BaseServlet {
 					url =url +0;
 				}
 				response.sendRedirect(url);
-			} catch (Exception e) {
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BizException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}
@@ -240,7 +257,11 @@ public class EorderServlet extends BaseServlet {
 				out.print(2);
 				return ;
 			}
-		} catch (Exception e) {
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -273,7 +294,11 @@ public class EorderServlet extends BaseServlet {
 			}else{
 				out.print(0);
 			}
-		} catch (Exception e) {
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

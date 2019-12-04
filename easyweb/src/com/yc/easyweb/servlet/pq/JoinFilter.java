@@ -7,7 +7,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,8 +16,6 @@ import javax.servlet.http.HttpSession;
  * ¹ýÂËÆ÷µÄÅäÖÃ£º web.xml ×¢½â
  */
 public class JoinFilter implements Filter {
-
- 
 	public void destroy() {	}
 
 	/**
@@ -42,12 +39,6 @@ public class JoinFilter implements Filter {
 		}
 		chain.doFilter(request, response);
 	}
-
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
 	}
-
 }

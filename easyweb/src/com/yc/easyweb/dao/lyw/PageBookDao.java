@@ -1,33 +1,30 @@
 package com.yc.easyweb.dao.lyw;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import com.yc.easyweb.bean.Book;
-import com.yc.easyweb.bean.PageBook;
-import com.yc.easyweb.bean.User;
 import com.yc.easyweb.common.DbHelper;
 
 public class PageBookDao {
-	public List<Book> selectbuniversity() throws Exception {
+	public List<Book> selectbuniversity() throws IOException  {
 		String sql = "select buniversity from book ";
-	
 		List<Book> list = DbHelper.selectAll(sql,null,Book.class);
 		return  list;
 	}
-	public List<Book> selectbucollege() throws Exception {
+	public List<Book> selectbucollege() throws IOException  {
 		String sql = "select bucollege from book ";
 	
 		List<Book> list = DbHelper.selectAll(sql,null,Book.class);
 		return  list;
 	}
-	public List<Book> selectbumajor() throws Exception {
+	public List<Book> selectbumajor() throws IOException  {
 		String sql = "select bumajor from book ";
 	
 		List<Book> list = DbHelper.selectAll(sql,null,Book.class);
 		return  list;
 	}
-	public List<Book> selectbclass() throws Exception {
+	public List<Book> selectbclass() throws IOException  {
 		String sql = "select bclass from book ";
 		List<Book> list = DbHelper.selectAll(sql,null,Book.class);
 		return  list;
