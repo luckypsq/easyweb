@@ -1,6 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class Cart {
+import java.io.Serializable;
+
+public class Cart implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//购物车
 	private long cid;//购物车id
 	private String eoid;//订单号

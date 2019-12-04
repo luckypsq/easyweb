@@ -1,6 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class Eorderitem {
+import java.io.Serializable;
+
+public class Eorderitem implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 订单详情表
 	private String itemid;// 订单详情id
 	private int count;// 数量

@@ -17,9 +17,7 @@
 	<script type="text/javascript" src="<%=application.getContextPath()%>/ckeditor/config.js"></script>
 </head>
 <body >
-
-<jsp:include page="common/header.jsp"></jsp:include>
-
+<jsp:include page="<%=application.getContextPath()%>/common/header.jsp"></jsp:include>
 <div class="mainbody" style="background: #FFF url(images/bodybg.png) repeat-x;">
 	<div class="container clearfix" style="background-color: white">
 		<div class="mainbody_topbg"></div>

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 自定义的Servlet基类
  */
-public abstract class BaseServlet extends HttpServlet {
+public abstract class BaseServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

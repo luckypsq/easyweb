@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -30,11 +31,13 @@ public class JoinFilter implements Filter {
 			ServletResponse response, 
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse response2 = (HttpServletResponse)response;
 		HttpSession session  = httpRequest.getSession();
-		
+		String path = httpRequest.getSession().getServletContext().getContextPath();
+		path = path +"/join.jsp";
 		if(session.getAttribute("loginedUser") == null) {
 			request.setAttribute("msg", "ÇëÏÈµÇÂ¼ÏµÍ³");
-			request.getRequestDispatcher("join.jsp").forward(request, response);
+			response2.sendRedirect(path);
 			return;
 		}
 		chain.doFilter(request, response);

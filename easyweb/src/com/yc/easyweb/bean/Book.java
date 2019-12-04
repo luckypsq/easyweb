@@ -1,7 +1,12 @@
 package com.yc.easyweb.bean;
 
+import java.io.Serializable;
 
-public class Book {
+public class Book implements Serializable  {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long bid;//id
 	private String bname;//书名
 	private String buniversity;//书籍分类学校
@@ -136,8 +141,8 @@ public class Book {
 				+ ", getBtemp()=" + getBtemp() + ", getBstate()=" + getBstate() + ", getBid()=" + getBid()
 				+ ", getBuniversity()=" + getBuniversity() + ", getBucollege()=" + getBucollege() + ", getBumajor()="
 				+ getBumajor() + ", getBclass()=" + getBclass() + ", getBcontent()=" + getBcontent() + ", getBimg()="
-				+ getBimg() + ", getBtid()=" + getBtid() + ", getBtemp1()=" + getBtemp1() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ getBimg() + ", getBtid()=" + getBtid() + ", getBtemp1()=" + getBtemp1() +
+				"]";
 	}
 	
 	

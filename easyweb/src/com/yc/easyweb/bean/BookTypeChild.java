@@ -1,6 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class BookTypeChild  extends BookType{
+import java.io.Serializable;
+
+public class BookTypeChild  extends BookType implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String open;
 	private String name;
 	private int id;

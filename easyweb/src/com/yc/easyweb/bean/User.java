@@ -1,6 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long uid;//用户id
 	private String uname;//用户名
 	private String uphone;//用户电话

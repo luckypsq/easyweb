@@ -1,5 +1,6 @@
 package com.yc.easyweb.bean;
 
+import java.io.Serializable;
 import java.util.*;
 
 import com.yc.easyweb.bean.Book;
@@ -7,8 +8,12 @@ import com.yc.easyweb.bean.Book;
 /**
  * 分页查询结果封装类（共有的静态的内部类）
  */
-public class PageBook {
-	 // 当前页数
+public class PageBook implements Serializable{
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// 当前页数
     private  List<Book> data;
     // 总行
     private long total;

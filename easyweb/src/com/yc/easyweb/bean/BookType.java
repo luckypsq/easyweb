@@ -1,6 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class BookType {
+import java.io.Serializable;
+
+public class BookType implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long btid;//类别id
 	private String btname;//类别名一
 	private String btnamesecond;//类别名二

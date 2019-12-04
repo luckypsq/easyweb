@@ -1,7 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class Result {
-	
+import java.io.Serializable;
+
+public class Result implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 返回的消息
 	private String msg;
 	// 返回的结果码 0 失败  1 成功

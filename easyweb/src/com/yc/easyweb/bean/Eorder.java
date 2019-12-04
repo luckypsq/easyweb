@@ -1,6 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class Eorder {
+import java.io.Serializable;
+
+public class Eorder implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String eoid;//订单id
 	private long uid;//用户id
 	private int eostate;//状态1.待付款2.待发货3.已发货4.退货申请中5.退款成功6.已接收7.退货失败

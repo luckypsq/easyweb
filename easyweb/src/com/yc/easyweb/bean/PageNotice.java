@@ -1,10 +1,15 @@
 package com.yc.easyweb.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PageNotice {
+public class PageNotice implements Serializable{
 	
-	 // 当前页数
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// 当前页数
     private  List<Notice> data;
     // 总行
     private long total;

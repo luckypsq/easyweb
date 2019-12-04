@@ -1,6 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class Control {
+import java.io.Serializable;
+
+public class Control implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long conid;
 	private String coname;
 	private String conamesecond;

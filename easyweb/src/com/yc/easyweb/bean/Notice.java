@@ -1,7 +1,12 @@
 package com.yc.easyweb.bean;
 
+import java.io.Serializable;
 
-public class Notice {
+public class Notice implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long nid;//公告id
 	private String ntime;//发布时间
 	private String nnumber;//浏览量

@@ -1,6 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class PayType {
+import java.io.Serializable;
+
+public class PayType implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long eopaytypeid;//id
 	private String eopayname;//Ö§¸¶Ãû×Ö
 	private int eopaystate;//×´Ì¬

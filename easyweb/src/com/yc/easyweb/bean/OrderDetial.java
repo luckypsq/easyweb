@@ -1,6 +1,13 @@
 package com.yc.easyweb.bean;
+
+import java.io.Serializable;
+
 //订单详情数据
-public class OrderDetial {
+public class OrderDetial implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String eoid;//订单编号
 	private String bname;//书名
 	private double total;//总价

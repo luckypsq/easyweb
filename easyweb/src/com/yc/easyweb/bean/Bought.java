@@ -1,6 +1,12 @@
 package com.yc.easyweb.bean;
 
-public class Bought {
+import java.io.Serializable;
+
+public class Bought implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String itemid;//购物车号
 	private long count;//数量
 	private long bid;//书id

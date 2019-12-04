@@ -1,5 +1,4 @@
 <%@page import="java.util.*"%>
-<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="com.yc.easyweb.bean.*"%>
 <%@page import="com.yc.easyweb.dao.lyw.*"%>
 <%@page import="com.yc.easyweb.common.DbHelper"%>

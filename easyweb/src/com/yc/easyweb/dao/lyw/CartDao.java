@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.el.ArrayELResolver;
 
 import com.yc.easyweb.bean.Bought;
 import com.yc.easyweb.common.DbHelper;

@@ -1,8 +1,13 @@
 package com.yc.easyweb.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PageCart {
+public class PageCart implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 当前页数
     private  List<Bought> data;
     // 总行
