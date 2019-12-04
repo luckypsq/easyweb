@@ -1,5 +1,7 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import com.yc.easyweb.common.DbHelper;
 
 public class UsercontrolDao {
 	// 查询所有
-		public List<Usercontrol> selectAll(Usercontrol usercontrol) throws Exception {
+		public List<Usercontrol> selectAll(Usercontrol usercontrol) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select uid,conid,ucon from usercontrol where 1=1 ");
 			if (usercontrol != null) {
@@ -26,7 +28,7 @@ public class UsercontrolDao {
 			List<Usercontrol> list = DbHelper.selectAll(sb.toString(), null, Usercontrol.class);
 			return list;
 		}
-		public Usercontrol selectSingle(Usercontrol usercontrol) throws Exception {
+		public Usercontrol selectSingle(Usercontrol usercontrol) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select uid,conid,ucon from usercontrol where 1=1 ");
 			if (usercontrol != null) {
@@ -44,13 +46,13 @@ public class UsercontrolDao {
 			return DbHelper.selectSingle(sb.toString(), null, Usercontrol.class);
 		}
 		// 添加
-		public int insert(Usercontrol usercontrol) throws Exception {
+		public int insert(Usercontrol usercontrol) throws SQLException  {
 			String sql = "insert into Usercontrol(ucon,conid,uid) " + " values(null,?,?);";
 			return DbHelper.update(sql, usercontrol.getConid(),usercontrol.getUid());
 		}
 		
 		// 删除
-		public int delete(Usercontrol usercontrol) throws Exception {
+		public int delete(Usercontrol usercontrol) throws SQLException  {
 			StringBuffer sb = new StringBuffer();
 			if (usercontrol == null) {
 				return 0;
@@ -70,7 +72,7 @@ public class UsercontrolDao {
 		}
 		
 		//删除多条
-		public int delete(List<Usercontrol> list) throws Exception {
+		public int delete(List<Usercontrol> list) throws SQLException  {
 			StringBuffer sb = null;
 			if (list.size() == 0) {
 				return 0;
@@ -94,7 +96,7 @@ public class UsercontrolDao {
 		}
 
 		// 更新
-		public int update(Usercontrol usercontrolNew,Usercontrol usercontrolOld) throws Exception {
+		public int update(Usercontrol usercontrolNew,Usercontrol usercontrolOld) throws SQLException  {
 			StringBuffer sb = new StringBuffer();
 			if (usercontrolNew== null || usercontrolOld== null) {
 				return 0;

@@ -1,5 +1,6 @@
 package com.yc.easyweb.common;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -13,24 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
 import org.apache.commons.beanutils.BeanUtils;
-import com.yc.easyweb.bean.Book;
-import com.yc.easyweb.bean.Bought;
-import com.yc.easyweb.bean.Eorder;
-import com.yc.easyweb.bean.Notice;
-import com.yc.easyweb.bean.PageBook;
-import com.yc.easyweb.bean.PageCart;
-import com.yc.easyweb.bean.PageEorder;
-import com.yc.easyweb.bean.PageNotice;
-import com.yc.easyweb.bean.PageUser;
-import com.yc.easyweb.bean.User;
-
-
-
+import com.yc.easyweb.bean.Page;
 public class DbHelper {
 	private static Connection conn = null;
 	private static PreparedStatement pstmt =null;
@@ -50,7 +35,7 @@ public class DbHelper {
 	 * @throws SQLException 
 	 */
 	
-	public static Connection getConn() throws Exception{
+	public static Connection getConn() throws SQLException {
 	
 	conn = DriverManager.getConnection(MyProperties.getInstace().getProperty("url"),MyProperties.getInstace().getProperty("username"),MyProperties.getInstace().getProperty("password"));
 		return conn;
@@ -66,7 +51,6 @@ public class DbHelper {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -74,7 +58,6 @@ public class DbHelper {
 			try {
 				pstmt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -82,7 +65,6 @@ public class DbHelper {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -92,8 +74,7 @@ public class DbHelper {
 	 * @throws SQLException 
 	 * @throws Exception 
 	 */
-	public static int update(List<String> sqls)
-			throws Exception {
+	public static int update(List<String> sqls) throws SQLException{
 		int result  =0;
 		try {
 			conn = getConn();
@@ -124,8 +105,7 @@ public class DbHelper {
 	 * @param params
 	 * @throws SQLException
 	 */
-	private static void setParamsList(PreparedStatement pstmt, List<Object> params) 
-			throws SQLException {
+	private static void setParamsList(PreparedStatement pstmt, List<Object> params)  throws SQLException {
 		if (null == params || params.isEmpty()) {
 			return;
 		}
@@ -135,9 +115,10 @@ public class DbHelper {
 	}
 	/**
 	 * 更新单行数据
+	 * @throws SQLException 
 	 * @throws Exception 
 	 */
-	public static int update(String sql,Object...params) throws Exception{
+	public static int update(String sql,Object...params) throws SQLException {
 		int result = 0;
 		conn = getConn();
 		pstmt = conn.prepareStatement(sql);
@@ -162,11 +143,12 @@ public class DbHelper {
 	 * @param sql 数据库语句
 	 * @param params 数据库语句中的参数
 	 * @return
+	 * @throws IOException 
 	 * @throws Exception 
 	 * @throws SQLException
 	 */
-	public static <T> List<T> selectAll(String sql,List<Object> params,Class<T> cls)
-				throws  Exception{
+	public static <T> List<T> selectAll(String sql,List<Object> params,Class<T> cls) throws IOException
+				{
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		Map<String, Object> map = null;
 	
@@ -232,10 +214,11 @@ public class DbHelper {
 	 * 查询操作， 之返回一条记录
 	 * @param <T>
 	 * @return
+	 * @throws IOException 
 	 * @throws Exception 
 	 */
-	public static <T> T selectSingle(String sql,List<Object> params,Class<T> cls)
-			throws Exception{
+	public static <T> T selectSingle(String sql,List<Object> params,Class<T> cls) throws IOException
+			{
 		Map<String, Object> map = null;
 		try {
 			conn = getConn();
@@ -279,8 +262,8 @@ public class DbHelper {
 		return t;
 		
 	}
-	public static Map<String, Object> selectSingle(String sql,List<Object> params)
-			throws Exception{
+	public static Map<String, Object> selectSingle(String sql,List<Object> params) throws IOException
+			{
 		Map<String, Object> map = null;
 		try {
 			conn = getConn();
@@ -322,162 +305,38 @@ public class DbHelper {
 		}
 		return map;
 	}
+	
+	
+	
+	
+	
 	/**
 	 * 对从mysql数据库中查询到的数据分页
+	 * @param <T>
 	 * @param <T> 
 	 * @param page 从那一页开始
 	 * @param rows 每一页多少行数据
 	 * @param chart操作的表名
 	 * @param t传的实体类
 	 * @return
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	//book表的分页
-	public static PageBook selectPageForMysql(int page, int rows,Book book) throws Exception {
-    	StringBuffer sb = new StringBuffer();
-    	sb.append("select * from book where 1=1 ");
-    	if(book != null){
-			if(book.getBname() != null){
-				sb.append(" and bname = '"+book.getBname()+"'");
-			}
-			if(book.getBuniversity() != null){
-				sb.append(" and buniversity = '"+book.getBuniversity()+"'");
-			}
-			
-			if(book.getBucollege() != null){
-				sb.append(" and bucollege = '"+book.getBucollege()+"'");
-			}
-			
-			if(book.getBumajor() != null){
-				sb.append(" and bumajor = '"+book.getBumajor()+"'");
-			}
-			
-			if(book.getBclass() != null){
-				sb.append(" and bclass = '"+book.getBclass()+"'");
-			}
-			if(book.getBauthor() != null){
-				sb.append(" and bauthor = '"+book.getBauthor()+"'");
-			}
-			if(book.getBtid() != null){
-				sb.append(" and btid = "+book.getBtid());
-			}
-			if(book.getBstate() != 0){
-				sb.append(" and bstate = "+book.getBstate());
-			}
-			if(book.getUid() != 0){
-				sb.append(" and uid = "+book.getUid());
-			}
-			if(book.getBtemp() != null){
-				sb.append(" and btemp = '"+book.getBtemp() +"'");
-			}
-			if(book.getBdate() != null){
-				sb.append(" and bdate = '"+book.getBdate() +"'");
-			}
-		}
-    	sb.append(" order by  bid asc");
-    	String sql = "select count(*) from("+sb.toString()+")b";
+	//分页
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static <T> Page selectPageForMysql(int page, int rows,Class<T> t,String sqlS) throws IOException {
+    	String sql = "select count(*) from("+sqlS+")b";
     	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, null);
     	long  total = 0;
     	if(totalObj != null){
     		total = Long.parseLong(totalObj.get("count(*)").toString());
     	}
     	int startRow = (page - 1 ) * rows;
-    	String pageSql =  "select * from ("+sb.toString()+")a limit " + startRow + ", " + rows;
-    	List<Book> data = DbHelper.selectAll(pageSql, null, Book.class);
-        return new PageBook(data,total,page,rows);
+    	String pageSql =  "select * from ("+sqlS+")a limit " + startRow + ", " + rows;
+    	List<T> data = DbHelper.selectAll(pageSql, null, t);
+        return new Page(data,total,page,rows);
     }
-	//user表的分页
-	public static PageUser selectPageForMysql(int page, int rows,User user) throws Exception {
-    	StringBuffer sb = new StringBuffer();
-    	sb.append("select * from user where 1=1 ");
-    	if(user != null){
-			if(user.getUminname() != null){
-				sb.append(" and uminname = '"+user.getUminname()+"'");
-			}
-			if(user.getUname() != null){
-				sb.append(" and uname = '"+user.getUname()+"'");
-			}
-			if(user.getUphone() != null){
-				sb.append(" and uphone = '"+user.getUphone()+"'");
-			}
-			if(user.getUniversity() != null){
-				sb.append(" and university ='"+user.getUniversity()+"'");
-			}
-			if(user.getUcollege() != null){
-				sb.append(" and ucollege = '"+user.getUcollege()+"'");
-			}
-			if(user.getUmajor() != null){
-				sb.append(" and umajor = '"+user.getUmajor()+"'");
-			}
-			if(user.getUstate() != 0){
-				sb.append(" and ustate = "+user.getUstate());
-			}
-			if(user.getUclass() != null){
-				sb.append(" and uclass = '"+user.getUclass()+"'");
-			}
-			if(user.getUtype() != 0){
-				sb.append(" and utype = "+user.getUtype());
-			}
-			if(user.getUage() != 0){
-				sb.append(" and uage = "+user.getUage());
-			}
-			if(user.getUsex() != 0){
-				sb.append(" and usex = "+user.getUsex());
-			}
-		}
-    	sb.append("  order by  uid asc");
-    	String sql = "select count(*) from("+sb.toString()+")b";
-    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, null);
-    	long  total = 0;
-    	if(totalObj != null){
-    		total = Long.parseLong(totalObj.get("count(*)").toString());
-    	}
-    	int startRow = (page - 1 ) * rows;
-    	String pageSql =  "select * from ("+sb.toString()+")a limit " + startRow + ", " + rows;
-    	List<User> data = DbHelper.selectAll(pageSql, null, User.class);
-        return new PageUser(data,total,page,rows);
-    }
-	/*public static void main(String[] args) throws Exception {
-		Eorder book = new Eorder();
-		PageEorder book1 = DbHelper.selectPageForMysql(1, 10, book);
-		System.out.println(book1.getTotal());
-	}*/
-	//Eorder表分页
-	public static PageEorder selectPageForMysql(int page, int rows,Eorder eorder) throws Exception {
-    	StringBuffer sb = new StringBuffer();
-    	sb.append("select * from eorder where 1=1 ");
-    	if(eorder != null){
-			if(eorder.getUid() != 0){
-				sb.append(" and uid="+eorder.getUid());
-			}
-			if(eorder.getEotime() != null){
-				sb.append(" and eotime = '"+eorder.getEotime()+"'");
-			}
-			if(eorder.getUname() != null){
-				sb.append(" and uname = '"+eorder.getUname()+"'");
-			}
-			if(eorder.getEotype() != null){
-				sb.append(" and eotype = '"+eorder.getEotype()+"'");
-			}
-			if(eorder.getEostate() != 0){
-				sb.append(" and eostate = "+eorder.getEostate());
-			}
-			if(eorder.getEoaddr() != null){
-				sb.append(" and eoaddr = '"+eorder.getEoaddr()+"'");
-			}
-		}
-		sb.append("  order by  eoid asc");
-    	String sql = "select count(*) from("+sb.toString()+")b";
-    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, null);
-    	long  total = 0;
-    	if(totalObj != null){
-    		total = Long.parseLong(totalObj.get("count(*)").toString());
-    	}
-    	int startRow = (page - 1 ) * rows;
-    	String pageSql =  "select * from ("+sb.toString()+")a limit " + startRow + ", " + rows;
-    	List<Eorder> data = DbHelper.selectAll(pageSql, null, Eorder.class);
-        return new PageEorder(data,total,page,rows);
-    }
+	
 	 /**
 	  * 将List集合中的Map集合进行转换为实体类，
 	  * @param list
@@ -515,77 +374,4 @@ public class DbHelper {
 				}
 			return p;
 		}
-	 
-	//购物车
-			public static PageCart selectPageForMysql(int page, int rows,Long uid) throws Exception {
-				String sql1 = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eoid,total,eitemp,eo.uid,cartstate,carttime"
-						+ " from book b,eorderitem eo"
-						+ " where eo.bid=b.bid and eo.uid=? and cartstate = 1";
-		    	String sql = "select count(*) from("+sql1+")b";
-		    	List<Object> params =new ArrayList<>();
-		    	params.add(uid);
-		    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, params);
-		    	long  total = 0;
-		    	if(totalObj != null){
-		    		total = Long.parseLong(totalObj.get("count(*)").toString());
-		    	}
-		    	int startRow = (page - 1 ) * rows;
-		    	String pageSql =  "select * from ("+sql1+")a limit " + startRow + ", " + rows;
-		    	List<Bought> data = DbHelper.selectAll(pageSql, params, Bought.class);
-		        return new PageCart(data,total,page,rows);
-
-		    }
-			
-			public static PageEorder selectPageForMysql2(int page, int rows,Long uid) throws Exception {
-				String sql1 = "select * from eorder where uid=?";
-		    	String sql = "select count(*) from("+sql1+")b";
-		    	List<Object> params =new ArrayList<>();
-		    	params.add(uid);
-		    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, params);
-		    	long  total = 0;
-		    	if(totalObj != null){
-		    		total = Long.parseLong(totalObj.get("count(*)").toString());
-		    	}
-		    	int startRow = (page - 1 ) * rows;
-		    	String pageSql =  "select * from ("+sql1+")a limit " + startRow + ", " + rows;
-		    	List<Eorder> data = DbHelper.selectAll(pageSql, params, Eorder.class);
-		        return new PageEorder(data,total,page,rows);
-
-		    }
-			public static PageNotice selectPageForMysql(int page, int rows,Notice notice) throws Exception  {
-				StringBuffer sb = new StringBuffer();
-		    	sb.append("select * from notice where 1=1 ");
-				if(notice != null) {
-					if(notice.getNtime() !=null) {
-						sb.append(" and ntime like '%" + notice.getNtime() + " %' ");
-					}
-					if(notice.getNnumber()!=null) {
-						sb.append(" and nnumber = "+notice.getNnumber());
-					}
-					if(notice.getNauthor()!=null) {
-						sb.append(" and nauthor like '%" + notice.getNauthor() +" %'");
-					}
-					if(notice.getNcontent()!=null) {
-						sb.append(" and ncontent like '%" + notice.getNcontent() +" %'");
-					}
-					if(notice.getNstate()!=0) {
-						sb.append("and nstate =" +notice.getNstate());
-					}
-					if(notice.getNtitle() !=null) {
-						sb.append(" and ntitle like'%" + notice.getNtitle() +" %'");
-					}
-					sb.append("  order by  nid asc");
-					String sql = "select count(*) from("+sb.toString()+")b";
-			    	Map<String, Object>  totalObj = DbHelper.selectSingle(sql, null);
-			    	long  total = 0;
-			    	if(totalObj != null){
-			    		total = Long.parseLong(totalObj.get("count(*)").toString());
-			    	}
-			    	int startRow = (page - 1 ) * rows;
-			    	String pageSql =  "select * from ("+sb.toString()+")a limit " + startRow + ", " + rows;
-			    	List<Notice> data = DbHelper.selectAll(pageSql, null, Notice.class);
-			        return new PageNotice(data,total,page,rows);
-				}
-				return null;
-			}
 }

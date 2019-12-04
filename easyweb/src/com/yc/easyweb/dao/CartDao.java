@@ -1,10 +1,10 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
-import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Cart;
 import com.yc.easyweb.common.DbHelper;
 
@@ -16,7 +16,7 @@ import com.yc.easyweb.common.DbHelper;
  */
 public class CartDao {
 	// 查询所有
-	public List<Cart> selectAll(Cart cart) throws Exception {
+	public List<Cart> selectAll(Cart cart) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select cid,eoid,uid,ctemp from book where 1=1 ");
 		if (cart != null) {
@@ -36,12 +36,12 @@ public class CartDao {
 	}
 
 	// 添加
-	public int insert(Cart cart) throws Exception {
+	public int insert(Cart cart) throws SQLException  {
 		String sql = "insert into cart(cid,eoid,uid,ctemp) " + " values(null,?,?,?);";
 		return DbHelper.update(sql, cart.getEoid(), cart.getUid(), cart.getCtemp());
 	}
 	// 删除
-	public int delete(Cart cart) throws Exception {
+	public int delete(Cart cart) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (cart == null) {
 			return 0;
@@ -61,7 +61,7 @@ public class CartDao {
 	}
 	
 	//删除多条
-	public int delete(List<Cart> list) throws Exception {
+	public int delete(List<Cart> list) throws SQLException  {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
 			return 0;
@@ -85,7 +85,7 @@ public class CartDao {
 	}
 
 	// 更新
-	public int update(Cart cartNew,Cart cartOld) throws Exception {
+	public int update(Cart cartNew,Cart cartOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (cartNew== null || cartOld== null) {
 			return 0;

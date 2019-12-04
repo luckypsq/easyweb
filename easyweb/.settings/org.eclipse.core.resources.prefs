@@ -1,7 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/com/yc/easyweb/bean/Bought.java=UTF-8
-encoding//src/com/yc/easyweb/bean/PageBook.java=UTF-8
-encoding//src/com/yc/easyweb/bean/PageEorder.java=UTF-8
-encoding//src/com/yc/easyweb/bean/PageUser.java=UTF-8
+encoding//src/com/yc/easyweb/bean/Page.java=UTF-8
 encoding//src/com/yc/easyweb/common/DbHelper.java=UTF-8
 encoding//src/com/yc/easyweb/servlet/BaseServlet.java=UTF-8

@@ -1,11 +1,11 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.javafx.binding.SelectBinding.AsBoolean;
 import com.yc.easyweb.bean.Book;
-import com.yc.easyweb.bean.User;
 import com.yc.easyweb.common.DbHelper;
 
 /**
@@ -18,7 +18,8 @@ public class BookDao {
 	DbHelper db = new DbHelper();
 
 	// 查询所有
-	public List<Book> selectAll(Book book) throws Exception {
+	@SuppressWarnings("static-access")
+	public List<Book> selectAll(Book book) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
 				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1,bnum,bauthor,bdate,uid" + " from book where 1=1 ");
@@ -73,7 +74,8 @@ public class BookDao {
 		return list;
 	}
 	//查询单条记录
-	public Book selectSingle(Book book) throws Exception {
+	@SuppressWarnings("static-access")
+	public Book selectSingle(Book book) throws IOException {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
 				+ " bcontent,bimg,bprice,bstate,btid,btemp,uid,btemp1,bnum,bauthor,bdate" + " from book where 1=1 ");
@@ -126,7 +128,7 @@ public class BookDao {
 	}
 	
 	// 添加
-	public int insert(Book book) throws Exception {
+	public int insert(Book book) throws SQLException  {
 		String sql = "insert into book(bid,bname,buniversity,bucollege," + "bumajor,bclass,bcontent,bimg,bprice,btid,"
 				+ "btemp,bnum,bauthor,bdate,uid) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
@@ -136,7 +138,7 @@ public class BookDao {
 	}
 
 	// 删除
-	public int delete(Book book) throws Exception {
+	public int delete(Book book) throws  SQLException {
 		StringBuffer sb = new StringBuffer();
 		sb.append("delete from book where 1=1 ");
 		if (book != null) {
@@ -188,7 +190,8 @@ public class BookDao {
 	}
 
 	// 删除多条数据
-	public int delete(List<Book> list) throws Exception {
+	@SuppressWarnings("static-access")
+	public int delete(List<Book> list) throws SQLException  {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
 			return 0;
@@ -212,7 +215,7 @@ public class BookDao {
 	}
 
 	// 更新
-	public int update(Book bookNew, Book bookOld) throws Exception {
+	public int update(Book bookNew, Book bookOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (bookNew == null || bookOld == null) {
 			return 0;

@@ -3,25 +3,26 @@ package com.yc.easyweb.bean;
 import java.io.Serializable;
 import java.util.*;
 
-import com.yc.easyweb.bean.User;
 
 /**
  * 分页查询结果封装类（共有的静态的内部类）
+ * @param <T>
  */
-public class PageUser implements Serializable{
+public class Page<T> implements Serializable{
 	 /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	// 当前页数
-    private  List<User> data;
+    private  List<T> data;
     // 总行
     private long total;
     private int page;
 	private int rows;
-   
-
-    public PageUser(List<User>data, long total, int page, int rows) {
+	public Page() {
+		super();
+	}
+	public Page(List<T> data, long total, int page, int rows) {
 		super();
 		this.data = data;
 		this.total = total;
@@ -30,7 +31,7 @@ public class PageUser implements Serializable{
 	}
 
 	//获取所有的数据
-    public List<User> getData() {
+    public List<T> getData() {
         return data;
     }
 

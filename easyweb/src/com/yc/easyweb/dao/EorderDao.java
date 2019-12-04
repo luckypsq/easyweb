@@ -1,13 +1,12 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.OrderDetial;
-import com.yc.easyweb.bean.User;
 import com.yc.easyweb.common.DbHelper;
 
 /**
@@ -20,7 +19,8 @@ public class EorderDao {
 	DbHelper db = new DbHelper();
 
 	// 查询所有
-	public List<Eorder> selectAll(Eorder eorder) throws Exception {
+	@SuppressWarnings("static-access")
+	public List<Eorder> selectAll(Eorder eorder) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype,eoespress,eopaytypeid " + " from eorder where 1=1 ");
 		if (eorder != null) {
@@ -57,7 +57,8 @@ public class EorderDao {
 		return list;
 	}
 	// 查询所有订单详细信息
-		public List<OrderDetial> selectAllDetail(OrderDetial  detial) throws Exception {
+		@SuppressWarnings("static-access")
+		public List<OrderDetial> selectAllDetail(OrderDetial  detial) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select e.eoid,bname,u.uid,b.bid,total,eotime,eotype,eoaddr,uphone,e.uname,count,eostate,eoespress,eopayname,bimg "
 					+ " from eorder e,book b,eorderitem eo,user u,paytype pay "
@@ -85,7 +86,8 @@ public class EorderDao {
 		
 		}
 	// 查询单个
-		public Eorder selectSingle(Eorder eorder) throws Exception {
+		@SuppressWarnings("static-access")
+		public Eorder selectSingle(Eorder eorder) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select eoid,uid,eostate,eotime,eotemp,uname,eoaddr,eotype " + " from eorder where 1=1 ");
 			if (eorder != null) {
@@ -121,7 +123,7 @@ public class EorderDao {
 			return db.selectSingle(sb.toString(), null, Eorder.class);
 		}
 	// 添加
-	public int insert(Eorder eorder) throws Exception {
+	public int insert(Eorder eorder) throws SQLException  {
 		String sql = "insert into eorder(eoid,uid,eotime,eotemp,uname,eoaddr,eotype,eoespress,eopaytypeid  ) "
 				+ " values(?,?,?,?,?,?,?,?,?);";
 		return DbHelper.update(sql, eorder.getEoid(), eorder.getUid(),  eorder.getEotime(),
@@ -129,7 +131,7 @@ public class EorderDao {
 	}
 
 	// 删除
-	public int delete(Eorder eorder) throws Exception {
+	public int delete(Eorder eorder) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (eorder == null) {
 			return 0;
@@ -160,7 +162,7 @@ public class EorderDao {
 	}
 
 	// 删除多条
-	public int delete(List<Eorder> list) throws Exception {
+	public int delete(List<Eorder> list) throws SQLException  {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
 			return 0;
@@ -196,7 +198,7 @@ public class EorderDao {
 	}
 
 	// 更新
-	public int update(Eorder eorderNew,Eorder eorderOld) throws Exception {
+	public int update(Eorder eorderNew,Eorder eorderOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (eorderNew== null ||  eorderOld== null) {
 			return 0;

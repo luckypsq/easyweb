@@ -1,5 +1,7 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ import com.yc.easyweb.common.DbHelper;
  */
 public class PayTypeDao {
 	// 查询所有
-	public List<PayType> selectAll(PayType payType) throws Exception {
+	public List<PayType> selectAll(PayType payType) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select eopaytypeid,eopayname,eopaystate,eopaytemp from paytype where 1=1 ");
 		if (payType != null) {
@@ -33,12 +35,12 @@ public class PayTypeDao {
 	}
 
 	// 添加
-	public int insert(PayType payType) throws Exception {
+	public int insert(PayType payType) throws SQLException  {
 		String sql = "insert into paytype(eopaytypeid,eopayname,eostatetemp) " + " values(null,?,?);";
 		return DbHelper.update(sql, payType.getEopayname(),payType.getEopaytemp());
 	}
 	// 删除
-	public int delete(PayType payType) throws Exception {
+	public int delete(PayType payType) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (payType == null) {
 			return 0;

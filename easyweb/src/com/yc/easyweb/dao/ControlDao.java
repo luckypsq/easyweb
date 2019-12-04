@@ -1,15 +1,16 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Control;
 import com.yc.easyweb.common.DbHelper;
 
 public class ControlDao {
 	// 查询所有
-	public List<Control> selectAll(Control control) throws Exception {
+	public List<Control> selectAll(Control control) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				" select conid,coname,conamesecond,conadd,condelete,coninsert,conupdate,concheck,uid,constate,contemp from control where 1=1 ");
@@ -50,7 +51,7 @@ public class ControlDao {
 
 	}
 
-	public Control selectSingle(Control control) throws Exception {
+	public Control selectSingle(Control control) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				" select conid,coname,conamesecond,conadd,condelete,coninsert,conupdate,concheck,uid,constate,contemp from control where 1=1 ");
@@ -94,7 +95,7 @@ public class ControlDao {
 	}
 
 	// 添加
-	public int insert(Control control) throws Exception {
+	public int insert(Control control) throws SQLException  {
 		String sql = "insert into Control(conid,coname,conamesecond,uid,contemp) "
 				+ " values(null,?,?,?,?);";
 		return DbHelper.update(sql, control.getConame(), control.getConamesecond(), control.getUid(),
@@ -102,7 +103,7 @@ public class ControlDao {
 	}
 
 	// 删除
-	public int delete(Control control) throws Exception {
+	public int delete(Control control) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (control == null) {
 			return 0;
@@ -128,7 +129,7 @@ public class ControlDao {
 	}
 
 	// 删除多条
-	public int delete(List<Control> list) throws Exception {
+	public int delete(List<Control> list) throws SQLException  {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
 			return 0;
@@ -158,7 +159,7 @@ public class ControlDao {
 	}
 
 	// 更新
-	public int update(Control controlNew, Control controlOld) throws Exception {
+	public int update(Control controlNew, Control controlOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (controlNew == null || controlOld == null) {
 			return 0;

@@ -1,9 +1,10 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.Eorderitem;
 import com.yc.easyweb.common.DbHelper;
 
@@ -15,7 +16,8 @@ import com.yc.easyweb.common.DbHelper;
 public class EorderitemDao {
 	DbHelper db = new DbHelper();
 	//查询所有
-	public List<Eorderitem> selectAll(Eorderitem eorderitem) throws Exception{
+	@SuppressWarnings("static-access")
+	public List<Eorderitem> selectAll(Eorderitem eorderitem) throws IOException {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select itemid,count,bid,eoid,total,eitemp,uid,cartstate,carttime"
 				+ " from eorderitem where 1=1 ");
@@ -42,7 +44,8 @@ public class EorderitemDao {
 		
 	}
 	//查询单个
-		public Eorderitem selectSingle(Eorderitem eorderitem) throws Exception{
+		@SuppressWarnings("static-access")
+		public Eorderitem selectSingle(Eorderitem eorderitem) throws IOException {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select itemid,count,bid,eoid,total,eitemp,uid,cartstate,carttime"
 					+ " from eorderitem where 1=1 ");
@@ -69,7 +72,7 @@ public class EorderitemDao {
 			
 		}
 	//添加
-	public int insert(Eorderitem eorderitem) throws Exception{
+	public int insert(Eorderitem eorderitem) throws SQLException {
 		String sql = "insert into eorderitem(itemid,bid,count,total,eitemp,uid,carttime) " 
 					+ " values(?,?,?,?,?,?,?);";
 		return DbHelper.update(sql, eorderitem.getItemid(),eorderitem.getBid(),eorderitem.getCount(),
@@ -77,7 +80,7 @@ public class EorderitemDao {
 				,eorderitem.getUid(),eorderitem.getCarttime());
 	}
 	//删除
-	public int delete(Eorderitem eorderitem) throws Exception{
+	public int delete(Eorderitem eorderitem) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 		if (eorderitem == null) {
 			return 0;
@@ -98,7 +101,7 @@ public class EorderitemDao {
 		return DbHelper.update(sb.toString(), null);
 	}
 	//删除多条数据
-	public int delete(List<Eorderitem > list) throws Exception{
+	public int delete(List<Eorderitem > list) throws SQLException {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
 			return 0;
@@ -125,7 +128,7 @@ public class EorderitemDao {
 	}
 	
 	//更新
-	public  int update (Eorderitem eoNew,Eorderitem eoOld) throws Exception {
+	public  int update (Eorderitem eoNew,Eorderitem eoOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (eoNew== null || eoOld== null) {
 			return 0;

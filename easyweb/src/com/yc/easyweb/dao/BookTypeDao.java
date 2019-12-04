@@ -1,10 +1,10 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.BookType;
 import com.yc.easyweb.common.DbHelper;
 
@@ -16,7 +16,8 @@ import com.yc.easyweb.common.DbHelper;
 public class BookTypeDao {
 	DbHelper db = new DbHelper();
 	//查询所有
-	public List<BookType> selectAll(BookType bookType) throws Exception{
+	@SuppressWarnings("static-access")
+	public List<BookType> selectAll(BookType bookType) throws IOException{
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select btid,btname,btnamesecond,btnamethird,btstate "
 				+ " from booktype where 1=1 ");
@@ -42,13 +43,13 @@ public class BookTypeDao {
 		return list;
 	}
 	//添加
-	public int insert(BookType bookType) throws Exception{
+	public int insert(BookType bookType) throws SQLException {
 		String sql = "insert into booktype(btid,btname,btnamesecond,btnamethird) " 
 					+ " values(null,?,?,?);";
 		return DbHelper.update(sql, bookType.getBtname(),bookType.getBtnamesecond(),bookType.getBtnamethird());
 	}
 	//删除
-	public int delete(BookType bookType) throws Exception{
+	public int delete(BookType bookType) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 		if (bookType == null) {
 			return 0;
@@ -73,7 +74,8 @@ public class BookTypeDao {
 	}
 	
 	//删除多条数据
-	public int delete(List<BookType> list) throws Exception{
+	@SuppressWarnings("static-access")
+	public int delete(List<BookType> list) throws SQLException {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
 			return 0;
@@ -102,7 +104,7 @@ public class BookTypeDao {
 		return db.update(sqList);
 	}
 	//更新
-	public  int update (BookType bookTypeNew,BookType bookTypeOld) throws Exception {
+	public  int update (BookType bookTypeNew,BookType bookTypeOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (bookTypeNew == null || bookTypeOld == null) {
 			return 0;

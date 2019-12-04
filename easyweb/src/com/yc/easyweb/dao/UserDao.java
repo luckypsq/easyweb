@@ -1,18 +1,12 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-import com.yc.easyweb.bean.Notice;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.common.DbHelper;
-
-import jdk.nashorn.internal.runtime.linker.LinkerCallSite;
-import sun.security.x509.URIName;
 
 /**
  * 操作User表的dao类
@@ -24,7 +18,8 @@ public class UserDao {
 	DbHelper db = new DbHelper();
 
 	// 查询所有
-	public List<User> selectAll(User user) throws Exception {
+	@SuppressWarnings("static-access")
+	public List<User> selectAll(User user) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select uid,uname,uminname,uphone,university,ucollege,umajor,upassword, "
 				+ " ustate,utemp,utype,uemail,utime,usex,uage,uclass " + " from user where 1=1 ");
@@ -69,7 +64,8 @@ public class UserDao {
 
 	}
 	// 查询单个
-		public User selectSingle(User user) throws Exception {
+		@SuppressWarnings("static-access")
+		public User selectSingle(User user) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select uid,uname,uminname,uphone,university,ucollege,umajor,upassword, "
 					+ " ustate,utemp,utype,uemail,utime,usex,uage,uclass " + " from user where 1=1 ");
@@ -115,7 +111,7 @@ public class UserDao {
 			return db.selectSingle(sb.toString(), null,User.class);
 		}
 	// 添加
-	public int insert(User user) throws Exception {
+	public int insert(User user) throws SQLException  {
 		String sql = "insert into user(uid,uname,uminname,uphone,university,ucollege,umajor,uclass,upassword,"
 				+ " utemp,utype,uemail,utime,usex,uage) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		return DbHelper.update(sql, user.getUname(), user.getUminname(), user.getUphone(), user.getUniversity(),
@@ -124,7 +120,7 @@ public class UserDao {
 	}
 
 	// 删除
-	public int delete(User user) throws Exception {
+	public int delete(User user) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (user == null) {
 			return 0;
@@ -147,7 +143,8 @@ public class UserDao {
 	}
 
 	// 删除多条记录
-	public int delete(List<User> list) throws Exception {
+	@SuppressWarnings("static-access")
+	public int delete(List<User> list) throws SQLException  {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
 			return 0;
@@ -174,7 +171,7 @@ public class UserDao {
 	}
 
 	// 更新
-	public int update(User userNew, User userOld) throws Exception {
+	public int update(User userNew, User userOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (userNew == null || userOld == null) {
 			return 0;
@@ -247,7 +244,7 @@ public class UserDao {
 	}
 
 	// 更新多条
-	public int update(List<User> list) throws Exception {
+	public int update(List<User> list) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		List<String> sqList = new ArrayList<String>();
 		if (list.size()== 0) {

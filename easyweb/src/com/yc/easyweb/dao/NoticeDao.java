@@ -1,5 +1,6 @@
 package com.yc.easyweb.dao;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.yc.easyweb.bean.Notice;
@@ -16,7 +17,8 @@ public class NoticeDao {
 	DbHelper db = new DbHelper();
 
 	// 查询所有
-	public List<Notice> selectAll(Notice notice) throws Exception {
+	@SuppressWarnings("static-access")
+	public List<Notice> selectAll(Notice notice) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select nid,ntime,nnumber,nauthor,ncontent,nstate,ntemp,ntitle " + " from notice where 1=1 ");
 		if (notice != null) {
@@ -39,7 +41,8 @@ public class NoticeDao {
 	}
 
 	// 查询所有
-		public Notice selectSingle(Notice notice) throws Exception {
+		@SuppressWarnings("static-access")
+		public Notice selectSingle(Notice notice) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select nid,ntime,nnumber,nauthor,ncontent,nstate,ntemp,ntitle " + " from notice where 1=1 ");
 			if (notice != null) {
