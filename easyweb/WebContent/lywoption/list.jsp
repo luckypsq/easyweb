@@ -1,3 +1,4 @@
+<%@page import="com.yc.easyweb.biz.BookBiz"%>
 <%@page import="java.util.*"%>
 <%@page import="com.yc.easyweb.bean.*"%>
 <%@page import="com.yc.easyweb.dao.lyw.*"%>
@@ -215,8 +216,9 @@ response.setCharacterEncoding("utf-8");
 							}
 							int ipage = pageParam == null ? 1 : Integer.parseInt(pageParam);
 							// 每页行数
-							int rows = 12;		
-							PageBook Page = dbHelper.selectPageForMysql(ipage, rows, book);
+							int rows = 12;	
+							BookBiz bookBiz = new BookBiz();
+							Page<Book> Page = bookBiz.bookPage(ipage, rows, book);
 							for(Book book2 : Page.getData()){
 						%>
 							<dl>

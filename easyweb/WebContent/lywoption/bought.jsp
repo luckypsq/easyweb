@@ -1,3 +1,4 @@
+<%@page import="com.yc.easyweb.biz.EorderitemBiz"%>
 <%@page import="java.util.*"%>
 <%@page import="com.yc.easyweb.bean.*"%>
 <%@page import="com.yc.easyweb.dao.lyw.*"%>
@@ -130,7 +131,9 @@
 					int rows = 6;	
 					User user =(User)session.getAttribute("loginedUser");
 					long uid=user.getUid();
-					PageCart Page = dbHelper.selectPageForMysql(ipage, rows,uid);
+					EorderitemBiz eorderitemBiz = new EorderitemBiz();
+					Bought bou = new Bought();
+					Page<Bought>  Page = eorderitemBiz.ePage(ipage, rows, bou, uid);
 						for(Bought bought1 : Page.getData()){
 							String state = null;
 							 switch (bought1.getCartstate()) {

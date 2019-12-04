@@ -109,8 +109,12 @@
 				int rows = 3;	
 				User user =(User)session.getAttribute("loginedUser");
 				long uid=user.getUid();
-				PageEorder Page = dbHelper.selectPageForMysql2(ipage, rows, uid);
-				
+				EorderBiz eorderBiz = new EorderBiz();
+				Eorder eorder = new Eorder();
+				if(uid != 0){
+					eorder.setUid(uid);
+				}
+				Page<Eorder> Page = eorderBiz.eorderPage(ipage, rows, eorder);
 				for(Eorder eorder2 : Page.getData()){%>
 				<table class="cart1" id="cart1" width="100%" height="250px"
 			cellspacing="0" cellpadding="0" bordercolor="#ADD3EF" border="1">

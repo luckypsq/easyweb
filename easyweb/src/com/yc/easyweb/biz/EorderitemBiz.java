@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.yc.easyweb.bean.Bought;
+import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.Eorderitem;
+import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.dao.EorderitemDao;
 
 /**
@@ -64,6 +67,10 @@ public class EorderitemBiz {
 			throw new BizException("请填写需要修改的购物车");
 		}
 		return dao.update(eoNew, eoOld);
+	}
+	//购物车分页
+	public Page<Bought> ePage(int page, int rows,Bought bought,Long uid) throws IOException {
+		return dao.eoPage(page, rows, bought,uid);
 	}
 	// 其他
 }

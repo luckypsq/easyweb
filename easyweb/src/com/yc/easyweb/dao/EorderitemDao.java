@@ -5,7 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yc.easyweb.bean.Bought;
+import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.Eorderitem;
+import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.common.DbHelper;
 
 /**
@@ -163,6 +166,14 @@ public class EorderitemDao {
 			sb.append(" and uid="+eoOld.getUid());
 		}
 		return DbHelper.update(sb.toString(), null);
+	}
+	//购物车分页
+	@SuppressWarnings({ "unchecked", "static-access" })
+	public Page<Bought> eoPage(int page, int rows,Bought bought,Long uid) throws IOException {
+		String sql1 = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eoid,total,eitemp,eo.uid,cartstate,carttime"
+				+ " from book b,eorderitem eo"
+				+ " where eo.bid=b.bid and eo.uid= "+uid+" and cartstate = 1";
+		return db.selectPageForMysql(page, rows, Bought.class, sql1);
 	}
 	//其他
 }

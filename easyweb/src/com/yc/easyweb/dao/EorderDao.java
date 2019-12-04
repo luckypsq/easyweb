@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.OrderDetial;
+import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.common.DbHelper;
 
 /**
@@ -254,6 +255,34 @@ public class EorderDao {
 			sb.append(" and eoid ='" + eorderOld.getEoid() + "'");
 		}
 		return db.update(sb.toString(), null);
+	}
+	//Eorder∑÷“≥
+	@SuppressWarnings({ "unchecked", "static-access" })
+	public Page<Eorder> eorderPage(int page, int rows,Eorder eorder) throws IOException {
+		StringBuffer sb = new StringBuffer();
+    	sb.append("select * from eorder where 1=1 ");
+    	if(eorder != null){
+			if(eorder.getUid() != 0){
+				sb.append(" and uid="+eorder.getUid());
+			}
+			if(eorder.getEotime() != null){
+				sb.append(" and eotime = '"+eorder.getEotime()+"'");
+			}
+			if(eorder.getUname() != null){
+				sb.append(" and uname = '"+eorder.getUname()+"'");
+			}
+			if(eorder.getEotype() != null){
+				sb.append(" and eotype = '"+eorder.getEotype()+"'");
+			}
+			if(eorder.getEostate() != 0){
+				sb.append(" and eostate = "+eorder.getEostate());
+			}
+			if(eorder.getEoaddr() != null){
+				sb.append(" and eoaddr = '"+eorder.getEoaddr()+"'");
+			}
+		}
+		sb.append("  order by  eoid asc");
+		return db.selectPageForMysql(page, rows, Eorder.class, sb.toString());
 	}
 	// ∆‰À˚
 }

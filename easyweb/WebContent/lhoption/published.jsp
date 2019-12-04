@@ -1,3 +1,4 @@
+<%@page import="com.yc.easyweb.bean.Page"%>
 <%@page import="com.yc.easyweb.bean.User"%>
 <%@ page import="com.yc.easyweb.biz.BookBiz"%>
 <%@ page import="com.yc.easyweb.bean.Book"%>
@@ -5,7 +6,6 @@
 <%@ page import ="com.yc.easyweb.common.DbHelper" %>
 <%@ page import = "java.lang.*"%>
 <%@ page import ="java.util.*" %>
-<%@ page import = "com.yc.easyweb.bean.PageBook" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -93,8 +93,9 @@
 				}else{
 				// 第几页
 				int iPage = paramNumber == null ? 1 : Integer.parseInt(paramNumber);
+				BookBiz bookBiz4 = new BookBiz();
+				Page<Book> pPage = bookBiz4.bookPage(iPage, 5,book);
 				// 查询总行数
-				PageBook pPage =  DbHelper.selectPageForMysql(iPage, 5,book );
 				for(Book s : pPage.getData()){ 
 				// 将 商品 map 添加到页面上下文中， 就是用 EL 表达式输出值
 				pageContext.setAttribute("t", s);

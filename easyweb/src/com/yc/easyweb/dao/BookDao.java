@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.common.DbHelper;
 
 /**
@@ -288,6 +289,52 @@ public class BookDao {
 		}
 		return db.update(sb.toString(), null);
 		
+	}
+	//book∑÷“≥
+	@SuppressWarnings({ "static-access", "unchecked" })
+	public Page<Book> bookPage(int page, int rows,Book book) throws IOException {
+		StringBuffer sb = new StringBuffer();
+    	sb.append("select * from book where 1=1 ");
+    	if(book != null){
+			if(book.getBname() != null){
+				sb.append(" and bname = '"+book.getBname()+"'");
+			}
+			if(book.getBuniversity() != null){
+				sb.append(" and buniversity = '"+book.getBuniversity()+"'");
+			}
+			
+			if(book.getBucollege() != null){
+				sb.append(" and bucollege = '"+book.getBucollege()+"'");
+			}
+			
+			if(book.getBumajor() != null){
+				sb.append(" and bumajor = '"+book.getBumajor()+"'");
+			}
+			
+			if(book.getBclass() != null){
+				sb.append(" and bclass = '"+book.getBclass()+"'");
+			}
+			if(book.getBauthor() != null){
+				sb.append(" and bauthor = '"+book.getBauthor()+"'");
+			}
+			if(book.getBtid() != null){
+				sb.append(" and btid = "+book.getBtid());
+			}
+			if(book.getBstate() != 0){
+				sb.append(" and bstate = "+book.getBstate());
+			}
+			if(book.getUid() != 0){
+				sb.append(" and uid = "+book.getUid());
+			}
+			if(book.getBtemp() != null){
+				sb.append(" and btemp = '"+book.getBtemp() +"'");
+			}
+			if(book.getBdate() != null){
+				sb.append(" and bdate = '"+book.getBdate() +"'");
+			}
+		}
+    	sb.append(" order by  bid asc");
+    	return  db.selectPageForMysql(page, rows, Book.class, sb.toString());
 	}
 	// ∆‰À˚
 }

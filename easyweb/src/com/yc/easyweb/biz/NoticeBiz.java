@@ -3,7 +3,9 @@ package com.yc.easyweb.biz;
 import java.io.IOException;
 import java.util.List;
 
+import com.yc.easyweb.bean.Eorderitem;
 import com.yc.easyweb.bean.Notice;
+import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.dao.NoticeDao;
 
 /**
@@ -46,5 +48,9 @@ public class NoticeBiz {
 		return 0;
 
 	}
+	//公告分页
+		public Page<Notice> noticePage(int page, int rows,Notice notice) throws IOException {
+			return dao.noticePage(page, rows, notice);
+		}
 	// 其他
 }

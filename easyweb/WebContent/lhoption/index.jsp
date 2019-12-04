@@ -134,9 +134,9 @@
 		}
 		Book book = new Book();
 		book.setBtid(id);
-		
 		int iPage = paramNumber == null ? 1 : Integer.parseInt(paramNumber);
-		PageBook pPage = DbHelper.selectPageForMysql(iPage, 12, book);
+		BookBiz bookBiz = new BookBiz();
+		Page<Book> pPage = bookBiz.bookPage(iPage, 8, book);
 		//教材区书籍展示
 		%>
 		<div class="list fl">
@@ -157,7 +157,6 @@
 		
 			<div class="book clearfix">
 			<% for(Book s : pPage.getData()){%>
-			
 				<dl>
 					<dt><a href="<%=application.getContextPath() %>/detail.jsp?bid=<%=s.getBid()%>"><img src="<%=s.getBimg() %>" alt=""/></a></dt>
 					<dd>
@@ -193,10 +192,7 @@
 			Book book1 = new Book();
 			book1.setBtid(id1);
 			int iPage1 = paramNumber1 == null ? 1 : Integer.parseInt(paramNumber1);
-			
-			
-			PageBook pPage1 = DbHelper.selectPageForMysql(iPage1, 7, book1);
-			
+			Page<Book> pPage1 = bookBiz.bookPage(iPage1, 7, book1);
 		%>
 		
 		<%for(BookType  a : list2){ %>
@@ -240,7 +236,7 @@
 			Book book2 = new Book();
 			book2.setBtid(Long.parseLong("3"));
 			int iPage2 = paramNumber2 == null ? 1 : Integer.parseInt(paramNumber2);
-			PageBook pPage2 = DbHelper.selectPageForMysql(iPage1, 7, book2);
+			Page<Book> pPage2 = bookBiz.bookPage(iPage1, 7, book2);
 		%>
 		
 		<div class="tabs book clearfix">

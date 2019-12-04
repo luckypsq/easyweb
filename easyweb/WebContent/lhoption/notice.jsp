@@ -1,9 +1,9 @@
+<%@page import="com.yc.easyweb.bean.Page"%>
 <%@page import="java.util.List"%>
 <%@page import= "com.yc.easyweb.bean.Notice" %>
 <%@page import= "com.yc.easyweb.biz.NoticeBiz" %>
 <%@page import="com.yc.easyweb.biz.NoticeBiz"%>
 <%@page import="com.yc.easyweb.common.DbHelper"%>
-<%@page import="com.yc.easyweb.bean.PageNotice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -32,7 +32,7 @@
 			Notice notice = new Notice();
 			
 			int iPage = paramNumber == null ? 1 : Integer.parseInt(paramNumber);
-			PageNotice pPage = DbHelper.selectPageForMysql(iPage, 5, notice);
+			Page<Notice> pPage = biz.noticePage(iPage, 5, notice);
 		%>
 		<%for(Notice t : pPage.getData()){%>
 			<div class="post">

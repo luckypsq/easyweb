@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.dao.BookDao;
 
 /**
@@ -62,6 +63,10 @@ public class BookBiz {
 			throw new BizException("请填写需要修改的书籍！");
 		}
 			return dao.update(newBook, oldBook);
+	}
+	//分页
+	public Page<Book> bookPage(int page, int rows,Book book) throws IOException{
+		return dao.bookPage(page, rows, book);
 	}
 	// 其他
 }

@@ -188,7 +188,7 @@
 										class="ace"><span class="lbl"></span></label></td>
 								<td width="80px">${bookShow.bid }</td>
 								<td width="250px"><u style="cursor: pointer"
-									class="text-primary" onclick="">${bookShow.bname }</u></td>
+									class="text-primary" onclick="window.location.href='<%=application.getContextPath()%>/detail.jsp?bid=${bookShow.bid }';">${bookShow.bname }</u></td>
 								<td width="100px">${bookShow.bprice }</td>
 								<td width="100px"><%=type == null? "":type %></td>
 								<td width="100px">${bookShow.btemp == null ? "":bookShow.btemp }</td>

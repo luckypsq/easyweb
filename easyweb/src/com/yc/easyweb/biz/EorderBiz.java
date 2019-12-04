@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.OrderDetial;
+import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.dao.EorderDao;
 
 /**
@@ -75,6 +76,10 @@ public class EorderBiz {
 			throw new BizException("请输入需要修改的订单");
 		}
 		return dao.update(eorderNew, eorderOld);
+	}
+	//分页
+	public Page<Eorder> eorderPage(int page, int rows,Eorder eorder) throws IOException {
+		return dao.eorderPage(page, rows, eorder);
 	}
 	// 其他
 }
