@@ -3,9 +3,6 @@ package com.yc.easyweb.bean;
 import java.io.Serializable;
 
 public class User implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private long uid;//用户id
 	private String uname;//用户名
@@ -124,9 +121,33 @@ public class User implements Serializable{
 	@Override
 	public String toString() {
 		return "User [uid=" + uid + ", uname=" + uname + ", uphone=" + uphone + ", university=" + university
-				+ ", ucollege=" + ucollege + ", umajor=" + umajor + ", upassword=" + upassword + ", ustate=" + ustate
-				+ ", utemp=" + utemp + ", utype=" + utype + ", uemail=" + uemail + ", utime=" + utime + ", usex=" + usex
-				+ ", uage=" + uage + "]";
+				+ ", ucollege=" + ucollege + ", umajor=" + umajor + ", uclass=" + uclass + ", upassword=" + upassword
+				+ ", ustate=" + ustate + ", utemp=" + utemp + ", utype=" + utype + ", uemail=" + uemail + ", utime="
+				+ utime + ", usex=" + usex + ", uage=" + uage + ", uminname=" + uminname + "]";
+	}
+	//重写hashCode 和equals方法去重
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((uname == null) ? 0 : uname.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (uname == null) {
+			if (other.uname != null)
+				return false;
+		} else if (!uname.equals(other.uname))
+			return false;
+		return true;
 	}
 	
 }

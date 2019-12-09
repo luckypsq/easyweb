@@ -1,4 +1,4 @@
-<%@page import="com.yc.easyweb.dao.lyw.*"%>
+<%@page import="com.yc.easyweb.dao.lyw.CartDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%

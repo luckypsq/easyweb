@@ -3,6 +3,7 @@
 <%@page import="com.yc.easyweb.bean.*"%>
 <%@page import="com.yc.easyweb.bean.*"%>
 <%@page import="java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,104 +16,64 @@
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link
-	href="<%=application.getContextPath()%>/back/assets/css/bootstrap.min.css"
+	href="${path}/back/assets/css/bootstrap.min.css"
 	rel="stylesheet" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/css/style.css" />
+	href="${path}/back/css/style.css" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/assets/css/ace.min.css" />
+	href="${path}/back/assets/css/ace.min.css" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/assets/css/font-awesome.min.css" />
+	href="${path}/back/assets/css/font-awesome.min.css" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/Widget/zTree/css/zTreeStyle/zTreeStyle.css"
+	href="${path}/back/Widget/zTree/css/zTreeStyle/zTreeStyle.css"
 	type="text/css">
 <link
-	href="<%=application.getContextPath()%>/back/Widget/icheck/icheck.css"
+	href="${path}/back/Widget/icheck/icheck.css"
 	rel="stylesheet" type="text/css" />
 <script
-	src="<%=application.getContextPath()%>/back/js/jquery-1.9.1.min.js"></script>
+	src="${path}/back/js/jquery-1.9.1.min.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/js/bootstrap.min.js"></script>
+	src="${path}/back/assets/js/bootstrap.min.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/js/typeahead-bs2.min.js"></script>
+	src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/js/jquery.dataTables.min.js"></script>
+	src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+	src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
 <script type="text/javascript"
-	src="<%=application.getContextPath()%>/back/js/H-ui.js"></script>
+	src="${path}/back/js/H-ui.js"></script>
 <script type="text/javascript"
-	src="<%=application.getContextPath()%>/back/js/H-ui.admin.js"></script>
+	src="${path}/back/js/H-ui.admin.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/layer/layer.js"
+	src="${path}/back/assets/layer/layer.js"
 	type="text/javascript"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/laydate/laydate.js"
+	src="${path}/back/assets/laydate/laydate.js"
 	type="text/javascript"></script>
 <script type="text/javascript"
-	src="<%=application.getContextPath()%>/back/Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script>
-<script src="<%=application.getContextPath()%>/back/js/lrtk.js"
+	src="${path}/back/Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<script src="${path}/back/js/lrtk.js"
 	type="text/javascript"></script>
 <title>书籍列表</title>
 </head>
-<body>
-	<%
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
-		String bauthor =null;
-		String btime =null;
-		String btid = null;
-		BookBiz bookBiz = new BookBiz();
-		Book book = new Book();
-		//获取查询条件
-		if(request.getParameter("bname") != null && !request.getParameter("bname").isEmpty()){
-			bauthor =request.getParameter("bname");	
-			book.setBauthor(bauthor);
-		}
-		if(request.getParameter("btime") != null && !request.getParameter("btime").isEmpty() ){
-			btime =request.getParameter("btime");
-			book.setBdate(btime);
-		}
-		if (request.getParameter("btid") != null && !request.getParameter("btid").isEmpty()) {
-			btid = request.getParameter("btid");
-			book.setBtid(Long.parseLong(request.getParameter("btid")));
-		}
-		//查询类别
-		BookType bookType = new BookType();
-		bookType.setBtstate(1);
-		BookTypeBiz btBiz = new BookTypeBiz();
-		List<BookType> btList = btBiz.selectAll(bookType);
-		Map<Long,String> btType = new HashMap<Long,String>();
-		for(BookType bt : btList){
-			if(bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()){
-				btType.put(bt.getBtid(),bt.getBtnamethird());
-				
-			}else if(bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()){
-				btType.put(bt.getBtid(),bt.getBtnamesecond());
-			}else{
-				btType.put(bt.getBtid(),bt.getBtname());
-			}
-		}
-		List<Book> bookList = bookBiz.selectAll(book);
-		pageContext.setAttribute("bookList", bookList);
-	%>
+<body onload="show()">
 	<div class=" page-content clearfix">
 		<div id="products_style">
 			<div class="search_style">
 				<ul class="search_content clearfix">
 					<li><label class="l_f">作者</label><input id ="queryName" name="" type="text"
-						class="text_add" placeholder="输入作者" value="<%=bauthor == null ? "":bauthor %>" style="width: 250px"  /></li>
+						class="text_add" placeholder="输入作者" value="${bauthor }" style="width: 250px"  /></li>
 					<li><label class="l_f">添加时间</label><input
-						class="inline laydate-icon" id="start" value="<%=btime == null ? "":btime %>" style="margin-left: 10px;"></li>
+						class="inline laydate-icon" id="start" value="${btime }" style="margin-left: 10px;"></li>
 					<li style="width: 90px;"><button type="button"
-							class="btn_search" onclick="query();">
+							class="btn_search" onclick="show();">
 							<i class="icon-search" ></i>查询
 						</button></li>
 				</ul>
 			</div>
 			<div class="border clearfix">
 				<span class="l_f"> <a
-					href="<%=application.getContextPath()%>/back/book/picture-add.jsp"
+					href="${path}/back/book/picture-add.jsp"
 					title="添加书籍" class="btn btn-warning Order_form"><i
 						class="icon-plus"></i>添加书籍</a> <a onclick="selectDelete();"
 					class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>
@@ -161,67 +122,46 @@
 							</tr>
 						</thead>
 						<tbody >
-							<%
-								String checkState = null;
-								String state = null;
-								String type= null;
-								for (Book bookShow : bookList) {
-									pageContext.setAttribute("bookShow", bookShow);
-									if (bookShow.getBstate() == 3) {
-										state = "售罄";
-										checkState = "通过";
-									} else if (bookShow.getBstate() == 2) {
-										state = "已下架";
-										checkState = "通过";
-									} else if (bookShow.getBstate() == 1) {
-										state = "已上架";
-										checkState = "通过";
-									} else if (bookShow.getBstate() == 5) {
-										checkState = "未审核";
-									} else if (bookShow.getBstate() == 4) {
-										checkState = "审核不通过";
-									}
-									type = btType.get(bookShow.getBtid());
-							%>
-							<tr>
-								<td width="25px"><label><input type="checkbox"
-										class="ace"><span class="lbl"></span></label></td>
-								<td width="80px">${bookShow.bid }</td>
-								<td width="250px"><u style="cursor: pointer"
-									class="text-primary" onclick="window.location.href='<%=application.getContextPath()%>/detail.jsp?bid=${bookShow.bid }';">${bookShow.bname }</u></td>
-								<td width="100px">${bookShow.bprice }</td>
-								<td width="100px"><%=type == null? "":type %></td>
-								<td width="100px">${bookShow.btemp == null ? "":bookShow.btemp }</td>
-								<td width="100px">${bookShow.bauthor }</td>
-								<td width="180px">${bookShow.bnum}</td>
-								<td class="text-l"><%=checkState == null ? "" : checkState%></td>
-								<td class="td-status">
-									<% if(state.equals("已上架")) {%>
-									<span class="label label-success radius"><%=state%></span>
-									<%}else{ %>
-									<span class="label label-defaunt radius"><%=state == null ? "已下架":state%></span>
-									<% }%>
-								</td>
-								<td class="td-manage">
-								<% if(state.equals("已上架")) {%>
-										<a onClick="member_stop(this,${bookShow.bid })" 
-										title="下架" class="btn btn-xs btn-success">
-										<i class="icon-ok bigger-120"></i></a> 
-									<%}else{ %>
-										<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,${bookShow.bid })" href="javascript:;" title="上架">
-										<i class="icon-ok bigger-120"></i></a>
-									<% }%>
-									<a title="编辑"
-									onclick="member_edit('编辑','<%=application.getContextPath()%>/back/book/bookEdit.jsp?bid=${bookShow.bid }','','300')"
-									 class="btn btn-xs btn-info"><i
-										class="icon-edit bigger-120"></i></a> <a title="删除"
-									href="javascript:;" onclick="member_del(this,${bookShow.bid })"
-									class="btn btn-xs btn-warning"><i
-										class="icon-trash  bigger-120"></i></a></td>
-							</tr>
-							<%
-								}
-							%>
+							<c:forEach items="${bookList}" var="b">
+								<tr>
+									<td width="25px"><label><input type="checkbox"
+											class="ace"><span class="lbl"></span></label></td>
+									<td width="80px">${b.bid }</td>
+									<td width="250px"><u style="cursor: pointer"
+										class="text-primary" onclick="window.location.href='${path}/detail.jsp?bid=${b.bid }';">${b.bname }</u></td>
+									<td width="100px">${b.bprice }</td>
+									<td width="100px">${bookType.get(b.btid) }</td>
+									<td width="100px">${b.btemp}</td>
+									<td width="100px">${b.bauthor }</td>
+									<td width="180px">${b.bnum}</td>
+									<td class="text-l">${bookState[b.bstate] }</td>
+									<td class="td-status">
+										<c:if test="${b.bstate == 1}" var="flag" scope="session">
+											<span class="label label-success radius">${bookState[b.bstate] }</span>
+										</c:if>
+										<c:if test="${not flag}">
+											<span class="label label-defaunt radius">${bookState[b.bstate] }</span>
+										</c:if>
+									</td>
+									<td class="td-manage">
+										<c:if test="${b.bstate == 1}" var="flag" scope="session">
+											<a onClick="member_stop(this,${b.bid })" 
+											title="下架" class="btn btn-xs btn-success">
+											<i class="icon-ok bigger-120"></i></a> 
+										</c:if>
+										<c:if test="${not flag}">
+											<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,${b.bid })" href="javascript:;" title="上架">
+											<i class="icon-ok bigger-120"></i></a>
+										</c:if>
+										<a title="编辑"
+										onclick="member_edit('编辑','${path}/back/book/bookEdit.jsp?bid=${b.bid }','','300')"
+										 class="btn btn-xs btn-info"><i
+											class="icon-edit bigger-120"></i></a> <a title="删除"
+										href="javascript:;" onclick="member_del(this,${b.bid })"
+										class="btn btn-xs btn-warning"><i
+											class="icon-trash  bigger-120"></i></a></td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -241,7 +181,6 @@ var sbox = -1;
 			"aaSorting" : [ [ 1, "desc" ] ],//默认第几个排序
 			"bStateSave" : true,//状态保存
 			"aoColumnDefs" : [
-			//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
 			{
 				"orderable" : false,
 				"aTargets" : [ 0, 2, 3, 4, 5, 8, 9 ]
@@ -318,6 +257,49 @@ var sbox = -1;
 			}
 		}
 	}
+	
+
+function show(){
+	var bauthor = document.getElementById("queryName").value;
+	var btime = document.getElementById("start").value;
+	if(xmlhttp!=null){
+		// 定义请求地址
+		var url;
+		if(btime == "" && bauthor == ""){
+			url ="${path}/book.s?op=query";
+		}else if(btime == ""){
+			url ="${path}/book.s?op=query&bauthor="+bauthor;
+		}else if(bauthor == ""){
+			url ="${path}/book.s?op=query&btime="+btime;
+		}else{
+			url ="${path}/book.s?op=query&btime="+btime+"&bauthor="+bauthor;
+		}
+		// 以 POST 方式 开启连接
+		// POST 请求 更安全（编码）  提交的数据大小没有限制
+		xmlhttp.open("POST",url,true);
+		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+		// 每次的状态改变都会调用该方法
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				// 替换空格
+				var msg = xmlhttp.responseText.replace(/\s/gi,"");
+				if(msg == '0'){
+					layer.msg('暂无数据', {
+						icon : 5,
+						time : 1000
+						});
+				}
+			}
+		};
+		// 发送请求
+		xmlhttp.send(null);
+	}else{
+		layer.msg('不能创建XMLHttpRequest对象实例', {
+			icon : 2,
+			time : 1000
+			});
+	} 
+}
 function selectDelete(){
 	layer.confirm('确认要删除吗？', function(index) {
 	if(sbox != "/"){
@@ -345,7 +327,7 @@ function selectDelete(){
 	}
 	if (xmlhttp != null) {
 		// 定义请求地址
-		var url = "<%=application.getContextPath()%>/book.s?op=delete&bid="+sbox;
+		var url = "${path}/book.s?op=delete&bid="+sbox;
 		// 以 POST 方式 开启连接
 		// POST 请求 更安全（编码）  提交的数据大小没有限制
 		xmlhttp.open("POST", url, true);
@@ -359,7 +341,7 @@ function selectDelete(){
 						icon : 6,
 						time : 1000
 						});
-					window.location.href='<%=application.getContextPath()%>/back/book/Products_List.jsp';
+					window.location.href='${path}/back/book/Products_List.jsp';
 				}else if(msg == 0){
 					layer.msg("不能进行此操作！！！", {
 						icon : 2,
@@ -420,7 +402,7 @@ function selectDelete(){
 					zTree.expandNode(treeNode);
 					return false;
 				} else {
-					window.location.href="<%=application.getContextPath()%>/back/book/Products_List.jsp?btid="+treeNode.btid;
+					typeClick(treeNode.btid);
 					return true;
 				}
 			}
@@ -519,27 +501,7 @@ function selectDelete(){
 		name : "分享区",
 		btid : 3
 	} ];
-	var code;
-
-	function showCode(str) {
-		if (!code)
-			code = $("#code");
-		code.empty();
-		code.append("<li>" + str + "</li>");
-	}
-	$(document).ready(function() {
-		var t = $("#treeDemo");
-		t = $.fn.zTree.init(t, setting, zNodes);
-		demoIframe = $("#testIframe");
-		demoIframe.bind("load", loadReady);
-		var zTree = $.fn.zTree.getZTreeObj("tree");
-		zTree.selectNode(zTree.getNodeByParam("id", '11'));
-	});
-	function query(){
-		var bname = $("#queryName").val().replace(/\ +/g,"");
-		var booktime = $("#start").val().replace(/\ +/g,"");
-		window.location.href="<%=application.getContextPath()%>/back/book/Products_List.jsp?bname="+bname+"&btime="+booktime;
-	}
+	
 	var xmlhttp;
 	// ajax
 	try {
@@ -554,6 +516,45 @@ function selectDelete(){
 			}
 		}
 	}
+function typeClick(id){
+	if(xmlhttp!=null){
+		// 定义请求地址
+		var url ="${path}/book.s?op=query&btid="+id;
+		// 以 POST 方式 开启连接
+		// POST 请求 更安全（编码）  提交的数据大小没有限制
+		xmlhttp.open("POST",url,true);
+		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+		// 每次的状态改变都会调用该方法
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				
+			}
+		};
+		// 发送请求
+		xmlhttp.send(null);
+	}else{
+		layer.msg('不能创建XMLHttpRequest对象实例', {
+			icon : 2,
+			time : 1000
+			});
+	} 
+}
+var code;
+	function showCode(str) {
+		if (!code)
+			code = $("#code");
+		code.empty();
+		code.append("<li>" + str + "</li>");
+	}
+	$(document).ready(function() {
+		var t = $("#treeDemo");
+		t = $.fn.zTree.init(t, setting, zNodes);
+		demoIframe = $("#testIframe");
+		demoIframe.bind("load", loadReady);
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		zTree.selectNode(zTree.getNodeByParam("id", '11'));
+	});
+	
 	/*产品-下架*/
 	function member_stop(obj, id) {
 		var soldBook = null;
@@ -562,7 +563,7 @@ function selectDelete(){
 			function(index) {
 				if(xmlhttp!=null){
 					// 定义请求地址
-					var url ="<%=application.getContextPath()%>/book.s?op=update&bstate=2&bid="+id;
+					var url ="${path}/book.s?op=update&bstate=2&bid="+id;
 					// 以 POST 方式 开启连接
 					// POST 请求 更安全（编码）  提交的数据大小没有限制
 					xmlhttp.open("POST",url,true);
@@ -617,7 +618,7 @@ function selectDelete(){
 		layer.confirm('确认要上架吗？',function(index) {
 			if(xmlhttp!=null){
 				// 定义请求地址
-				var url ="<%=application.getContextPath()%>/book.s?op=update&bstate=1&bid="+id;
+				var url ="${path}/book.s?op=update&bstate=1&bid="+id;
 				// 以 POST 方式 开启连接
 				// POST 请求 更安全（编码）  提交的数据大小没有限制
 				xmlhttp.open("POST",url,true);
@@ -679,7 +680,7 @@ function selectDelete(){
 		layer.confirm('确认要删除吗？', function(index) {
 			if(xmlhttp!=null){
 				// 定义请求地址
-				var url ="<%=application.getContextPath()%>/book.s?op=delete&bid="+id;
+				var url ="${path}/book.s?op=delete&bid="+id;
 				// 以 POST 方式 开启连接
 				// POST 请求 更安全（编码）  提交的数据大小没有限制
 				xmlhttp.open("POST",url,true);

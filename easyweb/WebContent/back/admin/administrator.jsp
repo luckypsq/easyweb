@@ -4,6 +4,7 @@
 <%@page import="com.yc.easyweb.biz.*"%>
 <%@page import="java.io.*"%>
 <%@page import="java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,78 +13,53 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link
-	href="<%=application.getContextPath()%>/back/assets/css/bootstrap.min.css"
+	href="${path}/back/assets/css/bootstrap.min.css"
 	rel="stylesheet" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/css/style.css" />
+	href="${path}/back/css/style.css" />
 <link
-	href="<%=application.getContextPath()%>/back/assets/css/codemirror.css"
+	href="${path}/back/assets/css/codemirror.css"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/assets/css/ace.min.css" />
+	href="${path}/back/assets/css/ace.min.css" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/font/css/font-awesome.min.css" />
+	href="${path}/back/font/css/font-awesome.min.css" />
 <script
-	src="<%=application.getContextPath()%>/back/js/jquery-1.9.1.min.js"></script>
+	src="${path}/back/js/jquery-1.9.1.min.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/js/bootstrap.min.js"></script>
+	src="${path}/back/assets/js/bootstrap.min.js"></script>
 <script type="text/javascript"
-	src="<%=application.getContextPath()%>/back/Widget/Validform/5.3.2/Validform.min.js"></script>
+	src="${path}/back/Widget/Validform/5.3.2/Validform.min.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/js/typeahead-bs2.min.js"></script>
+	src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/js/jquery.dataTables.min.js"></script>
+	src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+	src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/layer/layer.js"
+	src="${path}/back/assets/layer/layer.js"
 	type="text/javascript"></script>
-<script src="<%=application.getContextPath()%>/back/js/lrtk.js"
-	type="text/javascript"></script>
-<script
-	src="<%=application.getContextPath()%>/back/assets/layer/layer.js"
+<script src="${path}/back/js/lrtk.js"
 	type="text/javascript"></script>
 <script
-	src="<%=application.getContextPath()%>/back/assets/laydate/laydate.js"
+	src="${path}/back/assets/layer/layer.js"
+	type="text/javascript"></script>
+<script
+	src="${path}/back/assets/laydate/laydate.js"
 	type="text/javascript"></script>
 <title>管理员</title>
 </head>
 
-<body>
+<body onload="selectAdmin()">
 	<div class="page-content clearfix">
 		<div class="administrator">
 				<div class="d_Confirm_Order_style">
 				<div class="search_style">
-					<%
-						UserBiz userBiz = new UserBiz();
-						User user = new User();
-						String userName = null;
-						String userPhone = null;
-						int userType = 0;
-						if(request.getParameter("name") != null && !request.getParameter("name").toString().isEmpty()){
-							user.setUname(request.getParameter("name"));
-							userName = request.getParameter("name");
-						}
-						if(request.getParameter("phone") != null && !request.getParameter("phone").toString().isEmpty()){
-							user.setUphone(request.getParameter("phone"));
-							userPhone = request.getParameter("phone");
-						}
-						if(request.getParameter("type") != null && !request.getParameter("type").toString().isEmpty()){
-							userType = Integer.parseInt(request.getParameter("type"));
-						}
-						user.setUtype(5);
-						List<User> userList1 = userBiz.selectAll(user);
-						user.setUtype(1);
-						List<User> userList2 = userBiz.selectAll(user);
-						for (User user2 : userList2) {
-							userList1.add(user2);
-						}
-					%>
 					<ul class="search_content clearfix">
-						<li><label class="l_f">管理员名称</label><input name="adminName"id="adminName" value="<%=userName == null ? "":userName %>"
+						<li><label class="l_f">管理员名称</label><input name="adminName"id="adminName" value="${userName}"
 							type="text" class="text_add"  style="width: 400px" /></li>
 						<li><label class="l_f">管理员电话</label><input style=" margin-left:10px;" name="adminType"id="adminType"
-							type="text" class="text_add"  style="width: 400px" value="<%=userPhone == null ? "":userPhone %>"/></li>
+							type="text" class="text_add"  style="width: 400px" value="${userPhone }"/></li>
 						<li style="width: 90px;"><button type="button" onclick="selectAdmin();"
 								class="btn_search">
 								<i class="fa fa-search"></i>查询
@@ -92,10 +68,10 @@
 				</div>
 				<!--操作-->
 				<div class="border clearfix">
-					<span class="l_f"><a href="<%=application.getContextPath()%>/back/admin/userAdd.jsp" id="administrator_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加管理员</a>
+					<span class="l_f"><a href="${path}/back/admin/userAdd.jsp" id="administrator_add" class="btn btn-warning"><i class="fa fa-plus"></i> 添加管理员</a>
 				 <a onclick="selectDelete();"
 						class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
-					</span> <span class="r_f">共：<b><%=userList1.size()%></b>人
+					</span> <span class="r_f">共：<b>${adminAllExit.size() }</b>人
 					</span>
 				</div>
 				<!--管理员列表-->
@@ -115,11 +91,11 @@
 									</div>
 									<div class="widget-body">
 										<ul class="b_P_Sort_list">
-											<li><i class="fa fa-users green"></i> <a href="<%=application.getContextPath()%>/back/admin/administrator.jsp">全部管理员(<%=userList1.size()%>)
+											<li><i class="fa fa-users green"></i> <a href="${path}/back/admin/administrator.jsp">全部管理员(${numAdmin[2] })
 											</a></li>
-											<li><i class="fa fa-users orange"></i> <a href="<%=application.getContextPath()%>/back/admin/administrator.jsp?type=1">超级管理员(<%=userList2.size()%>)
+											<li><i class="fa fa-users orange"></i> <a href="${path}/back/admin/administrator.jsp?type=1">超级管理员(${numAdmin[0] })
 											</a></li>
-											<li><i class="fa fa-users orange"></i> <a href="<%=application.getContextPath()%>/back/admin/administrator.jsp?type=5">普通管理员(<%=userList1.size() - userList2.size()%>)
+											<li><i class="fa fa-users orange"></i> <a href="${path}/back/admin/administrator.jsp?type=5">普通管理员(${numAdmin[1] })
 											</a></li>
 									</ul>
 									</div>
@@ -145,68 +121,50 @@
 								</tr>
 							</thead>
 							<tbody>
-								<%
-									String adminState = "";
-									for (User userAdmin_show : userList1) {
-										if (userAdmin_show.getUstate() == 1) {
-											adminState = "已启用";
-										} else if (userAdmin_show.getUstate() == 2) {
-											adminState = "已停用";
-										} else {
-											adminState = "已删除";
-										}
-										if(userType != 0 && userAdmin_show.getUtype() != userType){
-											continue;
-										}
-										pageContext.setAttribute("admin", userAdmin_show);
-								%>
-								<tr>
-									<td><label><input type="checkbox" class="ace"><span
-											class="lbl"></span></label></td>
-									<td>${admin.uid }</td>
-									<td>${admin.uname }</td>
-									<td>${admin.uphone }</td>
-									<td>${admin.uemail }</td>
-									<td>${admin.utype == 5 ? "普通管理员" :"超级管理员" }</td>
-									<td>${admin.utime }</td>
-									<%
-									if(userAdmin_show.getUstate() == 1){
-								%>
-								<td class="td-status">
-									<span class="label label-success radius">已启用</span>
-								</td>
-								<%}else if(userAdmin_show.getUstate() == 2){%>
-									<td class="td-status">
-										<span class="label label-defaunt radius">已冻结</span>
-									</td>
-								<% }else if(userAdmin_show.getUstate() == 3){%>
-									<td class="td-status">
-									<span class="label label-defaunt radius">已删除</span>
-									</td>
-								<%}%>
-									<td class="td-manage">
-									<%
-									if(userAdmin_show.getUstate() == 1){
-								%>
-								<a
-									onClick="member_stop(this,'${admin.uid }')"
-									href="javascript:;"
-									title="停用" class="btn btn-xs btn-success"><i
-									class="fa fa-check  bigger-120"></i></a>
-								<%}else{%>
-									<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,${admin.uid })" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>
-								<%}%>
-										<a title="编辑"
-										href="<%=application.getContextPath()%>/back/admin/userAdd.jsp?uid=${admin.uid }"
-										class="btn btn-xs btn-info"><i
-											class="fa fa-edit bigger-120"></i></a> <a title="删除"
-										href="javascript:;" onclick="member_del(this,${admin.uid })"
-										class="btn btn-xs btn-warning"><i
-											class="fa fa-trash  bigger-120"></i></a></td>
-								</tr>
-								<%
-									}
-								%>
+								<c:forEach items="${adminAllExit}" var="admin">
+									<tr>
+										<td><label><input type="checkbox" class="ace"><span
+												class="lbl"></span></label></td>
+										<td>${admin.uid }</td>
+										<td>${admin.uname }</td>
+										<td>${admin.uphone }</td>
+										<td>${admin.uemail }</td>
+										<td>${admin.utype == 5 ? "普通管理员" :"超级管理员" }</td>
+										<td>${admin.utime }</td>
+										<c:if test="${admin.ustate == 1}" var="flag" scope="session">
+											<td class="td-status">
+												<span class="label label-success radius">已启用</span>
+											</td>
+										</c:if>
+										
+										<c:if test="${not flag}">
+											<td class="td-status">
+											<span class="label label-defaunt radius">${adminStateC[admin.ustate] }</span>
+										</td>
+										</c:if>
+									
+										<td class="td-manage">
+										
+											<c:if test="${admin.ustate == 1}" var="flag" scope="session">
+													<a
+													onClick="member_stop(this,'${admin.uid }')"
+													href="javascript:;"
+													title="停用" class="btn btn-xs btn-success"><i
+													class="fa fa-check  bigger-120"></i></a>
+											</c:if>
+											
+											<c:if test="${not flag}">
+												<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,${admin.uid })" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>
+											</c:if>
+											<a title="编辑"
+											href="${path}/back/admin/userAdd.jsp?uid=${admin.uid }"
+											class="btn btn-xs btn-info"><i
+												class="fa fa-edit bigger-120"></i></a> <a title="删除"
+											href="javascript:;" onclick="member_del(this,${admin.uid })"
+											class="btn btn-xs btn-warning"><i
+												class="fa fa-trash  bigger-120"></i></a></td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
@@ -217,6 +175,20 @@
 </body>
 </html>
 	<script type="text/javascript">
+	var xmlhttp;
+	//ajax
+	try {
+		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (e) {
+			try {
+				xmlhttp = new XMLHttpRequest();
+			} catch (e) {
+			}
+		}
+	}
 	var sbox = "";
 	jQuery(function($) {
 		var oTable1 = $('#sample_table').dataTable({
@@ -286,20 +258,6 @@
 	});
 	
 	
-	var xmlhttp;
-	//ajax
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (e) {
-			try {
-				xmlhttp = new XMLHttpRequest();
-			} catch (e) {
-			}
-		}
-	}
 	//字数限制
 	function checkLength(which) {
 		var maxChars = 100; //
@@ -345,11 +303,36 @@
 			});
 			return ;
 		}
-		if(adminName == "" && adminType == ""){
-			window.location.href="<%=application.getContextPath()%>/back/admin/administrator.jsp";
+		if(xmlhttp!=null){
+			var  url;
+			if(adminName == "" && adminType == ""){
+				url="${path}/control.s?op=queryAdmin";
+			}else{
+				url="${path}/control.s?op=queryAdmin&name="+adminName+"&phone="+adminType;
+			}
+			xmlhttp.open("POST",url,true);
+			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+			// 每次的状态改变都会调用该方法
+			xmlhttp.onreadystatechange=function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					// 替换空格
+					var msg = xmlhttp.responseText.replace(/\s/gi,"");
+					if(msg == 1){
+						layer.msg('暂无数据', {
+							icon : 5,
+							time : 1000
+							});
+					}
+				}
+			};
+			// 发送请求
+			xmlhttp.send(null);
 		}else{
-			window.location.href="<%=application.getContextPath()%>/back/admin/administrator.jsp?name="+adminName+"&phone="+adminType;
-		}
+			layer.msg('不能创建XMLHttpRequest对象实例', {
+				icon : 2,
+				time : 1000
+				});
+		} 
 	}
 	
 	
@@ -358,7 +341,7 @@
 		layer.confirm('确认要停用吗？',function(index){
 			if(xmlhttp!=null){
 				// 定义请求地址
-				var url ="<%=application.getContextPath()%>/user.s?op=updateState&ustate=2&uid="+id;
+				var url ="${path}/user.s?op=updateState&ustate=2&uid="+id;
 				// 以 POST 方式 开启连接
 				// POST 请求 更安全（编码）  提交的数据大小没有限制
 				xmlhttp.open("POST",url,true);
@@ -404,7 +387,7 @@
 		layer.confirm('确认要启用吗？',function(index) {
 			if(xmlhttp!=null){
 				// 定义请求地址
-				var url ="<%=application.getContextPath()%>/user.s?op=updateState&ustate=1&uid="+id;
+				var url ="${path}/user.s?op=updateState&ustate=1&uid="+id;
 				// 以 POST 方式 开启连接
 				// POST 请求 更安全（编码）  提交的数据大小没有限制
 				xmlhttp.open("POST",url,true);
@@ -455,7 +438,7 @@
 		layer.confirm('确认要删除吗？', function(index) {
 			if(xmlhttp!=null){
 				// 定义请求地址
-				var url ="<%=application.getContextPath()%>/user.s?op=delete&uid="+id;
+				var url ="${path}/user.s?op=delete&uid="+id;
 				// 以 POST 方式 开启连接
 				// POST 请求 更安全（编码）  提交的数据大小没有限制
 				xmlhttp.open("POST",url,true);
@@ -522,7 +505,7 @@
 			}
 			if (xmlhttp != null) {
 				// 定义请求地址
-				var url = "<%=application.getContextPath()%>/user.s?op=delete&uid="+sbox;
+				var url = "${path}/user.s?op=delete&uid="+sbox;
 				// 以 POST 方式 开启连接
 				// POST 请求 更安全（编码）  提交的数据大小没有限制
 				xmlhttp.open("POST", url, true);
@@ -537,7 +520,7 @@
 								icon : 6,
 								time : 1000
 								});
-							window.location.href='<%=application.getContextPath()%>/back/admin/administrator.jsp';
+							window.location.href='${path}/back/admin/administrator.jsp';
 						}else if(msg == 2){
 							sbox = "";
 							layer.msg("不能进行此操作！！！", {

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
-import com.yc.easyweb.dao.lyw.PasswordDao;
+import com.yc.easyweb.dao.PasswordDao;
 
 public class PasswordBiz {
 	private PasswordDao dao= new  PasswordDao();

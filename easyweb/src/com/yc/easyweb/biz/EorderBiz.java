@@ -33,13 +33,16 @@ public class EorderBiz {
 	}
 
 	// 查询订单详情
-	public List<OrderDetial> selectDetail(OrderDetial detial) throws IOException, BizException  {
-		if(detial == null){
-			throw new BizException("请输入订单详情信息");
-		}
+	public List<OrderDetial> selectAllDetail(OrderDetial detial) throws IOException  {
 		return dao.selectAllDetail(detial);
 	}
-
+	// 查询单个订单详情
+		public OrderDetial selectSingleDetail(OrderDetial detial) throws IOException, BizException   {
+			if(detial == null){
+				throw new BizException("请输入订单信息");
+			}
+			return dao.selectSingleDetail(detial);
+		}
 	// 添加
 	public int insert(Eorder eorder) throws SQLException, BizException  {
 		if(eorder == null){

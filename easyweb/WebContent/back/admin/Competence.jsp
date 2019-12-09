@@ -4,6 +4,7 @@
 <%@page import="com.yc.easyweb.biz.*"%>
 <%@page import="java.io.*"%>
 <%@page import="java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,50 +12,23 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
-		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>           	
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
-        <script src="<%=application.getContextPath() %>/back/js/dragDivResize.js" type="text/javascript"></script>
+<link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="${path}/back/css/style.css"/>       
+<link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+<link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
+<link rel="stylesheet" href="${path}/back/font/css/font-awesome.min.css" />
+<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+<script src="${path}/back/assets/js/bootstrap.min.js"></script>
+<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script>           	
+<script src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
+<script src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+<script src="${path}/back/assets/layer/layer.js" type="text/javascript" ></script>          
+<script src="${path}/back/assets/laydate/laydate.js" type="text/javascript"></script>
+<script src="${path}/back/js/dragDivResize.js" type="text/javascript"></script>
 <title>添加权限</title>
 </head>
 
-<body>
-<%
-String admin_uid = null;
-if(request.getParameter("uid")!=null &&!request.getParameter("uid").isEmpty()){
-	admin_uid = request.getParameter("uid");
-}
-	       	UserBiz userBiz = new UserBiz();
-			User user = new User();
-			user.setUtype(5);
-			List<User> userList1 = userBiz.selectAll(user);//保存所有的管理员
-			user.setUtype(1);
-			List<User> userList2 = userBiz.selectAll(user);
-			for (User u : userList2) {
-				userList1.add(u);
-			}
-			//查询所有的权限
-			Control control_com = new Control();//查询所有的条件对象
-			control_com.setConstate(1);//为1时是系统全部存在的功能
-			ControlBiz cBiz = new ControlBiz();
-			List<Control> conShow = cBiz.selectAll(control_com);//保存所有的权限项目
-			HashSet<String> conType = new HashSet<String>(); 
-			for(Control con : conShow){
-				if(con.getConamesecond()== null){
-					conType.add(con.getConame());
-				}
-			}
-			
-       %>
+<body onload="show()">
 <div class="Competence_add_style clearfix">
   <div class="left_Competence_add">
    <div class="title_name">添加权限</div>
@@ -68,20 +42,10 @@ if(request.getParameter("uid")!=null &&!request.getParameter("uid").isEmpty()){
      <!-- <div class="form-group"><label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 管理子栏目名称 </label>
       <div class="col-sm-9"><textarea name="权限描述" class="form-control" id="form_textarea" placeholder="" onkeyup="checkLength(this);"></textarea><span class="wordage">剩余字数：<span id="sy" style="color:Red;">10</span>字</span></div>
 	</div> -->
-    <div class="form-group"><label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 用户选择 </label>
-       <div class="col-sm-9">
-       <% for(User userCom : userList1){%>
-       <label class="middle"><input class="ace" type="checkbox" id="id-user" value="<%=userCom.getUid() %>"><span class="lbl"><%=userCom.getUname() %></span></label>
-      <%} %>
-	</div>   
-   </div>
-   	<input id="uid_damin_show" value="<%=admin_uid == null?"":admin_uid %>" style="display:none;">
-	
    <!--按钮操作-->
    <div class="Button_operation">
 				<button onclick="type_save();" class="btn btn-primary radius" type="button"><i class="fa fa-save "></i> 保存并提交</button>
-				<button onclick="type_add();"class="btn btn-secondary  btn-warning" type="button">分配权限</button>
-				<button  onclick="window.location.href='<%=application.getContextPath() %>/back/admin/admin_Competence.jsp'"class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+				<button  onclick="window.location.href='${path}/back/admin/admin_Competence.jsp'"class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
    </div>
    </div>
@@ -89,93 +53,32 @@ if(request.getParameter("uid")!=null &&!request.getParameter("uid").isEmpty()){
    <div class="Assign_style">
       <div class="title_name">权限分配</div>
       <div class="Select_Competence">
-      <%
-      		//确定父标题
-      		for(String connameFrist : conType){
-      %>
-      <dl class="permission-list">
-		<dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl"><%=connameFrist %></span></label></dt>
-		<dd>
-			<%
-				for(Control conShowType : conShow){ 
-					if(connameFrist.equals(conShowType.getConame())){
-						if(conShowType.getConamesecond()!= null){
-			%>
-		 <dl class="cl permission-list2">
-		 <dt><label class="middle"><input type="checkbox"  class="ace"  name="user-Character-0-0" id="id-disable-check" value="<%=conShowType.getConid()%>"><span class="lbl"><%=conShowType.getConamesecond() %></span></label></dt>
-         <dd>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
-		   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
-		</dd>
-		</dl>
-			<%
-				}}
-			} %>
-		</dd>
-	    </dl> 
-	    <%} %>
+      <c:forEach items="${conType}" var="type">
+	      <dl class="permission-list">
+			<dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl">${type }</span></label></dt>
+			<dd>
+				 <c:forEach items="${conShow}" var="show">
+					<c:if test="${type.equals(show.coname)}" var="flag" scope="session">
+						<c:if test="${ show.conamesecond != null}" var="flag" scope="session">
+						   <dl class="cl permission-list2">
+						   <dt><label class="middle"><input type="checkbox"  class="ace"  name="user-Character-0-0" id="id-disable-check" value="${show.conid}"><span class="lbl">${show.conamesecond}</span></label></dt>
+					       <dd>
+						   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-0"><span class="lbl">添加</span></label>
+						   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-1"><span class="lbl">修改</span></label>
+						   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-2"><span class="lbl">删除</span></label>
+						   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-3"><span class="lbl">查看</span></label>
+						   <label class="middle"><input type="checkbox" value="" class="ace" name="user-Character-0-0-0" id="user-Character-0-0-4"><span class="lbl">审核</span></label>
+						   </dd>
+						   </dl>
+						</c:if>
+					</c:if>
+				 </c:forEach>
+			</dd>
+		    </dl> 
+	   </c:forEach>
+	   </div>
       </div> 
   </div>
-</div>
-</body>
-</html>
-<script type="text/javascript">
-//初始化宽度、高度  
-$(".left_Competence_add,.Competence_add_style").height($(window).height()).val();; 
-$(".Assign_style").width($(window).width()-500).height($(window).height()).val();
-$(".Select_Competence").width($(window).width()-500).height($(window).height()-40).val();
- //当文档窗口发生改变时 触发  
-   $(window).resize(function(){
-	$(".Assign_style").width($(window).width()-500).height($(window).height()).val();
-	$(".Select_Competence").width($(window).width()-500).height($(window).height()-40).val();
-	$(".left_Competence_add,.Competence_add_style").height($(window).height()).val();;
-	});
-/*字数限制*/
-function checkLength(which) {
-	var maxChars = 200; //
-	if(which.value.length > maxChars){
-	   layer.open({
-	   icon:2,
-	   title:'提示框',
-	   content:'您出入的字数超多限制!',	
-   });
-		// 超过限制的字数了就将 文本框中的内容按规定的字数 截取
-		which.value = which.value.substring(0,maxChars);
-		return false;
-	}else{
-		var curr = maxChars - which.value.length; //250 减去 当前输入的
-		document.getElementById("sy").innerHTML = curr.toString();
-		return true;
-	}
-};
-
-/*按钮选择*/
-$(function(){
-	$(".permission-list dt input:checkbox").click(function(){
-		$(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
-	});
-	$(".permission-list2 dd input:checkbox").click(function(){
-		var l =$(this).parent().parent().find("input:checked").length;
-		var l2=$(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
-		if($(this).prop("checked")){
-			$(this).closest("dl").find("dt input:checkbox").prop("checked",true);
-			$(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
-		}
-		else{
-			if(l==0){
-				$(this).closest("dl").find("dt input:checkbox").prop("checked",false);
-			}
-			if(l2==0){
-				$(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
-			}
-		}
-		
-	});
-});
-</script>
 <script>
 var xmlhttp;
 //ajax
@@ -191,6 +94,33 @@ try {
 		}
 	}
 }
+function show(){
+	if(xmlhttp!=null){
+		// 定义请求地址
+		var url ="${path}/control.s?op=queryCom";
+		// 以 POST 方式 开启连接
+		// POST 请求 更安全（编码）  提交的数据大小没有限制
+		xmlhttp.open("POST",url,true);
+		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+		// 每次的状态改变都会调用该方法
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				// 替换空格
+				var msg = xmlhttp.responseText.replace(/\s/gi,"");
+				if(msg == 1){
+					layer.msg('暂无信息！！！', {
+						icon : 5,
+						time : 1000
+						});
+				}
+			}
+		};
+		// 发送请求
+		xmlhttp.send(null);
+	}else{
+		alert('不能创建XMLHttpRequest对象实例')
+	} 
+}
 /*添加权限*/
 function type_save(){
 	var cname = document.getElementById("form-field-name").value.trim();
@@ -204,7 +134,7 @@ function type_save(){
 	}
 	if(xmlhttp!=null){
 		// 定义请求地址
-		var url ="<%=application.getContextPath()%>/control.s?op=add&name="+cname+"&namesecond="+cnamesecond;
+		var url ="${path}/control.s?op=add&name="+cname+"&namesecond="+cnamesecond;
 		// 以 POST 方式 开启连接
 		// POST 请求 更安全（编码）  提交的数据大小没有限制
 		xmlhttp.open("POST",url,true);
@@ -264,7 +194,7 @@ function type_add(){
     }
     if(xmlhttp!=null){
 		// 定义请求地址
-		var url ="<%=application.getContextPath()%>/control.s?op=addUserControl&uid="+uid_show+"&type="+control_show;
+		var url ="${path}/control.s?op=addUserControl&uid="+uid_show+"&type="+control_show;
 		// 以 POST 方式 开启连接
 		// POST 请求 更安全（编码）  提交的数据大小没有限制
 		xmlhttp.open("POST",url,true);
@@ -293,4 +223,60 @@ function type_add(){
 		alert('不能创建XMLHttpRequest对象实例')
 	} 
 }
+</script>
+</body>
+</html>
+<script type="text/javascript">
+//初始化宽度、高度  
+$(".left_Competence_add,.Competence_add_style").height($(window).height()).val();; 
+$(".Assign_style").width($(window).width()-500).height($(window).height()).val();
+$(".Select_Competence").width($(window).width()-500).height($(window).height()-40).val();
+ //当文档窗口发生改变时 触发  
+   $(window).resize(function(){
+	$(".Assign_style").width($(window).width()-500).height($(window).height()).val();
+	$(".Select_Competence").width($(window).width()-500).height($(window).height()-40).val();
+	$(".left_Competence_add,.Competence_add_style").height($(window).height()).val();;
+	});
+/*字数限制*/
+function checkLength(which) {
+	var maxChars = 200; //
+	if(which.value.length > maxChars){
+	   layer.open({
+	   icon:2,
+	   title:'提示框',
+	   content:'您出入的字数超多限制!',	
+   });
+		// 超过限制的字数了就将 文本框中的内容按规定的字数 截取
+		which.value = which.value.substring(0,maxChars);
+		return false;
+	}else{
+		var curr = maxChars - which.value.length; //250 减去 当前输入的
+		document.getElementById("sy").innerHTML = curr.toString();
+		return true;
+	}
+};
+
+/*按钮选择*/
+$(function(){
+	$(".permission-list dt input:checkbox").click(function(){
+		$(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
+	});
+	$(".permission-list2 dd input:checkbox").click(function(){
+		var l =$(this).parent().parent().find("input:checked").length;
+		var l2=$(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
+		if($(this).prop("checked")){
+			$(this).closest("dl").find("dt input:checkbox").prop("checked",true);
+			$(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
+		}
+		else{
+			if(l==0){
+				$(this).closest("dl").find("dt input:checkbox").prop("checked",false);
+			}
+			if(l2==0){
+				$(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+			}
+		}
+		
+	});
+});
 </script>

@@ -13,66 +13,93 @@
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link
-	href="<%=application.getContextPath()%>/back/assets/css/bootstrap.min.css"
+	href="${path}/back/assets/css/bootstrap.min.css"
 	rel="stylesheet" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/css/style.css" />
+	href="${path}/back/css/style.css" />
 <link
-	href="<%=application.getContextPath()%>/back/assets/css/codemirror.css"
+	href="${path}/back/assets/css/codemirror.css"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/assets/css/ace.min.css" />
+	href="${path}/back/assets/css/ace.min.css" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/assets/css/font-awesome.min.css" />
+	href="${path}/back/assets/css/font-awesome.min.css" />
 <script
-	src="<%=application.getContextPath()%>/back/assets/js/jquery.min.js"></script>
+	src="${path}/back/assets/js/jquery.min.js"></script>
 <title>用户查看</title>
 </head>
-<body>
+<body onload="show()">
 	<div class="member_show">
-	<%
-				request.setCharacterEncoding("utf-8");
-				//新建条件对象
-				User user = new User();
-				UserBiz userBiz = new UserBiz();
-				if(request.getParameter("uid") != null && !request.getParameter("uid").isEmpty()){
-					user.setUid(Long.parseLong(request.getParameter("uid")));
-				}
-				String utype = null;
-				User userShow  = userBiz.selectSingle(user);
-				if(userShow.getUtype() == 2){
-					utype = "用户";
-				}else if(userShow.getUtype() == 3){
-					utype = "会员";
-				}else if(userShow.getUtype() == 4){
-					utype = "钻石会员";
-				}
-			%>
 		<div class="member_jbxx clearfix">
 			<img class="img"
-				src="<%=application.getContextPath()%>/back/images/user.png">
+				src="${path}/back/images/user.png">
 			<dl class="right_xxln">
 				<dt>
-					<span class=""><%=userShow.getUname() == null? "":userShow.getUname() %></span> <span class="">余额：0</span>
+					<span class="">${userMessage.uname }</span> <span class="">余额：0</span>
 				</dt>
 				<dd class="" style="margin-left: 0">这家伙很懒，什么也没有留下</dd>
 			</dl>
 		</div>
 		<div class="member_content">
 			<ul>
-				<li><label class="label_name">性别：</label><span class="name"><%=userShow.getUsex() == 1? "男":"女" %></span></li>
-				<li><label class="label_name">年龄：</label><span class="name"><%=userShow.getUage() == 0? "":userShow.getUage() %></span></li>
-				<li><label class="label_name">电话：</label><span class="name"><%=userShow.getUphone() == null? "":userShow.getUphone() %></span></li>
-				<li><label class="label_name">邮箱：</label><span class="name"><%=userShow.getUemail() == null? "":userShow.getUemail() %></span></li>
-				<li><label class="label_name">级别：</label><span class="name"><%=utype == null? "":utype %></span></li>
+				<li><label class="label_name">性别：</label><span class="name">${ userSex[userMessage.usex] }</span></li>
+				<li><label class="label_name">年龄：</label><span class="name">${ userMessage.uage}</span></li>
+				<li><label class="label_name">电话：</label><span class="name">${ userMessage.phone}</span></li>
+				<li><label class="label_name">邮箱：</label><span class="name">${ userMessage.uemail}</span></li>
+				<li><label class="label_name">级别：</label><span class="name">${ userType[userMessage.utype] }</span></li>
 				<li><label class="label_name">积分：</label><span class="name">0</span></li>
-				<li><label class="label_name">注册时间：</label><span class="name"><%=userShow.getUtime() == null? "":userShow.getUtime() %></span></li>
-				<li><label class="label_name">所在大学：</label><span class="name"><%=userShow.getUniversity() == null? "":userShow.getUniversity() %></span></li>
-				<li><label class="label_name">所在学院：</label><span class="name"><%=userShow.getUcollege() == null? "":userShow.getUcollege() %></span></li>
-				<li><label class="label_name">所在专业：</label><span class="name"><%=userShow.getUmajor() == null? "":userShow.getUmajor()%></span></li>
-				<li><label class="label_name">所在年级：</label><span class="name"><%=userShow.getUclass() == null? "":userShow.getUclass() %></span></li>
+				<li><label class="label_name">注册时间：</label><span class="name">${ userMessage.utime}</span></li>
+				<li><label class="label_name">所在大学：</label><span class="name">${ userMessage.university}</span></li>
+				<li><label class="label_name">所在学院：</label><span class="name">${ userMessage.ucollege}</span></li>
+				<li><label class="label_name">所在专业：</label><span class="name">${ userMessage.umajor}</span></li>
+				<li><label class="label_name">所在年级：</label><span class="name">${ userMessage.uclass}</span></li>
 			</ul>
 		</div>
 	</div>
+	<script type="text/javascript">
+	//定义xml对象
+	var xmlhttp;
+	// ajax 
+	try {
+		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (e) {
+			try {
+				xmlhttp = new XMLHttpRequest();
+			} catch (e) {
+			}
+		}
+	}
+		function show(){
+			var id = "param.uid";
+			if(id == ''){
+				alert("未选择用户！！！");
+				return ;
+			}
+			if (xmlhttp != null) {
+				// 定义请求地址
+				var url = "${path}/user.s?op=showUserMessage&uid="+id;
+				// 以 POST 方式 开启连接
+				// POST 请求 更安全（编码）  提交的数据大小没有限制
+				xmlhttp.open("POST", url, true);
+				// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+				// 每次的状态改变都会调用该方法
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						var msg = xmlhttp.responseText.replace(/\s/gi, "");
+						if(msg == 0){
+							alert("暂无数据");
+						}
+					}
+				};
+				// 发送请求
+				xmlhttp.send(null);
+			} else {
+				alert("不能创建XMLHttpRequest对象实例")
+			}
+		}
+	</script>
 </body>
 </html>

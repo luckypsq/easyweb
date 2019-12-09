@@ -4,19 +4,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.fabric.xmlrpc.base.Array;
 import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 import com.yc.easyweb.bean.Control;
+import com.yc.easyweb.bean.User;
 import com.yc.easyweb.bean.Usercontrol;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.ControlBiz;
+import com.yc.easyweb.biz.UserBiz;
 import com.yc.easyweb.biz.UsercontrolBiz;
 
 public class ControlServlet extends BaseServlet {
@@ -26,7 +30,25 @@ public class ControlServlet extends BaseServlet {
 
 	// 查询
 	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+		UserBiz userBiz = new UserBiz();
+		User user = new User();
+		user.setUstate(1);
+		// 存储管理员所有信息
+		user.setUtype(1);
+		List<User> adminListAll = userBiz.selectAll(user);
+		user.setUtype(5);
+		List<User> adminList = userBiz.selectAll(user);
+		if (adminList.size() != 0) {
+			for (User u : adminList) {
+				adminListAll.add(u);
+			}
+		}
+		session.setAttribute("adminExit", adminListAll);// 存储所有存在的管理员信息
+		if(adminListAll.size() ==0 ){
+			out.print(1);
+		}
 	}
 
 	// 添加
@@ -110,13 +132,77 @@ public class ControlServlet extends BaseServlet {
 
 	}
 
-	// 删除
-	public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	//administrator页面数据显示
+	public void queryAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+		UserBiz userBiz = new UserBiz();
+		User user = new User();
+		String userName = null;
+		String userPhone = null;
+		int userType = 0;
+		if(request.getParameter("name") != null && !request.getParameter("name").toString().isEmpty()){
+			user.setUname(request.getParameter("name"));
+			userName = request.getParameter("name");
+		}
+		if(request.getParameter("phone") != null && !request.getParameter("phone").toString().isEmpty()){
+			user.setUphone(request.getParameter("phone"));
+			userPhone = request.getParameter("phone");
+		}
+		if(request.getParameter("type") != null && !request.getParameter("type").toString().isEmpty()){
+			userType = Integer.parseInt(request.getParameter("type"));
+		}
+		List<User> userList1 = null;
+		List<User> userList2 = null;
+		user.setUtype(1);
+		userList2 = userBiz.selectAll(user);
+		user.setUtype(5);
+		userList1 = userBiz.selectAll(user);
+		List<User> userList3 = userBiz.selectAll(user);
+		if(userList2.size() != 0){
+			for (User user2 : userList2) {
+				userList1.add(user2);
+			}
+		}
+		if(userType == 5 ){
+			session.setAttribute("adminAllExit", userList3);// 存储所有存在的管理员信息
+		}else if(userType == 1){
+			session.setAttribute("adminAllExit", userList2);// 存储所有存在的管理员信息
+		}else if(userType == 0){
+			session.setAttribute("adminAllExit", userList1);// 存储所有存在的管理员信息
+		}
+		
+		int [] numAdmin = {0,0,0};
+		numAdmin[0] = userList2.size();
+		numAdmin[1] = userList3.size();
+		numAdmin[2] = userList1.size();
+		session.setAttribute("numAdmin", numAdmin);// 存储所有存在的管理员信息
+		session.setAttribute("userName", userName);
+		session.setAttribute("userPhone", userPhone);
+		if(userList1.size() == 0 ){
+			out.print(1);
+		}
 	}
-
-	// 更新
-	public void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	
+	//Competence页面数据显示
+	public void queryCom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+		//查询所有的权限
+		Control control_com = new Control();//查询所有的条件对象
+		control_com.setConstate(1);//为1时是系统全部存在的功能
+		ControlBiz cBiz = new ControlBiz();
+		List<Control> conShow = cBiz.selectAll(control_com);//保存所有的权限项目
+		HashSet<String> conType = new HashSet<String>(); 
+		for(Control con : conShow){
+			if(con.getConamesecond()== null){
+				conType.add(con.getConame());
+			}
+		}
+		session.setAttribute("conShow", conShow);
+		session.setAttribute("conType", conType);
+		if(conShow.size() == 0){
+			out.print(1);
+		}
 	}
 }

@@ -18,7 +18,7 @@ public class ControlBiz {
 	private ControlDao dao = new ControlDao();
 
 	// 查询所有
-	public List<Control> selectAll(Control control) throws BizException,  IOException {
+	public List<Control> selectAll(Control control) throws   IOException {
 		return dao.selectAll(control);
 	}
 	// 查询单个

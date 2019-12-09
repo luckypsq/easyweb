@@ -1,9 +1,10 @@
-<%@page import="com.yc.easyweb.dao.lyw.*"%>
+<%@page import="com.yc.easyweb.biz.EorderitemBiz"%>
+<%@page import="com.yc.easyweb.bean.Eorderitem"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 
-	CartDao dao =new CartDao();
+	EorderitemBiz biz =new EorderitemBiz();
 	String itemid = null;
 	String count=null;
 	if(request.getParameter("itemid") != null && !request.getParameter("itemid").isEmpty()){
@@ -16,8 +17,12 @@
 		out.print(0);
 		return;
 	}
+	Eorderitem eo = new Eorderitem();
+	Eorderitem eoOld = new Eorderitem();
+	eo.setCount(Integer.parseInt(count));
+	eoOld.setItemid(itemid);
 	try{
-		int code = dao.updatebj(count,itemid);
+		int code = biz.update(eo, eoOld);
 		if(code > 0){
 			out.print(1);
 		}else{

@@ -6,16 +6,20 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.Eorderitem;
+import com.yc.easyweb.bean.OrderDetial;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookBiz;
@@ -29,8 +33,126 @@ public class EorderServlet extends BaseServlet {
 	BookBiz biz = new BookBiz();
 	//查询
 	public void  query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		EorderBiz eoBiz = new EorderBiz();
+		OrderDetial orderDetial = new OrderDetial();
+		String eotime ="";
+		String eoid = "";
+		String eostate = "";
+		//获取查询条件
+		if(request.getParameter("eotime") != null && !request.getParameter("eotime").isEmpty()){
+			 eotime =request.getParameter("eotime");	
+			orderDetial.setEotime(eotime);
+		}
+		if(request.getParameter("eoid") != null && !request.getParameter("eoid").isEmpty()){
+			eoid =request.getParameter("eoid");	
+			orderDetial.setEoid(eoid);
+		}
+		if(request.getParameter("eostate") != null && !request.getParameter("eostate").isEmpty()){
+			eostate = request.getParameter("eostate");
+			orderDetial.setEostate(Integer.parseInt(eostate));
+		}
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("eotime", eotime);
+		map.put("eoid", eoid);
+		session.setAttribute("queryOrder", map);
+		List<OrderDetial> order_show = eoBiz.selectAllDetail(orderDetial);
+		for (int i = 0; i < order_show.size(); i++) {
+			 if(order_show.get(i).getEostate() == 4 || order_show.get(i).getEostate() == 5 || order_show.get(i).getEostate() == 7){
+	   				order_show.remove(i);
+	   				i--;
+			 }
+		}
+		session.setAttribute("orderDetialShow",  order_show);
+		long[] num = {0,0,0,0};
+		for(OrderDetial order_main :  order_show){
+			if(order_main.getEostate() == 1){
+				num[0] = num[0]+1;
+			}else if(order_main.getEostate() == 2){
+				num[1] = num[1]+1;
+			}else if(order_main.getEostate() == 3){
+				num[2] = num[2]+1;
+			}else if(order_main.getEostate() == 6){
+				num[3] = num[3]+1;
+			}
+		}
+		session.setAttribute("orderNum", num);
+		if(order_show.size() == 0){
+			out.print(1);
+		}
 	}
+	//查询单个订单详情
+		public void  querySingle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			PrintWriter out = response.getWriter();
+			HttpSession session = request.getSession();
+			EorderBiz eorderBiz = new EorderBiz();
+			OrderDetial order_Detial = new OrderDetial();
+			//获取查询条件
+			if(request.getParameter("eoid") != null && !request.getParameter("eoid").isEmpty()){
+				order_Detial.setEoid(request.getParameter("eoid"));
+			}
+			try {
+				OrderDetial rDetial = eorderBiz.selectSingleDetail(order_Detial);
+				if(rDetial == null){
+					out.print(1);
+					return ;
+				}
+				session.setAttribute("orderdetialshow", rDetial);
+			} catch (BizException e) {
+				e.printStackTrace();
+			}
+		}
+	//查询退货订单
+		public void  queryReorder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			PrintWriter out = response.getWriter();
+			HttpSession session = request.getSession();
+			EorderBiz eoBiz = new EorderBiz();
+			OrderDetial orderDetial = new OrderDetial();
+			String eotime ="";
+			String eoid = "";
+			String eostate = "";
+			//获取查询条件
+			if(request.getParameter("eotime") != null && !request.getParameter("eotime").isEmpty()){
+				 eotime =request.getParameter("eotime");	
+				orderDetial.setEotime(eotime);
+			}
+			if(request.getParameter("eoid") != null && !request.getParameter("eoid").isEmpty()){
+				eoid =request.getParameter("eoid");	
+				orderDetial.setEoid(eoid);
+			}
+			if(request.getParameter("eostate") != null && !request.getParameter("eostate").isEmpty()){
+				eostate = request.getParameter("eostate");
+				orderDetial.setEostate(Integer.parseInt(eostate));
+			}
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("eotime", eotime);
+			map.put("eoid", eoid);
+			session.setAttribute("queryReOrder", map);
+			List<OrderDetial> order_show = eoBiz.selectAllDetail(orderDetial);
+			for (int i = 0; i < order_show.size(); i++) {
+				 if(order_show.get(i).getEostate() != 4 && order_show.get(i).getEostate() != 5 && order_show.get(i).getEostate() != 7){
+		   				order_show.remove(i);
+		   				i--;
+				 }
+			}
+			session.setAttribute("reorderDetialShow",  order_show);
+			long[] num = {0,0,0};
+			for(OrderDetial order_main :  order_show){
+				if(order_main.getEostate() == 4){
+					num[0] = num[0]+1;
+				}else if(order_main.getEostate() == 5){
+					num[1] = num[1]+1;
+				}else if(order_main.getEostate() == 7){
+					num[2] = num[2]+1;
+				}
+			}
+			session.setAttribute("reorderNum", num);
+			if(order_show.size() == 0){
+				out.print(1);
+			}
+		}
+		
 	//添加
 	public void  add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Eorderitem eod = new Eorderitem();

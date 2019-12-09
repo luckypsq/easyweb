@@ -7,75 +7,30 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link
-	href="<%=application.getContextPath()%>/back/assets/css/bootstrap.min.css"
+	href="${path}/back/assets/css/bootstrap.min.css"
 	rel="stylesheet" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/css/style.css" />
+	href="${path}/back/css/style.css" />
 <link
-	href="<%=application.getContextPath()%>/back/assets/css/codemirror.css"
+	href="${path}/back/assets/css/codemirror.css"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/assets/css/ace.min.css" />
+	href="${path}/back/assets/css/ace.min.css" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath()%>/back/font/css/font-awesome.min.css" />
+	href="${path}/back/font/css/font-awesome.min.css" />
 <script
-	src="<%=application.getContextPath()%>/back/js/jquery-1.9.1.min.js"></script>
+	src="${path}/back/js/jquery-1.9.1.min.js"></script>
 	
 <title>管理员操作</title>
 </head>
-<body>
-<%
-request.setCharacterEncoding("utf-8");
-response.setContentType("text/html;charset=utf-8");
-	String notice = null;
-	String name_insert = null;
-	String email_insert = null;
-	String phone_insert = null;
-	String uuid = null;
-	String utype_insert=null;
-	String time = null;
-	if(request.getParameter("msg") != null && !request.getParameter("msg").toString().isEmpty()){
-		notice = request.getParameter("msg") ;
-	}
-	if(request.getParameter("name") != null && !request.getParameter("name").toString().isEmpty()){
-		name_insert = request.getParameter("name") ;
-	}
-	if(request.getParameter("email") != null && !request.getParameter("email").toString().isEmpty()){
-		email_insert = request.getParameter("email") ;
-	}
-	if(request.getParameter("phone") != null && !request.getParameter("phone").toString().isEmpty()){
-		phone_insert= request.getParameter("phone") ;
-	}
-	if(request.getParameter("uid") != null && !request.getParameter("uid").toString().isEmpty()){
-		uuid= request.getParameter("uid") ;
-	}
-	if(uuid !=null){
-		User user = new User();
-		UserBiz uBiz = new UserBiz();
-		user.setUid(Integer.parseInt(uuid));
-		User user2 = uBiz.selectSingle(user);
-		if(user2.getUphone() != null && !user2.getUphone().isEmpty()){
-			phone_insert = user2.getUphone();
-		}
-		if(user2.getUemail() != null && !user2.getUemail().isEmpty()){
-			email_insert = user2.getUemail();
-		}
-		if(user2.getUname() != null && !user2.getUname().isEmpty()){
-			name_insert = user2.getUname();
-		}
-		if(user2.getUtime()!= null && !user2.getUtime().isEmpty()){
-			time = user2.getUtime();
-		}
-	}
-%>
-<div id="add_administrator_style" class="add_menber"
-			>
-			<form action="<%=application.getContextPath()%>/user.s?op=addAdmin" method="post" id="form-admin-add">
+<body onload="show()">
+<div id="add_administrator_style" class="add_menber">
+			<form action="${path}/user.s?op=addAdmin" method="post" id="form-admin-add">
 				<div class="form-group">
 					<label class="form-label"><span class="c-red">*</span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
 					<div class="formControls">
 						<input type="text" class="input-text" placeholder="请输入1到10个以内的汉字或字符"
-							value= "<%=name_insert == null ? "":name_insert%>"id="user-name" name="user-name" datatype="*1-8" oninput="checkName();">
+							value= "${adminShowAdd.uname }"id="user-name" name="user-name" datatype="*1-8" oninput="checkName();">
 					</div>
 					<div class="col-4" >
 							<span id="vf_username" style="margin-left: 20px;color:red;"></span>
@@ -121,7 +76,7 @@ response.setContentType("text/html;charset=utf-8");
 					<label class="form-label "><span class="c-red">*</span>手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;机：</label>
 					<div class="formControls ">
 						<input type="text" class="input-text" placeholder="请输入十一位手机号"
-							value= "<%=phone_insert == null ? "":phone_insert%>"id="user-tel" name="user-tel" oninput="checkPhone();">
+							value= "${adminShowAdd.uphone }"id="user-tel" name="user-tel" oninput="checkPhone();">
 					</div>
 					<div class="col-4">
 						<span id="vf_phone"style="margin-left: 20px;color:red;"></span>
@@ -131,7 +86,7 @@ response.setContentType("text/html;charset=utf-8");
 					<label class="form-label"><span class="c-red">*</span>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
 					<div class="formControls ">
 						<input type="text" class="input-text" placeholder="@" name="email"
-							value= "<%=email_insert == null ? "":email_insert%>"id="email" datatype="e" oninput="checkEmail();">
+							value= "${adminShowAdd.uemail }"id="email" datatype="e" oninput="checkEmail();">
 					</div>
 					<div class="col-4">
 						<span id="vf_email"style="margin-left: 20px;color:red;"></span>
@@ -152,25 +107,38 @@ response.setContentType("text/html;charset=utf-8");
 					<label class="form-label">加入时间：</label>
 					<div class="formControls ">
 						<input class="inline laydate-icon" id="bdate" name="bdate"
-							type="date" style="width: 150px;" value="<%=time==null?"":time%>">
+							type="date" style="width: 150px;" value="${adminShowAdd.utime }">
 					</div>
 				</div>
 					
-				<input type="text" id="notice" style="display:none;" value="<%=notice == null ? -1:notice%>">
-				<input type="text" id="uid" style="display:none;" name="uid" value="<%=uuid == null ? -1:uuid%>">
 				<input class="btn btn-primary radius" type="submit"
 						id="Add_Administrator" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
-				<input class="btn btn-primary radius" type="button" onclick="window.location.href='<%=application.getContextPath()%>/back/admin/administrator.jsp'"
+				<input class="btn btn-primary radius" type="button" onclick="window.location.href='${path}/back/admin/administrator.jsp'"
 						id="Add_Administrator" value="&nbsp;&nbsp;返回&nbsp;&nbsp;">
 			
 			</form>
 		</div>
 		<script>
+		//定义xml对象
+		var xmlhttp;
+		// ajax 
+		try {
+			xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e) {
+				try {
+					xmlhttp = new XMLHttpRequest();
+				} catch (e) {
+				}
+			}
+		}
 		//监听
 		window.onload = function()
 		{
-			 var msg =  document.getElementById("notice").value;
-			 if (msg == 0) {
+			 var msg = "${param.msg}";
+			 if (msg == -1) {
 				alert("添加失败！！！");
 		     }else if(msg == 1){
 		    	 alert("添加成功！！！");
@@ -198,6 +166,33 @@ response.setContentType("text/html;charset=utf-8");
 		    	 alert("更新失败！！！");
 			}
 		}
+function show(){
+	var uid = "${param.uid}";
+	if (xmlhttp != null) {
+		if(uid == ""){
+			uid= -1;
+		}
+		// 定义请求地址
+		var url = "${path}/user.s?op=addAdmin&uid="+uid;
+		// 以 POST 方式 开启连接
+		// POST 请求 更安全（编码）  提交的数据大小没有限制
+		xmlhttp.open("POST", url, true);
+		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+		// 每次的状态改变都会调用该方法
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				/* var msg = xmlhttp.responseText.replace(/\s/gi, "");
+				if(msg == 0){
+					alert("暂无数据");
+				} */
+			}
+		};
+		// 发送请求
+		xmlhttp.send(null);
+	} else {
+		alert("不能创建XMLHttpRequest对象实例")
+	}
+}
 function checkName(){
 		var bpriceReg = /^[\u4e00-\u9fa5a-zA-Z]{0,15}$/;
 		var bpriceText = document.getElementById("user-name").value.trim();

@@ -83,6 +83,16 @@
 		<servlet-name>权限ControlServlet</servlet-name>
 		<url-pattern>/control.s</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>信息展示ShowServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.ShowServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>信息展示ShowServlet</servlet-name>
+		<url-pattern>/show.s</url-pattern>
+	</servlet-mapping>
+	
 	<filter>
     <filter-name>权限访问控制过滤器</filter-name>
     <filter-class>com.yc.easyweb.servlet.pq.JoinFilter</filter-class>

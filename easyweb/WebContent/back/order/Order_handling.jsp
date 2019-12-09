@@ -2,6 +2,7 @@
 <%@page import="com.yc.easyweb.bean.OrderDetial"%>
 <%@page import="com.yc.easyweb.dao.EorderDao"%>
 <%@page import="com.yc.easyweb.biz.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,79 +13,38 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link
-	href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css"
+	href="${path}/back/assets/css/bootstrap.min.css"
 	rel="stylesheet" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath() %>/back/css/style.css" />
+	href="${path}/back/css/style.css" />
 <link
-	href="<%=application.getContextPath() %>/back/assets/css/codemirror.css"
+	href="${path}/back/assets/css/codemirror.css"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+	href="${path}/back/assets/css/ace.min.css" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
-<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
-		<![endif]-->
+	href="${path}/back/font/css/font-awesome.min.css" />
 <script
-	src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
+	src="${path}/back/js/jquery-1.9.1.min.js"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+	src="${path}/back/assets/js/bootstrap.min.js"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>
+	src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
+	src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+	src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/layer/layer.js"
+	src="${path}/back/assets/layer/layer.js"
 	type="text/javascript"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js"
+	src="${path}/back/assets/laydate/laydate.js"
 	type="text/javascript"></script>
-<script src="<%=application.getContextPath() %>/back/js/lrtk.js"
+<script src="${path}/back/js/lrtk.js"
 	type="text/javascript"></script>
 <title>订单处理</title>
 </head>
-<%
-request.setCharacterEncoding("utf-8");
-response.setContentType("text/html;charset=utf-8");
-	EorderBiz eoBiz = new EorderBiz();
-	OrderDetial orderDetial = new OrderDetial();
-	String eotime =null;
-	String eoid = null;
-	String eostate = null;
-	//获取查询条件
-	if(request.getParameter("eotime") != null && !request.getParameter("eotime").isEmpty()){
-		 eotime =request.getParameter("eotime");	
-		orderDetial.setEotime(eotime);
-	}
-	if(request.getParameter("eoid") != null && !request.getParameter("eoid").isEmpty()){
-		eoid =request.getParameter("eoid");	
-		orderDetial.setEoid(eoid);
-	}
-	if(request.getParameter("eostate") != null && !request.getParameter("eostate").isEmpty()){
-		eostate = request.getParameter("eostate");
-		orderDetial.setEostate(Integer.parseInt(eostate));
-	}
-	List<OrderDetial> order_show = eoBiz.selectDetail(orderDetial);
-	int success = 0;//成功的
-	int numSend = 0;//待发货
-	int numPay= 0;//待付款
-	int num = 0;//待收货
-	for(OrderDetial order_main :  order_show){
-		if(order_main.getEostate() == 1){
-			numPay ++;
-		}else if(order_main.getEostate() == 2){
-			numSend++;	
-		}else if(order_main.getEostate() == 3){
-			num++;
-		}else if(order_main.getEostate() == 6){
-			success++;		
-		}
-	}
-%>
-<body>
+<body onload="selectDate()">
 	<div class="clearfix">
 		<div class="handling_style" id="order_hand">
 			<div id="scrollsidebar" class="left_Treeview">
@@ -102,17 +62,17 @@ response.setContentType("text/html;charset=utf-8");
 						<div class="widget-body">
 							<ul class="b_P_Sort_list">
 								<li><i class="orange  fa fa-reorder"></i><a
-									href="<%=application.getContextPath() %>/back/order/Order_handling.jsp">全部订单(<%=order_show.size() %>)
+									href="${path}/back/order/Order_handling.jsp">全部订单(${orderDetialShow.size()})
 								</a></li>
 								<li><i class="fa fa-sticky-note pink "></i> <a
-									href="<%=application.getContextPath() %>/back/order/Order_handling.jsp?eostate=6">已完成(<%=success%>)</a></li>
+									href="${path}/back/order/Order_handling.jsp?eostate=6">已完成(${orderNum[3]})</a></li>
 								<li><i class="fa fa-sticky-note pink "></i> <a
-									href="<%=application.getContextPath() %>/back/order/Order_handling.jsp?eostate=1">待付款(<%=numPay%>)</a>
+									href="${path}/back/order/Order_handling.jsp?eostate=1">待付款(${orderNum[0]})</a>
 								</li>
 								<li><i class="fa fa-sticky-note pink "></i> <a
-									href="<%=application.getContextPath() %>/back/order/Order_handling.jsp?eostate=2">待发货(<%=numSend%>)</a></li>
+									href="${path}/back/order/Order_handling.jsp?eostate=2">待发货(${orderNum[1]})</a></li>
 								<li><i class="fa fa-sticky-note pink "></i> <a
-									href="<%=application.getContextPath() %>/back/order/Order_handling.jsp?eostate=3">待收货(<%=num%>)</a></li>
+									href="${path}/back/order/Order_handling.jsp?eostate=3">待收货(${orderNum[2]})</a></li>
 							</ul>
 						</div>
 					</div>
@@ -122,10 +82,10 @@ response.setContentType("text/html;charset=utf-8");
 				<div class="search_style">
 					<ul class="search_content clearfix">
 						<li><label class="l_f">订单编号</label><input id="eoid_show"
-							value="<%=eoid == null? "" :eoid %>" type="text"  class="text_add" placeholder="输入订单编号" style="width: 250px" /></li>
+							value="${queryOrder['eoid'] }" type="text"  class="text_add" placeholder="输入订单编号" style="width: 250px" /></li>
 						<li><label class="l_f">交易时间</label><input
 							class="inline laydate-icon" id="start"
-							value="<%=eotime == null? "" :eotime %>" style="margin-left:10px;"></li>
+							value="${queryOrder['eotime'] }" style="margin-left:10px;"></li>
 						<li style="width: 90px;"><button type="button"
 								class="btn_search" onClick="selectDate()">
 								<i class="fa fa-search"></i>查询
@@ -155,69 +115,44 @@ response.setContentType("text/html;charset=utf-8");
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<%
-   		for(OrderDetial order :  order_show){
-   				String showState = null;
-				String message = null;
-		   		 if(order.getEostate() != 4 && order.getEostate() != 5 && order.getEostate() != 7){
-		   			pageContext.setAttribute("orderShow", order);
-	   				if(order.getEostate() == 1){
-	   					showState = "待付款";
-	   					message = "等待支付";
-	   				}else if(order.getEostate() == 2){
-	   					showState = "待发货";
-	   					message = "等待发获";
-	   				}else if(order.getEostate() == 3){
-	   					showState = "已发货";
-	   					message = "等待揽件";
-	   				}else if(order.getEostate() == 5){
-	   					showState = "交易失败";
-	   					message = "退款成功";
-	   				}else if(order.getEostate() == 6){
-	   					showState = "已收货";
-	   					message = "已领取包裹";
-	   				}
-				
-   	%>
-								<td><label><input type="checkbox" class="ace"><span
-										class="lbl"></span></label></td>
-								<td>${orderShow.getEoid() }</td>
-								<td class="order_product_name"><a
-									href="<%=application.getContextPath() %>/detail.jsp?bid=${orderShow.getBid()}"
-									class="product_Display">${orderShow.getBname() }</a></td>
-								<td>${orderShow.getTotal() }</td>
-								<td>${orderShow.getEotime() }</td>
-								<td>${orderShow.getEotype() }</td>
-								<td>${orderShow.getEoaddr() }</td>
-								<td>${orderShow.getUphone() }</td>
-								<td>${orderShow.getUname() }</td>
-								<td>${orderShow.getCount() }</td>
-								<td class="td-status">
-									<% if(order.getEostate() == 5) {%> <span
-									class="label label-defaunt radius"><%=showState ==null ? "" :showState %></span>
-									<%}else{ %> <span class="label label-success radius"><%=showState ==null ? "" :showState %></span>
-									<% }%>
-								</td>
-								<td><%=message ==null ? "" :message %></td>
-								<td>
-									<% if(order.getEostate() == 2) {%> <a
-									onClick="Delivery_stop(this,${orderShow.getEoid() })"
-									title="发货" class="btn btn-xs btn-success"><i
-										class="fa fa-cubes bigger-120"></i></a> <%}%> 
-									<a title="订单详细"
-									href="<%=application.getContextPath() %>/back/order/order_detailed.jsp?eoid=${orderShow.getEoid() }"
-									class="btn btn-xs btn-info order_detailed"><i
-										class="fa fa-list bigger-120"></i></a> 
-										
-										<a title="删除"
-									href="javascript:;"
-									onclick="Order_form_del(this,${orderShow.getEoid() })"
-									class="btn btn-xs btn-warning"><i
-										class="fa fa-trash  bigger-120"></i></a>
-								</td>
-							</tr>
-							<%}} %>
+							<c:forEach items="${orderDetialShow}" var="orderShow">
+								<tr>
+									<td><label><input type="checkbox" class="ace"><span
+											class="lbl"></span></label></td>
+									<td>${orderShow.eoid }</td>
+									<td class="order_product_name"><a
+										href="${path}/detail.jsp?bid=${orderShow.bid}"
+										class="product_Display">${orderShow.bname }</a></td>
+									<td>${orderShow.total }</td>
+									<td>${orderShow.eotime }</td>
+									<td>${orderShow.eotype }</td>
+									<td>${orderShow.eoaddr }</td>
+									<td>${orderShow.uphone }</td>
+									<td>${orderShow.uname}</td>
+									<td>${orderShow.count }</td>
+									<td class="td-status">
+										${eoderState[orderShow.eostate]}
+									</td>
+									<td>${eoderMessage[orderShow.eostate]}</td>
+									<td>
+										<c:if test="${orderShow.eostate == 2}" var="flag" scope="session">
+											<a onClick="Delivery_stop(this,${orderShow.eoid})"
+											title="发货" class="btn btn-xs btn-success"><i
+												class="fa fa-cubes bigger-120"></i></a>
+										</c:if>
+										<a title="订单详细"
+										href="${path}/back/order/order_detailed.jsp?eoid=${orderShow.eoid }"
+										class="btn btn-xs btn-info order_detailed"><i
+											class="fa fa-list bigger-120"></i></a> 
+											
+											<a title="删除"
+										href="javascript:;"
+										onclick="Order_form_del(this,${orderShow.eoid })"
+										class="btn btn-xs btn-warning"><i
+											class="fa fa-trash  bigger-120"></i></a>
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -292,7 +227,31 @@ try {
 function selectDate(){
 	  var eoid = document.getElementById("eoid_show").value.trim();
 	  var eotime = document.getElementById("start").value.trim();
-	  window.location.href="<%=application.getContextPath() %>/back/order/Order_handling.jsp?eoid="+eoid+"&eotime="+eotime;
+	  if(xmlhttp!=null){
+			// 定义请求地址
+			var url ="${path}/eorder.s?op=query&eoid="+eoid+"&eotime="+eotime;
+			// 以 POST 方式 开启连接
+			// POST 请求 更安全（编码）  提交的数据大小没有限制
+			xmlhttp.open("POST",url,true);
+			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+			// 每次的状态改变都会调用该方法
+			xmlhttp.onreadystatechange=function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					// 替换空格
+					var msg = xmlhttp.responseText.replace(/\s/gi,"");
+					if(msg == 1){
+						alert("暂无数据！！！");
+					}
+				}
+			};
+			// 发送请求
+			xmlhttp.send(null);
+		}else{
+			layer.msg('不能创建XMLHttpRequest对象实例', {
+				icon :2,
+				time : 1000
+				});
+		} 
 }
 $(function() { 
 	$("#order_hand").fix({
@@ -342,7 +301,7 @@ function Delivery_stop(obj,id){
 				 var eotype =  $("input[type='radio']:checked").val();
 				 if(xmlhttp!=null){
 						// 定义请求地址
-						var url ="<%=application.getContextPath()%>/eorder.s?op=update&eostate=3&eoid="+id+"&eopress="+express+"&type="+eotype;
+						var url ="${path}/eorder.s?op=update&eostate=3&eoid="+id+"&eopress="+express+"&type="+eotype;
 						// 以 POST 方式 开启连接
 						// POST 请求 更安全（编码）  提交的数据大小没有限制
 						xmlhttp.open("POST",url,true);
@@ -359,7 +318,7 @@ function Delivery_stop(obj,id){
 										});
 									 layer.close(index);  
 								}else{
-									$(obj).parents("tr").find(".td-manage").prepend('<a style=" display:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="已发货"><i class="fa fa-cubes bigger-120"></i></a>');
+									$(obj).parents("tr").find(".td-manage").prepend('<a style=" display:none" class="btn btn-xs btn-success" onClick="member_stop(this,${orderShow.eoid })" href="javascript:;" title="已发货"><i class="fa fa-cubes bigger-120"></i></a>');
 									$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发货</span>');
 									$(obj).remove();
 									layer.msg('已发货!',{icon: 6,time:1000});
@@ -386,7 +345,7 @@ function Order_form_del(obj, id) {
 	layer.confirm('确认要删除吗？', function(index) {
 		if(xmlhttp!=null){
 			// 定义请求地址
-			var url ="<%=application.getContextPath()%>/eorder.s?op=delete&eoid="+id;
+			var url ="${path}/eorder.s?op=delete&eoid="+id;
 			// 以 POST 方式 开启连接
 			// POST 请求 更安全（编码）  提交的数据大小没有限制
 			xmlhttp.open("POST",url,true);

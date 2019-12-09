@@ -5,47 +5,29 @@
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>易书网后台管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css" />
-<link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-<link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
-<link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-<!--[if IE 7]>
-		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
-		<![endif]-->
-<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
-		<![endif]-->
-<script src="<%=application.getContextPath()%>/back/assets/js/ace-extra.min.js"></script>
-<!--[if lt IE 9]>
-		<script src="assets/js/html5shiv.js"></script>
-		<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
-<!--[if !IE]> -->
-<script src="<%=application.getContextPath() %>/back/assets/js/jquery.min.js"></script>
-<!-- <![endif]-->
-<script src="<%=application.getContextPath() %>/back/assets/dist/echarts.js"></script>
-<script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+<link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="${path}/back/css/style.css" />
+<link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
+<link rel="stylesheet" href="${path}/back/assets/css/font-awesome.min.css" />
+<link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+<script src="${path}/back/assets/js/ace-extra.min.js"></script>
+<script src="${path}/back/assets/js/jquery.min.js"></script>
+<script src="${path}/back/assets/dist/echarts.js"></script>
+<script src="${path}/back/assets/js/bootstrap.min.js"></script>
 <title></title>
 </head>
-<body>
+<body onload="show()">
 	<div class="page-content clearfix">
 		<div class="alert alert-block alert-success">
 			<button type="button" class="close" data-dismiss="alert">
 				<i class="icon-remove"></i>
 			</button>
-			<%
-				//获取系统当前时间
-				SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss/SSS");
-				Date date = new Date();
-				String[] dateStr = df.format(date).split("/");
-				pageContext.setAttribute("date", dateStr);
-			%>
 			<i class="icon-ok green"></i>
 			欢迎使用
 			<strong class="green">易书网后台管理系统<small>(v1.1)</small></strong>
@@ -53,78 +35,45 @@
 		</div>
 		<div class="state-overview clearfix">
 			<div class="col-lg-3 col-sm-6">
-				<section class="panel"> <a href="<%=application.getContextPath() %>/back/user/user_list.jsp" title="商城会员">
+				<section class="panel"> <a href="${path}/back/user/user_list.jsp" title="商城会员">
 					<div class="symbol terques">
 						<i class="icon-user"></i>
 					</div>
 					<div class="value">
-					<%
-						UserBiz userBiz = new UserBiz();
-						User user = new User();
-						user.setUstate(1);
-						List<User> userList1 = userBiz.selectAll(user);
-						user.setUtype(1);
-						List<User> userList2 = userBiz.selectAll(user);
-						user.setUtype(5);
-						List<User> userList3 = userBiz.selectAll(user);
-						long userNum = userList1.size()-userList3.size()-userList2.size();
-					%>
-						<h1><%=userNum %></h1>
+						<h1>${customerExit.size()}</h1>
 						<p>书城用户</p>
 					</div>
 				</a> </section>
 			</div>
 			<div class="col-lg-3 col-sm-6">
-				<section class="panel"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp" title="商城订单">
+				<section class="panel"><a href="${path}/back/book/Products_List.jsp" title="商城订单">
 				<div class="symbol red">
 					<i class="icon-tags"></i>
 				</div>
 				<div class="value">
-				<%
-					BookBiz bookBiz = new BookBiz();
-					Book book = new Book();
-					book.setBstate(1);
-					List<Book> bookList = bookBiz.selectAll(book);
-					pageContext.setAttribute("bookList", bookList);
-				%>
-					<h1>${bookList.size() }</h1>
+					<h1>${bookExit.size() }</h1>
 					<p>书籍数量</p>
 				</div>
 				</section>
 			</div>
 			<div class="col-lg-3 col-sm-6">
-				<section class="panel"><a href="<%=application.getContextPath() %>/back/order/Orderform.jsp" title="商城订单">
+				<section class="panel"><a href="${path}/back/order/Orderform.jsp" title="商城订单">
 				<div class="symbol yellow">
 					<i class="icon-shopping-cart"></i>
 				</div>
 				<div class="value">
-				<%
-					//1.查询全部订单数
-					EorderBiz eorderBiz = new EorderBiz();
-					OrderDetial eorder = new OrderDetial();
-					List<OrderDetial> eorderList = eorderBiz.selectDetail(eorder);
-					pageContext.setAttribute("eorderList", eorderList);
-				%>
-					<h1>${eorderList.size() }</h1>
+					<h1>${eorderAll.size() }</h1>
 					<p>书籍订单</p>
 				</div>
 				</section>
 			</div>
 			<div class="col-lg-3 col-sm-6">
-				<section class="panel"><a href="<%=application.getContextPath() %>/back/order/Amounts.jsp" title="交易记录">
+				<section class="panel"><a href="${path}/back/order/Amounts.jsp" title="交易记录">
 				<div class="symbol blue">
 					<i class="icon-bar-chart"></i>
 				</div>
 				<div class="value">
-				<%
-					double num = 0.0;
-					if(eorderList.size() != 0){
-						for(OrderDetial oShow : eorderList){
-							num = num+oShow.getTotal();
-						}
-					}
-				%>
-					<h1>￥<%=num %></h1>
+					<h1>￥${eorderTotal }</h1>
 					<p>交易金额</p>
 				</div>
 				</section>
@@ -136,48 +85,25 @@
 				<div class="title_name">订单统计信息</div>
 				<table class="table table-bordered">
 					<tbody>
-					<%
-						//eorderList保存着全部订单
-						//状态1.待付款2.待发货3.已发货4.退货申请中5.退款成功6.已接收7.退货失败
-						//配送方式(1.送货上门2.自取)
-						long num1 = 0;//未处理订单eostate == 4 
-						long num2 = 0;//待发货订单eostate == 2 
-						long num3 = 0;//待结算订单eotype==1
-						long num4 = 0;//已成交订单数eostate == 6
-						long num5 = 0;//交易失败eostate == 5 
-						for(OrderDetial eo : eorderList){
-							if(eo.getEostate() == 1){
-								num3 ++;
-							}else if(eo.getEostate() == 2){
-								num2++;
-							}else if(eo.getEostate() == 4 ){
-								num1++;
-							}else if(eo.getEostate() == 6 ){
-								num4++;
-							}else if(eo.getEostate() == 5 ){
-								num5++;
-							}
-						}
-					%>
 						<tr>
 							<td class="name">未处理订单：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num1%></a>&nbsp;个</td>
+							<td class="munber"><a href="${path}/back/order/Order_handling.jsp">${eorderCount[0]}</a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">待发货订单：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num2%></a>&nbsp;个</td>
+							<td class="munber"><a href="${path}/back/order/Order_handling.jsp">${eorderCount[1]}</a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">待结算订单：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num3 %></a>&nbsp;个</td>
+							<td class="munber"><a href="${path}/back/order/Order_handling.jsp">${eorderCount[2]}</a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">已成交订单数：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp"><%=num4 %></a>&nbsp;个</td>
+							<td class="munber"><a href="${path}/back/order/Order_handling.jsp">${eorderCount[3]}</a>&nbsp;个</td>
 						</tr>
 						<tr>
 							<td class="name">交易失败：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/order/Refund.jsp"><%=num5 %></a>&nbsp;个</td>
+							<td class="munber"><a href="${path}/back/order/Refund.jsp">${eorderCount[4]}</a>&nbsp;个</td>
 						</tr>
 					</tbody>
 				</table>
@@ -186,41 +112,25 @@
 				<div class="title_name">书籍统计信息</div>
 				<table class="table table-bordered">
 					<tbody>
-					<%
-					//bookList存储所有书籍信息
-					// bstate;//状态(1可用，2.删除3.售罄)
-					long bnum1 = 0;
-					long bnum2 = 0;
-					long bnum3 = 0;
-					for(Book book1 : bookList){
-						if(book1.getBstate() == 3){
-							bnum1++;
-						}else if(book1.getBstate() == 1){
-							bnum2++;
-						}else if(book1.getBstate() == 2){
-							bnum3++;
-						}
-					}
-					%>
 						<tr>
 							<td class="name">书籍总数：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp">${bookList.size() }</a>&nbsp;个</td>
+							<td class="munber"><a href="${path}/back/book/Products_List.jsp">${bookExit.size() }</a>&nbsp;本</td>
 						</tr>
 						<tr>
 							<td class="name">售罄书籍：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp"><%=bnum1 %></a>&nbsp;个</td>
+							<td class="munber"><a href="${path}/back/book/Products_List.jsp">${bookCount[0] }</a>&nbsp;本</td>
 						</tr>
 						<tr>
 							<td class="name">上架书籍：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp"><%=bnum2 %></a>&nbsp;个</td>
+							<td class="munber"><a href="${path}/back/book/Products_List.jsp">${bookCount[1] }</a>&nbsp;本</td>
 						</tr>
 						<tr>
 							<td class="name">下架书籍：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/Products_List.jsp"><%=bnum3 %></a>&nbsp;个</td>
+							<td class="munber"><a href="${path}/back/book/Products_List.jsp">${bookCount[2] }</a>&nbsp;本</td>
 						</tr>
 						<tr>
 							<td class="name">商品评论：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/book/#">2176</a>&nbsp;条</td>
+							<td class="munber"><a href="${path}/back/book/#">2176</a>&nbsp;条</td>
 						</tr>
 
 					</tbody>
@@ -232,48 +142,35 @@
 					<tbody>
 						<tr>
 							<td class="name">注册会员登录：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">3240</a>&nbsp;次</td>
+							<td class="munber"><a href="${path}/back/#">3240</a>&nbsp;次</td>
 						</tr>
 						<tr>
 							<td class="name">新浪会员登录：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">1130</a>&nbsp;次</td>
+							<td class="munber"><a href="${path}/back/#">1130</a>&nbsp;次</td>
 						</tr>
 						<tr>
 							<td class="name">支付宝登录：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">1130</a>&nbsp;次</td>
+							<td class="munber"><a href="${path}/back/#">1130</a>&nbsp;次</td>
 						</tr>
 						<tr>
 							<td class="name">QQ会员登录：</td>
-							<td class="munber"><a href="<%=application.getContextPath() %>/back/#">1130</a>&nbsp;次</td>
+							<td class="munber"><a href="${path}/back/#">1130</a>&nbsp;次</td>
 						</tr>
 					</tbody>
 				</table>
 			</div> --%>
-			<!--<div class="t_Record">
-               <div id="main" style="height:300px; overflow:hidden; width:100%; overflow:auto" ></div>     
-              </div> -->
 			<div class="news_style">
 				<div class="title_name">最新公告</div>
 				<ul class="list">
-				<%
-					NoticeBiz noticeBiz = new NoticeBiz();
-					Notice notice = new Notice();
-					List<Notice> nList = noticeBiz.selectAll(notice);
-					if(nList.size() != 0){
-						for(int i=0; i<nList.size();i++){
-							if(i == 6){
-								break ;
-							}
-				%>
-				<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
-				<% 
-						}
-					}else{
-				%>
-				<li><i class="icon-bell red"></i>暂无新公告</li>
-				<%
-					}
-				%>
+					<c:if test="${noticeAll.size()> 0}" var="flag" scope="session">
+						<c:forEach items="${noticeAll}" var="n">
+							<li><i class="icon-bell red"></i><a href="${path}/notice-detail.jsp?nid=${n.nid}">${n.ntitle }</a></li>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${not flag}">
+					   	<li><i class="icon-bell red"></i>暂无新公告</li>
+					</c:if>
 				</ul>
 			</div>
 		</div>
@@ -281,41 +178,80 @@
 		<div class="clearfix">
 			<div class="home_btn">
 				<div>
-					<a href="<%=application.getContextPath() %>/back/book/picture-add.jsp" title="添加书籍"
+					<a href="${path}/back/book/picture-add.jsp" title="添加书籍"
 						class="btn  btn-info btn-sm no-radius"> <i class="bigger-200"><img
-							src="<%=application.getContextPath() %>/back/images/icon-addp.png" /></i>
+							src="${path}/back/images/icon-addp.png" /></i>
 						<h5 class="margin-top">添加书籍</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/book/Category_Manage.jsp" title="书籍分类"
+					</a> <a href="${path}/back/book/product-category-add.jsp" title="书籍分类"
 						class="btn  btn-primary btn-sm no-radius"> <i
-						class="bigger-200"><img src="<%=application.getContextPath() %>/back/images/icon-cpgl.png" /></i>
+						class="bigger-200"><img src="${path}/back/images/icon-cpgl.png" /></i>
 						<h5 class="margin-top">书籍分类</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/admin/admin_info.jsp" title="个人信息"
+					</a> <a href="${path}/back/admin/admin_info.jsp" title="个人信息"
 						class="btn  btn-success btn-sm no-radius"> <i
-						class="bigger-200"><img src="<%=application.getContextPath() %>/back/images/icon-grxx.png" /></i>
+						class="bigger-200"><img src="${path}/back/images/icon-grxx.png" /></i>
 						<h5 class="margin-top">个人信息</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/system/Systems.jsp" title="系统设置"
+					</a> <a href="${path}/back/system/Systems.jsp" title="系统设置"
 						class="btn  btn-info btn-sm no-radius"> <i class="bigger-200"><img
-							src="<%=application.getContextPath() %>/back/images/xtsz.png" /></i>
+							src="${path}/back/images/xtsz.png" /></i>
 						<h5 class="margin-top">系统设置</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/order/Order_handling.jsp" title="书籍订单"
+					</a> <a href="${path}/back/order/Order_handling.jsp" title="书籍订单"
 						class="btn  btn-purple btn-sm no-radius"> <i
-						class="bigger-200"><img src="<%=application.getContextPath() %>/back/images/icon-gwcc.png" /></i>
+						class="bigger-200"><img src="${path}/back/images/icon-gwcc.png" /></i>
 						<h5 class="margin-top">书籍订单</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/book/picture-add.jsp" title="添加广告"
+					</a> <a href="${path}/back/advertising/advertising.jsp" title="添加广告"
 						class="btn  btn-pink btn-sm no-radius"> <i class="bigger-200"><img
-							src="<%=application.getContextPath() %>/back/images/icon-ad.png" /></i>
+							src="${path}/back/images/icon-ad.png" /></i>
 						<h5 class="margin-top">添加广告</h5>
-					</a> <a href="<%=application.getContextPath() %>/back/notice/article_add.jsp" title="添加公告"
+					</a> <a href="${path}/back/notice/article_add.jsp" title="添加公告"
 						class="btn  btn-info btn-sm no-radius"> <i class="bigger-200"><img
-							src="<%=application.getContextPath() %>/back/images/icon-addwz.png" /></i>
+							src="${path}/back/images/icon-addwz.png" /></i>
 						<h5 class="margin-top">添加公告</h5>
 					</a>
 				</div>
 			</div>
-
 		</div>
-
 	</div>
+<script>
+//定义xml对象
+var xmlhttp;
+// ajax 
+try {
+	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+	try {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new XMLHttpRequest();
+		} catch (e) {
+		}
+	}
+}
+	//当页面打开时执行此函数
+function show(){
+		if (xmlhttp != null) {
+			// 定义请求地址
+			var url = "${path}/show.s?op=queryHome";
+			// 以 POST 方式 开启连接
+			// POST 请求 更安全（编码）  提交的数据大小没有限制
+			xmlhttp.open("POST", url, true);
+			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+			// 每次的状态改变都会调用该方法
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					/* var msg = xmlhttp.responseText.replace(/\s/gi, "");
+					if(msg == 0){
+						alert("暂无数据");
+					} */
+				}
+			};
+			// 发送请求
+			xmlhttp.send(null);
+		} else {
+			alert("不能创建XMLHttpRequest对象实例")
+		}
+	}
+</script>
 </body>
 </html>
 <script type="text/javascript">
@@ -338,12 +274,10 @@
 			"color" : "#4c8fbd",
 			"cursor" : "pointer"
 		});
-		//parent.$('.Current_page').html("<a href='javascript:void(0)' name="+herf+" class='iframeurl'>" + cnames + "</a>");
 		parent.layer.close(index);
 
 	});
 	$(document).ready(function() {
-
 		$(".t_Record").width($(window).width() - 640);
 		//当文档窗口发生改变时 触发  
 		$(window).resize(function() {
@@ -351,4 +285,3 @@
 		});
 	});
 </script>
-l>

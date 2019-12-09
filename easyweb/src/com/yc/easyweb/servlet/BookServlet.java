@@ -8,22 +8,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.google.gson.Gson;
 import com.jspsmart.upload.Files;
 import com.jspsmart.upload.SmartUpload;
 import com.jspsmart.upload.SmartUploadException;
 import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.BookType;
 import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookBiz;
+import com.yc.easyweb.biz.BookTypeBiz;
 
+import sun.invoke.util.BytecodeName;
 import sun.util.resources.no.LocaleNames_no_NO_NY;
 
 public class BookServlet extends BaseServlet {
@@ -32,8 +39,58 @@ public class BookServlet extends BaseServlet {
 
 	// 查询
 	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+		String bauthor =null;
+		String btime =null;
+		String btid = null;
+		BookBiz bookBiz = new BookBiz();
+		Book book = new Book();
+		//获取查询条件
+		if(request.getParameter("bauthor") != null && !request.getParameter("bauthor").isEmpty()){
+			bauthor =request.getParameter("bauthor");	
+			book.setBauthor(bauthor);
+		}
+		if(request.getParameter("btime") != null && !request.getParameter("btime").isEmpty() ){
+			btime =request.getParameter("btime");
+			book.setBdate(btime);
+		}
+		if (request.getParameter("btid") != null && !request.getParameter("btid").isEmpty()) {
+			btid = request.getParameter("btid");
+			book.setBtid(Long.parseLong(request.getParameter("btid")));
+		}
+		//查询类别
+		BookType bookType = new BookType();
+		bookType.setBtstate(1);
+		BookTypeBiz btBiz = new BookTypeBiz();
+		List<BookType> btList = btBiz.selectAll(bookType);
+		Map<Long,String> btType = new HashMap<Long,String>();
+		for(BookType bt : btList){
+			if(bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()){
+				btType.put(bt.getBtid(),bt.getBtnamethird());
+			}else if(bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()){
+				btType.put(bt.getBtid(),bt.getBtnamesecond());
+			}else{
+				btType.put(bt.getBtid(),bt.getBtname());
+			}
+		}
+		List<Book> bookList = bookBiz.selectAll(book);
+		session.setAttribute("bookList", bookList);//保存所有书籍信息
+		session.setAttribute("bookType", btType);//保存所有书籍类型信息
+		
+		if(bauthor != null){
+			session.setAttribute("bauthor", bauthor);
+		}else{
+			session.setAttribute("bauthor", "");
+		}
+		if(btime != null){
+			session.setAttribute("btime", btime);
+		}else{
+			session.setAttribute("btime", "");
+		}
+		if(bookList.size() <= 0){
+			out.print(0);
+		}
 	}
 
 	// 添加
@@ -231,8 +288,6 @@ public class BookServlet extends BaseServlet {
 	// 更新书本信息
 	public void updateBook(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
 		String path = this.getServletContext().getContextPath();
 		Book bookNew = new Book();
 		Book bookOld = new Book();
@@ -304,4 +359,73 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
+	// 更新书本信息页面显示(bookEdit.jsp)
+		public void editShow(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			 //获取提示信息
+			BookBiz bizBook = new BookBiz();
+			//获取id
+			Book showBook = new Book();
+			Book book2 = new Book();
+			Long bid=null ;
+			if(request.getParameter("bid")!=null && !request.getParameter("bid").isEmpty()){
+				bid=Long.parseLong(request.getParameter("bid").toString());
+				book2.setBid(bid);
+			}
+			try {
+				showBook = bizBook.selectSingle(book2);
+				session.setAttribute("showBookEdit",showBook);
+				//展示的数据
+				String showType = null;
+				//从数据库中查询所有的大学，专业等信息
+				Book book = new Book();
+				List<Book> bookList_add = bizBook.selectAll(book);
+				HashSet<String> bookUniver = new HashSet<String>();
+				HashSet<String> bookUcollage = new HashSet<String>();
+				HashSet<String> bookUmagor = new HashSet<String>();
+				for (Book bookSet : bookList_add) {
+					if (null != bookSet.getBuniversity() && !bookSet.getBuniversity().isEmpty()) {
+						bookUniver.add(bookSet.getBuniversity());
+					}
+					if (null != bookSet.getBucollege() && !bookSet.getBucollege().isEmpty()) {
+						bookUcollage.add(bookSet.getBucollege());
+					}
+					if (null != bookSet.getBumajor() && !bookSet.getBumajor().isEmpty()) {
+						bookUmagor.add(bookSet.getBumajor());
+					}
+				}
+				BookType bookType = new BookType();
+				bookType.setBtstate(1);
+				BookTypeBiz btBiz = new BookTypeBiz();
+				List<BookType> btList = btBiz.selectAll(bookType);
+				HashSet<String> btType = new HashSet<String>();
+				session.setAttribute("bookUniverEdit", bookUniver);
+				session.setAttribute("bookUcollageEdit", bookUcollage);
+				session.setAttribute("bookUmagorEdit", bookUmagor);
+				for(BookType bt : btList){
+					if(showBook.getBtid() == bt.getBtid()){
+						if(bt.getBtnamethird() != null && !bt.getBtnamethird() .isEmpty()){
+							showType =bt.getBtid()+"-"+bt.getBtnamethird();
+						}else if(bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()){
+							showType =bt.getBtid()+"-"+bt.getBtnamesecond();
+						}else{
+							showType =bt.getBtid()+"-"+bt.getBtname();
+						}
+					}
+					if(bt.getBtnamethird() != null && !bt.getBtnamethird() .isEmpty()){
+						btType.add(bt.getBtid()+"-"+bt.getBtnamethird());
+					}else if(bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()){
+						btType.add(bt.getBtid()+"-"+bt.getBtnamesecond());
+					}else{
+						btType.add(bt.getBtid()+"-"+bt.getBtname());
+					}
+				}
+				session.setAttribute("showTypeEdit", showType);
+				session.setAttribute("btTypeEdit", btType);
+			} catch (BizException e) {
+				e.printStackTrace();
+			}
+		}
 }

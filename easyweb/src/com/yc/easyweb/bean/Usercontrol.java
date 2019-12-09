@@ -3,9 +3,7 @@ package com.yc.easyweb.bean;
 import java.io.Serializable;
 
 public class Usercontrol implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private long ucon;
 	private long uid;

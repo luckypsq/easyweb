@@ -175,5 +175,37 @@ public class EorderitemDao {
 				+ " where eo.bid=b.bid and eo.uid= "+uid+" and cartstate = 1";
 		return db.selectPageForMysql(page, rows, Bought.class, sql1);
 	}
+	//查询购物车所有信息
+	public List<Bought> selectbAll(Eorderitem eorderitem) throws IOException {
+		StringBuffer sb = new StringBuffer();
+		sb.append("select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
+				+ " eo.uid,cartstate,carttime "
+				+ " from book b,eorderitem eo,eorder e  where eo.eoid=e.eoid and eo.bid=b.bid ");
+		if(eorderitem != null){
+			if(eorderitem.getUid() != 0){
+				sb.append(" and e.uid="+eorderitem.getUid());
+			}
+		}
+		sb.append("  order by  itemid desc");
+		List<Bought> list = DbHelper.selectAll(sb.toString(),null,Bought.class);
+		return  list;
+	}
+	//查询单个
+		public Bought selectSingleCart(Eorderitem eorderitem) throws IOException  {
+			StringBuffer sb = new StringBuffer();
+			sb.append("select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
+					+ " eo.uid,cartstate,carttime "
+					+ " from book b,eorderitem eo,eorder e  where eo.eoid=e.eoid and eo.bid=b.bid ");
+			if(eorderitem != null){
+				if(eorderitem.getUid() != 0){
+					sb.append(" and e.uid="+eorderitem.getUid());
+				}
+				if(eorderitem.getItemid() != null){
+					sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
+				}
+			}
+			sb.append("  order by  itemid desc");
+			return  DbHelper.selectSingle(sb.toString(),null,Bought.class);
+		}
 	//其他
 }

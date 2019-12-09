@@ -14,6 +14,17 @@ public class Result implements Serializable{
 	// 返回的数据
 	private Object data;
 	
+	public Result() {
+		super();
+	}
+	
+	public Result(String msg, int code, Object data) {
+		super();
+		this.msg = msg;
+		this.code = code;
+		this.data = data;
+	}
+
 	/**
 	 * 默认成功的结果对象
 	 * @param msg

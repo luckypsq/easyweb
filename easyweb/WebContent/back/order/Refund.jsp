@@ -5,6 +5,7 @@
 <%@page import="com.yc.easyweb.bean.OrderDetial"%>
 <%@page import="com.yc.easyweb.dao.EorderDao"%>
 <%@page import="com.yc.easyweb.biz.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,106 +14,65 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link
-	href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css"
+	href="${path}/back/assets/css/bootstrap.min.css"
 	rel="stylesheet" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath() %>/back/css/style.css" />
+	href="${path}/back/css/style.css" />
 <link
-	href="<%=application.getContextPath() %>/back/assets/css/codemirror.css"
+	href="${path}/back/assets/css/codemirror.css"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
+	href="${path}/back/assets/css/ace.min.css" />
 <link rel="stylesheet"
-	href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
-<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
-		<![endif]-->
+	href="${path}/back/font/css/font-awesome.min.css" />
 <script
-	src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-<script src="<%=application.getContextPath() %>/back/js/H-ui.js"
+	src="${path}/back/js/jquery-1.9.1.min.js"></script>
+<script src="${path}/back/js/H-ui.js"
 	type="text/javascript"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+	src="${path}/back/assets/js/bootstrap.min.js"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>
+	src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
+	src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+	src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/layer/layer.js"
+	src="${path}/back/assets/layer/layer.js"
 	type="text/javascript"></script>
 <script
-	src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js"
+	src="${path}/back/assets/laydate/laydate.js"
 	type="text/javascript"></script>
 
-<script src="<%=application.getContextPath() %>/back/js/lrtk.js"
+<script src="${path}/back/js/lrtk.js"
 	type="text/javascript"></script>
 <title>退款管理</title>
 </head>
 
-<body>
+<body onload="show()">
 	<div class="margin clearfix">
-		<%
-request.setCharacterEncoding("utf-8");
-response.setContentType("text/html;charset=utf-8");
-	EorderBiz eoBiz = new EorderBiz();
-	OrderDetial orderDetial = new OrderDetial();
-	String eotime =null;
-	String eoid = null;
-	String eostate = null;
-	//获取查询条件
-	if(request.getParameter("eotime") != null && !request.getParameter("eotime").isEmpty()){
-		 eotime =request.getParameter("eotime");	
-		orderDetial.setEotime(eotime);
-	}
-	if(request.getParameter("eoid") != null && !request.getParameter("eoid").isEmpty()){
-		eoid =request.getParameter("eoid");	
-		orderDetial.setEoid(eoid);
-	}
-	if(request.getParameter("eostate") != null && !request.getParameter("eostate").isEmpty()){
-		eostate = request.getParameter("eostate");
-		orderDetial.setEostate(Integer.parseInt(eostate));
-	}
-	List<OrderDetial> order_show = eoBiz.selectDetail(orderDetial);
-	List<OrderDetial> reSuccess = new ArrayList<OrderDetial>();//退货成功
-	List<OrderDetial> reFaile = new ArrayList<OrderDetial>();//退货失败
-	List<OrderDetial>  reWait = new ArrayList<OrderDetial>();//待退货
-	for(OrderDetial order1 :  order_show){
-		if(order1.getEostate() == 4){
-			reWait.add(order1);
-		}else if(order1.getEostate() == 5){
-			reSuccess.add(order1);
-		}else if(order1.getEostate() == 7){
-			reFaile.add(order1);
-		}
-	}
-	int orderCount = 0;
-	orderCount = reFaile.size() + reWait.size() + reSuccess.size();
-%>
 		<div id="refund_style">
 			<div class="search_style">
-
 				<ul class="search_content clearfix">
 					<li><label class="l_f">订单编号</label><input id="eoid_show"
-						value="<%=eoid == null? "" :eoid %>" type="text" class="text_add"
+						value="${queryReOrder['eoid']}" type="text" class="text_add"
 						placeholder="输入订单编号" style="width: 250px" /></li>
 					<li><label class="l_f">退款时间</label><input
-						value="<%=eotime == null? "" :eotime %>"class="inline laydate-icon" id="start" style="margin-left: 10px;"></li>
+						value="${queryReOrder['eotime']}"class="inline laydate-icon" id="start" style="margin-left: 10px;"></li>
 					<li style="width: 90px;"><button type="button"
-							class="btn_search" onClick="selectReDate()">
+							class="btn_search" onClick="show()">
 							<i class="fa fa-search"></i>查询
 						</button></li>
 				</ul>
 			</div>
 			<div class="border clearfix">
-				<span class="l_f"> <a href="<%=application.getContextPath() %>/back/order/Refund.jsp?eostate=5"
+				<span class="l_f"> <a href="${path}/back/order/Refund.jsp?eostate=5"
 					class="btn btn-success Order_form"><i
 						class="fa fa-check-square-o"></i>&nbsp;已退款订单</a> <a
-					href="<%=application.getContextPath() %>/back/order/Refund.jsp?eostate=4" class="btn btn-warning Order_form"><i
+					href="${path}/back/order/Refund.jsp?eostate=4" class="btn btn-warning Order_form"><i
 						class="fa fa-close"></i>&nbsp;未退款订单</a> <a onclick="selectOrderDelete();"
 					class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;批量删除</a>
-				</span> <span class="r_f">共：<b><%=orderCount %></b>笔
+				</span> <span class="r_f">共：<b>${reorderDetialShow.size()}</b>笔
 				</span>
 			</div>
 			<!--退款列表-->
@@ -137,63 +97,47 @@ response.setContentType("text/html;charset=utf-8");
 						</tr>
 					</thead>
 					<tbody>
-					<tr>
-					<%
-				   		for(OrderDetial order :  order_show){
-				   			String showState = null;
-								String message = null;
-					   		 if(order.getEostate() == 4 || order.getEostate() == 5 || order.getEostate() == 7){
-						   			pageContext.setAttribute("orderReShow", order);
-					   				if(order.getEostate() == 4){
-					   					showState = "待退款";
-					   					message = "等待退款";
-					   				}else if(order.getEostate() == 5){
-					   					showState = "已退款";
-					   					message = "退款成功";
-					   				}else if(order.getEostate() == 7){
-					   					showState = "退款失败";
-					   					message = "条件不符合";
-					   				}
-								
-   						%>
+						<c:forEach items="${reorderDetialShow}" var="orderReShow">
+							<tr>
 								<td><label><input type="checkbox" class="ace"><span
 										class="lbl"></span></label></td>
-								<td>${orderReShow.getEoid() }</td>
+								<td>${orderReShow.eoid }</td>
 								<td class="order_product_name"><a
-									href="<%=application.getContextPath() %>/detail.jsp?bid=${orderReShow.getBid()}"
-									class="product_Display">${orderReShow.getBname() }</a></td>
-								<td>${orderReShow.getTotal() }</td>
-								<td>${orderReShow.getEotime() }</td>
-								<td>${orderReShow.getEoaddr() }</td>
-								<td>${orderReShow.getUphone() }</td>
-								<td>${orderReShow.getUname() }</td>
-								<td>${orderReShow.getCount() }</td>
+									href="${path}/detail.jsp?bid=${orderReShow.bid}"
+									class="product_Display">${orderReShow.bname }</a></td>
+								<td>${orderReShow.total }</td>
+								<td>${orderReShow.eotime }</td>
+								<td>${orderReShow.eoaddr }</td>
+								<td>${orderReShow.uphone }</td>
+								<td>${orderReShow.uname }</td>
+								<td>${orderReShow.count }</td>
 								<td class="td-status">
-									<% if(order.getEostate() != 4) {%> <span
-									class="label label-defaunt radius"><%=showState ==null ? "" :showState %></span>
-									<%}else{ %> <span class="label label-success radius"><%=showState ==null ? "" :showState %></span>
-									<% }%>
+									<c:if test="${orderReShow.eostate !=4 }" var="flag" scope="session">
+										<span class="label label-defaunt radius">${eoderState[orderReShow.eostate]}</span>
+									</c:if>
+										
+									<c:if test="${not flag}">
+										<span class="label label-success radius">${eoderState[orderReShow.eostate]}</span>
+									</c:if>
 								</td>
-								<td><%=message ==null ? "" :message %></td>
+								<td>${eoderMessage[orderReShow.eostate]}</td>
 								<td>
-								<% if(order.getEostate() == 4) {%>
-										<a onClick="Delivery_Refund(this,${orderReShow.getEoid() })"
+									<c:if test="${orderReShow.eostate ==4 }" var="flag" scope="session">
+										<a onClick="Delivery_Refund(this,${orderReShow.eoid })"
 										title="退款" class="btn btn-xs btn-success">退款</a>
-								<%}%> 
+									</c:if>
 							   <a
 								title="退款订单详细"
-								href="<%=application.getContextPath() %>/back/order/Refund_detailed.jsp?eoid=${orderReShow.getEoid() }"
+								href="${path}/back/order/Refund_detailed.jsp?eoid=${orderReShow.eoid }"
 								class="btn btn-xs btn-info Refund_detailed">详细</a>
 								 <a
 								title="删除"
 								href="javascript:;"
-								onclick="Order_form_del(this,${orderReShow.getEoid() })"
+								onclick="Order_form_del(this,${orderReShow.eoid })"
 								class="btn btn-xs btn-warning">删除</a>
 								</td>
 							</tr>
-							<%
-					   		 	}
-					   		 } %>
+						</c:forEach>
 					</tbody>
 				</table>
 
@@ -255,7 +199,7 @@ function Delivery_Refund(obj,id){
 	layer.confirm('是否退款当前商品价格！',function(index){
 		if(xmlhttp!=null){
 			// 定义请求地址
-			var url ="<%=application.getContextPath()%>/eorder.s?op=update&eostate=5&eoid="+id;
+			var url ="${path}/eorder.s?op=update&eostate=5&eoid="+id;
 			// 以 POST 方式 开启连接
 			// POST 请求 更安全（编码）  提交的数据大小没有限制
 			xmlhttp.open("POST",url,true);
@@ -299,7 +243,7 @@ function Order_form_del(obj, id) {
 	layer.confirm('确认要删除吗？', function(index) {
 		if(xmlhttp!=null){
 			// 定义请求地址
-			var url ="<%=application.getContextPath()%>/eorder.s?op=delete&eoid="+id;
+			var url ="${path}/eorder.s?op=delete&eoid="+id;
 			// 以 POST 方式 开启连接
 			// POST 请求 更安全（编码）  提交的数据大小没有限制
 			xmlhttp.open("POST",url,true);
@@ -334,10 +278,34 @@ function Order_form_del(obj, id) {
 	});
 }	
 /*订单查询*/
-	function selectReDate(){
+	function show(){
 		  var eoid = document.getElementById("eoid_show").value.trim();
 		  var eotime = document.getElementById("start").value.trim();
-		  window.location.href="<%=application.getContextPath() %>/back/order/Refund.jsp?eoid="+eoid+"&eotime="+eotime;
+		  if(xmlhttp!=null){
+				// 定义请求地址
+				var url ="${path}/eorder.s?op=queryReorder&eoid="+eoid+"&eotime="+eotime;
+				// 以 POST 方式 开启连接
+				// POST 请求 更安全（编码）  提交的数据大小没有限制
+				xmlhttp.open("POST",url,true);
+				// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+				// 每次的状态改变都会调用该方法
+				xmlhttp.onreadystatechange=function(){
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						// 替换空格
+						var msg = xmlhttp.responseText.replace(/\s/gi,"");
+						if(msg == 1){
+							alert("暂无数据！！！");
+						}
+					}
+				};
+				// 发送请求
+				xmlhttp.send(null);
+			}else{
+				layer.msg('不能创建XMLHttpRequest对象实例', {
+					icon :2,
+					time : 1000
+					});
+			} 
 	}
 	
 	
@@ -369,7 +337,7 @@ function Order_form_del(obj, id) {
 			}
 			 if (xmlhttp != null) {
 				// 定义请求地址
-				var url = "<%=application.getContextPath()%>/eorder.s?op=delete&eoid="+sbox;
+				var url = "${path}/eorder.s?op=delete&eoid="+sbox;
 				// 以 POST 方式 开启连接
 				// POST 请求 更安全（编码）  提交的数据大小没有限制
 				xmlhttp.open("POST", url, true);
@@ -384,7 +352,7 @@ function Order_form_del(obj, id) {
 								icon : 6,
 								time : 1000
 								});
-							window.location.href='<%=application.getContextPath()%>/back/order/Refund.jsp';
+							show();
 						}else if(msg == 2){
 							sbox = "";
 							layer.msg("不能进行此操作！！！", {

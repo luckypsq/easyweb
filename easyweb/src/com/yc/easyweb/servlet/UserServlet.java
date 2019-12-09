@@ -4,17 +4,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.UserBiz;
-import com.yc.easyweb.dao.lyw.UserDaoLyw;
+import com.yc.easyweb.dao.UserDaoLyw;
 
 public class UserServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,11 +25,28 @@ public class UserServlet extends BaseServlet {
 	public void add(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, InvocationTargetException {
 		User user = new User();
+		HttpSession session = request.getSession();
 		String name = request.getParameter("username").trim();
 		String phone = request.getParameter("uphone").trim();
 		String email = request.getParameter("uemail").trim();
 		String uid = request.getParameter("uid").trim();
 		String url = "/back/user/userAdd.jsp?name=" + name + "&phone=" + phone + "&email=" + email;
+		if (!uid.equals("-1")) {
+			User user2 = new User();
+			user2.setUid(Long.parseLong(uid));
+			try {
+				User userShow = userBiz.selectSingle(user2);
+				session.setAttribute("userShowAdd", userShow);
+			} catch (BizException e) {
+				e.printStackTrace();
+			}
+		}else{
+			Map<String,String> show = new HashMap<String, String>();
+			show.put("uname", name);
+			show.put("uphone", phone);
+			show.put("uemail", email);
+			session.setAttribute("userShowAdd", show);
+		}
 		// 验证用户名 1.是否为空 2. 是否合法 3.是否存在
 		if (name != null && !name.isEmpty()) {
 			String reg = "^[\u4e00-\u9fa5a-zA-Z]{0,20}$";
@@ -234,6 +252,29 @@ public class UserServlet extends BaseServlet {
 		String email = request.getParameter("email").trim();
 		String type = request.getParameter("admin-role").trim();
 		String uid = request.getParameter("uid").trim();
+		String utime = request.getParameter("bdate").trim();
+		int message = Integer.parseInt(uid);
+		HttpSession session = request.getSession();
+		session.setAttribute("uidAdd", message);
+		if (!uid.equals("-1")) {
+			User user2 = new User();
+			user2.setUid(Long.parseLong(uid));
+			try {
+				User userShow = userBiz.selectSingle(user2);
+				session.setAttribute("adminShowAdd", userShow);
+			} catch (BizException e) {
+				e.printStackTrace();
+			}
+		}else{
+			Map<String,String> show = new HashMap<String, String>();
+			show.put("uname", name);
+			show.put("usex", sex);
+			show.put("uphone", phone);
+			show.put("uemail", email);
+			show.put("utype", type);
+			show.put("utime", utime);
+			session.setAttribute("adminShowAdd", show);
+		}
 		User user = new User();
 		String url = "/back/admin/userAdd.jsp?name=" + name + "&phone=" + phone + "&email=" + email;
 		// 验证用户名 1.是否为空 2. 是否合法 3.是否存在
@@ -313,6 +354,10 @@ public class UserServlet extends BaseServlet {
 		if(sex!= null && !sex.isEmpty()){
 			user.setUsex(Integer.parseInt(sex));
 		}
+		//时间
+		if(utime != null){
+			user.setUtime(utime);
+		}
 		//级别
 		if(type!= null && !type.isEmpty()){
 			user.setUtype(Integer.parseInt(type));
@@ -348,7 +393,7 @@ public class UserServlet extends BaseServlet {
 			if (i > 0) {
 				url = url + "&msg=" + 1;
 			} else {
-				url = url + "&msg=" + 0;
+				url = url + "&msg=" + -1;
 			}
 			request.getRequestDispatcher(url).forward(request, response);
 		}  catch (SQLException e) {
@@ -359,6 +404,7 @@ public class UserServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 	}
+	
 	public void remember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user =(User)request.getSession().getAttribute("loginedUser");
 		String uminname = request.getParameter("uminname");
@@ -384,4 +430,68 @@ public class UserServlet extends BaseServlet {
 			e.printStackTrace();
 		}
     }
+	
+	//个人信息展示
+	public void showUserMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User user = new User();
+		UserBiz userBiz = new UserBiz();
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+		if(request.getParameter("uid") != null && !request.getParameter("uid").isEmpty()){
+			user.setUid(Long.parseLong(request.getParameter("uid")));
+		}
+		try {
+			User userShow  = userBiz.selectSingle(user);
+			session.setAttribute("userMessage", userShow);
+			if(userShow.getUid() == 0){
+				out.print(0);
+			}
+		} catch (BizException e) {
+			e.printStackTrace();
+		}
+	}
+	public void queryUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+	
+		String uname = "";//姓名
+		String phone = "";//电话
+		String email = "";//邮箱
+		//查询所有的用户
+		User userShow = new User();//定义显示的用户条件对象
+		UserBiz userBiz = new UserBiz();//user事务操作类
+		//获取查询条件
+		if(request.getParameter("username") != null && !request.getParameter("username").isEmpty()){
+			uname = request.getParameter("username");
+			userShow.setUname(uname);
+		}
+		if(request.getParameter("phone") != null && !request.getParameter("phone").isEmpty()){
+			phone = request.getParameter("phone");
+			userShow.setUphone(phone);
+		}
+		if(request.getParameter("email") != null && !request.getParameter("email").isEmpty()){
+			email = request.getParameter("email");
+			userShow.setUemail(email);
+		}
+		Map<String, String> map  = new HashMap<String, String>();
+		map.put("uname", uname);
+		map.put("uphone", phone);
+		map.put("uemail", email);
+		session.setAttribute("userQuery", map);
+		//查询数据
+		List<User> showList = userBiz.selectAll(userShow);//数据库所有的用户以及管理员
+		//剔除管理员
+		for(int i =0;i<showList.size();i++){
+			if(showList.get(i).getUtype() ==1 || showList.get(i).getUtype() ==0 ){
+				showList.remove(i);//将元素移出
+				//此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
+				i--;
+			}
+		}
+		session.setAttribute("userListShow", showList);
+		if(showList.size() == 0){
+			out.print(1);
+		}
+	}
+	
 }

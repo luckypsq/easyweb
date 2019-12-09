@@ -1,6 +1,5 @@
 <%@page import="com.yc.easyweb.bean.*"%>
 <%@page import="java.util.*"%>
-<%@page import="com.yc.easyweb.dao.lyw.*"%>
 <%@page import="com.yc.easyweb.biz.*"%>
 <%@page import="com.yc.easyweb.common.DbHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -145,7 +144,7 @@
 								if(eorder2.getEoid() != null){
 									orderBuy.setEoid(eorder2.getEoid());
 								}
-								List<OrderDetial> buy_show = eoBuyBiz.selectDetail(orderBuy);
+								List<OrderDetial> buy_show = eoBuyBiz.selectAllDetail(orderBuy);
 								String state = null;
 								for(OrderDetial bought:buy_show){
 									switch (bought.getEostate()) {

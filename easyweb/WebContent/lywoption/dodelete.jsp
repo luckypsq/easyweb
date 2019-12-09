@@ -1,11 +1,9 @@
-<%@page import="com.yc.easyweb.dao.lyw.*"%>
+<%@page import="com.yc.easyweb.dao.lyw.CartDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
-	CartDao dao =new CartDao();
+	CartDao dao = new CartDao();
 	String itemid = request.getParameter("itemid");
-	System.out.println(itemid);
 	try{
 		int code = dao.updateall(itemid);
 		// json 格式字符串

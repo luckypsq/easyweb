@@ -17,7 +17,6 @@ import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookBiz;
 import com.yc.easyweb.biz.EorderitemBiz;
-import com.yc.easyweb.dao.lyw.CartDao;
 
 public class EorderitemServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;

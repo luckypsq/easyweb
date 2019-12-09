@@ -4,6 +4,7 @@
 <%@page import="com.yc.easyweb.bean.OrderDetial"%>
 <%@page import="com.yc.easyweb.dao.EorderDao"%>
 <%@page import="com.yc.easyweb.biz.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -11,56 +12,28 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
-        <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
-		<![endif]-->
-		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script> 
-        <script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.js"></script>      	
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/jquery.easy-pie-chart.min.js"></script>
-        <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
+ <link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${path}/back/css/style.css"/>       
+        <link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="${path}/back/font/css/font-awesome.min.css" />
+		<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+        <script src="${path}/back/assets/js/bootstrap.min.js"></script>
+		<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script> 
+        <script type="text/javascript" src="${path}/back/js/H-ui.js"></script>      	
+		<script src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="${path}/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="${path}/back/assets/laydate/laydate.js" type="text/javascript"></script>
+        <script src="${path}/back/assets/js/jquery.easy-pie-chart.min.js"></script>
+        <script src="${path}/back/js/lrtk.js" type="text/javascript" ></script>
 <title>订单详细</title>
 </head>
 
-<body>
+<body onload="show()">
 <div class="margin clearfix">
-<%
-	request.setCharacterEncoding("utf-8");
-	response.setContentType("text/html;charset=utf-8");
-	EorderBiz eorderBiz = new EorderBiz();
-	OrderDetial order_Detial = new OrderDetial();
-	//获取查询条件
-	if(request.getParameter("eoid") != null && !request.getParameter("eoid").isEmpty()){
-		order_Detial.setEoid(request.getParameter("eoid"));
-	}
-	List<OrderDetial> orderShow = eorderBiz.selectDetail(order_Detial);
-	String type = null;
-	if(orderShow.get(0).getEostate() == 1){
-		type = "待付款";
-		}else if(orderShow.get(0).getEostate() == 2){
-			type = "待发货";
-		}else if(orderShow.get(0).getEostate() == 3){
-			type = "已发货";
-		}else if(orderShow.get(0).getEostate() == 5){
-			type = "交易失败";
-		}else if(orderShow.get(0).getEostate() == 6){
-			type = "已收货";
-		}
-	OrderDetial order_Detial1 = orderShow.get(0);
-	pageContext.setAttribute("orderdetialshow",order_Detial1 );
-%>
 <div class="Order_Details_style">
-<div class="Numbering">订单编号:<b>${orderdetialshow.getEoid() }</b></div></div>
+<div class="Numbering">订单编号:<b>${orderdetialshow.eoid }</b></div></div>
  <div class="detailed_style">
  <!--收件人信息-->
     <div class="Receiver_style">
@@ -68,11 +41,11 @@
      <div class="Info_style clearfix">
         <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 收件人姓名： </label>
-         <div class="o_content">${orderdetialshow.getUname() }</div>
+         <div class="o_content">${orderdetialshow.uname }</div>
         </div>
         <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 收件人电话： </label>
-         <div class="o_content">${orderdetialshow.getUphone() }</div>
+         <div class="o_content">${orderdetialshow.uphone }</div>
         </div>
          <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 收件地邮编： </label>
@@ -80,7 +53,7 @@
         </div>
          <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 收件地址： </label>
-         <div class="o_content">${orderdetialshow.getEoaddr() }</div>
+         <div class="o_content">${orderdetialshow.eoaddr}</div>
         </div>
      </div>
     </div>
@@ -89,13 +62,10 @@
     <div class="title_name">产品信息</div>
     <div class="Info_style clearfix">
       <div class="product_info clearfix">
-      <a href="<%=application.getContextPath() %>/detail.jsp?bid=${orderdetialshow.getBid() }" class="img_link"><img src="${orderdetialshow.getBimg() }" /></a>
+      <a href="${path}/detail.jsp?bid=${orderdetialshow.bid }" class="img_link"><img src="${orderdetialshow.bimg }" /></a>
       <span>
-      <a href="<%=application.getContextPath() %>/detail.jsp?bid=${orderdetialshow.getBid() }" class="name_link">${orderdetialshow.getBname() }</a>
-      <!-- <b>也称为姬娜果，饱满色艳，个头小</b>
-      <p>规格：500g/斤</p>
-      <p>价格：<b class="price"><i>￥</i>56</b></p>   -->
-       <p>数量：${orderdetialshow.getCount() }本</p>
+      <a href="${path}/detail.jsp?bid=${orderdetialshow.bid }" class="name_link">${orderdetialshow.bname }</a>
+       <p>数量：${orderdetialshow.count }本</p>
       <p>状态：<i class="label label-success radius">有货</i></p>   
       </span>
       </div>
@@ -106,26 +76,33 @@
      <div class="Info_style clearfix">
       <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 支付方式： </label>
-         <div class="o_content">${orderdetialshow.getEopayname() }</div>
+         <div class="o_content">${orderdetialshow.eopayname }</div>
         </div>
         <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 支付状态： </label>
-         <div class="o_content"><%=type == null ? "" :type %></div>
+         <div class="o_content">
+         	<c:if test="${orderdetialshow.eostate ==  1}" var="flag" scope="session">
+         		<c:out value="未支付"></c:out>
+			</c:if>
+			<c:if test="${not flag}">
+				<c:out value="已支付"></c:out>
+			</c:if>
+         </div>
         </div>
         <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 订单生成日期： </label>
-         <div class="o_content">${orderdetialshow.getEotime() }</div>
+         <div class="o_content">${orderdetialshow.eotime}</div>
         </div>
          <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 快递名称： </label>
-         <div class="o_content">${orderdetialshow.getEoespress() }</div>
+         <div class="o_content">${orderdetialshow.eoespress }</div>
         </div>
         <!--  <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 发货日期： </label>
          <div class="o_content">2016-7-19</div>
         </div> -->
         </div>
-      <div class="Total_m_style"><span class="Total">总数：<b>${orderdetialshow.getCount() }</b></span><span class="Total_price">总价：<b>${orderdetialshow.getTotal() }</b>元</span></div>
+      <div class="Total_m_style"><span class="Total">总数：<b>${orderdetialshow.count }</b></span><span class="Total_price">总价：<b>${orderdetialshow.total() }</b>元</span></div>
     </div>
     
     <!--物流信息-->
@@ -143,7 +120,7 @@
                                 <span class="before"></span><span class="after"></span><i class="mh-icon mh-icon-new"></i></li>
                             <li>
                                 <p>2015-04-28 07:38:44</p>
-                                <p>深圳市南油速递营销部安排投递（投递员姓名：蔡远发<a href="<%=application.getContextPath() %>/back/tel:18718860573">18718860573</a>;联系电话：）</p>
+                                <p>深圳市南油速递营销部安排投递（投递员姓名：蔡远发<a href="${path}/back/tel:18718860573">18718860573</a>;联系电话：）</p>
                                 <span class="before"></span><span class="after"></span></li>
                             <li>
                                 <p>2015-04-28 05:08:00</p>
@@ -163,7 +140,7 @@
                                 <span class="before"></span><span class="after"></span></li>
                             <li>
                                 <p>2015-04-26 17:12:00</p>
-                                <p>泉州市速递物流分公司南区电子商务业务部已收件，（揽投员姓名：王晨光;联系电话：<a href="<%=application.getContextPath() %>/back/tel:13774826403">13774826403</a>）</p>
+                                <p>泉州市速递物流分公司南区电子商务业务部已收件，（揽投员姓名：王晨光;联系电话：<a href="${path}/back/tel:13774826403">13774826403</a>）</p>
                                 <span class="before"></span><span class="after"></span></li>
                         </ul>
                     </div>
@@ -173,13 +150,50 @@
     </div>
     </div>
 <div class="Button_operation">
-				<button onclick="window.location.href='<%=application.getContextPath() %>/back/order/Order_handling.jsp'" class="btn btn-primary radius" type="button"><i class="icon-save "></i>返回上一步</button>
-				
-			<!-- 	<button onclick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-		 -->	</div>
-            
-            
+	<button onclick="window.location.href='${path}/back/order/Order_handling.jsp'" class="btn btn-primary radius" type="button"><i class="icon-save "></i>返回上一步</button>
+</div>
  </div>
 </div>
+<script>
+//定义xml对象
+var xmlhttp;
+// ajax 
+try {
+	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+	try {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new XMLHttpRequest();
+		} catch (e) {
+		}
+	}
+}
+	function show(){
+		var eoid = "${param.eoid}";
+		if (xmlhttp != null) {
+			// 定义请求地址
+			var url = "${path}/eorder.s?op=querySingle&eoid="+eoid;
+			// 以 POST 方式 开启连接
+			// POST 请求 更安全（编码）  提交的数据大小没有限制
+			xmlhttp.open("POST", url, true);
+			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+			// 每次的状态改变都会调用该方法
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					/* var msg = xmlhttp.responseText.replace(/\s/gi, "");
+					if(msg == 0){
+						alert("暂无数据");
+					} */
+				}
+			};
+			// 发送请求
+			xmlhttp.send(null);
+		} else {
+			alert("不能创建XMLHttpRequest对象实例")
+		}
+	}
+</script>
 </body>
 </html>

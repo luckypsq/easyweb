@@ -136,7 +136,7 @@
 		book.setBtid(id);
 		int iPage = paramNumber == null ? 1 : Integer.parseInt(paramNumber);
 		BookBiz bookBiz = new BookBiz();
-		Page<Book> pPage = bookBiz.bookPage(iPage, 8, book);
+		Page<Book> pPage = bookBiz.bookPage(iPage, 12, book);
 		//教材区书籍展示
 		%>
 		<div class="list fl">
