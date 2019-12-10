@@ -88,6 +88,10 @@ public class UserDao {
 				if (user.getUmajor() != null) {
 					sb.append(" and umajor like '%" + user.getUmajor() + "%'");
 				}
+				//” œ‰
+				if (user.getUemail()!= null) {
+					sb.append(" and uemail like '%" + user.getUemail() + "%'");
+				}
 				if (user.getUstate() != 0) {
 					sb.append(" and ustate = " + user.getUstate());
 				}
@@ -219,26 +223,12 @@ public class UserDao {
 		
 		
 		sb.append(" where 1=1 ");
-		if (userOld.getUminname() != null) {
-			sb.append(" and uminname ='" + userOld.getUminname() + "'");
-		}
+		
 		if (userOld.getUname() != null) {
 			sb.append(" and uname ='" + userOld.getUname() + "'");
 		}
-		if (userOld.getUpassword() != null) {
-			sb.append(" and upassword ='" + userOld.getUpassword() + "'");
-		}
-		if (userOld.getUstate() != 0) {
-			sb.append(" and ustate = " + userOld.getUstate());
-		}
-		if (userOld.getUtype() != 0) {
-			sb.append(" and utype = " + userOld.getUtype());
-		}
 		if (userOld.getUid() != 0) {
 			sb.append(" and uid = " + userOld.getUid());
-		}
-		if (userOld.getUsex() != 0) {
-			sb.append(" and usex = " + userOld.getUsex());
 		}
 		return DbHelper.update(sb.toString(), null);
 	}

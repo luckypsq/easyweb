@@ -10,9 +10,12 @@ import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.Bought;
 import com.yc.easyweb.bean.Eorderitem;
+import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookBiz;
@@ -23,7 +26,22 @@ public class EorderitemServlet extends BaseServlet {
 	EorderitemBiz eBiz = new EorderitemBiz();
 	//查询
 	public void  query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		String pageParam = request.getParameter("Page");
+		int ipage = pageParam == null ? 1 : Integer.parseInt(pageParam);
+		// 每页行数
+		int rows = 6;	
+		User user =(User)session.getAttribute("loginedUser");
+		long uid=user.getUid();
+		EorderitemBiz eorderitemBiz = new EorderitemBiz();
+		Bought bou = new Bought();
+		Page<Bought>  Page = eorderitemBiz.ePage(ipage, rows, bou, uid);
+		session.setAttribute("cartDate", Page.getData());
+		session.setAttribute("cartPage", Page);
+		if(Page.getData().size() == 0){
+			out.print(-1);
+		}
 	}
 	//添加
 	public void  add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -87,10 +105,65 @@ public class EorderitemServlet extends BaseServlet {
 	}
 	//删除
 	public void  delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Eorderitem eorderitem = new Eorderitem();
+		PrintWriter out = response.getWriter();
+		if(request.getParameter("itemid") != null && !request.getParameter("itemid").isEmpty()){
+			eorderitem.setItemid(request.getParameter("itemid"));
+		}
+			
+			try {
+				int code = eBiz.delete(eorderitem);
+				if(code > 1){
+					out.print(1);
+				}else{
+					out.print(-1);
+				}
+			} catch (SQLException e) {
+				out.print(-1);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BizException e) {
+				out.print(-1);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
+	
+	
 	//更新
 	public void  update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
 		
+		String itemid = null;
+		String count=null;
+		if(request.getParameter("itemid") != null && !request.getParameter("itemid").isEmpty()){
+			itemid = request.getParameter("itemid");
+		}
+		if(request.getParameter("count") != null && !request.getParameter("count").isEmpty()){
+			count=request.getParameter("count");
+		}
+		if(count == null || itemid == null){
+			out.print(2);
+			return;
+		}
+		Eorderitem eo = new Eorderitem();
+		Eorderitem eoOld = new Eorderitem();
+		eo.setCount(Integer.parseInt(count));
+		eoOld.setItemid(itemid);
+		session.setAttribute("cartCount", count);
+		try{
+			int code = eBiz.update(eo, eoOld);
+			if(code > 0){
+				out.print(1);
+			}else{
+				out.print(-1);
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

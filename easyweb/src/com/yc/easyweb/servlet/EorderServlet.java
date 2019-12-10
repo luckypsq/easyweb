@@ -16,15 +16,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.Bought;
 import com.yc.easyweb.bean.Eorder;
 import com.yc.easyweb.bean.Eorderitem;
 import com.yc.easyweb.bean.OrderDetial;
+import com.yc.easyweb.bean.Page;
+import com.yc.easyweb.bean.PayType;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookBiz;
 import com.yc.easyweb.biz.EorderBiz;
 import com.yc.easyweb.biz.EorderitemBiz;
+import com.yc.easyweb.biz.PayTypeBiz;
+
+import sun.reflect.generics.tree.BottomSignature;
 
 public class EorderServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
@@ -165,6 +172,15 @@ public class EorderServlet extends BaseServlet {
 		User user = null;
 		long count = 0;
 		long bid = 0;
+		HttpSession session = request.getSession();
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("eoaddr", request.getParameter("eoaddr"));
+		map.put("uname", request.getParameter("uname"));
+		map.put("uphone", request.getParameter("uphone"));
+		map.put("count", request.getParameter("count"));
+		map.put("bid", request.getParameter("bid"));
+		map.put("itemid", request.getParameter("itemid"));
+		session.setAttribute("eorderMessage", map);
 		if(request.getSession().getAttribute("loginedUser") != null ){
 			user = (User)request.getSession().getAttribute("loginedUser");
 		}else{
@@ -349,6 +365,11 @@ public class EorderServlet extends BaseServlet {
 				if (eoid.length == 1) {
 					if (!eoid[0].isEmpty() && eoid[0] != null) {
 						eorder1.setEoid(eoid[0]);
+						Eorder eorder2 = eorderBiz.selectSingle(eorder1);
+						if(eorder2.getEostate() != 5 && eorder2.getEostate() != 6){
+							out.print(2);
+							return;
+						}
 						int i= eorderBiz.delete(eorder1);
 						if(i > 0 ){
 							out.print(1);
@@ -362,6 +383,11 @@ public class EorderServlet extends BaseServlet {
 					eorder = new Eorder();
 					if (!string.isEmpty() && string != null) {
 						eorder.setEoid(string);
+						Eorder eorder2 = eorderBiz.selectSingle(eorder);
+						if(eorder2.getEostate() != 5 && eorder2.getEostate() != 6){
+							out.print(2);
+							return;
+						}
 						list.add(eorder);
 					}
 				}
@@ -424,5 +450,74 @@ public class EorderServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	//用户订单查询
+	public void  queryUserOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+
+		String pageParam = request.getParameter("Page");
+		int ipage = pageParam == null ? 1 : Integer.parseInt(pageParam);
+		// 每页行数
+		int rows = 3;	
+		User user =(User)session.getAttribute("loginedUser");
+		long uid=user.getUid();
+		EorderBiz eorderBiz = new EorderBiz();
+		Eorder eorder = new Eorder();
+		if(uid != 0){
+			eorder.setUid(uid);
+		}
+		Page<Eorder> Page = eorderBiz.eorderPage(ipage, rows, eorder);
+		OrderDetial orderBuy = new OrderDetial();
+		List<OrderDetial> orderDetials = eorderBiz.selectAllDetail(orderBuy);
+		session.setAttribute("allOrder", orderDetials);
+		session.setAttribute("userOrder", Page.getData());
+		session.setAttribute("userOrderPage", Page);
+		if(Page.getData().size() == 0){
+			out.print(-1);
+		}
+	}
+	//用户填写订单信息展示
+	public void  showEorder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		BookBiz biz = new BookBiz();
+
+		String bid = request.getParameter("bid");
+		String itemid = request.getParameter("itemid");
+		try {
+			PayTypeBiz payTypeBiz = new PayTypeBiz();
+			PayType payType = new PayType();
+			List<PayType> payTypeList = payTypeBiz.selectAll(payType);
+			session.setAttribute("payType", payTypeList);
+			if(bid != null && !bid.isEmpty()){
+				Book book = new Book();
+				book.setBid(Long.parseLong(bid));
+				Book book2 = biz.selectSingle(book);
+				if(book2.getBid() != 0){
+					session.setAttribute("eorderBook", book2);
+					session.setAttribute("totalBook", book2.getBprice());
+				}else{
+					out.print(-1);
+				}
+			}else if(itemid != null && !itemid.isEmpty()){
+				EorderitemBiz biz2 = new EorderitemBiz();
+				Bought bought1 = new Bought();
+				bought1.setItemid(itemid);
+				Bought bought = biz2.selectSingleCart(bought1);
+				if(bought.getBid() != 0){
+					session.setAttribute("eorderBook", bought);
+					session.setAttribute("totalBook", bought.getTotal());
+				}else{
+					out.print(-1);
+				}
+			}else{
+				out.print(2);
+			}
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

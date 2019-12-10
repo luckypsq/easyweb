@@ -79,7 +79,7 @@
 								break ;
 							}
 				%>
-				<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
+				<li><i class="icon-bell red"></i><a href="${path}/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
 				<% 
 						}
 					}else{

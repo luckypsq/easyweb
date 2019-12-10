@@ -1,4 +1,4 @@
-package com.yc.easyweb.servlet.pq;
+package com.yc.easyweb.servlet;
 
 import java.io.IOException;
 import javax.servlet.Filter;

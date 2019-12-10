@@ -10,11 +10,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-	<link rel="stylesheet" href="<%=application.getContextPath() %>/css/index.css"/>
-	<link rel="stylesheet" href="<%=application.getContextPath() %>/css/swiper3.07.min.css"/>
-	<script src="<%=application.getContextPath() %>/js/jquery-1.11.2.min.js"></script>
-	<script src="<%=application.getContextPath() %>/js/main.js"></script>
-	<script src="<%=application.getContextPath() %>/js/koala.min.1.5.js"></script>
+	<link rel="stylesheet" href="${path}/css/index.css"/>
+	<link rel="stylesheet" href="${path}/css/swiper3.07.min.css"/>
+	<script src="${path}/js/jquery-1.11.2.min.js"></script>
+	<script src="${path}/js/main.js"></script>
+	<script src="${path}/js/koala.min.1.5.js"></script>
 	<style>
 		.swiper-container {
 			width: 1100px;
@@ -27,33 +27,33 @@
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
 <div class="banner container">
-	<img src="<%=application.getContextPath() %>/images/notice.png" alt="" style="width: 1200px;height: auto;"/>
+	<img src="${path}/images/notice.png" alt="" style="width: 1200px;height: auto;"/>
 	<div class="clearfix">
 		<div class="about fl">
 			<h1>易书网</h1>
-			<img src="<%=application.getContextPath() %>/images/logo9.png" alt=""/>
+			<img src="${path}/images/logo9.png" alt=""/>
 			<p><span>易书网</span>是一个网上书商城。力求打造网上最大的中文图书借换系统二手书交换系统力求打造是是网上最大的中文图书借换系统二手书交换系统。易书网来了,让爱书的你花极小的支出(1到2元)就可以读到你喜欢的书且没有后顾之忧哦！</p>
 		</div>
 		<div id="fsD1" class="focus fl">
 			<div id="D1pic1" class="fPic">
 				<div class="fcon">
-					<a href="javascript:void();"><img src="<%=application.getContextPath() %>/images/focus1.jpg" /></a>
+					<a href="javascript:void();"><img src="${path}/images/focus1.jpg" /></a>
 					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
 				</div>
 				<div class="fcon">
-					<a href="javascript:void();"><img src="<%=application.getContextPath() %>/images/focus2.jpg" /></a>
+					<a href="javascript:void();"><img src="${path}/images/focus2.jpg" /></a>
 					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
 				</div>
 				<div class="fcon">
-					<a href="javascript:void();"><img src="<%=application.getContextPath() %>/images/focus3.jpg" /></a>
+					<a href="javascript:void();"><img src="${path}/images/focus3.jpg" /></a>
 					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
 				</div>
 				<div class="fcon">
-					<a href="javascript:void();"><img src="<%=application.getContextPath() %>/images/focus4.jpg" /></a>
+					<a href="javascript:void();"><img src="${path}/images/focus4.jpg" /></a>
 					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
 				</div>
 				<div class="fcon">
-					<a href="javascript:void();"><img src="<%=application.getContextPath() %>/images/focus5.jpg" /></a>
+					<a href="javascript:void();"><img src="${path}/images/focus5.jpg" /></a>
 					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
 				</div>
 			</div>
@@ -80,7 +80,7 @@
 								break ;
 							}
 				%>
-				<li><a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
+				<li><a href="${path}/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
 				<% 
 						}
 					}else{
@@ -92,7 +92,7 @@
 			</ul>
 			<h2>新手帮助</h2>
 			<ul>
-				<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">如何买书</a></li>
+				<li><a href="${path}/lhoption/help.jsp">如何买书</a></li>
 			</ul>
 		</div>
 	</div>
@@ -142,9 +142,9 @@
 		<div class="list fl">
 			<ul class="one">
 			<%for(BookType t :list ){ %>
-				<li><a href="<%=application.getContextPath() %>/lhoption/index.jsp?btid=<%=t.getBtid() %>"><%=t.getBtnamesecond() %></a>
+				<li><a href="${path}/lhoption/index.jsp?btid=<%=t.getBtid() %>"><%=t.getBtnamesecond() %></a>
 					<ul class="two">
-						<li><a href="<%=application.getContextPath() %>/lywoption/list.jsp"><%=t.getBtnamethird() %></a></li>
+						<li><a href="${path}/lywoption/list.jsp"><%=t.getBtnamethird() %></a></li>
 					
 					</ul>
 				</li>
@@ -158,9 +158,9 @@
 			<div class="book clearfix">
 			<% for(Book s : pPage.getData()){%>
 				<dl>
-					<dt><a href="<%=application.getContextPath() %>/detail.jsp?bid=<%=s.getBid()%>"><img src="<%=s.getBimg() %>" alt=""/></a></dt>
+					<dt><a href="${path}/detail.jsp?bid=<%=s.getBid()%>"><img src="<%=s.getBimg() %>" alt=""/></a></dt>
 					<dd>
-						<p ><a href="<%=application.getContextPath() %>/detail.jsp?bid=<%=s.getBid()%>"><%=s.getBname() %></a></p>
+						<p ><a href="${path}/detail.jsp?bid=<%=s.getBid()%>"><%=s.getBname() %></a></p>
 						<p>数量：<%=s.getBnum() %></p>
 						<p><s>价格：￥<%=s.getBprice() %></s> ￥<%=s.getBprice() %> </p>
 					</dd>
@@ -170,10 +170,10 @@
 			</div>
 			<div id="ball_footer" class="ball_footer">
 				 <%String condition = "btid=" + btid ; %>
-					<a class="firstPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page=1">首页</a>
-					<a class="previousPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page=<%=pPage.getPreviousPage()%>">上一页</a>
-					<a class="nextPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page=<%=pPage.getNextPage()%>">下一页</a>
-					<a class="lastPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page=<%=pPage.getLastPage()%>">尾页</a>
+					<a class="firstPage" href="${path}/lhoption/index.jsp?<%=condition %>&page=1">首页</a>
+					<a class="previousPage" href="${path}/lhoption/index.jsp?<%=condition %>&page=<%=pPage.getPreviousPage()%>">上一页</a>
+					<a class="nextPage" href="${path}/lhoption/index.jsp?<%=condition %>&page=<%=pPage.getNextPage()%>">下一页</a>
+					<a class="lastPage" href="${path}/lhoption/index.jsp?<%=condition %>&page=<%=pPage.getLastPage()%>">尾页</a>
 					第<%=pPage.getPage()%>/<%=pPage.getLastPage()%>
 				
 			</div>	
@@ -196,7 +196,7 @@
 		%>
 		
 		<%for(BookType  a : list2){ %>
-			<li><a class="on" href="<%=application.getContextPath() %>/lhoption/index.jsp?btid=<%=a.getBtid()%>"><%=a.getBtnamesecond() %> </a></li>
+			<li><a class="on" href="${path}/lhoption/index.jsp?btid=<%=a.getBtid()%>"><%=a.getBtnamesecond() %> </a></li>
 		<%} %>
 		</ul>
 		
@@ -204,9 +204,9 @@
 			<div class="book clearfix">
 			<%for(Book b : pPage1.getData() ){ %>
 				<dl>
-					<dt><a href="<%=application.getContextPath() %>/detail.jsp?bid=<%=b.getBid() %>>"><img src="<%=b.getBimg() %>" alt=""/></a></dt>
+					<dt><a href="${path}/detail.jsp?bid=<%=b.getBid() %>>"><img src="<%=b.getBimg() %>" alt=""/></a></dt>
 					<dd>
-						<p><a href="<%=application.getContextPath() %>/detail.jsp?bid=<%=b.getBid() %>"><%=b.getBname() %></a></p>
+						<p><a href="${path}/detail.jsp?bid=<%=b.getBid() %>"><%=b.getBname() %></a></p>
 						<p>数量：<%=b.getBnum() %></p>
 						<p><s>价格：￥<%=b.getBprice() %></s> ￥<%=b.getBprice() %></p>
 					</dd>
@@ -217,15 +217,15 @@
 			</div>
 			<div id="ball_footer" class="ball_footer">
 					
-					<a class="firstPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page1=1">首页</a>
-					<a class="previousPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page1=<%=pPage1.getPreviousPage()%>">上一页</a>
-					<a class="nextPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page1=<%=pPage1.getNextPage()%>">下一页</a>
-					<a class="lastPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page1=<%=pPage1.getLastPage()%>">尾页</a>
+					<a class="firstPage" href="${path}/lhoption/index.jsp?<%=condition %>&page1=1">首页</a>
+					<a class="previousPage" href="${path}/lhoption/index.jsp?<%=condition %>&page1=<%=pPage1.getPreviousPage()%>">上一页</a>
+					<a class="nextPage" href="${path}/lhoption/index.jsp?<%=condition %>&page1=<%=pPage1.getNextPage()%>">下一页</a>
+					<a class="lastPage" href="${path}/lhoption/index.jsp?<%=condition %>&page1=<%=pPage1.getLastPage()%>">尾页</a>
 					第<%=pPage1.getPage()%>/<%=pPage1.getLastPage()%>
 				
 			</div>
 		</div>
-		
+	</div>
 		
 		
 		
@@ -242,9 +242,9 @@
 		<div class="tabs book clearfix">
 		<% for(Book c:pPage2.getData()){%>
 			<dl>
-				<dt><a href="<%=application.getContextPath() %>/detail.jsp?bid=<%=c.getBid() %>"><img src="<%=c.getBimg() %>" alt=""/></a></dt>
+				<dt><a href="${path}/detail.jsp?bid=<%=c.getBid() %>"><img src="<%=c.getBimg() %>" alt=""/></a></dt>
 				<dd>
-					<p ><a href="<%=application.getContextPath() %>/detail.jsp?bid=<%=c.getBid() %>"><%=c.getBname() %></a></p>
+					<p ><a href="${path}/detail.jsp?bid=<%=c.getBid() %>"><%=c.getBname() %></a></p>
 					<p>数量：<%=c.getBnum() %></p>
 					<p><s>价格：￥<%=c.getBprice() %></s> ￥<%=c.getBprice() %></p>
 				</dd>
@@ -254,19 +254,18 @@
 			
 		</div>
 		<div id="ball_footer" class="ball_footer">
-			<a class="firstPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page2=1">首页</a>
-			<a class="previousPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page2=<%=pPage2.getPreviousPage()%>">上一页</a>
-			<a class="nextPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page2=<%=pPage2.getNextPage()%>">下一页</a>
-			<a class="lastPage" href="<%=application.getContextPath() %>/lhoption/index.jsp?<%=condition %>&page2=<%=pPage2.getLastPage()%>">尾页</a>
+			<a class="firstPage" href="${path}/lhoption/index.jsp?<%=condition %>&page2=1">首页</a>
+			<a class="previousPage" href="${path}/lhoption/index.jsp?<%=condition %>&page2=<%=pPage2.getPreviousPage()%>">上一页</a>
+			<a class="nextPage" href="${path}/lhoption/index.jsp?<%=condition %>&page2=<%=pPage2.getNextPage()%>">下一页</a>
+			<a class="lastPage" href="${path}/lhoption/index.jsp?<%=condition %>&page2=<%=pPage2.getLastPage()%>">尾页</a>
 			第<%=pPage2.getPage()%>/<%=pPage2.getLastPage()%>
 				
 		</div>
 	</div>
-
 </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <script type="text/javascript">
-	Qfast.add('widgets', { path: "<%=application.getContextPath() %>/js/terminator2.2.min.js", type: "js", requires: ['fx'] });
+	Qfast.add('widgets', { path: "${path}/js/terminator2.2.min.js", type: "js", requires: ['fx'] });
 	Qfast(false, 'widgets', function () {
 		K.tabs({
 			id: 'fsD1',   //焦点图包裹id

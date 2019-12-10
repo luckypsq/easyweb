@@ -1,48 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@page import="com.yc.easyweb.bean.*"%>
-<%@page import="com.yc.easyweb.biz.*"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.io.*"%>
-<%@page import="java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="<%=application.getContextPath() %>/css/index.css"/>
-	<script src="<%=application.getContextPath() %>/js/main.js"></script>
+<link rel="stylesheet" href="${path}/css/index.css"/>
+	<script src="${path}/js/main.js"></script>
 	<title>公告详情</title>
 </head>
-<body >
+<body onload="show()">
 <jsp:include page="/common/header.jsp"></jsp:include>
 <div class="mainbody" style="background: #FFF url(images/bodybg.png) repeat-x;">
-<%
-		NoticeBiz noticeBiz = new NoticeBiz();
-		Notice notice = new Notice();
-		List<Notice> nList = noticeBiz.selectAll(notice);
-		if(request.getParameter("nid") != null && !request.getParameter("nid").isEmpty()){
-			notice.setNid(Long.parseLong(request.getParameter("nid")));
-		}
-		Notice noticeShow = noticeBiz.selectSingle(notice);
-%>
 	<div class="container clearfix" style="background-color: white">
 		<div class="mainbody_topbg"></div>
 		<div class="bread">当前位置：
-			<a href="<%=application.getContextPath() %>/lhoption/index.jsp">首页</a> >
-			<a href="<%=application.getContextPath() %>/lhoption/notice.jsp">公告</a> >
-			<a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=noticeShow.getNid()%>">公告详情</a>
+			<a href="${path}/lhoption/index.jsp">首页</a> >
+			<a href="${path}/lhoption/notice.jsp">公告</a> >
+			<a href="${path}/notice-detail.jsp?nid=${noticeDetail.nid}">公告详情</a>
 		</div>
 		<div class="maincontent fl">
 			<div class="post">
-				<h2><a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=noticeShow.getNid()%>"">华南地区因暴雨天气部分订单推迟配送</a></h2>
+				<h2><a href="${path}/notice-detail.jsp?nid=${noticeDetail.nid}">${noticeDetail.ntitle}</a></h2>
 				<div class="postdata">
-					<div class="date"><%=noticeShow.getNtime()%></div>
+					<div class="date">${date[0] }年${date[1] }月${date[2] }日</div>
 					<div class="cate">发表于 <a href="#">公告</a> | </div>
-					<div class="cate">浏览量: <span><%=noticeShow.getNnumber()%></span>次</div>
+					<div class="cate">浏览量: <span>${noticeDetail.nnumber}</span>次</div>
 				</div>
 				<div class="content">
-					<p><%=noticeShow.getNcontent()%></p>
-					<p style="text-align: right;"><%=noticeShow.getNauthor()%><br /><%=noticeShow.getNtime()%></p>
+					<p>${noticeDetail.ncontent}</p>
+					<p style="text-align: right;">${noticeDetail.nauthor}<br />${noticeDetail.ntime}</p>
 				</div>
 			</div>
 		</div>
@@ -51,23 +38,16 @@
 				<li>
 					<h2>最新公告</h2>
 					<ul>
-					<%
-					if(nList.size() != 0){
-						for(int i=0; i<nList.size();i++){
-							if(i == 6){
-								break ;
-							}
-				%>
-				<li><i class="icon-bell red"></i><a href="<%=application.getContextPath() %>/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
-				<% 
-						}
-					}else{
-				%>
-				<li><i class="icon-bell red"></i>暂无新公告</li>
-				<%
-					}
-				%>
-				</ul>
+						<c:if test="${noticeAll.size()> 0}" var="flag" scope="session">
+						<c:forEach items="${noticeAll}" var="n">
+							<li><i class="icon-bell red"></i><a href="${path}/notice-detail.jsp?nid=${n.nid}">${n.ntitle }</a></li>
+						</c:forEach>
+						</c:if>
+						
+						<c:if test="${not flag}">
+						   	<li><i class="icon-bell red"></i>暂无新公告</li>
+						</c:if>
+					</ul>
 				</li>
 				<li>
 					<h2>公告存档</h2>
@@ -134,5 +114,46 @@
 	</div>
 </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
+<script type="text/javascript">
+var xmlhttp;
+try {
+	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+	try {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new XMLHttpRequest();
+		} catch (e) {
+		}
+	}
+}
+function show(){
+	var nid = "${param.nid}";
+	if(xmlhttp!=null){
+		var  url;
+		if(nid == ""){
+			alert("未选择公告！！！");
+			 url ="${path}/notice.s?op=query";
+		}else{
+			 url ="${path}/notice.s?op=query&nid="+nid;
+		}
+		// 定义请求地址
+		xmlhttp.open("POST",url,true);
+		xmlhttp.onreadystatechange=function(){
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				var json = xmlhttp.responseText.replace(/\s/gi,"");
+				if(json == -1){
+					alert("暂无数据");
+				}
+			}
+		};
+		// 发送请求
+		xmlhttp.send(null);
+	}else{
+		alert("不能创建XMLHttpRequest对象实例");
+	}
+}
+</script>
 </body>
 </html>

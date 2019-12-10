@@ -7,29 +7,29 @@
 			<ul class="clearfix">
 				<li class="item-li">关于我们
 					<ul>
-					<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">自我介绍</a></li>
-						<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">联系我们</a></li>
-						<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">网站公告</a></li>
+					<li><a href="${path}/back/lhoption/help.jsp">自我介绍</a></li>
+						<li><a href="${path}/back/lhoption/help.jsp">联系我们</a></li>
+						<li><a href="${path}/back/lhoption/help.jsp">网站公告</a></li>
 						</ul>
 				</li>
 				<li class="item-li">新手指南
 					<ul>
-						<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">如何买书</a></li>
-						<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">如何卖书</a></li>
-						<li><a href="<%=application.getContextPath() %>/lywoption/password.jsp">修改密码</a></li>
+						<li><a href="${path}/back/lhoption/help.jsp">如何买书</a></li>
+						<li><a href="${path}/back/lhoption/help.jsp">如何卖书</a></li>
+						<li><a href="${path}/back/lywoption/password.jsp">修改密码</a></li>
 					</ul>
 				</li>
 				<li class="item-li">配送方式
 					<ul>
-						<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">配送范围</a></li>
-						<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">配送时间</a></li>
+						<li><a href="${path}/back/lhoption/help.jsp">配送范围</a></li>
+						<li><a href="${path}/back/lhoption/help.jsp">配送时间</a></li>
 					</ul>
 				</li>
 				<li class="item-li">售后服务
 					<ul>
-						<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">退款申请</a></li>
-						<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">退换货处理</a></li>
-						<li><a href="<%=application.getContextPath() %>/lhoption/help.jsp">退换货政策</a></li>
+						<li><a href="${path}/back/lhoption/help.jsp">退款申请</a></li>
+						<li><a href="${path}/back/lhoption/help.jsp">退换货处理</a></li>
+						<li><a href="${path}/back/lhoption/help.jsp">退换货政策</a></li>
 					</ul>
 				</li>
 			</ul>

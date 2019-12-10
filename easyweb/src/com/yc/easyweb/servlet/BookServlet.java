@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.attribute.standard.MediaSize.Other;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -396,14 +397,15 @@ public class BookServlet extends BaseServlet {
 						bookUmagor.add(bookSet.getBumajor());
 					}
 				}
+				session.setAttribute("bookUniverEdit", bookUniver);
+				session.setAttribute("bookUcollageEdit", bookUcollage);
+				session.setAttribute("bookUmagorEdit", bookUmagor);
+				
 				BookType bookType = new BookType();
 				bookType.setBtstate(1);
 				BookTypeBiz btBiz = new BookTypeBiz();
 				List<BookType> btList = btBiz.selectAll(bookType);
 				HashSet<String> btType = new HashSet<String>();
-				session.setAttribute("bookUniverEdit", bookUniver);
-				session.setAttribute("bookUcollageEdit", bookUcollage);
-				session.setAttribute("bookUmagorEdit", bookUmagor);
 				for(BookType bt : btList){
 					if(showBook.getBtid() == bt.getBtid()){
 						if(bt.getBtnamethird() != null && !bt.getBtnamethird() .isEmpty()){
@@ -424,8 +426,51 @@ public class BookServlet extends BaseServlet {
 				}
 				session.setAttribute("showTypeEdit", showType);
 				session.setAttribute("btTypeEdit", btType);
+				if(btType.size() == 0){
+					out.print(-1);
+				}
 			} catch (BizException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		//显示书本详情
+		public void bookDetail(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
+			
+			  Book book1 = new Book();
+			  if(request.getParameter("bid") != null && !request.getParameter("bid").isEmpty()){
+				  book1.setBid(Long.parseLong(request.getParameter("bid")));
+			  }
+			  try {
+				Book book = bookBiz.selectSingle(book1);
+				if(book.getBid() == 0){
+					out.print(-1);
+					return ;
+				}
+			     Book book2 = new Book();
+			     book2.setBtid(book.getBtid());
+			     List<Book> list = bookBiz.selectAll(book2);
+			     if(list.size() == 0){
+			    	 out.print(-2);
+			    	 return ;
+			     }
+				session.setAttribute("bookDetail", book);
+				session.setAttribute("similarBook", list);
+				
+			} catch (BizException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//用户发布书籍
+		public void userAddBook(HttpServletRequest request, HttpServletResponse response)
+					throws ServletException, IOException {
+		}
+		//用户已发布的书籍显示
+		public void userPublishedBook(HttpServletRequest request, HttpServletResponse response)
+					throws ServletException, IOException {
 		}
 }

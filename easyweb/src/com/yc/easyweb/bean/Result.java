@@ -54,6 +54,12 @@ public class Result implements Serializable{
 		result.msg = msg;
 		return result;
 	}
+	public static Result error(String msg){
+		Result result = new Result();
+		result.code = -1;
+		result.msg = msg;
+		return result;
+	}
 	
 	public String getMsg() {
 		return msg;

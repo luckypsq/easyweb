@@ -207,5 +207,39 @@ public class EorderitemDao {
 			sb.append("  order by  itemid desc");
 			return  DbHelper.selectSingle(sb.toString(),null,Bought.class);
 		}
+		
+	//查询购物车详情
+		public List<Bought> selectAllCart(Bought bought) throws IOException {
+			StringBuffer sb = new StringBuffer();
+			String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
+					+ " eo.uid,cartstate,carttime "
+					+ " from book b,eorderitem eo,eorder e  where eo.eoid=e.eoid and eo.bid=b.bid  ";
+			sb.append(sql);
+			if(bought != null){
+				if(bought.getUid() != 0){
+					sb.append(" and e.uid=" + bought.getUid());
+				}
+			}
+			sb.append("order by  itemid desc");
+			return DbHelper.selectAll(sb.toString(), null, Bought.class);
+		}
+		//查询单个购物车详情
+		public Bought selectSingleCart(Bought bought) throws IOException {
+			StringBuffer sb = new StringBuffer();
+			String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
+					+ " eo.uid,cartstate,carttime "
+					+ " from book b,eorderitem eo,eorder e  where eo.eoid=e.eoid and eo.bid=b.bid  ";
+			sb.append(sql);
+			if(bought != null){
+				if(bought.getUid() != 0){
+					sb.append(" and e.uid=" + bought.getUid());
+				}
+				if(bought.getItemid() != null){
+					sb.append(" and itemid like '%" + bought.getItemid()+"%'");
+				}
+			}
+			sb.append("order by  itemid desc");
+			return DbHelper.selectSingle(sb.toString(), null, Bought.class);
+		}
 	//其他
 }

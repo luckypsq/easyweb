@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 
+import com.google.gson.Gson;
+import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.UserBiz;
@@ -405,32 +407,6 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 	
-	public void remember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User user =(User)request.getSession().getAttribute("loginedUser");
-		String uminname = request.getParameter("uminname");
-		String uphone = request.getParameter("uphone");
-		String university = request.getParameter("university");
-		String ucollege = request.getParameter("ucollege");
-		String umajor = request.getParameter("umajor");
-		String uclass = request.getParameter("uclass");
-		Long uid = user.getUid();
-		String url = "/lywoption/member.jsp";
-		try {
-			int i=dao.update(uminname,uphone,university,ucollege,umajor,uclass,uid);
-			if(i==1){
-				request.setAttribute("result","个人信息修改成功");
-				request.getRequestDispatcher(url).forward(request, response);
-				
-            }else{
-                request.setAttribute("result","个人信息修改失败");
-                request.getRequestDispatcher(url).forward(request, response);
-            }
-		}  catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-	
 	//个人信息展示
 	public void showUserMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = new User();
@@ -494,4 +470,220 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 	
+	//检查个人密码输入
+	public void checkPwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		User user =(User)session.getAttribute("loginedUser");
+		
+		String oldpassword = request.getParameter("oldpassword");
+		if(oldpassword != null && !oldpassword.isEmpty()){
+			if(oldpassword.equals(user.getUpassword())){
+				out.print(1);
+			}else{
+				out.print(-1);
+			}
+		}else{
+			out.print(-1);
+		}
+	}
+	//修改个人密码
+	public void updatePwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		User user =(User)session.getAttribute("loginedUser");
+		User userNew = new User();
+		String newpassword = request.getParameter("newpassword");
+		if(newpassword != null && !newpassword.isEmpty()){
+			userNew.setUpassword(newpassword);
+		}
+			int code;
+			try {
+				code = userBiz.update(userNew, user);
+				String json = "{code:'"+code
+						+"', msg:'修改密码成功！'}";   // 扩张一个结果描述信息
+				out.print(json);
+			} catch (SQLException e) {
+				String json = "{msg:'修改密码失败！'}";   // 扩张一个结果描述信息
+				out.print(json);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BizException e) {
+				String json = "{msg:'修改密码失败！'}";   // 扩张一个结果描述信息
+				out.print(json);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	//显示需要修改的信息
+	public void showUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		User userOld =(User)session.getAttribute("loginedUser");
+		
+		if(userOld.getUid() == 0){
+			out.print(-1);
+			return ;
+		}
+		//定义展示的map
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("uname", userOld.getUname());
+		map.put("uphone", userOld.getUphone());
+		map.put("university", userOld.getUniversity());
+		map.put("ucollege", userOld.getUcollege());
+		map.put("umajor", userOld.getUmajor());
+		map.put("uclass", userOld.getUclass());
+		map.put("uemail", userOld.getUemail());
+		map.put("utime", userOld.getUtime());
+		map.put("usex", userOld.getUtime()+"");
+		map.put("uage", userOld.getUage()+"");
+		map.put("uminname", userOld.getUminname());
+		session.setAttribute("editShowUser", map);
+	}
+	//检验电话
+	public void checkPhone(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		 PrintWriter out = response.getWriter();
+		 HttpSession session = request.getSession();
+		String uphone = request.getParameter("uphone");
+		User userOld =(User)session.getAttribute("loginedUser");
+		String regphone = "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$";
+		 User user = new User();
+		 try {
+			if(uphone != null && !uphone.isEmpty()){
+				if (!uphone.matches(regphone)) {
+					out.print(-2);//不合法
+					return ;
+				} 
+				if( !userOld.getUphone().equals(uphone)){
+					User user2 = userBiz.selectSingle(user);
+					if(user2.getUid() != 0){
+						out.print(-3);//已存在
+						return ;
+					}
+				}
+				out.print(1);//可以使用
+				session.setAttribute("updateUphone", uphone);
+			}else{
+				out.print(-1);//输入为空
+			}
+		 } catch (BizException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+	}
+	
+	//检验年龄
+		public void checkUage(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			 PrintWriter out = response.getWriter();
+			 HttpSession session = request.getSession();
+			 
+			String uage = request.getParameter("uage");
+			String regage = "^[0-9]{1,3}$";
+			
+			if(uage != null && !uage.isEmpty()){
+				if (!uage.matches(regage)) {
+					out.print(-2);//不合法
+					return ;
+				}
+				session.setAttribute("updateAge", uage);
+				out.print(1);
+			}else{
+				out.print(-1);
+			}
+			 
+		}
+	//更新个人信息
+	public void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		Gson gson = new Gson();
+		Result result ;
+		User user = new User();
+		String phone = (String) session.getAttribute("updateAge");
+		String age = (String) session.getAttribute("updateUphone");
+		String minname = request.getParameter("uminname").trim();
+		String sex = request.getParameter("usex").trim();
+		String uni = request.getParameter("university").trim();
+		String ucol = request.getParameter("ucollege").trim();
+		String umajor = request.getParameter("umajor").trim();
+		String uclass = request.getParameter("uclass").trim();
+		User userOld =(User)session.getAttribute("loginedUser");
+		//定义展示的map
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("uname", userOld.getUname());
+		map.put("uphone", phone);
+		map.put("university", uni);
+		map.put("ucollege", ucol);
+		map.put("umajor", umajor);
+		map.put("uclass", uclass);
+		map.put("uemail", userOld.getUemail());
+		map.put("utime", userOld.getUtime());
+		map.put("usex", sex);
+		map.put("uage", age);
+		map.put("uminname", minname);
+		session.setAttribute("editShowUser", map);
+		
+		String check = "1";
+		if(phone != null && !phone.isEmpty()){
+			user.setUphone(phone);
+			check = check + "/1";
+		}else{
+			check = check + "/1";
+		}
+		if(age != null && !age.isEmpty()){
+			user.setUage(Integer.parseInt(age));
+			check = check + "/-1";
+		}else{
+			check = check + "/-1";
+		}
+		if(!check.equals("1/1/1")){
+			result= Result.error(check);
+			String json = gson.toJson(result);
+			// 返回json格式数据
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return ;
+		}
+		//输入合法
+		if(minname != null && !minname.isEmpty()){
+			user.setUminname(minname);
+		}
+		if(sex != null && !sex.isEmpty()){
+			user.setUsex(Integer.parseInt(sex));
+		}
+		if(uni != null && !uni.isEmpty()){
+			user.setUniversity(uni);
+		}
+		if(ucol != null && !ucol.isEmpty()){
+			user.setUcollege(ucol);
+		}
+		if(!uclass.isEmpty() && uclass != null){
+			user.setUclass(uclass);
+		}
+		if(umajor != null && !umajor.isEmpty()){
+			user.setUmajor(umajor);
+		}
+		
+		//进行更新操作
+		try {
+			int code = userBiz.update(user, userOld);
+			if(code > 0){
+				result = Result.success("修改成功！！！");
+			}else{
+				result = Result.failure("修改失败");
+			}
+			String json = gson.toJson(result);
+			// 返回json格式数据
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BizException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }

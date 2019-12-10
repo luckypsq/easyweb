@@ -93,9 +93,27 @@
 		<url-pattern>/show.s</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>登录的JoinServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.JoinServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>登录的JoinServlet</servlet-name>
+		<url-pattern>/join.s</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>注册验证的RegServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.RegServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>注册验证的RegServlet</servlet-name>
+		<url-pattern>/reg.s</url-pattern>
+	</servlet-mapping>
+	
 	<filter>
     <filter-name>权限访问控制过滤器</filter-name>
-    <filter-class>com.yc.easyweb.servlet.pq.JoinFilter</filter-class>
+    <filter-class>com.yc.easyweb.servlet.JoinFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>权限访问控制过滤器</filter-name>

@@ -72,5 +72,16 @@ public class EorderitemBiz {
 	public Page<Bought> ePage(int page, int rows,Bought bought,Long uid) throws IOException {
 		return dao.eoPage(page, rows, bought,uid);
 	}
+	//查询购物车详情
+	public List<Bought> selectAllCart(Bought bought) throws IOException{
+		return dao.selectAllCart(bought);
+	}
+	//查询单个
+	public Bought selectSingleCart(Bought bought) throws IOException, BizException{
+		if(bought == null){
+			throw new BizException("请输入购物车信息！！！");
+		}
+		return dao.selectSingleCart(bought);
+	}
 	// 其他
 }
