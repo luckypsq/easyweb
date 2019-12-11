@@ -40,5 +40,28 @@ public class PayType implements Serializable{
 		return "PayType [eopaytypeid=" + eopaytypeid + ", eopayname=" + eopayname + ", eopaystate=" + eopaystate
 				+ ", eopaytemp=" + eopaytemp + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((eopayname == null) ? 0 : eopayname.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PayType other = (PayType) obj;
+		if (eopayname == null) {
+			if (other.eopayname != null)
+				return false;
+		} else if (!eopayname.equals(other.eopayname))
+			return false;
+		return true;
+	}
 	
 }

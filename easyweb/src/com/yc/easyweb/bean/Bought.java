@@ -115,6 +115,40 @@ public class Bought implements Serializable{
 				+ bumajor + ", bclass=" + bclass + ", bname=" + bname + ", bprice=" + bprice + ", bimg=" + bimg
 				+ ", uname=" + uname + "]";
 	}
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (bid ^ (bid >>> 32));
+		result = prime * result + ((carttime == null) ? 0 : carttime.hashCode());
+		result = prime * result + ((itemid == null) ? 0 : itemid.hashCode());
+		result = prime * result + (int) (uid ^ (uid >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bought other = (Bought) obj;
+		if (bid != other.bid)
+			return false;
+		if (carttime == null) {
+			if (other.carttime != null)
+				return false;
+		} else if (!carttime.equals(other.carttime))
+			return false;
+		if (itemid == null) {
+			if (other.itemid != null)
+				return false;
+		} else if (!itemid.equals(other.itemid))
+			return false;
+		if (uid != other.uid)
+			return false;
+		return true;
+	}
 	
 }

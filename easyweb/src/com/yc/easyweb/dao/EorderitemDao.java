@@ -35,10 +35,10 @@ public class EorderitemDao {
 				sb.append(" and cartstate="+eorderitem.getCartstate());
 			}
 			if(eorderitem.getEoid() != null){
-				sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
+				sb.append(" and eoid like'%"+eorderitem.getEoid() +"%'");
 			}
 			if(eorderitem.getItemid() != null){
-				sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
+				sb.append(" and itemid like '%"+eorderitem.getItemid()+"%'");
 			}
 		}
 		sb.append("  order by  itemid desc");
@@ -235,7 +235,7 @@ public class EorderitemDao {
 					sb.append(" and e.uid=" + bought.getUid());
 				}
 				if(bought.getItemid() != null){
-					sb.append(" and itemid like '%" + bought.getItemid()+"%'");
+					sb.append(" and itemid = '" + bought.getItemid()+"'");
 				}
 			}
 			sb.append("order by  itemid desc");

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@page import="com.yc.easyweb.biz.UserBiz"%>
-<%@page import="com.yc.easyweb.bean.User"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,7 +21,7 @@
 	
 <title>管理员操作</title>
 </head>
-<body onload="show()">
+<body >
 <div id="add_administrator_style" class="add_menber">
 			<form action="${path}/user.s?op=addAdmin" method="post" id="form-admin-add">
 				<div class="form-group">
@@ -166,33 +164,34 @@
 		    	 alert("更新失败！！！");
 			}
 		}
-function show(){
-	var uid = "${param.uid}";
-	if (xmlhttp != null) {
-		if(uid == ""){
-			uid= -1;
-		}
-		// 定义请求地址
-		var url = "${path}/user.s?op=addAdmin&uid="+uid;
-		// 以 POST 方式 开启连接
-		// POST 请求 更安全（编码）  提交的数据大小没有限制
-		xmlhttp.open("POST", url, true);
-		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-		// 每次的状态改变都会调用该方法
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				/* var msg = xmlhttp.responseText.replace(/\s/gi, "");
-				if(msg == 0){
-					alert("暂无数据");
-				} */
+		$(function(){
+			var uid = "${param.uid}";
+			if (xmlhttp != null) {
+				if(uid == ""){
+					uid= -1;
+				}
+				// 定义请求地址
+				var url = "${path}/user.s?op=addAdmin&uid="+uid;
+				// 以 POST 方式 开启连接
+				// POST 请求 更安全（编码）  提交的数据大小没有限制
+				xmlhttp.open("POST", url, true);
+				// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+				// 每次的状态改变都会调用该方法
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						/* var msg = xmlhttp.responseText.replace(/\s/gi, "");
+						if(msg == 0){
+							alert("暂无数据");
+						} */
+					}
+				};
+				// 发送请求
+				xmlhttp.send(null);
+			} else {
+				alert("不能创建XMLHttpRequest对象实例")
 			}
-		};
-		// 发送请求
-		xmlhttp.send(null);
-	} else {
-		alert("不能创建XMLHttpRequest对象实例")
-	}
-}
+		});
+
 function checkName(){
 		var bpriceReg = /^[\u4e00-\u9fa5a-zA-Z]{0,15}$/;
 		var bpriceText = document.getElementById("user-name").value.trim();

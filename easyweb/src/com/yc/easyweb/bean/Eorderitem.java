@@ -98,4 +98,35 @@ public class Eorderitem implements Serializable{
 				+ total + ", eitemp=" + eitemp + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (bid ^ (bid >>> 32));
+		result = prime * result + ((itemid == null) ? 0 : itemid.hashCode());
+		result = prime * result + (int) (uid ^ (uid >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Eorderitem other = (Eorderitem) obj;
+		if (bid != other.bid)
+			return false;
+		if (itemid == null) {
+			if (other.itemid != null)
+				return false;
+		} else if (!itemid.equals(other.itemid))
+			return false;
+		if (uid != other.uid)
+			return false;
+		return true;
+	}
+	
 }

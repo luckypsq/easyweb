@@ -28,6 +28,9 @@ public class NoticeBiz {
 		if(notice == null){
 			throw new BizException("请填写公告信息");
 		}
+		if(notice.getNid() ==0 && notice.getNtitle() == null && notice.getNtime() == null){
+			throw new BizException("请填写需要查询的公告信息");
+		}
 		return dao.selectSingle(notice);
 	}
 

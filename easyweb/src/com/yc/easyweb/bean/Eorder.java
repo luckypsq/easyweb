@@ -82,5 +82,37 @@ public class Eorder implements Serializable{
 		return "Eorder [eoid=" + eoid + ", uid=" + uid + ", eostate=" + eostate + ", eotime=" + eotime + ", eotemp="
 				+ eotemp + ", uname=" + uname + ", eoaddr=" + eoaddr + ", eotype=" + eotype + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((eoaddr == null) ? 0 : eoaddr.hashCode());
+		result = prime * result + ((eoid == null) ? 0 : eoid.hashCode());
+		result = prime * result + (int) (uid ^ (uid >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Eorder other = (Eorder) obj;
+		if (eoaddr == null) {
+			if (other.eoaddr != null)
+				return false;
+		} else if (!eoaddr.equals(other.eoaddr))
+			return false;
+		if (eoid == null) {
+			if (other.eoid != null)
+				return false;
+		} else if (!eoid.equals(other.eoid))
+			return false;
+		if (uid != other.uid)
+			return false;
+		return true;
+	}
 	
 }

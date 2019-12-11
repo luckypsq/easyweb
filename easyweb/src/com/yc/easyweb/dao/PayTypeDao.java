@@ -51,7 +51,7 @@ public class PayTypeDao {
 				sb.append(" and eopaytypeid = " + payType.getEopaytypeid() );
 			}
 			if (payType.getEopayname() != null) {
-				sb.append(" and eopayname like'%" + payType.getEopayname()+"%'" );
+				sb.append(" and eopayname ='" + payType.getEopayname()+"'" );
 			}
 		}
 		return DbHelper.update(sb.toString(), null);

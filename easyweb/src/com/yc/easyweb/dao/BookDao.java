@@ -82,19 +82,19 @@ public class BookDao {
 				+ " bcontent,bimg,bprice,bstate,btid,btemp,uid,btemp1,bnum,bauthor,bdate" + " from book where 1=1 ");
 		if (book != null) {
 			if (book.getBname() != null && !book.getBname().isEmpty()) {
-				sb.append(" and bname like '%" + book.getBname() + "%'");
+				sb.append(" and bname = '" + book.getBname() + "'");
 			}
 			if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
-				sb.append(" and buniversity like '%" + book.getBuniversity() + "%'");
+				sb.append(" and buniversity = '" + book.getBuniversity() + "'");
 			}
 			if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
-				sb.append(" and bucollege like '%" + book.getBucollege() + "%'");
+				sb.append(" and bucollege = '" + book.getBucollege() + "'");
 			}
 			if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
-				sb.append(" and bumajor like '%" + book.getBumajor() + "%'");
+				sb.append(" and bumajor = '" + book.getBumajor() + "'");
 			}
 			if (book.getBclass() != null && !book.getBclass().isEmpty()) {
-				sb.append(" and bclass like '%" + book.getBclass() + "%'");
+				sb.append(" and bclass = '" + book.getBclass() + "'");
 			}
 			if(book.getUid() != 0){
 				sb.append(" and uid = " + book.getUid());
@@ -103,7 +103,7 @@ public class BookDao {
 				sb.append(" and bnum =" + book.getBnum());
 			}
 			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
-				sb.append(" and bauthor like '%" + book.getBauthor() + "%'");
+				sb.append(" and bauthor = '" + book.getBauthor() + "'");
 			}
 			if (book.getBtid() != null) {
 				sb.append(" and btid = " + book.getBtid());
@@ -115,13 +115,13 @@ public class BookDao {
 				sb.append(" and bstate = " + book.getBstate());
 			}
 			if (book.getBtemp() != null && !book.getBtemp().isEmpty()) {
-				sb.append(" and btemp like '%" + book.getBtemp() + "%'");
+				sb.append(" and btemp = '" + book.getBtemp() + "'");
 			}
 			if (book.getBid() != 0) {
 				sb.append(" and bid = " + book.getBid());
 			}
 			if (book.getBdate() != null && !book.getBdate().isEmpty()) {
-				sb.append(" and bdate like '%" + book.getBdate() + "%'");
+				sb.append(" and bdate = '" + book.getBdate() + "'");
 			}
 		}
 		sb.append(" order by  bid desc");

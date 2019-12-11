@@ -30,6 +30,9 @@ public class EorderitemBiz {
 		if(eorderitem == null){
 			throw new BizException("请填写购物车信息");
 		}
+		if(eorderitem.getBid() == 0 && eorderitem.getEoid() == null && eorderitem.getItemid() == null && eorderitem.getUid() == 0){
+			throw new BizException("请填写需要查询的购物车信息");
+		}
 		return dao.selectSingle(eorderitem);
 	}
 
@@ -37,6 +40,15 @@ public class EorderitemBiz {
 	public int insert(Eorderitem eorderitem) throws SQLException, BizException {
 		if(eorderitem == null){
 			throw new BizException("请填写购物车信息");
+		}
+		if(eorderitem.getBid() == 0){
+			throw new BizException("请选择加入购物车的书籍");
+		}
+		if(eorderitem.getCarttime() == null){
+			throw new BizException("请填写加入购物车的时间");
+		}
+		if(eorderitem.getCount() == 0){
+			throw new BizException("请填写书本数量");
 		}
 		return dao.insert(eorderitem);
 	}
@@ -46,6 +58,9 @@ public class EorderitemBiz {
 		if(eorderitem == null){
 			throw new BizException("请填写购物车信息");
 		}
+		if(eorderitem.getBid() == 0 && eorderitem.getEoid() == null && eorderitem.getItemid() == null && eorderitem.getUid() == 0){
+			throw new BizException("请填写需要删除的购物车信息");
+		}
 		return dao.delete(eorderitem);
 
 	}
@@ -54,6 +69,11 @@ public class EorderitemBiz {
 	public int delete(List<Eorderitem> list) throws SQLException, BizException {
 		if(list.size() == 0){
 			throw new BizException("请填写购物车信息");
+		}
+		for(Eorderitem eorderitem : list){
+			if(eorderitem.getBid() == 0 && eorderitem.getEoid() == null && eorderitem.getItemid() == null && eorderitem.getUid() == 0){
+				throw new BizException("请填写需要查询的购物车信息");
+			}
 		}
 		return dao.delete(list);
 	}
@@ -65,6 +85,9 @@ public class EorderitemBiz {
 		}
 		if(eoOld == null){
 			throw new BizException("请填写需要修改的购物车");
+		}
+		if(eoOld.getBid() == 0 && eoOld.getEoid() == null && eoOld.getItemid() == null && eoOld.getUid() == 0){
+			throw new BizException("请填写需要修改的购物车信息");
 		}
 		return dao.update(eoNew, eoOld);
 	}
@@ -80,6 +103,9 @@ public class EorderitemBiz {
 	public Bought selectSingleCart(Bought bought) throws IOException, BizException{
 		if(bought == null){
 			throw new BizException("请输入购物车信息！！！");
+		}
+		if(bought.getBid() == 0  && bought.getItemid() == null && bought.getUid() == 0){
+			throw new BizException("请填写需要查询的购物车信息");
 		}
 		return dao.selectSingleCart(bought);
 	}

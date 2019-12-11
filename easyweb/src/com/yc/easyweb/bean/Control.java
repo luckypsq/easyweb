@@ -90,5 +90,34 @@ public class Control implements Serializable {
 				+ conadd + ", condelete=" + condelete + ", coninsert=" + coninsert + ", conupdate=" + conupdate
 				+ ", concheck=" + concheck + ", uid=" + uid + ", constate=" + constate + ", contemp=" + contemp + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((coname == null) ? 0 : coname.hashCode());
+		result = prime * result + ((conamesecond == null) ? 0 : conamesecond.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Control other = (Control) obj;
+		if (coname == null) {
+			if (other.coname != null)
+				return false;
+		} else if (!coname.equals(other.coname))
+			return false;
+		if (conamesecond == null) {
+			if (other.conamesecond != null)
+				return false;
+		} else if (!conamesecond.equals(other.conamesecond))
+			return false;
+		return true;
+	}
 	
 }

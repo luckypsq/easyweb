@@ -69,5 +69,40 @@ public class Notice implements Serializable{
 		return "Notice [nid=" + nid + ", ntime=" + ntime + ", nnumber=" + nnumber + ", nauthor=" + nauthor
 				+ ", ncontent=" + ncontent + ", nstate=" + nstate + ", ntemp=" + ntemp + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nauthor == null) ? 0 : nauthor.hashCode());
+		result = prime * result + ((ncontent == null) ? 0 : ncontent.hashCode());
+		result = prime * result + ((ntitle == null) ? 0 : ntitle.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Notice other = (Notice) obj;
+		if (nauthor == null) {
+			if (other.nauthor != null)
+				return false;
+		} else if (!nauthor.equals(other.nauthor))
+			return false;
+		if (ncontent == null) {
+			if (other.ncontent != null)
+				return false;
+		} else if (!ncontent.equals(other.ncontent))
+			return false;
+		if (ntitle == null) {
+			if (other.ntitle != null)
+				return false;
+		} else if (!ntitle.equals(other.ntitle))
+			return false;
+		return true;
+	}
 	
 }

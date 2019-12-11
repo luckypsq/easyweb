@@ -27,18 +27,16 @@ public class UserBiz {
 		if (user == null) {
 			throw new BizException("请输入用户信息");
 		}
+		if(user.getUemail() == null && user.getUphone() == null){
+			throw new BizException("请输入您的邮箱或电话号码，方便以后验证");
+		}
+		if(user.getUname() == null){
+			throw new BizException("请输入您的用户名");
+		}
+		if(user.getUpassword() == null){
+			throw new BizException("请输入您的密码");
+		}
 		return dao.insert(user);
-	}
-
-	// 删除
-	public int delete(User user) {
-		return 0;
-
-	}
-
-	// 删除多条
-	public int delete(List<User> list) {
-		return 0;
 	}
 
 	// 更新
@@ -49,6 +47,12 @@ public class UserBiz {
 		if (userOld == null) {
 			throw new BizException("请输入需要修改的用户");
 		}
+		if(userOld.getUcollege() == null && userOld.getUid() == 0 && userOld.getUminname() ==null && 
+				userOld.getUname() == null && userOld.getUphone() == null 
+				&& userOld.getUemail() == null){
+			
+			throw new BizException("请输入需要修改的用户信息");
+		}
 		return dao.update(userNew, userOld);
 
 	}
@@ -58,6 +62,14 @@ public class UserBiz {
 		if (list.size() == 0) {
 			throw new BizException("请输入用户信息");
 		}
+		for(User user : list){
+			if( user.getUid() == 0 && user.getUminname() ==null && 
+					user.getUname() == null && user.getUphone() == null 
+					&& user.getUemail() == null && user.getUstate() == 0){
+				
+				throw new BizException("请输入需要修改的用户信息");
+			}
+		}
 		return dao.update(list);
 	}
 
@@ -65,6 +77,12 @@ public class UserBiz {
 	public User selectSingle(User user) throws IOException, BizException {
 		if (user == null) {
 			throw new BizException("请输入用户信息");
+		}
+		if(user.getUcollege() == null && user.getUid() == 0 && user.getUminname() ==null && 
+				user.getUname() == null && user.getUphone() == null 
+				&& user.getUemail() == null){
+			
+			throw new BizException("请输入需要查询的用户信息");
 		}
 		return dao.selectSingle(user);
 	}

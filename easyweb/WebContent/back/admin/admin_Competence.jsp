@@ -45,7 +45,7 @@
 <title>管理权限</title>
 </head>
 
-<body  onload="show()">
+<body >
 	<div class="margin clearfix">
 		<div class="border clearfix">
 			<span class="l_f"> <a
@@ -206,7 +206,7 @@ jQuery(function($) {
 		return 'left';
 	}
 });
-function show(){
+$(function(){  
 	if(xmlhttp!=null){
 		// 定义请求地址
 		var url ="${path}/control.s?op=query";
@@ -235,7 +235,7 @@ function show(){
 			time : 1000
 			});
 	} 
-}
+});
  /*权限-删除*/
 function Competence_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){

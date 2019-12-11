@@ -144,6 +144,41 @@ public class Book implements Serializable  {
 				+ getBimg() + ", getBtid()=" + getBtid() + ", getBtemp1()=" + getBtemp1() +
 				"]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bauthor == null) ? 0 : bauthor.hashCode());
+		result = prime * result + ((bname == null) ? 0 : bname.hashCode());
+		result = prime * result + (int) (uid ^ (uid >>> 32));
+		return result;
+	}
+	
+	//重写hashCode 和equals方法 判断书籍是否相同
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		if (bauthor == null) {
+			if (other.bauthor != null)
+				return false;
+		} else if (!bauthor.equals(other.bauthor))
+			return false;
+		if (bname == null) {
+			if (other.bname != null)
+				return false;
+		} else if (!bname.equals(other.bname))
+			return false;
+		if (uid != other.uid)
+			return false;
+		return true;
+	}
+	
 	
 	
 	

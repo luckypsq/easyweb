@@ -28,7 +28,7 @@
 <title>添加权限</title>
 </head>
 
-<body onload="show()">
+<body >
 <div class="Competence_add_style clearfix">
   <div class="left_Competence_add">
    <div class="title_name">添加权限</div>
@@ -94,7 +94,8 @@ try {
 		}
 	}
 }
-function show(){
+
+$(function(){  
 	if(xmlhttp!=null){
 		// 定义请求地址
 		var url ="${path}/control.s?op=queryCom";
@@ -120,7 +121,7 @@ function show(){
 	}else{
 		alert('不能创建XMLHttpRequest对象实例')
 	} 
-}
+});
 /*添加权限*/
 function type_save(){
 	var cname = document.getElementById("form-field-name").value.trim();

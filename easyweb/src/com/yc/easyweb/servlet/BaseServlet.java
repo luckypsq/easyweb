@@ -1,6 +1,7 @@
 package com.yc.easyweb.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BaseServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
        
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, UnsupportedEncodingException{
 		
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");

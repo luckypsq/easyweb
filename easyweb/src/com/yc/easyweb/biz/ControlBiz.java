@@ -26,12 +26,18 @@ public class ControlBiz {
 		if(control == null){
 			throw new BizException("请填写管理权限信息");
 		}
+		if(control.getConid() == 0){
+			throw new BizException("请指定查询的管理权限！！！");
+		}
 		return dao.selectSingle(control);
 	}
 
 	// 添加
 	public int insert(Control control) throws SQLException, BizException {
 		if(control == null){
+			throw new BizException("请填写管理权限信息");
+		}
+		if(control.getConame() == null ){
 			throw new BizException("请填写管理权限信息");
 		}
 		return dao.insert(control);
@@ -43,6 +49,10 @@ public class ControlBiz {
 		if(control == null){
 			throw new BizException("请填写管理权限信息");
 		}
+		if(control.getConid() ==0  && control.getConame() == null){
+			throw new BizException("请指定删除的管理权限");
+		}
+		
 		return dao.delete(control);
 
 	}
@@ -51,6 +61,11 @@ public class ControlBiz {
 	public int deleteAll(List<Control> list) throws SQLException, BizException {
 		if(list.size() == 0){
 			throw new BizException("请填写管理权限信息");
+		}
+		for(Control control : list){
+			if(control.getConid() ==0  && control.getConame() == null){
+				throw new BizException("请指定删除的管理权限");
+			}
 		}
 		return dao.delete(list);
 
@@ -63,6 +78,9 @@ public class ControlBiz {
 		}
 		if(controlOld == null){
 			throw new BizException("请填写需要的管理权限");
+		}
+		if(controlOld.getConid() ==0  && controlOld.getConame() == null){
+			throw new BizException("请指定修改的管理权限");
 		}
 		return dao.update(controlNew, controlOld);
 	}

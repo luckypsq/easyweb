@@ -26,11 +26,11 @@ public class NoticeDao {
 		if (notice != null) {
 			// 按发布者查
 			if (notice.getNauthor() != null) {
-				sb.append(" and nauthor like %'" + notice.getNauthor() + "'%");
+				sb.append(" and nauthor like '%" + notice.getNauthor() + "%'");
 			}
 			// 按时间查
 			if (notice.getNtime() != null) {
-				sb.append(" and ntime like %'" + notice.getNtime() + "'%");
+				sb.append(" and ntime like '%" + notice.getNtime() + "%'");
 			}
 			// 按状态查
 			if (notice.getNstate() != 0) {
@@ -42,7 +42,7 @@ public class NoticeDao {
 		return list;
 	}
 
-	// 查询所有
+	// 查询单个
 		@SuppressWarnings("static-access")
 		public Notice selectSingle(Notice notice) throws IOException  {
 			StringBuffer sb = new StringBuffer();
@@ -50,11 +50,11 @@ public class NoticeDao {
 			if (notice != null) {
 				// 按发布者查
 				if (notice.getNauthor() != null) {
-					sb.append(" and nauthor like %'" + notice.getNauthor() + "'%");
+					sb.append(" and nauthor = '" + notice.getNauthor() + "'");
 				}
 				// 按时间查
 				if (notice.getNtime() != null) {
-					sb.append(" and ntime like %'" + notice.getNtime() + "'%");
+					sb.append(" and ntime like '" + notice.getNtime() + "'");
 				}
 				// 按状态查
 				if (notice.getNstate() != 0) {

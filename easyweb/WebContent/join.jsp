@@ -6,10 +6,35 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>易书网</title>
-<link rel="stylesheet" type="text/css" href="${path}/css/index.css" />
-<link rel="stylesheet" type="text/css" href="${path}/css/animate-custom.css" />
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<style type="text/css">
+	#msg{
+		font-size:20px;
+	}
+</style>
 <script type="text/javascript">
+$(function(){
+	$.ajax({
+        type: "post",
+        url: "reg.s?op=showUser",
+        data: "",
+        async:true, // 异步请求
+        cache:false, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+           if(result.code == 0){
+        	   alert(result.msg);
+        	   return ;
+     	  }
+           if(result.code == -1){
+        	   alert(result.msg);
+        	   return ;
+     	  }
+  	 	}
+	});
+});
 var xmlhttp;
 // ajax 验证用户名是否存在//是否为空//
 try {
@@ -25,6 +50,7 @@ try {
 	}
 
 }
+
 function checkUserName(){
 	//校验用户名是否存在//是否为空
 	// 获取用户填写的用户名
@@ -46,14 +72,18 @@ function checkUserName(){
 			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 				// 替换空格
 				var msg = xmlhttp.responseText.replace(/\s/gi,"");
-				if(msg == -1){
-					$("#span1").text("请输入用户名！").css("color", 'red');
-				}else if(msg == -2){
-					$("#span1").text("该用户名已被注册！").css("color", 'red');
-				}else if(msg == -3){
-					$("#span1").text("该用户名不合法！").css("color", 'red');
-				}else if(msg == 1){
-					$("#span1").text("该用户名可以注册！").css("color", 'green'); 
+				eval("var result = " + msg);
+				if(result.code == -1){
+					alert(result.msg);
+					return ;
+				}
+				if(result.code == 1){
+					$("#span1").text(result.msg).css("color", 'green'); 
+					return ;
+				}
+				if(result.code == 0){
+					$("#span1").text(result.msg).css("color", 'red'); 
+					return ;
 				}
 			}
 		};
@@ -75,14 +105,18 @@ function checkPhone(){
 		xmlhttp.onreadystatechange=function(){
 			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 				var msg = xmlhttp.responseText.replace(/\s/gi,"");
-				if(msg == -1){
-					$("#span2").text("请输入电话号码！").css("color", 'red');
-				}else if(msg == -2){
-					$("#span2").text("该电话号码不合法！").css("color", 'red');
-				}else if(msg == -3){
-					$("#span2").text("该电话号码已被注册！").css("color", 'red');
-				}else if(msg == 1){
-					$("#span2").text("该电话号码可以注册！！").css("color", 'green'); 
+				eval("var result = " + msg);
+				if(result.code == -1){
+					alert(result.msg);
+					return ;
+				}
+				if(result.code == 1){
+					$("#span2").text(result.msg).css("color", 'green'); 
+					return ;
+				}
+				if(result.code == 0){
+					$("#span2").text(result.msg).css("color", 'red'); 
+					return ;
 				}
 			}
 		};
@@ -103,14 +137,19 @@ function checkEmail(){
 		xmlhttp.open("POST",url,true);
 		xmlhttp.onreadystatechange=function(){
 			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-				if(msg == -1){
-					$("#span01").text("请输入邮箱！").css("color", 'red');
-				}else if(msg == -3){
-					$("#span01").text("该邮箱不合法！").css("color", 'red');
-				}else if(msg == -2){
-					$("#span01").text("该邮箱已被注册！").css("color", 'red');
-				}else if(msg == 1){
-					$("#span01").text("该邮箱可以注册!").css("color", 'green'); 
+				var msg = xmlhttp.responseText.replace(/\s/gi,"");
+				eval("var result = " + msg);
+				if(result.code == -1){
+					alert(result.msg);
+					return ;
+				}
+				if(result.code == 1){
+					$("#span01").text(result.msg).css("color", 'green'); 
+					return ;
+				}
+				if(result.code == 0){
+					$("#span01").text(result.msg).css("color", 'red'); 
+					return ;
 				}
 			}
 		};
@@ -129,12 +168,18 @@ function checkPassword(){
 			xmlhttp.onreadystatechange=function(){
 				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					if(msg == -1){
-						$("#span3").text("请输入密码！").css("color", 'red');
-					}else if(msg == -2){
-						$("#span3").text("该密码不合法！").css("color", 'red');
-					}else if(msg == 1){
-						$("#span3").text("该密码可以使用!").css("color", 'green'); 
+					eval("var result = " + msg);
+					if(result.code == -1){
+						alert(result.msg);
+						return ;
+					}
+					if(result.code == 1){
+						$("#span3").text(result.msg).css("color", 'green'); 
+						return ;
+					}
+					if(result.code == 0){
+						$("#span3").text(result.msg).css("color", 'red'); 
+						return ;
 					}
 			}
 		};
@@ -156,14 +201,18 @@ function checkPasswordsignup_confirm(){
 		xmlhttp.onreadystatechange=function(){
 			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 				var msg = xmlhttp.responseText.replace(/\s/gi,"");
-				if(msg == -1){
-					$("#span4").text("请输入密码！").css("color", 'red');
-				}else if(msg == -2){
-					$("#span4").text("请确认密码！").css("color", 'red');
-				}else if(msg == -3){
-					$("#span4").text("密码不一致！").css("color", 'red');
-				}else if(msg == 1){
-					$("#span4").text("密码一致!").css("color", 'green'); 
+				eval("var result = " + msg);
+				if(result.code == 1){
+					$("#span4").text(result.msg).css("color", 'green'); 
+					return ;
+				}
+				if(result.code == 0){
+					$("#span4").text(result.msg).css("color", 'red'); 
+					return ;
+				}
+				if(result.code == -1){
+					alert(result.msg);
+					return ;
 				}
 			}
 		};
@@ -187,20 +236,33 @@ function checkReg(){
 			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 				// 替换空格
 				var msg = xmlhttp.responseText.replace(/\s/gi,"");
-				var m = msg.split("/");
-				if(m[1] == "-1"){
-					$("#span1").text("用户名未输入或不合法！").css("color", 'red');
-				}else if(m[2] == "-1"){
-					$("#span2").text("电话未输入或不合法！").css("color", 'red');
-				}else if(m[3] == "-1"){
-					$("#span01").text("密码未输入或不合法！").css("color", 'red');
-				}else if(m[4] == "-1"){
-					$("#span3").text("邮箱未输入或不合法！").css("color", 'red');
-				}else if(msg == -5){
-					document.getElementById('regMsg').innerText = "注册失败！！！";
-				}else if(msg == 1){
-					alert("注册成功！！！");
+				eval("var result = " + msg);
+				if(result.code == 1){
+					alert(result.msg);
 					location.href="join.jsp";
+					return ;
+				}
+				if(result.code == 0){
+					document.getElementById('regMsg').innerText = result.msg;
+					return ;
+				}
+				if(result.code == -1){
+					alert(result.msg);
+					return ;
+				}
+				if(result.code == -2){
+					alert(result.msg);
+					var m = rusult.data;
+					if(m[1] == "-1"){
+						$("#span1").text("用户名未输入或不合法！").css("color", 'red');
+					}else if(m[2] == "-1"){
+						$("#span2").text("电话未输入或不合法！").css("color", 'red');
+					}else if(m[3] == "-1"){
+						$("#span01").text("密码未输入或不合法！").css("color", 'red');
+					}else if(m[4] == "-1"){
+						$("#span3").text("邮箱未输入或不合法！").css("color", 'red');
+					}
+					return ;
 				}
 			}
 		};
@@ -222,38 +284,24 @@ function checkJoin(){
 			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 				// 替换空格
 				var msg = xmlhttp.responseText.replace(/\s/gi,"");
-				if(msg==1){
-					alert("用户登录成功！！！");
-					location.href="${path}/bcak/lhoption/index.jsp";
-				}else if(msg==2){
-					alert("管理员登录成功！！！");
-					location.href="${path}/back/main/index.jsp";
-				}else if(msg==-3){
-					document.getElementById('msg').innerText = "用户名或密码错误！！！";
-				}else if(msg==-2){
-					document.getElementById('msg').innerText = "验证码错误！！！";
-				}else if(msg == -1){
-					document.getElementById('msg').innerText = "用户名不存在！！！";
-				}else if(msg == -4){
-					document.getElementById('msg').innerText = "您的账户已被冻结或删除！！！";
-				}	
-			}
-		};
-		xmlhttp.send(null);
-	}else{
-		alert("不能创建XMLHttpRequest对象实例")
-	}
-}
-function show(){
-	if(xmlhttp!=null){
-		var url ="reg.s?op=showUser";
-		xmlhttp.open("POST",url,true);
-		xmlhttp.onreadystatechange=function(){
-			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-				// 替换空格
-				var msg = xmlhttp.responseText.replace(/\s/gi,"");
-				if(msg == -1){
-					alert("暂无数据！！！");
+				eval("var result = " + msg);
+				if(result.code == 1){
+					alert(result.data+",欢迎您");
+					location.href="back/lhoption/index.jsp";
+					return ;
+				}
+				if(result.code == 2){
+					alert(result.msg);
+					location.href="back/main/index.jsp";
+					return;
+				}
+				if(result.code == -1){
+					alert(result.msg);
+					return;
+				}
+				if(result.code == 0){
+					document.getElementById('msg').innerText = result.msg;
+					return;
 				}
 			}
 		};
@@ -262,9 +310,10 @@ function show(){
 		alert("不能创建XMLHttpRequest对象实例")
 	}
 }
+
 </script>
 </head>
-<body style="background: #fff url(images/bg.jpg) repeat top left;" onload="show()">
+<body style="background: #fff url(images/bg.jpg) repeat top left;">
 <div id="container_demo" >
 	<a class="hiddenanchor" id="toregister"></a>
 	<a class="hiddenanchor" id="tofind"></a>
@@ -272,7 +321,10 @@ function show(){
 	<div id="wrapper">
 		<div id="login" class="animate form">
 			<form  action=""  method="post" >
-				<h1>登录</h1> 
+				<h1>登录</h1>
+				<div class="title" style="text-align: center;">
+							<font color="red" id="msg"></font>
+				</div> 
 				<p> 
 					<label for="username" class="uname" data-icon="u" >您的用户名</label>
 					<input id="username" name="username" required="required" type="text" 
@@ -288,15 +340,12 @@ function show(){
 					<label for="vcode" class="vcode" data-icon="p">请输入验证码</label>
 					<input id="vcode" name="vcode" required="required" type="text" 
 					placeholder="请输入验证码" />
-					<img alt="" src="${codeImg }" style="width:200px; height:80px;" onclick="show()">
+					<img alt="" src="${codeImg }" style="width:300px; height:100px;" onclick="show()">
 				</p>
 				<p class="keeplogin"> 
 					<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
 					<label for="loginkeeping">保持登录状态</label>
 				</p>
-				<div class="title" style="text-align: center;">
-							<font color="red" id="msg"></font>
-				</div>
 				<p class="login button"> 
 					<input type="button" value="登录" onclick="checkJoin()" /> 
 				</p>				
@@ -317,14 +366,14 @@ function show(){
 					
 					<span id="span1" style="font-weight:700;font-size:15px"></span>
 					<input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="用户名" 
-					onblur="checkUserName()" />
+					oninput="checkUserName()" />
 					
 				</p>
 				<p> 
 					<label for="tel" class="youmail">联系电话</label>
 					<span id="span2" style="font-weight:700;font-size:15px"></span>
 					<input id="tel" name="emailsignup" required="required" type="tel" placeholder="联系电话"
-					onblur="checkPhone()"/>
+					oninput="checkPhone()"/>
 					
 				</p>
 				
@@ -332,7 +381,7 @@ function show(){
 					<label for="uemail" class="youemail">电子邮箱</label>
 					<span id="span01" style="font-weight:700;font-size:15px"></span>
 					<input id="uemail" name="uemail" required="required" type="text" placeholder="电子邮箱"
-					onblur="checkEmail()"/>
+					oninput="checkEmail()"/>
 					
 				</p>
 				
@@ -370,7 +419,7 @@ function show(){
 					<label for="passwordsignup" class="youpasswd" data-icon="p">密码（由6-21位字母和数字组成）</label>
 					<span id="span3" style="font-weight:700;font-size:15px"></span>
 					<input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="密码"
-					onblur="checkPassword()"/>
+					oninput="checkPassword()"/>
 				</p>
 				<p> 
 					<label for="passwordsignup_confirm" class="youpasswd" data-icon="p">确认密码</label>

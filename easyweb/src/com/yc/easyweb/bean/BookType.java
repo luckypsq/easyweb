@@ -54,5 +54,40 @@ public class BookType implements Serializable{
 		return "BookType [btid=" + btid + ", btname=" + btname + ", btnamesecond=" + btnamesecond + ", btnamethird="
 				+ btnamethird + ", bttemp=" + bttemp + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((btname == null) ? 0 : btname.hashCode());
+		result = prime * result + ((btnamesecond == null) ? 0 : btnamesecond.hashCode());
+		result = prime * result + ((btnamethird == null) ? 0 : btnamethird.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BookType other = (BookType) obj;
+		if (btname == null) {
+			if (other.btname != null)
+				return false;
+		} else if (!btname.equals(other.btname))
+			return false;
+		if (btnamesecond == null) {
+			if (other.btnamesecond != null)
+				return false;
+		} else if (!btnamesecond.equals(other.btnamesecond))
+			return false;
+		if (btnamethird == null) {
+			if (other.btnamethird != null)
+				return false;
+		} else if (!btnamethird.equals(other.btnamethird))
+			return false;
+		return true;
+	}
 	
 }

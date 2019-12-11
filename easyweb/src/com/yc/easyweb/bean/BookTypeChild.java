@@ -35,5 +35,32 @@ public class BookTypeChild  extends BookType implements Serializable{
 	public void setOpen(String open) {
 		this.open = open;
 	}
+	@Override
+	public String toString() {
+		return "BookTypeChild [open=" + open + ", name=" + name + ", id=" + id + ", pId=" + pId + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BookTypeChild other = (BookTypeChild) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 	
 }

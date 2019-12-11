@@ -29,6 +29,9 @@ public class EorderBiz {
 		if(eorder == null){
 			throw new BizException("请输入订单信息");
 		}
+		if(eorder.getEoid() ==null && eorder.getUid() ==0 && eorder.getEostate() == 0 && eorder.getUname() == null){
+			throw new BizException("请输入需要查询的订单信息");
+		}
 		return dao.selectSingle(eorder);
 	}
 
@@ -41,12 +44,33 @@ public class EorderBiz {
 			if(detial == null){
 				throw new BizException("请输入订单信息");
 			}
+			if(detial.getBid() == 0 && detial.getEoid() == null && detial.getUid() ==0 && detial.getUname() == null && detial.getUphone() == null ){
+				throw new BizException("请输入需要查询的订单信息");
+			}
 			return dao.selectSingleDetail(detial);
 		}
 	// 添加
 	public int insert(Eorder eorder) throws SQLException, BizException  {
 		if(eorder == null){
 			throw new BizException("请输入订单信息");
+		}
+		if(eorder.getEoaddr() == null){
+			throw new BizException("请输入收获地址");
+		}
+		if(eorder.getEoespress() == null){
+			throw new BizException("请选择快递类型");
+		}
+		if(eorder.getEotime() == null){
+			throw new BizException("请输入下单时间");
+		}
+		if(eorder.getUname() ==null){
+			throw new BizException("请输入收货人");
+		}
+		if(eorder.getEotype() == null){
+			throw new BizException("请选择支付类型");
+		}
+		if(eorder.getEopaytypeid() == 0){
+			throw new BizException("请输入支付方式");
 		}
 		return dao.insert(eorder);
 
@@ -57,6 +81,10 @@ public class EorderBiz {
 		if(eorder == null){
 			throw new BizException("请输入订单信息");
 		}
+		if(eorder.getEoid() == null && eorder.getUid() == 0 && eorder.getUname() == null){
+			throw new BizException("请选择需要删除的订单信息");
+		}
+	
 		return dao.delete(eorder);
 
 	}
@@ -65,6 +93,11 @@ public class EorderBiz {
 	public int delete(List<Eorder> list) throws SQLException, BizException  {
 		if(list.size() == 0){
 			throw new BizException("请输入订单信息");
+		}
+		for(Eorder eorder : list){
+			if(eorder.getEoid() == null && eorder.getUid() == 0 && eorder.getUname() == null){
+				throw new BizException("请选择需要删除的订单信息");
+			}
 		}
 		return dao.delete(list);
 
@@ -77,6 +110,9 @@ public class EorderBiz {
 		}
 		if(eorderOld == null){
 			throw new BizException("请输入需要修改的订单");
+		}
+		if(eorderOld.getEoid() == null && eorderOld.getUid() == 0 && eorderOld.getUname() == null){
+			throw new BizException("请选择需要需改的订单信息");
 		}
 		return dao.update(eorderNew, eorderOld);
 	}

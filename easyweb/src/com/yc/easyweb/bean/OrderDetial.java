@@ -120,6 +120,38 @@ public class OrderDetial implements Serializable{
 				+ ", eotype=" + eotype + ", eoaddr=" + eoaddr + ", uphone=" + uphone + ", uname=" + uname + ", uid="
 				+ uid + ", bid=" + bid + ", count=" + count + ", eostate=" + eostate + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((eoaddr == null) ? 0 : eoaddr.hashCode());
+		result = prime * result + ((eoid == null) ? 0 : eoid.hashCode());
+		result = prime * result + (int) (uid ^ (uid >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrderDetial other = (OrderDetial) obj;
+		if (eoaddr == null) {
+			if (other.eoaddr != null)
+				return false;
+		} else if (!eoaddr.equals(other.eoaddr))
+			return false;
+		if (eoid == null) {
+			if (other.eoid != null)
+				return false;
+		} else if (!eoid.equals(other.eoid))
+			return false;
+		if (uid != other.uid)
+			return false;
+		return true;
+	}
 	
 	
 }

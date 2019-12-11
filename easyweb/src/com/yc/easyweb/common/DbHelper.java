@@ -47,26 +47,18 @@ public class DbHelper {
 	}
 	
 	public static  void closeAll(Connection conn,PreparedStatement pstmt,ResultSet rs) {
-		if(null != rs){
-			try {
+		try {
+			if(null != rs){
 				rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
-		}
-		if(null != pstmt){
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if(null != pstmt){
+					pstmt.close();
 			}
-		}
-		if(null != conn){
-			try {
+			if(null != conn){
 				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -74,7 +66,7 @@ public class DbHelper {
 	 * @throws SQLException 
 	 * @throws Exception 
 	 */
-	public static int update(List<String> sqls) throws SQLException{
+	public static int update(List<String> sqls) {
 		int result  =0;
 		try {
 			conn = getConn();
@@ -90,9 +82,18 @@ public class DbHelper {
 			}
 			conn.commit();
 		} catch (SQLException e) {
-			conn.rollback();
-		}finally{
-			conn.setAutoCommit(true);
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				throw new RuntimeException(e1);
+			}
+			
+		}finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
 			closeAll(conn, pstmt, null);
 		}
 		
@@ -105,12 +106,17 @@ public class DbHelper {
 	 * @param params
 	 * @throws SQLException
 	 */
-	private static void setParamsList(PreparedStatement pstmt, List<Object> params)  throws SQLException {
+	private static void setParamsList(PreparedStatement pstmt, List<Object> params){
 		if (null == params || params.isEmpty()) {
 			return;
 		}
 		for (int i = 0; i < params.size(); i++) {
-			pstmt.setObject(i+1, params.get(i));
+			try {
+				pstmt.setObject(i+1, params.get(i));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	/**
@@ -118,23 +124,33 @@ public class DbHelper {
 	 * @throws SQLException 
 	 * @throws Exception 
 	 */
-	public static int update(String sql,Object...params) throws SQLException {
+	public static int update(String sql,Object...params) {
 		int result = 0;
-		conn = getConn();
-		pstmt = conn.prepareStatement(sql);
-		setParamsObject(pstmt,params);
-		result = pstmt.executeUpdate();
-		closeAll(conn, pstmt, null);
+		try {
+			conn = getConn();
+			pstmt = conn.prepareStatement(sql);
+			setParamsObject(pstmt,params);
+			result = pstmt.executeUpdate();
+			closeAll(conn, pstmt, null);
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return result;
 		
 	}
-	private static void setParamsObject(PreparedStatement pstmt2, Object[] params)
-			throws SQLException {
+	private static void setParamsObject(PreparedStatement pstmt2, Object[] params){
 		if(null == params || params.length <= 0){
 			return;
 		}
 		for (int i = 0; i < params.length; i++) {
-			pstmt2.setObject(i+1, params[i]);
+			try {
+				pstmt2.setObject(i+1, params[i]);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	/**
@@ -147,7 +163,7 @@ public class DbHelper {
 	 * @throws Exception 
 	 * @throws SQLException
 	 */
-	public static <T> List<T> selectAll(String sql,List<Object> params,Class<T> cls) throws IOException
+	public static <T> List<T> selectAll(String sql,List<Object> params,Class<T> cls) 
 				{
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		Map<String, Object> map = null;
@@ -184,6 +200,9 @@ public class DbHelper {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}finally {
 			closeAll(conn, pstmt, rs);
 		}
@@ -198,15 +217,22 @@ public class DbHelper {
 	 * @return
 	 * @throws SQLException 
 	 */
-	private static List<String> getColumnNames(ResultSet rs) throws SQLException {
+	private static List<String> getColumnNames(ResultSet rs) {
 		List<String> list = new ArrayList<String>();
 		//获取结果集列的名称，结果集数据视图
-		ResultSetMetaData data = rs.getMetaData();
-		int count = data.getColumnCount();
-		//System.out.println(count);
-		for (int i = 1; i <= count; i++) {
-			//System.out.println(data.getColumnName(i));
-			list.add(data.getColumnName(i));
+		ResultSetMetaData data;
+		try {
+				data = rs.getMetaData();
+			int count = data.getColumnCount();
+			//System.out.println(count);
+			for (int i = 1; i <= count; i++) {
+				//System.out.println(data.getColumnName(i));
+				list.add(data.getColumnName(i));
+			}
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return list;
 	}
@@ -217,7 +243,7 @@ public class DbHelper {
 	 * @throws IOException 
 	 * @throws Exception 
 	 */
-	public static <T> T selectSingle(String sql,List<Object> params,Class<T> cls) throws IOException
+	public static <T> T selectSingle(String sql,List<Object> params,Class<T> cls)
 			{
 		Map<String, Object> map = null;
 		try {
@@ -255,6 +281,9 @@ public class DbHelper {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}finally {
 			closeAll(conn, pstmt, rs);
 		}
@@ -262,7 +291,7 @@ public class DbHelper {
 		return t;
 		
 	}
-	public static Map<String, Object> selectSingle(String sql,List<Object> params) throws IOException
+	public static Map<String, Object> selectSingle(String sql,List<Object> params)
 			{
 		Map<String, Object> map = null;
 		try {
@@ -299,6 +328,9 @@ public class DbHelper {
 			}
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			closeAll(conn, pstmt, rs);

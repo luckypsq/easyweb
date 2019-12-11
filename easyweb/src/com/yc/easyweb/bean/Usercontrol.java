@@ -31,5 +31,28 @@ public class Usercontrol implements Serializable{
 	public String toString() {
 		return "Usercontrol [ucon=" + ucon + ", uid=" + uid + ", conid=" + conid + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (ucon ^ (ucon >>> 32));
+		result = prime * result + (int) (uid ^ (uid >>> 32));
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usercontrol other = (Usercontrol) obj;
+		if (ucon != other.ucon)
+			return false;
+		if (uid != other.uid)
+			return false;
+		return true;
+	}
 	
 }

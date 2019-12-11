@@ -30,7 +30,7 @@ public class EorderDao {
 				sb.append(" and uid=" + eorder.getUid());
 			}
 			if (eorder.getEoid() != null) {
-				sb.append(" and eoid='" + eorder.getEoid() + "'");
+				sb.append(" and eoid like '%" + eorder.getEoid() + "%'");
 			}
 			if (eorder.getEotime() != null) {
 				sb.append(" and eotime like '%" + eorder.getEotime() + "%'");
@@ -104,7 +104,7 @@ public class EorderDao {
 				sb.append(" and e.eoid = '" + detial.getEoid() + "'");
 			}
 			if (detial.getEotime() != null) {
-				sb.append(" and eotime like '%" + detial.getEotime() + "%'");
+				sb.append(" and eotime = '" + detial.getEotime() + "'");
 			}
 			if (detial.getEostate() != 0) {
 				sb.append(" and eostate = " + detial.getEostate());
@@ -133,22 +133,22 @@ public class EorderDao {
 				sb.append(" and eoid='" + eorder.getEoid() + "'");
 			}
 			if (eorder.getEotime() != null) {
-				sb.append(" and eotime like '%" + eorder.getEotime() + "%'");
+				sb.append(" and eotime = '" + eorder.getEotime() + "'");
 			}
 			if (eorder.getUname() != null) {
-				sb.append(" and uname like '%" + eorder.getUname() + "%'");
+				sb.append(" and uname = '" + eorder.getUname() + "'");
 			}
 			if (eorder.getEotype() != null) {
-				sb.append(" and eotype like '%" + eorder.getEotype() + "%'");
+				sb.append(" and eotype = '" + eorder.getEotype() + "'");
 			}
 			if (eorder.getEostate() != 0) {
 				sb.append(" and eostate = " + eorder.getEostate());
 			}
 			if (eorder.getEoaddr() != null) {
-				sb.append(" and eoaddr like '%" + eorder.getEoaddr() + "%'");
+				sb.append(" and eoaddr ='" + eorder.getEoaddr() + "'");
 			}
 			if (eorder.getEoespress() != null) {
-				sb.append(" and eoespress like '%" + eorder.getEoespress() + "%'");
+				sb.append(" and eoespress = '" + eorder.getEoespress() + "'");
 			}
 			if (eorder.getEopaytypeid() != 0) {
 				sb.append(" and eopaytypeid = " + eorder.getEopaytypeid());

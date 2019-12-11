@@ -23,13 +23,13 @@ public class BookTypeDao {
 				+ " from booktype where 1=1 ");
 		if(bookType != null){
 			if(bookType.getBtname() != null && !bookType.getBtname().isEmpty()){
-				sb.append(" and btname ='"+bookType.getBtname()+"'");
+				sb.append(" and btname like '%"+bookType.getBtname()+"%'");
 			}
 			if(bookType.getBtnamesecond() != null && !bookType.getBtnamesecond().isEmpty()){
-				sb.append(" and btnamesecond ='"+bookType.getBtnamesecond()+"'");
+				sb.append(" and btnamesecond like'%"+bookType.getBtnamesecond()+"%'");
 			}
 			if(bookType.getBtnamethird() != null && !bookType.getBtnamethird().isEmpty()){
-				sb.append(" and btnamethird ='"+bookType.getBtnamethird()+"'");
+				sb.append(" and btnamethird like '%"+bookType.getBtnamethird()+"%'");
 			}
 			if(bookType.getBtid() != 0){
 				sb.append(" and btid = "+bookType.getBtid() );
@@ -134,9 +134,6 @@ public class BookTypeDao {
 		}
 		if(bookTypeOld.getBtid() != 0){
 			sb.append(" and btid = "+bookTypeOld.getBtid() );
-		}
-		if(bookTypeOld.getBtstate() != 0){
-			sb.append(" and btstate = "+bookTypeOld.getBtstate() );
 		}
 		return db.update(sb.toString(), null);
 	}

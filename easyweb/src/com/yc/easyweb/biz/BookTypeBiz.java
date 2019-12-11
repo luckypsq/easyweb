@@ -25,13 +25,19 @@ public class BookTypeBiz {
 			if(bookType ==null){
 				throw new BizException("请填写类型信息！！！");
 			}
+			if(bookType.getBtname() == null){
+				throw new BizException("请填写主类型信息！！！");
+			}
 				return book.insert(bookType);
 			
 		}
 		//删除
 		public int delete(BookType bookType)throws BizException, SQLException{
 			if(bookType ==null){
-				throw new BizException("请填写类型信息！！！");
+				throw new BizException("请填写需要删除的类型信息！！！");
+			}
+			if(bookType.getBtname() == null && bookType.getBtid() == 0){
+				throw new BizException("请指定需要删除的类型！！！");
 			}
 				return book.delete(bookType);
 		}
@@ -40,10 +46,13 @@ public class BookTypeBiz {
 			if(bookTypeOld ==null){
 				throw new BizException("请填写类型信息！！！");
 			}
+			if(bookTypeOld.getBtname() == null && bookTypeOld.getBtid() == 0){
+				throw new BizException("请指定需要修改的类型！！！");
+			}
 			if(bookTypeNew ==null){
 				throw new BizException("请填写需要修改的信息！！！");
 			}
-				return book.update(bookTypeNew, bookTypeOld);
+			return book.update(bookTypeNew, bookTypeOld);
 		}
 		//其他
 }

@@ -1,20 +1,20 @@
 package com.yc.easyweb.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.BookType;
+import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.bean.Usercontrol;
 import com.yc.easyweb.biz.BizException;
@@ -27,46 +27,71 @@ public class JoinServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private UserBiz userBiz = new UserBiz();
 	
-	public void join(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
+	public void join(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
-		
-		// 获取验证码
+		Gson gson = new Gson();
+		/*// 获取验证码
 		String vcode01 = (String) session.getAttribute("vcode");
 		String vcode02 = request.getParameter("vcode");
-		if (!vcode01.equalsIgnoreCase(vcode02)) {
-			out.print(-2);//验证码错误
-			return;
-		} 
+		if(vcode01 != null && !vcode01.isEmpty() && !vcode02.isEmpty() && vcode02 != null){
+			if (!vcode01.equalsIgnoreCase(vcode02)) {
+				out.print(-2);//验证码错误
+				return;
+			} 
+		}
+		*/
 				
 		// 接收 用户名 和 密码
 		String username = request.getParameter("uname");
 		String password = request.getParameter("upassword");
-		String loginkeeping = request.getParameter("loginkeeping");
+		String loginkeeping = request.getParameter("loginkeeping");//验证码
 		session.setAttribute("loginUname", username);
 		User user = new User();
-		//添加用户名条件
-		if(username != null && !username.isEmpty()){
-			user.setUname(username);
-		}else{
-			out.print(-3);//用户名为空
-		}
-		//添加密码条件
-		if(password != null && !password.isEmpty()){
-			user.setUpassword(password);
-		}else{
-			out.print(-3);//密码为空
-		}
-		
+		Result result;
 		try {
+			//添加用户名条件
+			if(username != null && !username.isEmpty()){
+				user.setUname(username);
+			}else{
+				result = Result.failure("用户名为空！！！", username);
+				String json = gson.toJson(result);
+				// 返回json格式数据
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return ;
+			}
+			//添加密码条件
+			if(password != null && !password.isEmpty()){
+				user.setUpassword(password);
+			}else{
+				result = Result.failure("密码为空！！！");
+				String json = gson.toJson(result);
+				// 返回json格式数据
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return ;
+			}
+			
+		
 			User userShow = userBiz.selectSingle(user);//保存用户信息
 			if(userShow.getUid() == 0){
-				out.print(-1);//用户名不存在
+				//用户名不存在
+				result =Result.failure("用户名不存在！！！", username);
+				String json = gson.toJson(result);
+				// 返回json格式数据
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return ;
+			}
+			if(userShow.getUstate() != 1){
+				result = Result.failure("您已被冻结或账号被删除！！！", username);
+				String json = gson.toJson(result);
+				// 返回json格式数据
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
 				return ;
 			}
 			session.setAttribute("loginedUser", userShow);
-		
 			// 获取系统当前时间
 			SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
 			Date date = new Date();
@@ -164,12 +189,13 @@ public class JoinServlet extends BaseServlet {
 			     }
      			}
 			*/
-			if(userShow.getUstate() != 1){
-				out.print(-4);
-				return;
-			}
+			
 			if (userShow.getUtype() != 1 && userShow.getUtype() != 5) {
-				out.print(1);
+				result = Result.success("用户登录成功！！！", username);
+				String json = gson.toJson(result);
+				// 返回json格式数据
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
 			} else {
 				UsercontrolBiz ucBiz = new UsercontrolBiz();
 				Usercontrol usercontrolOld = new Usercontrol();
@@ -183,10 +209,32 @@ public class JoinServlet extends BaseServlet {
 					}
 				}
 				session.setAttribute("adminControl", conList);
-				out.print(2);
+				result = new Result("管理员登录成功！！！",2);
+				String json = gson.toJson(result);
+				// 返回json格式数据
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
 			}
 		} catch (BizException e) {
-			// TODO Auto-generated catch block
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			// 返回json格式数据
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
+			String json = gson.toJson(result);
+			// 返回json格式数据
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
 			e.printStackTrace();
 		}
 	}

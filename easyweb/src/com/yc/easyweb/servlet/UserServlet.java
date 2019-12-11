@@ -10,19 +10,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 import com.google.gson.Gson;
 import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.UserBiz;
-import com.yc.easyweb.dao.UserDaoLyw;
 
 public class UserServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	UserBiz userBiz = new UserBiz();
-	private UserDaoLyw dao =new UserDaoLyw();
 	// 添加
 	public void add(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, InvocationTargetException {
@@ -596,7 +593,6 @@ public class UserServlet extends BaseServlet {
 		}
 	//更新个人信息
 	public void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		Gson gson = new Gson();
 		Result result ;
@@ -639,7 +635,7 @@ public class UserServlet extends BaseServlet {
 			check = check + "/-1";
 		}
 		if(!check.equals("1/1/1")){
-			result= Result.error(check);
+			result= Result.failure(check);
 			String json = gson.toJson(result);
 			// 返回json格式数据
 			response.setContentType("application/json;charset=UTF-8");

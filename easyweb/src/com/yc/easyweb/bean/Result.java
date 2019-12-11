@@ -2,6 +2,8 @@ package com.yc.easyweb.bean;
 
 import java.io.Serializable;
 
+import jdk.nashorn.internal.codegen.ObjectClassGenerator;
+
 public class Result implements Serializable{
 	/**
 	 * 
@@ -18,6 +20,13 @@ public class Result implements Serializable{
 		super();
 	}
 	
+	public Result(String msg, int code) {
+		super();
+		this.msg = msg;
+		this.code = code;
+	}
+
+
 	public Result(String msg, int code, Object data) {
 		super();
 		this.msg = msg;
@@ -54,10 +63,49 @@ public class Result implements Serializable{
 		result.msg = msg;
 		return result;
 	}
+	
+	public static Result failure(String msg ,Object data){
+		Result result = new Result();
+		result.code = 0;
+		result.msg = msg;
+		result.data =data;
+		return result;
+	}
+	/**
+	 * 默认错误的结果对象
+	 * @param msg
+	 * @param data
+	 * @return
+	 */
+	public static Result error(String msg,Object data){
+		Result result = new Result();
+		result.code = -1;
+		result.msg = msg;
+		result.data = data;
+		return result;
+	}
 	public static Result error(String msg){
 		Result result = new Result();
 		result.code = -1;
 		result.msg = msg;
+		return result;
+	}
+	
+	/**
+	 * 默认信息不完全的结果对象
+	 * @return
+	 */
+	public static Result lack(String msg){
+		Result result = new Result();
+		result.code = -2;
+		result.msg = msg;
+		return result;
+	}
+	public static Result lack(String msg,Object data){
+		Result result = new Result();
+		result.code = -2;
+		result.msg = msg;
+		result.data = data;
 		return result;
 	}
 	

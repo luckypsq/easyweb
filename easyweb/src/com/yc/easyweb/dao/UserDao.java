@@ -71,26 +71,26 @@ public class UserDao {
 					+ " ustate,utemp,utype,uemail,utime,usex,uage,uclass " + " from user where 1=1 ");
 			if (user != null) {
 				if (user.getUminname() != null) {
-					sb.append(" and uminname like '%" + user.getUminname() + "%'");
+					sb.append(" and uminname = '" + user.getUminname() + "'");
 				}
 				if (user.getUname() != null) {
-					sb.append(" and uname like '%" + user.getUname() + "%'");
+					sb.append(" and uname = '" + user.getUname() + "'");
 				}
 				if (user.getUphone() != null) {
-					sb.append(" and uphone like '%" + user.getUphone() + "%'");
+					sb.append(" and uphone = '" + user.getUphone() + "'");
 				}
 				if (user.getUniversity() != null) {
-					sb.append(" and university like '%" + user.getUniversity() + "%'");
+					sb.append(" and university = '" + user.getUniversity() + "'");
 				}
 				if (user.getUcollege() != null) {
-					sb.append(" and ucollege like '%" + user.getUcollege() + "%'");
+					sb.append(" and ucollege = '" + user.getUcollege() + "'");
 				}
 				if (user.getUmajor() != null) {
-					sb.append(" and umajor like '%" + user.getUmajor() + "%'");
+					sb.append(" and umajor = '" + user.getUmajor() + "'");
 				}
 				//” œ‰
 				if (user.getUemail()!= null) {
-					sb.append(" and uemail like '%" + user.getUemail() + "%'");
+					sb.append(" and uemail = '" + user.getUemail() + "'");
 				}
 				if (user.getUstate() != 0) {
 					sb.append(" and ustate = " + user.getUstate());

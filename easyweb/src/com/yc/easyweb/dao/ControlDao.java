@@ -57,10 +57,10 @@ public class ControlDao {
 				" select conid,coname,conamesecond,conadd,condelete,coninsert,conupdate,concheck,uid,constate,contemp from control where 1=1 ");
 		if (control != null) {
 			if (control.getConame() != null) {
-				sb.append(" and coname like '%" + control.getConame() + "%'");
+				sb.append(" and coname = '" + control.getConame() + "'");
 			}
 			if (control.getConamesecond() != null) {
-				sb.append(" and conamesecond like '%" + control.getConamesecond() + "%'");
+				sb.append(" and conamesecond = '" + control.getConamesecond() + "'");
 			}
 			if (control.getConadd() != 0) {
 				sb.append(" and conadd =" + control.getConadd());
@@ -84,7 +84,7 @@ public class ControlDao {
 				sb.append(" and constate=" + control.getConstate());
 			}
 			if (control.getContemp() != null) {
-				sb.append(" and contemp like '%" + control.getContemp() + "%'");
+				sb.append(" and contemp = '" + control.getContemp() + "'");
 			}
 			if (control.getConid() != 0) {
 				sb.append(" and conid=" + control.getConid());

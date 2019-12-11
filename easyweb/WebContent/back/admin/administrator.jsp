@@ -50,7 +50,7 @@
 <title>管理员</title>
 </head>
 
-<body onload="selectAdmin()">
+<body >
 	<div class="page-content clearfix">
 		<div class="administrator">
 				<div class="d_Confirm_Order_style">
@@ -290,7 +290,34 @@
 		elem : '#start',
 		event : 'focus'
 	});
-	
+
+	$(function(){  
+		if(xmlhttp!=null){
+			var url="${path}/control.s?op=queryAdmin";
+			xmlhttp.open("POST",url,true);
+			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+			// 每次的状态改变都会调用该方法
+			xmlhttp.onreadystatechange=function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					// 替换空格
+					var msg = xmlhttp.responseText.replace(/\s/gi,"");
+					if(msg == -1){
+						layer.msg('暂无数据', {
+							icon : 5,
+							time : 1000
+							});
+					}
+				}
+			};
+			// 发送请求
+			xmlhttp.send(null);
+		}else{
+			layer.msg('不能创建XMLHttpRequest对象实例', {
+				icon : 2,
+				time : 1000
+				});
+		} 
+	});
 	
 	function selectAdmin(){
 		var adminName = document.getElementById("adminName").value.trim();
@@ -317,7 +344,7 @@
 				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
 					// 替换空格
 					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					if(msg == 1){
+					if(msg == -1){
 						layer.msg('暂无数据', {
 							icon : 5,
 							time : 1000

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+
+
 public class Test {
 	
 	//≤È—Ø
@@ -12,7 +14,7 @@ public class Test {
 		String tString = null;
 		Map<String ,String> map  =new HashMap<String, String>();
 		map.put("str", tString);
-		System.out.println(map.get("str"));
-		System.out.println(map.get("str33"));
+		String min = uuid.substring(0, 8);
+		System.out.println(min);
 	}
 }
