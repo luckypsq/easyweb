@@ -13,41 +13,27 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link
-	href="${path}/back/assets/css/bootstrap.min.css"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="${path}/back/css/style.css" />
-<link
-	href="${path}/back/assets/css/codemirror.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="${path}/back/assets/css/ace.min.css" />
+<link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="${path}/back/css/style.css" />
+<link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+<link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
 <link rel="stylesheet"
 	href="${path}/back/Widget/zTree/css/zTreeStyle/zTreeStyle.css"
 	type="text/css">
 <link rel="stylesheet"
 	href="${path}/back/assets/css/font-awesome.min.css" />
-<link
-	href="${path}/back/Widget/icheck/icheck.css"
+<link href="${path}/back/Widget/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="${path}/back/Widget/webuploader/0.1.5/webuploader.css"
 	rel="stylesheet" type="text/css" />
-<link
-	href="${path}/back/Widget/webuploader/0.1.5/webuploader.css"
-	rel="stylesheet" type="text/css" />
-<link href="${path}/back/css/button.css"
-	rel="stylesheet" type="text/css" />
-<script
-	src="${path}/back/assets/layer/layer.js"
+<link href="${path}/back/css/button.css" rel="stylesheet"
+	type="text/css" />
+<script src="${path}/back/assets/layer/layer.js" type="text/javascript"></script>
+<script src="${path}/back/assets/laydate/laydate.js"
 	type="text/javascript"></script>
-<script
-	src="${path}/back/assets/laydate/laydate.js"
-	type="text/javascript"></script>
-<script
-	src="${path}/back/js/jquery-1.9.1.min.js"></script>
-<script
-	src="${path}/back/assets/js/bootstrap.min.js"></script>
-<script
-	src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
+<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+<script src="${path}/back/assets/js/bootstrap.min.js"></script>
+<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
 <script type="text/javascript"
 	src="${path}/back/Widget/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript"
@@ -61,15 +47,14 @@
 <script type="text/javascript"
 	src="${path}/back/Widget/ueditor/1.4.3/ueditor.config.js"></script>
 <script type="text/javascript"
-	src="${path}/back/Widget/ueditor/1.4.3/ueditor.all.min.js"> </script>
+	src="${path}/back/Widget/ueditor/1.4.3/ueditor.all.min.js">
+	
+</script>
 <script type="text/javascript"
 	src="${path}/back/Widget/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
-<script src="${path}/back/js/lrtk.js"
-	type="text/javascript"></script>
-<script type="text/javascript"
-	src="${path}/back/js/H-ui.js"></script>
-<script type="text/javascript"
-	src="${path}/back/js/H-ui.admin.js"></script>
+<script src="${path}/back/js/lrtk.js" type="text/javascript"></script>
+<script type="text/javascript" src="${path}/back/js/H-ui.js"></script>
+<script type="text/javascript" src="${path}/back/js/H-ui.admin.js"></script>
 <title>新增书籍</title>
 </head>
 <body>

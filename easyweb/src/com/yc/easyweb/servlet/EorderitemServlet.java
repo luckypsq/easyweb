@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Bought;
 import com.yc.easyweb.bean.Eorderitem;
 import com.yc.easyweb.bean.Page;
+import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookBiz;
@@ -24,6 +26,8 @@ import com.yc.easyweb.biz.EorderitemBiz;
 public class EorderitemServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	EorderitemBiz eBiz = new EorderitemBiz();
+	private  Gson gson = new Gson();
+	private Result result ;
 	//查询
 	public void  query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
@@ -41,66 +45,6 @@ public class EorderitemServlet extends BaseServlet {
 		session.setAttribute("cartPage", Page);
 		if(Page.getData().size() == 0){
 			out.print(-1);
-		}
-	}
-	//添加
-	public void  add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-		Eorderitem eod = new Eorderitem();
-		PrintWriter out = response.getWriter();
-		if(request.getParameter("bid") != null && !request.getParameter("bid").isEmpty()){
-			eod.setBid(Long.parseLong(request.getParameter("bid")));
-			BookBiz biz = new BookBiz();
-			Book book = new Book();
-			book.setBid(Long.parseLong(request.getParameter("bid")));
-			try {
-				Book bookOld = biz.selectSingle(book);
-				if(bookOld != null){
-					eod.setTotal(bookOld.getBprice());
-				}else{
-					out.print(2);
-					return ;
-				}
-			} catch (BizException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}else{
-			out.print(2);
-			return ;
-		}
-		User user = null;
-		if(request.getSession().getAttribute("loginedUser") != null ){
-			user = (User)request.getSession().getAttribute("loginedUser");
-			if(user.getUid() != 0){
-				eod.setUid(user.getUid());
-			}else{
-				out.print(2);
-				return ;
-			}
-		}else{
-			out.print(2);
-			return ;
-		}
-		//获取系统时间
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		eod.setCarttime(df.format(date));
-		//生成订单号
-		String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
-		eod.setItemid(uuid);
-		try {
-			int i = eBiz.insert(eod);
-			if(i > 0 ){
-				out.print(1);
-			}else{
-				out.print(0);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BizException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	//删除
@@ -166,4 +110,106 @@ public class EorderitemServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	//添加
+		public void  add(HttpServletRequest request, HttpServletResponse response){
+			Eorderitem eod = new Eorderitem();
+			try {
+				Book bookOld ;
+				if(request.getParameter("bid") != null && !request.getParameter("bid").isEmpty()){
+					eod.setBid(Long.parseLong(request.getParameter("bid")));
+					BookBiz biz = new BookBiz();
+					Book book = new Book();
+					book.setBid(Long.parseLong(request.getParameter("bid")));
+					book.setBstate(1);
+					bookOld = biz.selectSingle(book);
+					if(bookOld != null){
+							eod.setTotal(bookOld.getBprice());
+					}else{
+						result = Result.lack("该本书已被下架或删除！！！");
+						String json = gson.toJson(result);
+						response.setContentType("application/json;charset=UTF-8");
+						response.getWriter().append(json);
+						return ;
+					}
+				}else{
+					result = Result.lack("请选择书籍！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return ;
+				}
+				User user = null;
+				if(request.getSession().getAttribute("loginedUser") != null ){
+					user = (User)request.getSession().getAttribute("loginedUser");
+					if(user.getUid() != 0){
+						eod.setUid(user.getUid());
+					}else{
+						result = Result.lack("请先登录！！！");
+						String json = gson.toJson(result);
+						response.setContentType("application/json;charset=UTF-8");
+						response.getWriter().append(json);
+						return ;
+					}
+				}else{
+					result = Result.lack("请先登录！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return ;
+				}
+				//获取系统时间
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = new Date();
+				eod.setCarttime(df.format(date));
+				//生成订单号
+				String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
+				eod.setItemid(uuid);
+				eod.setCount(1);
+				int i = eBiz.insert(eod);
+				if(i > 0 ){
+					result = Result.success("添加成功！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);	
+				}else{
+					result = Result.failure("添加失败！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);	
+				}
+			} catch (SQLException e) {
+				result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				try {
+					response.getWriter().append(json);
+				} catch (IOException e1) {
+					throw new RuntimeException(e1);
+					// TODO Auto-generated catch block
+				}			
+				e.printStackTrace();
+			} catch (BizException e) {
+				result = Result.error(e.getMessage());
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				try {
+					response.getWriter().append(json);
+				} catch (IOException e1) {
+					throw new RuntimeException(e1);
+					// TODO Auto-generated catch block
+				}
+			} catch (IOException e) {
+				result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				try {
+					response.getWriter().append(json);
+				} catch (IOException e1) {
+					throw new RuntimeException(e1);
+					// TODO Auto-generated catch block
+				}			
+				e.printStackTrace();
+			}
+		}
 }

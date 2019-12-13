@@ -9,7 +9,7 @@
 <title>易书网</title>
 </head>
 <body>
-<jsp:include page="/common/header.jsp"></jsp:include>
+<jsp:include page="../common/header.jsp"></jsp:include>
 <div class="help-wrap">
 	<div class="container clearfix">
 		<div class="bread">当前位置：
@@ -86,6 +86,6 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="/common/footer.jsp"></jsp:include>
+<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

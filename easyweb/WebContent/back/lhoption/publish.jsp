@@ -144,7 +144,7 @@
 	}
 </style>
 <body>
-<jsp:include page="/common/header.jsp"></jsp:include>
+<jsp:include page="../common/header.jsp"></jsp:include>
 
 <div class="help-wrap">
 	<div class="container clearfix">
@@ -153,7 +153,7 @@
 			<a href="${path}/back/lywoption/member.jsp">个人中心</a> >
 			<a href="${path}/back/lywoption/bought.jsp">发布书籍</a>
 		</div>
-		<jsp:include page="${path}/common/middle.jsp"></jsp:include>
+		<jsp:include page="../common/middle.jsp"></jsp:include>
 		<div class="help-r fr">
 			<div class="help-item-title">发布书籍</div>
 			<div class="help-main">
@@ -285,6 +285,6 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="/common/footer.jsp"></jsp:include>
+<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

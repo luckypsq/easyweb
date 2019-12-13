@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
+import com.google.gson.Gson;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.Bought;
 import com.yc.easyweb.bean.Eorder;
@@ -24,6 +24,7 @@ import com.yc.easyweb.bean.Eorderitem;
 import com.yc.easyweb.bean.OrderDetial;
 import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.bean.PayType;
+import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookBiz;
@@ -31,13 +32,14 @@ import com.yc.easyweb.biz.EorderBiz;
 import com.yc.easyweb.biz.EorderitemBiz;
 import com.yc.easyweb.biz.PayTypeBiz;
 
-import sun.reflect.generics.tree.BottomSignature;
 
 public class EorderServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	EorderitemBiz eBiz = new EorderitemBiz();
 	EorderBiz eorderBiz = new EorderBiz();
 	BookBiz biz = new BookBiz();
+	private  Gson gson = new Gson();
+	private Result result ;
 	//查询
 	public void  query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
@@ -478,19 +480,17 @@ public class EorderServlet extends BaseServlet {
 			out.print(-1);
 		}
 	}
+	
+	
+	
 	//用户填写订单信息展示
-	public void  showEorder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
+	public void  showEorder(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
 		BookBiz biz = new BookBiz();
 
 		String bid = request.getParameter("bid");
 		String itemid = request.getParameter("itemid");
 		try {
-			PayTypeBiz payTypeBiz = new PayTypeBiz();
-			PayType payType = new PayType();
-			List<PayType> payTypeList = payTypeBiz.selectAll(payType);
-			session.setAttribute("payType", payTypeList);
 			if(bid != null && !bid.isEmpty()){
 				Book book = new Book();
 				book.setBid(Long.parseLong(bid));
@@ -499,7 +499,10 @@ public class EorderServlet extends BaseServlet {
 					session.setAttribute("eorderBook", book2);
 					session.setAttribute("totalBook", book2.getBprice());
 				}else{
-					out.print(-1);
+					result = Result.failure("该书籍已被删除或下架！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
 				}
 			}else if(itemid != null && !itemid.isEmpty()){
 				EorderitemBiz biz2 = new EorderitemBiz();
@@ -510,13 +513,37 @@ public class EorderServlet extends BaseServlet {
 					session.setAttribute("eorderBook", bought);
 					session.setAttribute("totalBook", bought.getTotal());
 				}else{
-					out.print(-1);
+					result = Result.failure("订单已被删除或失效！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
 				}
 			}else{
-				out.print(2);
+				result = Result.failure("未选择书籍或购物车订单！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
 			}
 		} catch (BizException e) {
-			// TODO Auto-generated catch block
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+				// TODO Auto-generated catch block
+			}
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+				// TODO Auto-generated catch block
+			}			
 			e.printStackTrace();
 		}
 	}

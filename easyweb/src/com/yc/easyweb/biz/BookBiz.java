@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.BookChild;
 import com.yc.easyweb.bean.Eorderitem;
 import com.yc.easyweb.bean.OrderDetial;
 import com.yc.easyweb.bean.Page;
@@ -111,6 +112,9 @@ public class BookBiz {
 	//∑÷“≥
 	public Page<Book> bookPage(int page, int rows,Book book) throws IOException{
 		return dao.bookPage(page, rows, book);
+	}
+	public Page<Book> bookChildPage(int page, int rows,BookChild book) throws IOException{
+		return dao.bookChildPage(page, rows, book);
 	}
 	// ∆‰À˚
 }

@@ -81,7 +81,7 @@
 	}
 </style>
 <body onload="show(-1)">
-<jsp:include page="${path }/common/header.jsp"></jsp:include>
+<jsp:include page="../common/header.jsp"></jsp:include>
 <div class="help-wrap">
 	<div class="container clearfix">
 		<div class="bread">当前位置：
@@ -89,7 +89,7 @@
 			<a href="${path}/back/lywoption/member.jsp">个人中心</a> >
 			<a href="${path}/back/lywoption/bought2.jsp">已买书籍</a>
 		</div>
-		<jsp:include page="${path}/common/middle.jsp"></jsp:include>
+		<jsp:include page="../common/middle.jsp"></jsp:include>
 		<div class="help-r fr">
 		<div class="help-item-title">已买书籍</div>
 		<c:forEach items="${userOrder}" var="userOrder">
@@ -163,6 +163,6 @@
 			</div>
 		</div>
 	</div>
-<jsp:include page="${path }/common/footer.jsp"></jsp:include>
+<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

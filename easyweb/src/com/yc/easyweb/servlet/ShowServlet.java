@@ -11,18 +11,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.yc.easyweb.bean.*;
 import com.yc.easyweb.biz.*;
 
 public class ShowServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
-
+	private  Gson gson = new Gson();
+	private UserBiz userBiz = new UserBiz();
+	private BookBiz bookBiz = new BookBiz();
+	private EorderBiz eorderBiz = new EorderBiz();
+	private NoticeBiz noticeBiz = new NoticeBiz();
+	private BookTypeBiz btBiz  = new BookTypeBiz();
+	private Result result ;
 	// home页面的信息展示查询
 	public void queryHome(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		// 获取用户信息
-		UserBiz userBiz = new UserBiz();
 		User user = new User();
 		// 获取user表所有信息存储在会话中
 		List<User> userListAll = userBiz.selectAll(user);
@@ -57,7 +63,7 @@ public class ShowServlet extends BaseServlet {
 		session.setAttribute("customerExit", customerExit);// 存储所有存在的用户信息
 
 		// 获取书籍信息
-		BookBiz bookBiz = new BookBiz();
+	
 		Book book = new Book();
 		List<Book> bookAll = bookBiz.selectAll(book);
 		book.setBstate(1);
@@ -66,7 +72,7 @@ public class ShowServlet extends BaseServlet {
 		session.setAttribute("bookAll", bookAll);// 存储所有书籍
 
 		// 获取全部订单数
-		EorderBiz eorderBiz = new EorderBiz();
+		
 		Eorder eorder = new Eorder();
 		OrderDetial eorder1 = new OrderDetial();
 		String[] date = (String[]) session.getAttribute("date");
@@ -121,7 +127,6 @@ public class ShowServlet extends BaseServlet {
 		session.setAttribute("bookCount", bookCount);// 存储每一状态数值
 
 		// 公告展示
-		NoticeBiz noticeBiz = new NoticeBiz();
 		Notice notice = new Notice();
 		List<Notice> nList = noticeBiz.selectAll(notice);
 		List<Notice> nShow = new ArrayList<Notice>();
@@ -136,5 +141,51 @@ public class ShowServlet extends BaseServlet {
 		}
 		// 存储最新的六个公告展示出来
 		session.setAttribute("noticeShow", nShow);
+	}
+	
+	/*
+	 * 用户index页面信息展示
+	 */
+	public void queryUserIndex(HttpServletRequest request, HttpServletResponse response){
+		HttpSession session = request.getSession();
+		try {
+			String btid1 = request.getParameter("btid1");
+			String btid2 = request.getParameter("btid2");
+			//书籍展示
+			BookChild book = new BookChild();
+			book.setBstate(1);
+			Book book2 = new Book();
+			book2.setBstate(1);
+			//教材区
+			if(btid1 != null && !btid1.isEmpty()){
+				book2.setBtid(Long.parseLong(btid1));
+				Page<Book> pPage = bookBiz.bookPage(1, 12, book2);
+				session.setAttribute("teachBook", pPage.getData());
+				session.setAttribute("teachPage", pPage);
+			}
+			//工具书区
+			if(btid2 != null && !btid2.isEmpty()){
+				book2.setBtid(Long.parseLong(btid2));
+				Page<Book> pPage = bookBiz.bookPage(1, 7, book2);
+				session.setAttribute("toolBook", pPage.getData());
+				session.setAttribute("toolPage", pPage);
+			}
+			result = Result.success("数据已加载");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+				
+			}			
+			e.printStackTrace();
+		}
 	}
 }

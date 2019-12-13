@@ -1,67 +1,92 @@
-<%@page import="com.yc.easyweb.bean.Page"%>
-<%@page import="java.util.List"%>
-<%@page import= "com.yc.easyweb.bean.Notice" %>
-<%@page import= "com.yc.easyweb.biz.NoticeBiz" %>
-<%@page import="com.yc.easyweb.biz.NoticeBiz"%>
-<%@page import="com.yc.easyweb.common.DbHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<link rel="stylesheet" href="<%=application.getContextPath()%>/css/index.css"/>
-	<script src="js/main.js"></script>
-	<title>Document</title>
-	<script type="text/javascript" src="<%=application.getContextPath()%>/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="<%=application.getContextPath()%>/ckeditor/config.js"></script>
+	<link rel="stylesheet" href="${path}/css/index.css"/>
+	<title>网站公告</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$.ajax({
+		        type: "post",
+		        url: "${path}/notice.s?op=query",
+		        data: "",
+		        async:true, // 异步请求
+		        cache:true, // 设置为 false 将不缓存此页面
+		        dataType: 'json', // 返回对象
+		        success: function(result) {
+		        	if(result.code == -1){
+		            	alert(result.msg);
+		            }
+		        	if(result.code == 0){
+		            	alert(result.msg);
+		            }
+		        	if(result.code == 1){
+			        		if(location.href.indexOf('#maincontent fl')==-1){
+			   			     location.href=location.href + '#maincontent fl';
+			   			     location.reload();
+			   		    }
+		        	}
+		        }
+		    });
+		});
+		function show(page){
+			var page1 = "page="+page;
+			$.ajax({
+		        type: "post",
+		        url: "${path}/notice.s?op=query",
+		        data: page1,
+		        async:true, // 异步请求
+		        cache:true, // 设置为 false 将不缓存此页面
+		        dataType: 'json', // 返回对象
+		        success: function(result) {
+		        	if(result.code == -1){
+		            	alert(result.msg);
+		            }
+		        	if(result.code == 0){
+		            	alert(result.msg);
+		            }
+		        	if(result.code == 1){
+			        		
+		        	}
+		        }
+		    });
+		}
+	</script>
 </head>
 <body >
-<jsp:include page="<%=application.getContextPath()%>/common/header.jsp"></jsp:include>
-<div class="mainbody" style="background: #FFF url(images/bodybg.png) repeat-x;">
+<jsp:include page="../common/header.jsp"></jsp:include>
+<div class="mainbody" style="background: #FFF url(images/bodybg.png) repeat-x;" >
 	<div class="container clearfix" style="background-color: white">
 		<div class="mainbody_topbg"></div>
 		<div class="bread">当前位置：
-			<a href="<%=application.getContextPath()%>/lhoption/index.jsp">首页</a> >
-			<a href="<%=application.getContextPath()%>/lhoption/notice.jsp">公告</a>
+			<a href="${path}/back/lhoption/index.jsp">首页</a> >
+			<a href="${path}/backlhoption/notice.jsp">公告</a>
 		</div>
-		<div class="maincontent fl">
-		<%
-			String paramNumber = request.getParameter("page"); 
-			NoticeBiz biz = new NoticeBiz();
-			Notice notice = new Notice();
-			
-			int iPage = paramNumber == null ? 1 : Integer.parseInt(paramNumber);
-			Page<Notice> pPage = biz.noticePage(iPage, 5, notice);
-		%>
-		<%for(Notice t : pPage.getData()){%>
-			<div class="post">
-				<h2><a href="<%=application.getContextPath()%>/notice-detail.jsp?nid=">华南地区因暴雨天气部分订单推迟配送</a></h2>
-				<div class="postdata">
-					<div class="date"><%=t.getNtime() %></div>
-					<div class="cate">发表于 <a href="notice-detail.html">公告</a> | </div>
-					<div class="cate">浏览量: <span><%=t.getNnumber() %></span>次</div>
-				</div>
+		<div class="maincontent fl" id="maincontent fl">
 				<div class="post">
-				<%-- <%=t.getNcontent() %> --%>
-				<textarea rows="10px" cols="10px" name="ckeditor<%=t.getNid() %>" ><%=t.getNcontent() %></textarea>
-				<script type="text/javascript">CKEDITOR.replace('ckeditor<%=t.getNid()%>');</script> 
-				<p style="text-align: right;"><%=t.getNauthor() %><br>
-						<%=t.getNtime() %>
-					</p>
+					<c:forEach   items="${allNoticeShow}" var="allNoticeShow">
+						<h2><a href="${path}/notice-detail.jsp?nid=${allNoticeShow.nid}">${allNoticeShow.ntitle}</a></h2>
+						<div class="postdata">
+							<div class="date">${date[0] }年${date[1] }月${date[2] }日</div>
+							<div class="cate">发表于 <a href="#">公告</a> | </div>
+							<div class="cate">浏览量: <span>${allNoticeShow.nnumber}</span>次</div>
+						</div>
+						<div class="content">
+							<p>${allNoticeShow.ncontent}</p>
+							<p style="text-align: right;">${allNoticeShow.nauthor}<br />${allNoticeShow.ntime}</p>
+						</div>
+					</c:forEach>
 				</div>
-			</div>
-			<%} %>
-			
-			
 			<div id="ball_footer" class="ball_footer">
-					
-					<a class="firstPage" href="<%=application.getContextPath()%>/lhoption/notice.jsp?page=1">首页</a>
-					<a class="previousPage" href="<%=application.getContextPath()%>/lhoption/notice.jsp?page=<%=pPage.getPreviousPage()%>">上一页</a>
-					<a class="nextPage" href="<%=application.getContextPath()%>/lhoption/notice.jsp?page=<%=pPage.getNextPage()%>">下一页</a>
-					<a class="lastPage" href="<%=application.getContextPath()%>/lhoption/notice.jsp?page=<%=pPage.getLastPage()%>">尾页</a>
-					第<%=pPage.getPage()%>/<%=pPage.getLastPage()%>
-				
+					<a href="javascript:;" class="firstPage" onclick = "show(${noticePage.getFirstPage()})">首页</a>
+					<a href="javascript:;" class="previousPage" onclick = "show(${noticePage.getPreviousPage()})">上一页</a>
+					<a class="nextPage" href="javascript:;"onclick = "show(${noticePage.getNextPage()})" >下一页</a>
+					<a class="lastPage" href="javascript:;" onclick = "show(${noticePage.getLastPage()})">尾页</a>
+					第${noticePage.getPage()}/${noticePage.getLastPage()}页
 			</div>	
 		</div>
 		<div class="sidebar fr">
@@ -69,25 +94,16 @@
 				<li>
 					<h2>最新公告</h2>
 					<ul>
-					<%
-					NoticeBiz noticeBiz = new NoticeBiz();
-					Notice noticer = new Notice();
-					List<Notice> nList = noticeBiz.selectAll(noticer);
-					if(nList.size() != 0){
-						for(int i=0; i<nList.size();i++){
-							if(i == 6){
-								break ;
-							}
-				%>
-				<li><i class="icon-bell red"></i><a href="${path}/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
-				<% 
-						}
-					}else{
-				%>
-				<li><i class="icon-bell red"></i>暂无新公告</li>
-				<%
-					}
-				%></ul>
+						<c:if test="${noticeShow.size()> 0}" var="flag" scope="session">
+							<c:forEach items="${noticeShow}" var="n">
+								<li><i class="icon-bell red"></i><a href="${path}/notice-detail.jsp?nid=${n.nid}">${n.ntitle }</a></li>
+							</c:forEach>
+						</c:if>
+						
+						<c:if test="${not flag}">
+						   	<li><i class="icon-bell red"></i>暂无新公告</li>
+						</c:if>
+					</ul>
 				</li>
 				<li>
 					<h2>公告存档</h2>
@@ -153,6 +169,6 @@
 		<div class="mainbody_bottombg"></div>
 	</div>
 </div>
-<jsp:include page="/common/footer.jsp"></jsp:include>
+<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

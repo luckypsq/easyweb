@@ -13,19 +13,29 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.BookChild;
 import com.yc.easyweb.bean.BookType;
+import com.yc.easyweb.bean.Notice;
+import com.yc.easyweb.bean.Page;
+import com.yc.easyweb.bean.PayType;
 import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.bean.Usercontrol;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookBiz;
 import com.yc.easyweb.biz.BookTypeBiz;
+import com.yc.easyweb.biz.NoticeBiz;
+import com.yc.easyweb.biz.PayTypeBiz;
 import com.yc.easyweb.biz.UserBiz;
 import com.yc.easyweb.biz.UsercontrolBiz;
 
 public class JoinServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private UserBiz userBiz = new UserBiz();
+	private NoticeBiz noticeBiz = new NoticeBiz();
+	private BookBiz bookBiz = new BookBiz();
+	private BookTypeBiz btBiz = new BookTypeBiz();
+	private PayTypeBiz payTypeBiz = new PayTypeBiz();
 	
 	public void join(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
@@ -71,8 +81,6 @@ public class JoinServlet extends BaseServlet {
 				response.getWriter().append(json);
 				return ;
 			}
-			
-		
 			User userShow = userBiz.selectSingle(user);//保存用户信息
 			if(userShow.getUid() == 0){
 				//用户名不存在
@@ -117,7 +125,7 @@ public class JoinServlet extends BaseServlet {
 			String[] eorderMessage = {"","等待支付","等待发货","等待揽件","等待处理","退款成功","买家已揽件","条件不符合"};
 			session.setAttribute("eoderMessage", eorderMessage);
 			
-			BookBiz bookBiz = new BookBiz();
+			//初始化大学，学院，专业
 			Book book = new Book();
 			List<Book> bookList_add = bookBiz.selectAll(book);
 			HashSet<String> bookUniver = new HashSet<String>();
@@ -140,10 +148,15 @@ public class JoinServlet extends BaseServlet {
 			
 			BookType bookType = new BookType();
 			bookType.setBtstate(1);
-			BookTypeBiz btBiz = new BookTypeBiz();
+			
 			
 			List<BookType> btList = btBiz.selectAll(bookType);
 			HashSet<String> btType = new HashSet<String>();
+			//初始化书籍类型
+			//书籍类型
+			BookType bookType1 = new BookType();
+			List<BookType> bookTypes = btBiz.selectAll(bookType1);
+			session.setAttribute("btypes", bookTypes);
 			for(BookType bt : btList){
 				if(bt.getBtnamethird() != null && !bt.getBtnamethird() .isEmpty()){
 					btType.add(bt.getBtid()+"-"+bt.getBtnamethird());
@@ -154,7 +167,49 @@ public class JoinServlet extends BaseServlet {
 				}
 			}
 			session.setAttribute("btTypeEdit", btType);
+			// 公告展示初始化公告
+			Notice notice = new Notice();
+			notice.setNstate(1);
+			List<Notice> nList;
+			nList = noticeBiz.selectAll(notice);
+			List<Notice> nShow = new ArrayList<Notice>();
+			if (nList.size() != 0) {
+					for (int i = 0; i < nList.size(); i++) {
+					if (i == 6) {
+							break;
+					}
+				nShow.add(nList.get(i));
+				}
+			}
+			// 存储最新的六个公告展示出来
+			session.setAttribute("noticeAll", nList);
+			session.setAttribute("noticeShow", nShow);
+			//初始化支付类型
 			
+			PayType payType = new PayType();
+			List<PayType> payTypeList = payTypeBiz.selectAll(payType);
+			session.setAttribute("payType", payTypeList);
+			
+			//用户index初始数据
+			//书籍展示
+			BookChild bookChild = new BookChild();
+			bookChild.setBstate(1);
+			//教材区
+			bookChild.setBtname("教材区");
+			Page<Book> pPage = bookBiz.bookChildPage(1, 12, bookChild);
+			session.setAttribute("teachBook", pPage.getData());
+			session.setAttribute("teachPage", pPage);
+			
+			//工具书
+			bookChild.setBtname("工具书区");
+			Page<Book> pPaget = bookBiz.bookChildPage(1, 7, bookChild);
+			session.setAttribute("toolBook", pPaget.getData());
+			session.setAttribute("toolPage", pPaget);
+			//分享区
+			bookChild.setBtid(Long.parseLong("3"));
+			Page<Book> pPages = bookBiz.bookPage(1, 7, bookChild);
+			session.setAttribute("shareBook", pPages.getData());
+			session.setAttribute("sharePage", pPages);
 			
 			String adminType = null;
 			if(userShow.getUtype() == 1){

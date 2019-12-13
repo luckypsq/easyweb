@@ -92,7 +92,7 @@ function show(page){
 	
 </style>
 <body >
-<jsp:include page="${path}/common/header.jsp"></jsp:include>
+<jsp:include page="../common/header.jsp"></jsp:include>
 <div class="help-wrap">
 	<div class="container clearfix">
 		<div class="bread">当前位置：
@@ -101,7 +101,7 @@ function show(page){
 			<a href="${path}/back/lywoption/bought.jsp">购物车</a>
 	
 		</div>
-		<jsp:include page="${path}/common/middle.jsp"></jsp:include>
+		<jsp:include page="../common/middle.jsp"></jsp:include>
 		<div class="help-r fr">
 			<div class="help-item-title">购物车</div>
 			<div class="help-main">
@@ -194,6 +194,6 @@ function show(page){
 		</div>
 	</div>
 </div>
-<jsp:include page="${path}/common/footer.jsp"></jsp:include>
+<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -1,68 +1,102 @@
 package com.yc.easyweb.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.yc.easyweb.bean.Notice;
+import com.yc.easyweb.bean.Page;
+import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.NoticeBiz;
 
 public class NoticeServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private NoticeBiz noticeBiz = new NoticeBiz();
-	
+	private  Gson gson = new Gson();
+	private Result result ;
 	//查询
-	public void  query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void  query(HttpServletRequest request, HttpServletResponse response){
 		// 公告展示
 		HttpSession session = request.getSession();
-		PrintWriter out = response.getWriter();
-		
 		Notice notice = new Notice();
-		List<Notice> nList = noticeBiz.selectAll(notice);
-		List<Notice> nShow = new ArrayList<Notice>();
-		session.setAttribute("noticeAll", nList);// 存储所有公告
-		if (nList.size() != 0) {
-			for (int i = 0; i < nList.size(); i++) {
-				if (i == 6) {
-					break;
-				}
-				nShow.add(nList.get(i));
-			}
-		}
-		// 存储最新的六个公告展示出来
-		session.setAttribute("noticeShow", nShow);
-		
-		String nid = request.getParameter("uid");
-		
-		if(nid != null && !nid.isEmpty()){
-			notice.setNid(Long.parseLong(nid));
-		}
+		notice.setNstate(1);
 		try {
-			Notice notice2 = noticeBiz.selectSingle(notice);
-			if(notice2.getNid() != 0){
-				session.setAttribute("noticeDetail", notice2);
+			//公告分页查询
+			String page = request.getParameter("page");
+			int iPage;
+			if(page != null && !page.isEmpty()){
+				iPage = Integer.parseInt(page);
 			}else{
-				out.print(-1);
+				iPage = 1 ;
 			}
+			Page<Notice> sPage = noticeBiz.noticePage(iPage, 3, notice);
+			if(sPage.getData().size() == 0){
+				result = Result.failure("暂无数据！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return ;
+			}
+			session.setAttribute("noticePage", sPage);
+			session.setAttribute("allNoticeShow", sPage.getData());
+			result = Result.success("查询成功！！！");
+			String json1 = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json1);
+			//查询公告详情
+			String nid = request.getParameter("nid");
+			if(nid != null && !nid.isEmpty()){
+				notice.setNid(Long.parseLong(nid));
+			}
+				Notice notice2 = noticeBiz.selectSingle(notice);
+				if(notice2.getNid() != 0){
+					session.setAttribute("noticeDetail", notice2);
+					result = Result.success("查询成功！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+				}else{
+					result = Result.failure("查询失败！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+				}
+				
 		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+				// TODO Auto-generated catch block
+			}
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+				// TODO Auto-generated catch block
+			}			
 			e.printStackTrace();
 		}
 	}
 	//添加
-	public void  add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void  add(HttpServletRequest request, HttpServletResponse response) {
 	}
 	//删除
-	public void  delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void  delete(HttpServletRequest request, HttpServletResponse response){
 	}
 	//更新
-	public void  update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void  update(HttpServletRequest request, HttpServletResponse response){
 	}
 	
 }

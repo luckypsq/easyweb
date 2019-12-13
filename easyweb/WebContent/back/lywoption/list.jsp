@@ -21,7 +21,7 @@
 	</script>
 </head>
 <body >
-<jsp:include page="/common/header.jsp"></jsp:include>
+<jsp:include page="../common/header.jsp"></jsp:include>
 <div class="list-main">
 	<div class="container">
 		<div class="bread" style="margin-bottom: 0;">当前位置：
@@ -277,6 +277,6 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="${path }/common/footer.jsp"></jsp:include>
+<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

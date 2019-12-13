@@ -10,41 +10,24 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link
-	href="${path}/back/assets/css/bootstrap.min.css"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="${path}/back/css/style.css" />
-<link
-	href="${path}/back/assets/css/codemirror.css"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="${path}/back/assets/css/ace.min.css" />
+<link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="${path}/back/css/style.css" />
+<link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+<link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
 <link rel="stylesheet"
 	href="${path}/back/Widget/zTree/css/zTreeStyle/zTreeStyle.css"
 	type="text/css">
 <link rel="stylesheet"
 	href="${path}/back/assets/css/font-awesome.min.css" />
-<link
-	href="${path}/back/Widget/icheck/icheck.css"
+<link href="${path}/back/Widget/icheck/icheck.css" rel="stylesheet"
+	type="text/css" />
+<link href="${path}/back/Widget/webuploader/0.1.5/webuploader.css"
 	rel="stylesheet" type="text/css" />
-<link
-	href="${path}/back/Widget/webuploader/0.1.5/webuploader.css"
-	rel="stylesheet" type="text/css" />
-<link href="${path}/back/css/button.css"
-	rel="stylesheet" type="text/css" />
-<script
-	src="${path}/back/assets/layer/layer.js"
-	type="text/javascript"></script>
-<script
-	src="${path}/back/assets/laydate/laydate.js"
-	type="text/javascript"></script>
-<script
-	src="${path}/back/js/jquery-1.9.1.min.js"></script>
-<script
-	src="${path}/back/assets/js/bootstrap.min.js"></script>
-<script
-	src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
+<link href="${path}/back/css/button.css" rel="stylesheet"
+	type="text/css" />
+<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+<script src="${path}/back/assets/js/bootstrap.min.js"></script>
+<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
 <script type="text/javascript"
 	src="${path}/back/Widget/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript"
@@ -59,23 +42,22 @@
 	src="${path}/back/Widget/ueditor/1.4.3/ueditor.config.js"></script>
 <script type="text/javascript"
 	src="${path}/back/Widget/ueditor/1.4.3/ueditor.all.min.js">
+	
 </script>
 <script type="text/javascript"
 	src="${path}/back/Widget/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script>
-<script src="${path}/back/js/lrtk.js"
-	type="text/javascript"></script>
-<script type="text/javascript"
-	src="${path}/back/js/H-ui.js"></script>
-<script type="text/javascript"
-	src="${path}/back/js/H-ui.admin.js"></script>
+<script src="${path}/back/js/lrtk.js" type="text/javascript"></script>
+<script type="text/javascript" src="${path}/back/js/H-ui.js"></script>
+<script type="text/javascript" src="${path}/back/js/H-ui.admin.js"></script>
+
 <style type="text/css">
 </style>
 <title>填写订单</title>
 </head>
-<body onload="show()">
+<body >
 	<div class="page_right_style">
 		<div class="type_title">填写订单</div>
-		<form action="${path}/eorder.s?op=add" method="post" class="form form-horizontal"
+		<form class="form form-horizontal"
 			id="form-article-add">
 			<div class="clearfix cl">
 				<label class="form-label col-2"><span class="c-red">*</span>地&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
@@ -176,7 +158,7 @@
 			</div>
 			<div class="clearfix cl">
 				<div class="Button_operation">
-					<input class="btn btn-primary radius" type="submit"
+					<input class="btn btn-primary radius" type="button" onclick="addEorder();"
 						id="btn btn-primary radius" value="提交">
 					<button onClick="window.location.href='${path}/back/lhoption/index.jsp';" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 				</div>
@@ -184,62 +166,57 @@
 		</form>
 	</div>
 <script type="text/javascript">
-var xmlhttp;
-try {
-	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-} catch (e) {
-	try {
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new XMLHttpRequest();
-		} catch (e) {
-		}
-	}
-}
-function show(){
-	var bid = "${param.bid}";
+$(function() { 
+	$("#add_picture").fix({
+		float : 'left',
+		skin : 'green',	
+		durationTime :false,
+		stylewidth:'220',
+		spacingw:0,
+		spacingh:260,
+	});
+});
+$( document).ready(function(){
+//初始化宽度、高度
+   $(".widget-box").height($(window).height()); 
+   $(".page_right_style").height($(window).height()); 
+   $(".page_right_style").width($(window).width()-220); 
+  //当文档窗口发生改变时 触发  
+    $(window).resize(function(){
+	 $(".widget-box").height($(window).height()); 
+	 $(".page_right_style").height($(window).height()); 
+	 $(".page_right_style").width($(window).width()-220); 
+	});	
+});
+$(function(){  
+	var bid ="${param.bid}";
 	 var itemid = "${param.itemid}";
-	 if(xmlhttp!=null){
-			// 定义请求地址
-			var url ;
-			 if(bid != ''){
-				 url ="${path}/eorde.s?op=showEorder&bid="+bid;
-			 }else if(itemid != ''){
-				 url ="${path}/eorde.s?op=showEorder&itemid="+itemid;
-			 }else {
-				 alert("条件不足无法显示信息！！！");
-				 return;
-			 }
-			xmlhttp.open("POST",url,true);
-			xmlhttp.onreadystatechange=function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					var json = xmlhttp.responseText.replace(/\s/gi,"");
-					if(json==-1){
-						alert("暂无数据");
-					}else{
-						alert("条件不足无法查询数据！！！");
-					}
-				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		}else{
-			alert("不能创建XMLHttpRequest对象实例");
-		}
-}
-//监听input框的变化
-window.onload = function()
-{
-	 var msg =  "${param.msg}";
-	 if (msg == -1) {
-		alert("添加失败！！！");
-     }else if(msg == 1){
-    	 alert("添加成功！！！");
-	}else if(msg == 3){
-		alert("信息填写错误！！！");
-	}
-}
+	 var url ;
+	 if(bid != ''){
+		 url ="${path}/eorder.s?op=showEorder&bid="+bid;
+	 }else if(itemid != ''){
+		 url ="${path}/eorder.s?op=showEorder&itemid="+itemid;
+	 }
+	$.ajax({
+        type: "post",
+        url: url,
+        data: "",
+        async:true, // 异步请求
+        cache:false, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+            if(result.code == -1){
+            	alert(result.msg);
+            }
+            if(result.code == 0){
+            	alert(result.msg);
+            }
+            if(result.code == -2){
+            	alert(result.msg);
+            }
+        }
+    });
+});
 /********添加订单的输入框失去焦点正则判断********/
 //地址
 $("#eoaddr").on('input',function(){
@@ -282,35 +259,39 @@ $("#uphone").on('input',function(){
    }
 });
 
-$(function() { 
-	$("#add_picture").fix({
-		float : 'left',
-		skin : 'green',	
-		durationTime :false,
-		stylewidth:'220',
-		spacingw:0,
-		spacingh:260,
-	});
-});
-$( document).ready(function(){
-//初始化宽度、高度
-   $(".widget-box").height($(window).height()); 
-   $(".page_right_style").height($(window).height()); 
-   $(".page_right_style").width($(window).width()-220); 
-  //当文档窗口发生改变时 触发  
-    $(window).resize(function(){
-
-	 $(".widget-box").height($(window).height()); 
-	 $(".page_right_style").height($(window).height()); 
-	 $(".page_right_style").width($(window).width()-220); 
-	});	
-});
 function updatePrice(){
 	var price =  document.getElementById("price").value;
 	var count =  document.getElementById("count").value;
 	document.getElementById("total").innerText = price * count;
 }
 
+function addEorder(){
+	var param = $('#form-article-add').serialize();
+	alert(param);
+	/* $.ajax({
+        type: "post",
+        url: "${path}/eorder.s?op=add",
+        data: param,
+        async:true, // 异步请求
+        cache:false, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+            if(result.code == 1){
+            	alert(result.msg);
+            }
+            //需要数据复现
+            if(result.code == -1){
+            	alert(result.msg);
+            }
+            if(result.code == 0){
+            	alert(result.msg);
+            }
+            if(result.code == -2){
+            	alert(result.msg);
+            }
+        }
+    }); */
+}
 </script>
 </body>
 </html>

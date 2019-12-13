@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -69,7 +68,6 @@ public class RegServlet extends BaseServlet {
 				result = Result.success("该用户名可以使用！！！", username);
 				String json = gson.toJson(result);
 				session.setAttribute("regUname", username);
-				
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				
@@ -81,7 +79,7 @@ public class RegServlet extends BaseServlet {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
-				// TODO Auto-generated catch block
+				
 			}
 		} catch (IOException e) {
 			result = Result.error("业务繁忙,请稍等几分钟再操作！！！",username);
@@ -91,7 +89,7 @@ public class RegServlet extends BaseServlet {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
-				// TODO Auto-generated catch block
+				
 			}			
 			e.printStackTrace();
 		}
@@ -125,7 +123,7 @@ public class RegServlet extends BaseServlet {
 					response.getWriter().append(json);
 					return ;
 				}
-				result = Result.success("该电话号码可以使用", uphone);
+				result = Result.success("该电话号码可以使用！！！", uphone);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -154,7 +152,7 @@ public class RegServlet extends BaseServlet {
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
 			}
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -206,7 +204,7 @@ public class RegServlet extends BaseServlet {
 			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
@@ -216,7 +214,7 @@ public class RegServlet extends BaseServlet {
 			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				throw new RuntimeException(e1);
 			}
 			e.printStackTrace();
@@ -232,10 +230,11 @@ public class RegServlet extends BaseServlet {
 			if(upassword != null && !upassword.isEmpty()){
 				//不合法
 				if (!upassword.matches(regpassword)) {
-					result = Result.failure("密码不合法,请重新输入！！！");
+					result = Result.failure("密码不合法,请重新输入(必须包含数字和字母)！！！");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
+					return ;
 				} 
 				//可以使用
 				session.setAttribute("regUpwd", upassword);
@@ -249,6 +248,7 @@ public class RegServlet extends BaseServlet {
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
+				return ;
 			}
 		} catch (IOException e) {
 			result = Result.error("业务繁忙,请稍等几分钟再操作！");
@@ -257,16 +257,16 @@ public class RegServlet extends BaseServlet {
 			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				throw new RuntimeException(e1);
 			}
 			e.printStackTrace();
 		}
 	}
 
+	
 	//确认密码
 	public void checkPassword01(HttpServletRequest request, HttpServletResponse response){
-		
 		String confirm = request.getParameter("passwordsignup_confirm");
 		String upassword = request.getParameter("upassword");
 		try {
@@ -289,6 +289,7 @@ public class RegServlet extends BaseServlet {
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
+				return ;
 			} 
 			result = Result.success("密码一致！！！");
 			String json = gson.toJson(result);
@@ -301,7 +302,7 @@ public class RegServlet extends BaseServlet {
 			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				throw new RuntimeException(e1);
 			}
 			e.printStackTrace();
@@ -382,8 +383,8 @@ public class RegServlet extends BaseServlet {
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
+				return ;
 			}
-			
 			result = Result.success("注册成功！！！");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
@@ -396,7 +397,7 @@ public class RegServlet extends BaseServlet {
 			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				throw new RuntimeException(e1);
 			}
 			e.printStackTrace();
@@ -407,7 +408,7 @@ public class RegServlet extends BaseServlet {
 			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
@@ -417,7 +418,7 @@ public class RegServlet extends BaseServlet {
 			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				throw new RuntimeException(e1);
 			}
 			e.printStackTrace();
@@ -468,7 +469,7 @@ public class RegServlet extends BaseServlet {
 			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				
 				throw new RuntimeException(e1);
 			}
 			e.printStackTrace();

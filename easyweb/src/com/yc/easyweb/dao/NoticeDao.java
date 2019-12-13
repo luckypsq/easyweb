@@ -60,6 +60,9 @@ public class NoticeDao {
 				if (notice.getNstate() != 0) {
 					sb.append(" and nstate = " + notice.getNstate());
 				}
+				if (notice.getNid() != 0) {
+					sb.append(" and nid = " + notice.getNid());
+				}
 			}
 			sb.append(" order by  ntime desc");
 			return db.selectSingle(sb.toString(), null, Notice.class);

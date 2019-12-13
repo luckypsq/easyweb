@@ -32,9 +32,16 @@ $(function(){
         	   alert(result.msg);
         	   return ;
      	  }
+           if(result.code == 1){
+        	    if(location.href.indexOf('#register')==-1){
+        	        location.href=location.href+"#register";
+        	        location.reload();
+        	     }   
+           }
   	 	}
 	});
 });
+
 var xmlhttp;
 // ajax 验证用户名是否存在//是否为空//
 try {
@@ -366,14 +373,14 @@ function checkJoin(){
 					
 					<span id="span1" style="font-weight:700;font-size:15px"></span>
 					<input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="用户名" 
-					oninput="checkUserName()" />
+					onblur="checkUserName()" />
 					
 				</p>
 				<p> 
 					<label for="tel" class="youmail">联系电话</label>
 					<span id="span2" style="font-weight:700;font-size:15px"></span>
 					<input id="tel" name="emailsignup" required="required" type="tel" placeholder="联系电话"
-					oninput="checkPhone()"/>
+					onblur="checkPhone()"/>
 					
 				</p>
 				
@@ -381,7 +388,7 @@ function checkJoin(){
 					<label for="uemail" class="youemail">电子邮箱</label>
 					<span id="span01" style="font-weight:700;font-size:15px"></span>
 					<input id="uemail" name="uemail" required="required" type="text" placeholder="电子邮箱"
-					oninput="checkEmail()"/>
+					onblur="checkEmail()"/>
 					
 				</p>
 				
@@ -419,7 +426,7 @@ function checkJoin(){
 					<label for="passwordsignup" class="youpasswd" data-icon="p">密码（由6-21位字母和数字组成）</label>
 					<span id="span3" style="font-weight:700;font-size:15px"></span>
 					<input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="密码"
-					oninput="checkPassword()"/>
+					onblur="checkPassword()"/>
 				</p>
 				<p> 
 					<label for="passwordsignup_confirm" class="youpasswd" data-icon="p">确认密码</label>

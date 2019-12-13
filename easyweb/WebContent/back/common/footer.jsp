@@ -9,7 +9,7 @@
 					<ul>
 					<li><a href="${path}/back/lhoption/help.jsp">自我介绍</a></li>
 						<li><a href="${path}/back/lhoption/help.jsp">联系我们</a></li>
-						<li><a href="${path}/back/lhoption/help.jsp">网站公告</a></li>
+						<li><a href="${path}/back/lhoption/notice.jsp">网站公告</a></li>
 						</ul>
 				</li>
 				<li class="item-li">新手指南
@@ -38,18 +38,9 @@
 
 		<div class="bottom">
 			<p>友情链接：<a href="#">安工在线</a>&nbsp;&nbsp;<a href="#">万林强-前端在线简历</a></p>
-			<p>本站所有信息均为用户自由发布，本站不对信息的真实性负任何责任，交易时请注意识别信息的真假如有网站内容侵害了您的权益请联系我们删除，举报电话：15068718875</p>
-			<p>技术支持：万林强 &nbsp;&nbsp;商务QQ:584845663 &nbsp;&nbsp;邮箱：584845663@qq.com</p>
+			<p>本站所有信息均为用户自由发布，本站不对信息的真实性负任何责任，交易时请注意识别信息的真假如有网站内容侵害了您的权益请联系我们删除，举报电话：18873251434</p>
+			<p>技术支持：彭算泉 &nbsp;&nbsp;商务QQ:1457489935 &nbsp;&nbsp;邮箱：1139386771@qq.com</p>
 		</div>
 	</div>
-</div>
-<div class="fixnav">
-	<ul>
-		<li><a href="#" title="1">教材区</a></li>
-		<li><a href="#" title="2">工具书区</a></li>
-		<li><a href="#" title="3">分享区</a></li>
-		<li><a href="#" title="4">返回顶部</a></li>
-		<li><a  href="http://wpa.qq.com/msgrd?v=3&uin=2078140086&site=qq&menu=yes">联系客服</a></li>
-	</ul>
 </div>
 

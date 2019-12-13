@@ -23,7 +23,6 @@ import com.yc.easyweb.biz.BookTypeBiz;
 
 public class BookTypeServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
-	private BookType bookType = new BookType();
 	private BookTypeBiz bookTypeBiz = new BookTypeBiz();
 
 	// ≤È—Ø

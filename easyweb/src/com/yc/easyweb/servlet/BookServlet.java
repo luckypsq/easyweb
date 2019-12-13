@@ -6,14 +6,11 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.print.attribute.standard.MediaSize.Other;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +20,6 @@ import com.google.gson.Gson;
 import com.jspsmart.upload.Files;
 import com.jspsmart.upload.SmartUpload;
 import com.jspsmart.upload.SmartUploadException;
-import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 import com.yc.easyweb.bean.Book;
 import com.yc.easyweb.bean.BookType;
 import com.yc.easyweb.bean.Result;
@@ -31,13 +27,12 @@ import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookBiz;
 import com.yc.easyweb.biz.BookTypeBiz;
 
-import sun.invoke.util.BytecodeName;
-import sun.util.resources.no.LocaleNames_no_NO_NY;
 
 public class BookServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private static BookBiz bookBiz = new BookBiz();
-
+	private  Gson gson = new Gson();
+	private Result result ;
 	// 查询
 	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -434,12 +429,10 @@ public class BookServlet extends BaseServlet {
 			}
 		}
 		
+		
 		//显示书本详情
-		public void bookDetail(HttpServletRequest request, HttpServletResponse response)
-				throws ServletException, IOException {
+		public void bookDetail(HttpServletRequest request, HttpServletResponse response){
 			HttpSession session = request.getSession();
-			PrintWriter out = response.getWriter();
-			
 			  Book book1 = new Book();
 			  if(request.getParameter("bid") != null && !request.getParameter("bid").isEmpty()){
 				  book1.setBid(Long.parseLong(request.getParameter("bid")));
@@ -447,30 +440,57 @@ public class BookServlet extends BaseServlet {
 			  try {
 				Book book = bookBiz.selectSingle(book1);
 				if(book.getBid() == 0){
-					out.print(-1);
+					result = Result.failure("该书已被删除或已下架");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
 					return ;
 				}
 			     Book book2 = new Book();
 			     book2.setBtid(book.getBtid());
 			     List<Book> list = bookBiz.selectAll(book2);
 			     if(list.size() == 0){
-			    	 out.print(-2);
-			    	 return ;
+			    	 result = Result.lack("暂无同类书籍！！！");
+					 String json = gson.toJson(result);
+					 response.setContentType("application/json;charset=UTF-8");
+					 response.getWriter().append(json);
+					 return ;
 			     }
 				session.setAttribute("bookDetail", book);
 				session.setAttribute("similarBook", list);
+				result = Result.success("查询成功！！！");
+				 String json = gson.toJson(result);
+				 response.setContentType("application/json;charset=UTF-8");
+				 response.getWriter().append(json);
 				
 			} catch (BizException e) {
+				result = Result.error(e.getMessage());
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				try {
+					response.getWriter().append(json);
+				} catch (IOException e1) {
+					throw new RuntimeException(e1);
+					// TODO Auto-generated catch block
+				}
+			} catch (IOException e) {
+				result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				try {
+					response.getWriter().append(json);
+				} catch (IOException e1) {
+					throw new RuntimeException(e1);
+					// TODO Auto-generated catch block
+				}			
 				e.printStackTrace();
 			}
 		}
 		
 		//用户发布书籍
-		public void userAddBook(HttpServletRequest request, HttpServletResponse response)
-					throws ServletException, IOException {
+		public void userAddBook(HttpServletRequest request, HttpServletResponse response){
 		}
 		//用户已发布的书籍显示
-		public void userPublishedBook(HttpServletRequest request, HttpServletResponse response)
-					throws ServletException, IOException {
+		public void userPublishedBook(HttpServletRequest request, HttpServletResponse response){
 		}
 }

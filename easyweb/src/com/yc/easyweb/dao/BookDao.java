@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.BookChild;
 import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.common.DbHelper;
 
@@ -326,15 +327,26 @@ public class BookDao {
 			if(book.getUid() != 0){
 				sb.append(" and uid = "+book.getUid());
 			}
-			if(book.getBtemp() != null){
-				sb.append(" and btemp = '"+book.getBtemp() +"'");
-			}
-			if(book.getBdate() != null){
-				sb.append(" and bdate = '"+book.getBdate() +"'");
-			}
 		}
     	sb.append(" order by  bid asc");
     	return  db.selectPageForMysql(page, rows, Book.class, sb.toString());
 	}
+	//book∑÷“≥
+		@SuppressWarnings({ "static-access", "unchecked" })
+		public Page<Book> bookChildPage(int page, int rows,BookChild book) throws IOException {
+			StringBuffer sb = new StringBuffer();
+			sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
+					+ " bcontent,bimg,bprice,bstate,b.btid,btemp,btemp1,bnum,bauthor,bdate,uid,btname,btnamesecond,btnamethird" + " from book b,booktype bt where 1=1 and b.btid = bt.btid ");
+	    	if(book != null){
+				if(book.getBtname() != null){
+					sb.append(" and btname = '"+book.getBtname()+"'");
+				}
+				if(book.getBtid() != null){
+					sb.append(" and b.btid = "+book.getBtid());
+				}
+			}
+	    	sb.append(" order by  bid asc");
+	    	return  db.selectPageForMysql(page, rows, Book.class, sb.toString());
+		}
 	// ∆‰À˚
 }

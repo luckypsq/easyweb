@@ -1,19 +1,14 @@
-<%@page import="com.yc.easyweb.bean.*"%>
-<%@page import="com.yc.easyweb.dao.*"%>
-<%@page import="com.yc.easyweb.biz.*"%>
-<%@page import="com.yc.easyweb.common.DbHelper" %>
-<%@ page import = "java.lang.*"%>
-<%@ page import ="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<link rel="stylesheet" href="${path}/css/swiper3.07.min.css"/>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="${path}/js/jquery-1.11.2.min.js"></script>
-	<script src="${path}/js/main.js"></script>
 	<script src="${path}/js/koala.min.1.5.js"></script>
 	<style>
 		.swiper-container {
@@ -25,8 +20,8 @@
 	<title>易书网</title>
 </head>
 <body>
-<jsp:include page="/common/header.jsp"></jsp:include>
-<div class="banner container">
+<jsp:include page="../common/header.jsp"></jsp:include>
+<div class="banner container" id="index-Show">
 	<img src="${path}/images/notice.png" alt="" style="width: 1200px;height: auto;"/>
 	<div class="clearfix">
 		<div class="about fl">
@@ -38,23 +33,23 @@
 			<div id="D1pic1" class="fPic">
 				<div class="fcon">
 					<a href="javascript:void();"><img src="${path}/images/focus1.jpg" /></a>
-					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
+					<span class="shadow"><a href="${path }/back/lyw/list.jsp">便宜出售一本好书</a></span>
 				</div>
 				<div class="fcon">
 					<a href="javascript:void();"><img src="${path}/images/focus2.jpg" /></a>
-					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
+					<span class="shadow"><a href="${path }/back/lyw/list.jsp">便宜出售一本好书</a></span>
 				</div>
 				<div class="fcon">
 					<a href="javascript:void();"><img src="${path}/images/focus3.jpg" /></a>
-					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
+					<span class="shadow"><a href="${path }/back/lyw/list.jsp">便宜出售一本好书</a></span>
 				</div>
 				<div class="fcon">
 					<a href="javascript:void();"><img src="${path}/images/focus4.jpg" /></a>
-					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
+					<span class="shadow"><a href="${path }/back/lyw/list.jsp">便宜出售一本好书</a></span>
 				</div>
 				<div class="fcon">
 					<a href="javascript:void();"><img src="${path}/images/focus5.jpg" /></a>
-					<span class="shadow"><a href="detail.html">便宜出售一本好书</a></span>
+					<span class="shadow"><a href="${path }/back/lyw/list.jsp">便宜出售一本好书</a></span>
 				</div>
 			</div>
 			<div class="fbg">
@@ -70,200 +65,133 @@
 		<div class="help fr">
 			<h2>最新公告</h2>
 			<ul>
-				<%
-					NoticeBiz noticeBiz = new NoticeBiz();
-					Notice notice = new Notice();
-					List<Notice> nList = noticeBiz.selectAll(notice);
-					if(nList.size() != 0){
-						for(int i=0; i<nList.size();i++){
-							if(i == 6){
-								break ;
-							}
-				%>
-				<li><a href="${path}/notice-detail.jsp?nid=<%=nList.get(i).getNid()%>"><%=nList.get(i).getNtitle() %></a></li>
-				<% 
-						}
-					}else{
-				%>
-				<li>暂无新公告</li>
-				<%
-					}
-				%>
+					<c:if test="${noticeShow.size()> 0}" var="flag" scope="session">
+						<c:forEach items="${noticeShow}" var="n">
+							<li><i class="icon-bell red"></i><a href="${path}/notice-detail.jsp?nid=${n.nid}">${n.ntitle }</a></li>
+						</c:forEach>
+					</c:if>
+					
+					<c:if test="${not flag}">
+					   	<li><i class="icon-bell red"></i>暂无新公告</li>
+					</c:if>
 			</ul>
 			<h2>新手帮助</h2>
 			<ul>
-				<li><a href="${path}/lhoption/help.jsp">如何买书</a></li>
+				<li><a href="${path}/back/lhoption/help.jsp">如何买书</a></li>
 			</ul>
 		</div>
 	</div>
 	<div class="item clearfix" id="item1">
 		<h1>教材区<span></span>
 		</h1>
-		<% 
-		
-		//教材区书籍类型分类
-		
-		BookType bookType = new BookType();
-		BookTypeBiz biz = new BookTypeBiz();
-		List<BookType> list = biz.selectAll(bookType);
-		for(int i = 0;i<list.size();i++){
-			if(list.get(i).getBtid()<=3 ||list.get(i).getBtid() >= 12 ){
-				list.remove(list.get(i));
-				i--;
-			}
-			
-		}
-		
-		//工具书区书籍类型分类
-		BookTypeBiz biz1 = new BookTypeBiz();
-		List<BookType> list2 = biz.selectAll(bookType);
-		for(int i = 0;i<list2.size();i++){
-			if(list2.get(i).getBtid()<=11 ){
-				list2.remove(list2.get(i));
-				i--;
-			}
-			
-		}
-		String paramNumber = request.getParameter("page");
-		String btid = request.getParameter("btid");
-		long id;
-		if(btid !=null && Integer.parseInt(btid)>3 && Integer.parseInt(btid)<12){
-			id = Integer.parseInt(btid);
-		}else{
-			id=4;
-		}
-		Book book = new Book();
-		book.setBtid(id);
-		int iPage = paramNumber == null ? 1 : Integer.parseInt(paramNumber);
-		BookBiz bookBiz = new BookBiz();
-		Page<Book> pPage = bookBiz.bookPage(iPage, 12, book);
-		//教材区书籍展示
-		%>
 		<div class="list fl">
 			<ul class="one">
-			<%for(BookType t :list ){ %>
-				<li><a href="${path}/lhoption/index.jsp?btid=<%=t.getBtid() %>"><%=t.getBtnamesecond() %></a>
-					<ul class="two">
-						<li><a href="${path}/lywoption/list.jsp"><%=t.getBtnamethird() %></a></li>
-					
-					</ul>
-				</li>
-				<%} %>
+				<c:forEach items="${btypes}" var="bookTypes">
+					<c:if test="${bookTypes.btname.equals('教材区')}" var="flag" scope="session">	
+						<li>
+							<c:if test="${bookTypes.btnamesecond != null}" var="flag" scope="session">	
+								<a class="on" href="javascript:;" onclick="show(${bookTypes.btid},0)">${bookTypes.btnamesecond}</a>
+								<ul class="two">
+									<c:if test="${!bookTypes.btnamethird.equals('')}" var="flag" scope="session">	
+										<li><a href="javascript:;" onclick="show(${bookTypes.btid},0)">${ bookTypes.btnamethird}</a></li>
+									</c:if>
+								</ul>
+							</c:if>
+						</li>					
+					</c:if>
+				</c:forEach>
 			</ul>
-			
 		</div>
-
 		<div class="book-wrap fr">
-		
 			<div class="book clearfix">
-			<% for(Book s : pPage.getData()){%>
-				<dl>
-					<dt><a href="${path}/detail.jsp?bid=<%=s.getBid()%>"><img src="<%=s.getBimg() %>" alt=""/></a></dt>
-					<dd>
-						<p ><a href="${path}/detail.jsp?bid=<%=s.getBid()%>"><%=s.getBname() %></a></p>
-						<p>数量：<%=s.getBnum() %></p>
-						<p><s>价格：￥<%=s.getBprice() %></s> ￥<%=s.getBprice() %> </p>
-					</dd>
-				</dl>
-				<%} %>
-			
+				<c:forEach   items="${teachBook}" var="teach">
+					<dl>
+						<dt><a href="${path}/detail.jsp?bid=${teach.bid}"><img src="${teach.bimg}" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="${path}/detail.jsp?bid=${teach.bid}" >${teach.bname}</a></p>
+							<p>数量：${teach.bnum}</p>
+							<p><s>价格：￥${teach.bprice}</s> ${teach.bprice}</p>
+						</dd>
+					</dl>
+				</c:forEach>
 			</div>
-			<div id="ball_footer" class="ball_footer">
-				 <%String condition = "btid=" + btid ; %>
-					<a class="firstPage" href="${path}/lhoption/index.jsp?<%=condition %>&page=1">首页</a>
-					<a class="previousPage" href="${path}/lhoption/index.jsp?<%=condition %>&page=<%=pPage.getPreviousPage()%>">上一页</a>
-					<a class="nextPage" href="${path}/lhoption/index.jsp?<%=condition %>&page=<%=pPage.getNextPage()%>">下一页</a>
-					<a class="lastPage" href="${path}/lhoption/index.jsp?<%=condition %>&page=<%=pPage.getLastPage()%>">尾页</a>
-					第<%=pPage.getPage()%>/<%=pPage.getLastPage()%>
-				
-			</div>	
+			<%-- <div id="ball_footer" class="ball_footer">
+				 <a href="javascript:;" class="firstPage" onclick = "show(1,0,0,${teachPage.getFirstPage()})">首页</a>
+					<a href="javascript:;" class="previousPage" onclick = "show(1,0,0,${teachPage.getPreviousPage()})">上一页</a>
+					<a class="nextPage" href="javascript:;"onclick = "show(1,0,0,${teachPage.getNextPage()})" >下一页</a>
+					<a class="lastPage" href="javascript:;" onclick = "show(1,0,0,${teachPage.getLastPage()})">尾页</a>
+					第${teachPage.getPage()}/${teachPage.getLastPage()}页
+			</div>	 --%>
 		</div>
 	</div>	
+	
 	<div class="item clearfix" id="item2">
 		<h1>工具书区<span></span></h1>
 		<ul class="tab clearfix">
-		<%
-			String paramNumber1 = request.getParameter("page1");
-			/*String btid1 = request.getParameter("btid"); */
-			long id1=14;
-			if(btid !=null && Integer.parseInt(btid)>11 ){
-				id1 = Integer.parseInt(btid);
-			}
-			Book book1 = new Book();
-			book1.setBtid(id1);
-			int iPage1 = paramNumber1 == null ? 1 : Integer.parseInt(paramNumber1);
-			Page<Book> pPage1 = bookBiz.bookPage(iPage1, 7, book1);
-		%>
-		
-		<%for(BookType  a : list2){ %>
-			<li><a class="on" href="${path}/lhoption/index.jsp?btid=<%=a.getBtid()%>"><%=a.getBtnamesecond() %> </a></li>
-		<%} %>
+			<c:forEach items="${btypes}" var="bookTypes">
+				<c:if test="${bookTypes.btname.equals('工具书区')}" var="flag" scope="session">	
+					<c:if test="${bookTypes.btnamesecond != null}" var="flag" scope="session">	
+						<li><a class=""  href="javascript:;" onclick="show(0,${bookTypes.btid})">${bookTypes.btnamesecond}</a></li>	
+					</c:if>
+				</c:if>
+			</c:forEach>
 		</ul>
 		
 		<div class="tab0 tabs clearfix">
 			<div class="book clearfix">
-			<%for(Book b : pPage1.getData() ){ %>
+			<c:forEach   items="${toolBook}" var="tool">
 				<dl>
-					<dt><a href="${path}/detail.jsp?bid=<%=b.getBid() %>>"><img src="<%=b.getBimg() %>" alt=""/></a></dt>
+					<dt><a href="${path}/detail.jsp?bid=${tool.bid}"><img src="${tool.bimg}" /></a></dt>
 					<dd>
-						<p><a href="${path}/detail.jsp?bid=<%=b.getBid() %>"><%=b.getBname() %></a></p>
-						<p>数量：<%=b.getBnum() %></p>
-						<p><s>价格：￥<%=b.getBprice() %></s> ￥<%=b.getBprice() %></p>
+						<p><a href="${path}/detail.jsp?bid=${tool.bid}">${tool.bname}</a></p>
+						<p>数量：${tool.bnum}</p>
+						<p><s>价格：￥${tool.bprice}</s> ${tool.bprice}</p>
 					</dd>
 				</dl>
-				<%} %>
-				
-			
+			</c:forEach>
 			</div>
-			<div id="ball_footer" class="ball_footer">
-					
-					<a class="firstPage" href="${path}/lhoption/index.jsp?<%=condition %>&page1=1">首页</a>
-					<a class="previousPage" href="${path}/lhoption/index.jsp?<%=condition %>&page1=<%=pPage1.getPreviousPage()%>">上一页</a>
-					<a class="nextPage" href="${path}/lhoption/index.jsp?<%=condition %>&page1=<%=pPage1.getNextPage()%>">下一页</a>
-					<a class="lastPage" href="${path}/lhoption/index.jsp?<%=condition %>&page1=<%=pPage1.getLastPage()%>">尾页</a>
-					第<%=pPage1.getPage()%>/<%=pPage1.getLastPage()%>
-				
-			</div>
+			<%-- <div id="ball_footer" class="ball_footer">
+					<a class="firstPage" href="javascript:;" onclick = "show(0,2,0,${toolPage.getFirstPage()})">首页</a>
+					<a class="previousPage" href="javascript:;" onclick = "show(0,2,0,${toolPage.getPreviousPage()})">上一页</a>
+					<a class="nextPage" href="javascript:;" onclick = "show(0,2,0,${toolPage.getNextPage()})" >下一页</a>
+					<a class="lastPage" href="javascript:;" onclick = "show(0,2,0,${toolPage.getLastPage()})">尾页</a>
+					第${toolPage.getPage()}/${toolPage.getLastPage()}页
+			</div> --%>
 		</div>
 	</div>
-		
-		
-		
 	<div class="item clearfix" id="item3">
 		<h1>分享区<span></span></h1>
-		<%
-			String paramNumber2 = request.getParameter("page2");
-			Book book2 = new Book();
-			book2.setBtid(Long.parseLong("3"));
-			int iPage2 = paramNumber2 == null ? 1 : Integer.parseInt(paramNumber2);
-			Page<Book> pPage2 = bookBiz.bookPage(iPage1, 7, book2);
-		%>
-		
 		<div class="tabs book clearfix">
-		<% for(Book c:pPage2.getData()){%>
-			<dl>
-				<dt><a href="${path}/detail.jsp?bid=<%=c.getBid() %>"><img src="<%=c.getBimg() %>" alt=""/></a></dt>
-				<dd>
-					<p ><a href="${path}/detail.jsp?bid=<%=c.getBid() %>"><%=c.getBname() %></a></p>
-					<p>数量：<%=c.getBnum() %></p>
-					<p><s>价格：￥<%=c.getBprice() %></s> ￥<%=c.getBprice() %></p>
-				</dd>
-
-			</dl>
-			<%} %>
-			
+		<c:forEach   items="${shareBook}" var="share">
+				<dl>
+					<dt><a href="${path}/detail.jsp?bid=${share.bid}"><img src="${share.bimg}" /></a></dt>
+					<dd>
+						<p><a href="${path}/detail.jsp?bid=${share.bid}">${share.bname}</a></p>
+						<p>数量：${share.bnum}</p>
+						<p><s>价格：￥${share.bprice}</s> ${share.bprice}</p>
+					</dd>
+				</dl>
+			</c:forEach>
 		</div>
-		<div id="ball_footer" class="ball_footer">
-			<a class="firstPage" href="${path}/lhoption/index.jsp?<%=condition %>&page2=1">首页</a>
-			<a class="previousPage" href="${path}/lhoption/index.jsp?<%=condition %>&page2=<%=pPage2.getPreviousPage()%>">上一页</a>
-			<a class="nextPage" href="${path}/lhoption/index.jsp?<%=condition %>&page2=<%=pPage2.getNextPage()%>">下一页</a>
-			<a class="lastPage" href="${path}/lhoption/index.jsp?<%=condition %>&page2=<%=pPage2.getLastPage()%>">尾页</a>
-			第<%=pPage2.getPage()%>/<%=pPage2.getLastPage()%>
-				
-		</div>
+		<%-- <div id="ball_footer" class="ball_footer">
+			<a class="firstPage" href="javascript:;" onclick = "show(0,0,3,${sharePage.getFirstPage()})">首页</a>
+					<a class="previousPage" href="javascript:;" onclick = "show(0,0,3,${sharePage.getPreviousPage()})">上一页</a>
+					<a class="nextPage" href="javascript:;" onclick = "show(0,0,3,${sharePage.getNextPage()})" >下一页</a>
+					<a class="lastPage" href="javascript:;" onclick = "show(0,0,3,${sharePage.getLastPage()})">尾页</a>
+					第${sharePage.getPage()}/${sharePage.getLastPage()}页
+		</div> --%>
 	</div>
 </div>
-<jsp:include page="/common/footer.jsp"></jsp:include>
+<div class="fixnav">
+	<ul>
+		<li><a href="#" title="1">教材区</a></li>
+		<li><a href="#" title="2">工具书区</a></li>
+		<li><a href="#" title="3">分享区</a></li>
+		<li><a href="#" title="4">返回顶部</a></li>
+		<li><a  href="http://wpa.qq.com/msgrd?v=3&uin=2078140086&site=qq&menu=yes">联系客服</a></li>
+	</ul>
+</div>
+<jsp:include page="../common/footer.jsp"></jsp:include>
 <script type="text/javascript">
 	Qfast.add('widgets', { path: "${path}/js/terminator2.2.min.js", type: "js", requires: ['fx'] });
 	Qfast(false, 'widgets', function () {
@@ -281,6 +209,34 @@
 			interval: 2750  //** 停顿时间
 		})
 	})
+function show(btid1,btid2){
+	var param = "btid="+btid1 ;
+	if(btid1 != 0){
+		param = "&btid1=" +btid1;
+	}
+	if(btid2 != 0){
+		param = "&btid2=" +btid2;
+	}
+	$.ajax({
+        type: "post",
+        url: "${path}/show.s?op=queryUserIndex",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+        	if(result.code == -1){
+            	alert(result.msg);
+            }
+        	if(result.code == 0){
+            	alert(result.msg);
+            }
+        	if(result.code == 1){
+        		window.location.href = location.href;
+        	}
+        }
+    });
+}
 </script>
 </body>
 </html>

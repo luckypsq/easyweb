@@ -130,19 +130,13 @@ public class Book implements Serializable  {
 	public void setBtemp1(String btemp1) {
 		this.btemp1 = btemp1;
 	}
+	
 	@Override
 	public String toString() {
 		return "Book [bid=" + bid + ", bname=" + bname + ", buniversity=" + buniversity + ", bucollege=" + bucollege
 				+ ", bumajor=" + bumajor + ", bclass=" + bclass + ", bcontent=" + bcontent + ", bimg=" + bimg
 				+ ", bprice=" + bprice + ", bstate=" + bstate + ", btid=" + btid + ", btemp=" + btemp + ", btemp1="
-				+ btemp1 + ", bnum=" + bnum + ", bauthor=" + bauthor + ", bdate=" + bdate + ", uid=" + uid
-				+ ", getUid()=" + getUid() + ", getBprice()=" + getBprice() + ", getBdate()=" + getBdate()
-				+ ", getBauthor()=" + getBauthor() + ", getBnum()=" + getBnum() + ", getBname()=" + getBname()
-				+ ", getBtemp()=" + getBtemp() + ", getBstate()=" + getBstate() + ", getBid()=" + getBid()
-				+ ", getBuniversity()=" + getBuniversity() + ", getBucollege()=" + getBucollege() + ", getBumajor()="
-				+ getBumajor() + ", getBclass()=" + getBclass() + ", getBcontent()=" + getBcontent() + ", getBimg()="
-				+ getBimg() + ", getBtid()=" + getBtid() + ", getBtemp1()=" + getBtemp1() +
-				"]";
+				+ btemp1 + ", bnum=" + bnum + ", bauthor=" + bauthor + ", bdate=" + bdate + ", uid=" + uid + "]";
 	}
 	@Override
 	public int hashCode() {

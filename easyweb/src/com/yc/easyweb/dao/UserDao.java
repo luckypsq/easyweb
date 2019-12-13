@@ -79,33 +79,12 @@ public class UserDao {
 				if (user.getUphone() != null) {
 					sb.append(" and uphone = '" + user.getUphone() + "'");
 				}
-				if (user.getUniversity() != null) {
-					sb.append(" and university = '" + user.getUniversity() + "'");
-				}
-				if (user.getUcollege() != null) {
-					sb.append(" and ucollege = '" + user.getUcollege() + "'");
-				}
-				if (user.getUmajor() != null) {
-					sb.append(" and umajor = '" + user.getUmajor() + "'");
+				if (user.getUpassword() != null) {
+					sb.append(" and upassword = '" + user.getUpassword() + "'");
 				}
 				//” œ‰
 				if (user.getUemail()!= null) {
 					sb.append(" and uemail = '" + user.getUemail() + "'");
-				}
-				if (user.getUstate() != 0) {
-					sb.append(" and ustate = " + user.getUstate());
-				}
-				if (user.getUclass() != null) {
-					sb.append(" and uclass = '" + user.getUclass() + "'");
-				}
-				if (user.getUtype() != 0) {
-					sb.append(" and utype = " + user.getUtype());
-				}
-				if (user.getUage() != 0) {
-					sb.append(" and uage = " + user.getUage());
-				}
-				if (user.getUsex() != 0) {
-					sb.append(" and usex = " + user.getUsex());
 				}
 				if (user.getUid() != 0) {
 					sb.append(" and uid = " + user.getUid());

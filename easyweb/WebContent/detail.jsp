@@ -5,25 +5,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" href="/css/index.css"/>
-	<script src="/js/jquery-1.11.2.min.js"></script>
-	<script src="/js/main.js"></script>
-	<script type="text/javascript" src="/js/mz-packed.js"></script>
+	<link rel="stylesheet" href="${path }/css/index.css"/>
+	<script src="${path }/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="${path }/js/mz-packed.js"></script>
 	<title>书籍详情</title>
 </head>
-<body onload="show()">
-<jsp:include page="common/header.jsp"></jsp:include>
-<div class="main">
+<body >
+<jsp:include page="back/common/header.jsp"></jsp:include>
+<div class="main" id="main">
 	<div class="container clearfix">
 		<div class="bread">当前位置：
-			<a href="/lhoption/index.jsp">首页</a> >
-			<a href="/lywoption/list.jsp">教材区</a> >
-			<a href="/detail.jsp">图书详情</a>
+			<a href="${path }/back/lhoption/index.jsp">首页</a> >
+			<a href="${path }/back/lywoption/list.jsp">教材区</a> >
+			<a href="detail.jsp?${bookDetail.bid}">图书详情</a>
 		</div>
 		<div class="main-left fl clearfix">
 			<div class="zoom-wrap fl">
 				<div id="zoom">
-					<a href="${path }/images/ps.jpg" title="" class="MagicZoom">
+					<a href="${bookDetail.bimg}" title="" class="MagicZoom">
 						<img class="bzoom" src="${bookDetail.bimg}" width="300" height="424" />
 					</a>
 				</div>
@@ -71,7 +70,7 @@
 					</c:if>
 				</span></p>
 				<a  class="pay" href="${path }/back/lywoption/buy.jsp?bid=${bookDetail.bid}">立即购买</a>
-				<a  class="pay" onclick="addCart(${bookDetail.bid});">加入购物车</a>
+				<a  class="pay" href="javascript:;"onclick="addCart(${bookDetail.bid});">加入购物车</a>
 			</div>
 			<div class="clearfix"></div>
 			<div class="description clearfix">
@@ -82,7 +81,7 @@
 		<div class="main-right fr">
 			<h2>同类推荐</h2>
 			<div class="tj">
-				<c:forEach items="${similarBook}" var="similar" end="5">
+				<c:forEach items="${similarBook}" var="similar" end="3">
 					<ul>
 						<li class="fore1" > <div class="p-img">  
 						<a href="${path }/detail.jsp?bid=${similar.bid}">  
@@ -98,7 +97,7 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="/common/footer.jsp"></jsp:include>
+<jsp:include page="back/common/footer.jsp"></jsp:include>
 
 <!-- <div class="full hide">
 	<div class="select-book">
@@ -130,62 +129,61 @@
 	</div>
 </div> -->
 <script type="text/javascript">
-var xmlhttp;
-// ajax 验证用户名是否存在//是否为空//
-try {
-	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-} catch (e) {
-	try {
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new XMLHttpRequest();
-		} catch (e) {
-		}
-	}
 
-}
 function addCart(id){
-	if (xmlhttp != null) {
-		var url = "${path}/eorderitem.s?op=add&bid="+id;
-		xmlhttp.open("POST", url, true);
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				var msg = xmlhttp.responseText.replace(/\s/gi, "");
-				if(msg == 1){
-					alert("添加成功！！！");
-				}else if(msg = 2){
-					alert("信息不足无法添加！！！");
-				}else{
-					alert("添加失败!!!");
-				}
-			}
-		};
-		xmlhttp.send(null);
-	} else {
-		alert("不能创建XMLHttpRequest对象实例");
-	}
+	var id = "bid="+id;
+	$.ajax({
+        type: "post",
+        url: "${path}/eorderitem.s?op=add",
+        data: id,
+        async:true, // 异步请求
+        cache:false, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+            if(result.code == -1){
+            	alert(result.msg);
+            }
+            if(result.code == 0){
+            	alert(result.msg);
+            }
+            if(result.code == 1){
+            	alert(result.msg);
+            }
+            if(result.code == -2){
+            	alert(result.msg);
+            }
+        }
+    });
 }
-function show(){
-	if (xmlhttp != null) {
-		var url = "${path}/book.s?op=bookDetail";
-		xmlhttp.open("POST", url, true);
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				var msg = xmlhttp.responseText.replace(/\s/gi, "");
-				if(msg == -1){
-					alert("暂无信息！！！");
-				}
-				if(msg == -2){
-					alert("暂无同类书籍！！！");
-				}
-			}
-		};
-		xmlhttp.send(null);
-	} else {
-		alert("不能创建XMLHttpRequest对象实例");
-	}
-}
+$(function(){  
+	var bid = "bid="+"${param.bid}";
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=bookDetail",
+        data: bid,
+        async:true, // 异步请求
+        cache:false, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+            if(result.code == -1){
+            	alert(result.msg);
+            }
+            if(result.code == 0){
+            	alert(result.msg);
+            }
+            if(result.code == -2){
+            	alert(result.msg);
+            }
+            if(result.code == 1){
+        	    if(location.href.indexOf('#main')==-1){
+        	        location.href=location.href+"#main";
+        	        location.reload();
+        	     }   
+           }
+        }
+    });
+});
+
 </script>
 </body>
 </html>
