@@ -1,24 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script>
+	function exitSys(){
+		if(confirm("请确认退出系统？")){
+			$.ajax({
+	            type: "post",
+	            url: "${path}/show.s?op=quit",
+	            data: "",
+	            async:true, // 异步请求
+	            cache:true, // 设置为 false 将不缓存此页面
+	            dataType: 'json', // 返回对象
+	            success: function(result) {
+	            	if(result.code == 1){
+	            		location.href="join.jsp";
+	            		return;
+	            	}
+	            }
+			});
+		}
+	}
+
+</script>
 <div class="top" id="item4">
 	<div class="container clearfix">
 		<ul class="clearfix fr">
-		<li>
-			<c:if test="${loginedUser.uid ==  0}" var="flag" scope="session">	
-				<a href="${path}/join.jsp" >登录</a>					
-			</c:if>
-			<c:if test="${not flag}">	
-				${loginedUser.uminname}				   	
-			</c:if>
-		</li>
+			<li>
+				<c:if test="${loginedUser.uid ==  0}" var="flag" scope="session">	
+					<a href="${path}/join.jsp" >登录</a>					
+				</c:if>
+				<c:if test="${not flag}">	
+					${loginedUser.uminname}				   	
+				</c:if>
+			</li>
 			<li><a href="${path}/join.jsp" >注册</a></li>
-			<c:if test="${loginedUser.uid ==  0}" var="flag" scope="session">	
-				<li><a href="" style="border: none">个人中心</a></li>				
-			</c:if>
-			<c:if test="${not flag}">	
-					<li><a href="${path}/back/lywoption/member.jsp" style="border: none">个人中心</a></li>
-			</c:if>
+			<li>
+				<c:if test="${loginedUser ==  null}" var="flag" scope="session">	
+					<a href="" style="border: none">个人中心</a>
+				</c:if>
+				<c:if test="${not flag}">	
+					<a href="${path}/back/lywoption/member.jsp" style="border: none">个人中心</a>
+				</c:if>
+					<a href="javascript:;" onclick="exitSys();" style="border: none">退出</a>
+			</li>	
 		</ul>
 	</div>
 </div>

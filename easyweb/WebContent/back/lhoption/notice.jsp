@@ -9,30 +9,6 @@
 	<title>网站公告</title>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript">
-		$(function(){
-			$.ajax({
-		        type: "post",
-		        url: "${path}/notice.s?op=query",
-		        data: "",
-		        async:true, // 异步请求
-		        cache:true, // 设置为 false 将不缓存此页面
-		        dataType: 'json', // 返回对象
-		        success: function(result) {
-		        	if(result.code == -1){
-		            	alert(result.msg);
-		            }
-		        	if(result.code == 0){
-		            	alert(result.msg);
-		            }
-		        	if(result.code == 1){
-			        		if(location.href.indexOf('#maincontent fl')==-1){
-			   			     location.href=location.href + '#maincontent fl';
-			   			     location.reload();
-			   		    }
-		        	}
-		        }
-		    });
-		});
 		function show(page){
 			var page1 = "page="+page;
 			$.ajax({
@@ -50,7 +26,7 @@
 		            	alert(result.msg);
 		            }
 		        	if(result.code == 1){
-			        		
+		        		$('#notice-show').load('${path}/back/lhoption/noticeChild.jsp');	
 		        	}
 		        }
 		    });
@@ -64,30 +40,12 @@
 		<div class="mainbody_topbg"></div>
 		<div class="bread">当前位置：
 			<a href="${path}/back/lhoption/index.jsp">首页</a> >
-			<a href="${path}/backlhoption/notice.jsp">公告</a>
+			<a href="${path}/back/lhoption/notice.jsp">公告</a>
 		</div>
 		<div class="maincontent fl" id="maincontent fl">
-				<div class="post">
-					<c:forEach   items="${allNoticeShow}" var="allNoticeShow">
-						<h2><a href="${path}/notice-detail.jsp?nid=${allNoticeShow.nid}">${allNoticeShow.ntitle}</a></h2>
-						<div class="postdata">
-							<div class="date">${date[0] }年${date[1] }月${date[2] }日</div>
-							<div class="cate">发表于 <a href="#">公告</a> | </div>
-							<div class="cate">浏览量: <span>${allNoticeShow.nnumber}</span>次</div>
-						</div>
-						<div class="content">
-							<p>${allNoticeShow.ncontent}</p>
-							<p style="text-align: right;">${allNoticeShow.nauthor}<br />${allNoticeShow.ntime}</p>
-						</div>
-					</c:forEach>
+				<div class="post" id="notice-show">
+					<jsp:include page="noticeChild.jsp"></jsp:include>
 				</div>
-			<div id="ball_footer" class="ball_footer">
-					<a href="javascript:;" class="firstPage" onclick = "show(${noticePage.getFirstPage()})">首页</a>
-					<a href="javascript:;" class="previousPage" onclick = "show(${noticePage.getPreviousPage()})">上一页</a>
-					<a class="nextPage" href="javascript:;"onclick = "show(${noticePage.getNextPage()})" >下一页</a>
-					<a class="lastPage" href="javascript:;" onclick = "show(${noticePage.getLastPage()})">尾页</a>
-					第${noticePage.getPage()}/${noticePage.getLastPage()}页
-			</div>	
 		</div>
 		<div class="sidebar fr">
 			<ul>

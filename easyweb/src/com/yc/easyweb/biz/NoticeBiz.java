@@ -26,29 +26,54 @@ public class NoticeBiz {
 	// 查询所有
 	public Notice selectSingle(Notice notice) throws BizException, IOException  {
 		if(notice == null){
-			throw new BizException("请填写公告信息");
+			throw new BizException("请填写公告信息！！！");
 		}
 		if(notice.getNid() ==0 && notice.getNtitle() == null && notice.getNtime() == null){
-			throw new BizException("请填写需要查询的公告信息");
+			throw new BizException("请填写需要查询的公告信息！！！");
 		}
 		return dao.selectSingle(notice);
 	}
 
 	// 添加
-	public int insert(Notice notice) {
-		return 0;
-
+	public int insert(Notice notice) throws BizException {
+		if(notice == null){
+			throw new BizException("请填写需要添加的公告信息！！！");
+		}
+		if(notice.getNtime() == null ){
+			throw new BizException("请填写公告的发布时间！！！");
+		}
+		if (notice.getNcontent() == null) {
+			throw new BizException("请填写公告的发布内容！！！");
+		}
+		if (notice.getNauthor() == null) {
+			throw new BizException("请填写公告的发布者！！！");
+		}
+		if (notice.getNtitle()== null) {
+			throw new BizException("请填写公告的发布标题！！！");
+		}
+		return dao.insert(notice);
 	}
 
 	// 删除
-	public int delete(Notice notice) {
-		return 0;
-
+	public int delete(Notice notice) throws BizException {
+		if(notice == null){
+			throw new BizException("请填写需要删除的公告信息！！！");
+		}
+		if (notice.getNtitle()== null && notice.getNauthor() == null && notice.getNtime() == null && notice.getNid() == 0) {
+			throw new BizException("请填写需要删除的公告信息！！！");
+		}
+		return dao.delete(notice);
 	}
 
 	// 更新
-	public int update(Notice notice) {
-		return 0;
+	public int update(Notice noticeOld, Notice noticeNew) throws BizException {
+		if(noticeNew ==null || noticeOld == null){
+			throw new BizException("请填写需要更新的公告信息！！！");
+		}
+		if(noticeOld.getNid() == 0 && noticeOld.getNtitle() == null){
+			throw new BizException("请填写需要更新的公告信息！！！");
+		}
+		return dao.update(noticeOld, noticeNew);
 
 	}
 	//公告分页

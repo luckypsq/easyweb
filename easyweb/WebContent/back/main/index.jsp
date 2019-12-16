@@ -1,8 +1,3 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="com.yc.easyweb.biz.UsercontrolBiz"%>
-<%@page import="com.yc.easyweb.bean.Usercontrol"%>
-<%@page import="com.yc.easyweb.bean.User"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>

@@ -95,12 +95,6 @@
 </div>
 <jsp:include page="../common/footer.jsp"></jsp:include>
 <script type="text/javascript">
-    $(function(){  
-		 if(location.href.indexOf('#helprfrm')==-1){
-		    location.href=location.href + '#helprfrm';
-		   	location.reload();
-		}
-    }); 
 	var xmlhttp;
 	try {
 		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");

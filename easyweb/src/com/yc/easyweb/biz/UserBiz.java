@@ -50,7 +50,6 @@ public class UserBiz {
 		if(userOld.getUcollege() == null && userOld.getUid() == 0 && userOld.getUminname() ==null && 
 				userOld.getUname() == null && userOld.getUphone() == null 
 				&& userOld.getUemail() == null){
-			
 			throw new BizException("请输入需要修改的用户信息");
 		}
 		return dao.update(userNew, userOld);
@@ -66,7 +65,6 @@ public class UserBiz {
 			if( user.getUid() == 0 && user.getUminname() ==null && 
 					user.getUname() == null && user.getUphone() == null 
 					&& user.getUemail() == null && user.getUstate() == 0){
-				
 				throw new BizException("请输入需要修改的用户信息");
 			}
 		}
@@ -81,7 +79,6 @@ public class UserBiz {
 		if(user.getUcollege() == null && user.getUid() == 0 && user.getUminname() ==null && 
 				user.getUname() == null && user.getUphone() == null 
 				&& user.getUemail() == null){
-			
 			throw new BizException("请输入需要查询的用户信息");
 		}
 		return dao.selectSingle(user);

@@ -28,6 +28,7 @@ public class UsercontrolDao {
 			List<Usercontrol> list = DbHelper.selectAll(sb.toString(), null, Usercontrol.class);
 			return list;
 		}
+		//²éÑ¯µ¥¸ö
 		public Usercontrol selectSingle(Usercontrol usercontrol) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select uid,conid,ucon from usercontrol where 1=1 ");

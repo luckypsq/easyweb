@@ -42,13 +42,13 @@ public class BookDao {
 				sb.append(" and bclass like '%" + book.getBclass() + "%'");
 			}
 			
-			if(book.getBnum() != null && !book.getBnum().toString().isEmpty()){
+			if(book.getBnum() != 0 ){
 				sb.append(" and bnum =" + book.getBnum());
 			}
 			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
 				sb.append(" and bauthor like '%" + book.getBauthor() + "%'");
 			}
-			if (book.getBtid() != null) {
+			if (book.getBtid() != 0) {
 				sb.append(" and btid = " + book.getBtid());
 			}
 			if(book.getBprice() != 0){
@@ -100,13 +100,13 @@ public class BookDao {
 			if(book.getUid() != 0){
 				sb.append(" and uid = " + book.getUid());
 			}
-			if(book.getBnum() != null && !book.getBnum().toString().isEmpty()){
+			if(book.getBnum() !=0){
 				sb.append(" and bnum =" + book.getBnum());
 			}
 			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
 				sb.append(" and bauthor = '" + book.getBauthor() + "'");
 			}
-			if (book.getBtid() != null) {
+			if (book.getBtid() !=0) {
 				sb.append(" and btid = " + book.getBtid());
 			}
 			if(book.getBprice() != 0){
@@ -160,13 +160,13 @@ public class BookDao {
 				sb.append(" and bclass ='"  + book.getBclass() + "'");
 			}
 			
-			if(book.getBnum() != null && !book.getBnum().toString().isEmpty()){
+			if(book.getBnum() != 0){
 				sb.append(" and bnum =" + book.getBnum());
 			}
 			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
 				sb.append(" and bauthor ='"  + book.getBauthor() + "'");
 			}
-			if (book.getBtid() != null) {
+			if (book.getBtid() != 0) {
 				sb.append(" and btid = " + book.getBtid());
 			}
 			if (book.getUid() != 0) {
@@ -239,7 +239,7 @@ public class BookDao {
 			sb.append(" ,bclass =  '" + bookNew.getBclass() + "'");
 		}
 
-		if (bookNew.getBtid() != null && bookNew.getBtid() != 0 ) {
+		if (bookNew.getBtid() != 0 ) {
 			sb.append(" ,btid = " + bookNew.getBtid());
 		}
 		if (bookNew.getBtemp() != null && !bookNew.getBtemp().isEmpty()) {
@@ -253,7 +253,7 @@ public class BookDao {
 			sb.append(" ,bprice = " + bookNew.getBprice());
 		}
 		//¿â´æ
-		if(bookNew.getBnum()!=null && !bookNew.getBnum().toString().isEmpty()){
+		if(bookNew.getBnum()!=0){
 			sb.append(" ,bnum = " + bookNew.getBnum());
 		}
 		//Í¼Æ¬
@@ -279,7 +279,7 @@ public class BookDao {
 		if (bookOld.getBauthor() != null && !bookOld.getBauthor().isEmpty()) {
 			sb.append(" and bauthor =  '" + bookOld.getBauthor() + "'");
 		}
-		if (bookOld.getBtid() != null) {
+		if (bookOld.getBtid() !=0) {
 			sb.append(" and btid = " + bookOld.getBtid());
 		}
 		if (bookOld.getBstate() != 0) {
@@ -318,7 +318,7 @@ public class BookDao {
 			if(book.getBauthor() != null){
 				sb.append(" and bauthor = '"+book.getBauthor()+"'");
 			}
-			if(book.getBtid() != null){
+			if(book.getBtid() != 0){
 				sb.append(" and btid = "+book.getBtid());
 			}
 			if(book.getBstate() != 0){
@@ -341,8 +341,20 @@ public class BookDao {
 				if(book.getBtname() != null){
 					sb.append(" and btname = '"+book.getBtname()+"'");
 				}
-				if(book.getBtid() != null){
+				if(book.getBtid() != 0){
 					sb.append(" and b.btid = "+book.getBtid());
+				}
+				if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
+					sb.append(" and buniversity = '" + book.getBuniversity() + "'");
+				}
+				if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
+					sb.append(" and bucollege = '" + book.getBucollege() + "'");
+				}
+				if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
+					sb.append(" and bumajor = '" + book.getBumajor() + "'");
+				}
+				if (book.getBclass() != null && !book.getBclass().isEmpty()) {
+					sb.append(" and bclass = '" + book.getBclass() + "'");
 				}
 			}
 	    	sb.append(" order by  bid asc");

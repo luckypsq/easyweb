@@ -55,7 +55,6 @@ public class PayTypeDao {
 			}
 		}
 		return DbHelper.update(sb.toString(), null);
-
 	}
 
 	

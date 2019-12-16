@@ -27,31 +27,10 @@ public class NoticeServlet extends BaseServlet {
 		try {
 			//公告分页查询
 			String page = request.getParameter("page");
-			int iPage;
-			if(page != null && !page.isEmpty()){
-				iPage = Integer.parseInt(page);
-			}else{
-				iPage = 1 ;
-			}
-			Page<Notice> sPage = noticeBiz.noticePage(iPage, 3, notice);
-			if(sPage.getData().size() == 0){
-				result = Result.failure("暂无数据！！！");
-				String json = gson.toJson(result);
-				response.setContentType("application/json;charset=UTF-8");
-				response.getWriter().append(json);
-				return ;
-			}
-			session.setAttribute("noticePage", sPage);
-			session.setAttribute("allNoticeShow", sPage.getData());
-			result = Result.success("查询成功！！！");
-			String json1 = gson.toJson(result);
-			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().append(json1);
-			//查询公告详情
 			String nid = request.getParameter("nid");
+			//查询公告详情
 			if(nid != null && !nid.isEmpty()){
 				notice.setNid(Long.parseLong(nid));
-			}
 				Notice notice2 = noticeBiz.selectSingle(notice);
 				if(notice2.getNid() != 0){
 					session.setAttribute("noticeDetail", notice2);
@@ -59,13 +38,37 @@ public class NoticeServlet extends BaseServlet {
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
+					return ;
 				}else{
 					result = Result.failure("查询失败！！！");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
+					return ;
 				}
-				
+			}else{
+				int iPage;
+				if(page != null && !page.isEmpty()){
+					iPage = Integer.parseInt(page);
+				}else{
+					iPage = 1 ;
+				}
+				Page<Notice> sPage = noticeBiz.noticePage(iPage, 3, notice);
+				if(sPage.getData().size() == 0){
+					result = Result.failure("暂无数据！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return ;
+				}else{
+					session.setAttribute("noticePage", sPage);
+					result = Result.success("查询成功！！！");
+					String json1 = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json1);
+					return ;
+				}
+			}
 		} catch (BizException e) {
 			result = Result.error(e.getMessage());
 			String json = gson.toJson(result);
@@ -74,7 +77,6 @@ public class NoticeServlet extends BaseServlet {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
-				// TODO Auto-generated catch block
 			}
 		} catch (IOException e) {
 			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
@@ -84,11 +86,11 @@ public class NoticeServlet extends BaseServlet {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
-				// TODO Auto-generated catch block
 			}			
 			e.printStackTrace();
 		}
 	}
+	// TODO Auto-generated catch block
 	//添加
 	public void  add(HttpServletRequest request, HttpServletResponse response) {
 	}

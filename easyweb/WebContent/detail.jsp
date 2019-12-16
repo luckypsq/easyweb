@@ -16,7 +16,7 @@
 	<div class="container clearfix">
 		<div class="bread">当前位置：
 			<a href="${path }/back/lhoption/index.jsp">首页</a> >
-			<a href="${path }/back/lywoption/list.jsp">教材区</a> >
+			<a href="${path }/back/lhoption/index.jsp">教材区</a> >
 			<a href="detail.jsp?${bookDetail.bid}">图书详情</a>
 		</div>
 		<div class="main-left fl clearfix">

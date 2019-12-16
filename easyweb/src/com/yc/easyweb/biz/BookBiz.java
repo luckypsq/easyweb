@@ -31,8 +31,8 @@ public class BookBiz {
 		if (book == null) {
 			throw new BizException("请填写书籍信息！");
 		}
-		if(book.getBid() == 0){
-			throw new BizException("未指定书籍编号！");
+		if(book.getBid() == 0 && book.getUid() ==0 && book.getBname() == null){
+			throw new BizException("未指定书籍！");
 		}
 		return dao.selectSingle(book);
 	}
@@ -55,7 +55,7 @@ public class BookBiz {
 		if (book == null) {
 			throw new BizException("请填写书籍信息！");
 		}
-		if(book.getBid() == 0){
+		if(book.getBid() == 0 && book.getUid() ==0 && book.getBname() == null){
 			throw new BizException("未指定删除的书籍！");
 		}
 		EorderBiz biz = new EorderBiz();
@@ -78,7 +78,7 @@ public class BookBiz {
 			throw new BizException("请填写书籍信息！");
 		}
 		for(Book book : list){
-			if(book.getBid() == 0 ){
+			if(book.getBid() == 0 && book.getUid() ==0 && book.getBname() == null){
 				throw new BizException("未指定删除的书籍！");
 			}
 			EorderBiz biz = new EorderBiz();
@@ -104,8 +104,8 @@ public class BookBiz {
 		if (oldBook == null ) {
 			throw new BizException("请填写需要修改的书籍！");
 		}
-		if(oldBook.getBid() == 0){
-			throw new BizException("请填写需要修改的书籍编号！");
+		if(oldBook.getBid() == 0 && oldBook.getBname() == null){
+			throw new BizException("请填写需要修改的书籍信息！");
 		}
 			return dao.update(newBook, oldBook);
 	}

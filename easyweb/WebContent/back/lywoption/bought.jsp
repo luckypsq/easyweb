@@ -7,77 +7,186 @@
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<link rel="stylesheet" href="${path}/css/font-awesome.min.css"/>
-	<script src="${path}/js/main.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<title>易书网</title>
 	<script type="text/javascript">
-	var xmlhttp;
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (e) {
-			try {
-				xmlhttp = new XMLHttpRequest();
-			} catch (e) {
-			}
-		}
-	}
-	function deleteone(obj,itemid){
+
+	function deleteCart(obj,itemid){
 		if(confirm("确实要删除吗？")){
-			if(xmlhttp!=null){
-				// 定义请求地址
-				if(itemid == ""){
-					alert("请选择商品！！！");
-					return;
+			var param = "itemid="+itemid;
+			$.ajax({
+			        type: "post",
+			        url: "${path}/eorderitem.s?op=delete",
+			        data: param,
+			        async:true, // 异步请求
+			        cache:true, // 设置为 false 将不缓存此页面
+			        dataType: 'json', // 返回对象
+			        success: function(result) {
+			        	if(result.code == 1){
+			        		$(obj).parents(".pro").remove();
+			        		alert(result.msg);
+			        		return ;
+			        	}
+			        	if(result.code == 0){
+			        		alert(result.msg);
+			        		return ;
+			        	}
+			        	if(result.code == -1){
+			        		alert(result.msg);
+			        		return ;
+			        	}
 				}
-				var url ="${path}/eorderitem.s?op=delete&itemid="+itemid;
-				xmlhttp.open("POST",url,true);
-				xmlhttp.onreadystatechange=function(){
-					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-						var json = xmlhttp.responseText.replace(/\s/gi,"");
-						if(json==1){
-							$(obj).parents("ul").remove();
-							alert("删除成功！！！");
-						}else{
-							alert("删除失败！！！");  
-						}
-					}
-				};
-				// 发送请求
-				xmlhttp.send(null);
-			}else{
-				alert("不能创建XMLHttpRequest对象实例");
-			}
+			});
 		}
 	}
-	
-function show(page){
-		if(xmlhttp!=null){
-			var url;
-			// 定义请求地址
-			if(page != -1){
-				 url ="${path}/eorderitem.s?op=query&Page="+page;
-			}else{
-				 url ="${path}/eorderitem.s?op=query";
+	function show(page){
+	var param = "page=" +page;
+	$.ajax({
+	        type: "post",
+	        url: "${path}/eorderitem.s?op=query",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+	        	if(result.code == 1){
+	        		$('#help-r-cart').load('${path}/back/lywoption/cartData.jsp');
+	        		return ;
+	        	}
+	        	if(result.code == 0){
+	        		alert(result.msg);
+	        		return ;
+	        	}
+	        	if(result.code == -1){
+	        		alert(result.msg);
+	        		return ;
+	        	}
 			}
-			xmlhttp.open("POST",url,true);
-			xmlhttp.onreadystatechange=function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					var json = xmlhttp.responseText.replace(/\s/gi,"");
-					if(json == -1){
-						alert("暂无数据");
-					}
-				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-	}else{
-		alert("不能创建XMLHttpRequest对象实例");
+		});
+}
+//检查输入的数量
+function checkCount(itemid,count){
+	var num = $('#count-cart').val();
+	var reg =/^[0-9]{1,7}$/;
+	
+	if(!reg.test(num)){
+		alert("输入不合法！！！");
+		return ;
 	}
-	$(function(){  
-	     show(-1);
-	});
+	var param = "itemid="+itemid +"&count="+num;
+	$.ajax({
+	        type: "post",
+	        url: "${path}/eorderitem.s?op=update",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+	        	if(result.code == 1){
+	        		$("#count-cart").attr("value",result.data);
+	        		$("#cart-total").html(result.data);
+	        		return ;
+	        	}
+	        	if(result.code == 0){
+	        		alert(result.msg);
+	        		return ;
+	        	}
+	        	if(result.code == -1){
+	        		alert(result.msg);
+	        		return ;
+	        	}
+			}
+		});
+}
+//改变数量
+function changeCount(itemid,num){
+	var number = $('#count-cart').val();
+	var realcount = 0;
+	if(num == 1){
+		realcount = parseInt(number) + 1;
+		var param = "itemid="+itemid +"&count="+realcount;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/eorderitem.s?op=update",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+	        	if(result.code == 1){
+	        		$("#count-cart").attr("value",realcount);
+	        		$("#cart-total").html(result.data);
+	        		return ;
+	        	}
+	        	if(result.code == 0){
+	        		alert(result.msg);
+	        		return ;
+	        	}
+	        	if(result.code == -1){
+	        		alert(result.msg);
+	        		return ;
+	        	}
+			}
+		});
+	}
+	if(num == -1){
+		if(parseInt(number) > 1){
+			realcount = parseInt(number) - 1;
+			var param = "itemid="+itemid +"&count="+realcount;
+			$.ajax({
+			        type: "post",
+			        url: "${path}/eorderitem.s?op=update",
+			        data: param,
+			        async:true, // 异步请求
+			        cache:true, // 设置为 false 将不缓存此页面
+			        dataType: 'json', // 返回对象
+			        success: function(result) {
+			        	if(result.code == 1){
+			        		$("#count-cart").attr("value",realcount);
+			        		$("#cart-total").html(result.data);
+			        		return ;
+			        	}
+			        	if(result.code == 0){
+			        		alert(result.msg);
+			        		return ;
+			        	}
+			        	if(result.code == -1){
+			        		alert(result.msg);
+			        		return ;
+			        	}
+					}
+				});
+		}else{
+			alert("该宝贝不能再减少了哟！！！");
+			return ;
+		}
+	}
+}
+//买书
+function buyBook(itemid){
+	var param = "itemid="+itemid;
+	$.ajax({
+	        type: "post",
+	        url: "${path}/eorderitem.s?op=buyBook",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+	        	if(result.code == 1){
+	        		location.href="${path}/back/lywoption/buy.jsp";
+	        		return ;
+	        	}
+	        	if(result.code == 0){
+	        		alert(result.msg);
+	        		return ;
+	        	}
+	        	if(result.code == -1){
+	        		alert(result.msg);
+	        		return ;
+	        	}
+			}
+		});
 }
 	</script>
 </head>
@@ -102,95 +211,8 @@ function show(page){
 	
 		</div>
 		<jsp:include page="../common/middle.jsp"></jsp:include>
-		<div class="help-r fr">
-			<div class="help-item-title">购物车</div>
-			<div class="help-main">
-				<div class="product-item clearfix">
-					<div class="name fl">
-						<span style="margin-left: 150px">书名</span>
-					</div>
-					<div class="attr fr">
-						<ul class="clearfix">
-							<li>单价</li>
-							<li>加入时间</li>
-							<li class="edit1" style="width: 50px">	
-							</li>
-							<li class="edit1" style="width: 50px">
-							</li>
-							<li class="edit1" style="width: 50px">
-							</li>
-						</ul>
-					</div>
-				</div>
-				<c:forEach items="${cartDate}" var="cart">
-					<div class="pro">
-						<div class="product-attr">
-							<div class="product-name fl">
-								<div class="pic-thumb fl"><a href="${path}/detail.jsp?bid=${cart.bid}"  ><img class="middle" src="${cart.bimg}"></a></div>
-								<div class="product-title fl">
-									<a href="${path}/detail.jsp?bid=${cart.bid}" class="ellipsis">${cart.bname}</a><br>
-									<span>
-										<c:if test="${cart.bucollege == ''}" var="flag" scope="session">						
-											<c:out value="暂无信息"></c:out>
-										</c:if>
-										<c:if test="${not flag}">	
-												${cart.bucollege}			   	
-										</c:if>
-									</span>
-									<span>
-										<c:if test="${cart.bumajor == ''}" var="flag" scope="session">						
-											<c:out value="暂无信息"></c:out>
-										</c:if>
-										<c:if test="${not flag}">	
-												${cart.bumajor}		   	
-										</c:if>
-									</span>
-									<span>
-										<c:if test="${cart.bclass == ''}" var="flag" scope="session">						
-											<c:out value="暂无信息"></c:out>
-										</c:if>
-										<c:if test="${not flag}">	
-												${cart.bclass}	   	
-										</c:if>
-									</span>
-								</div>
-							</div>
-							<div class="product-price fr">
-								<ul class="clearfix">
-									<li>${cart.bprice}	 </li>
-									<li>${cart.carttime} </li>
-									<li class="edit" style="width: 110px">
-									</li>
-									<li  class="edit1" style="width: 50px" >
-										<a id="buyA" href="${path}/back/lywoption/buy.jsp?itemid=${cart.itemid}">购买</a>
-									</li>
-									<li class="edit2" style="width: 50px" >
-										<a id="buyA" href="${path}/back/lywoption/boughtupdate.jsp?itemid=${cart.itemid}"></a>
-									</li>
-									<li class="edit3" style="width: 50px" >
-										<a id="buyA" onclick="deleteone(this,${cart.itemid})"></a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-				<div class="page clearfix">
-					<a onclick = "show(${cartPage.getFirstPage()})">首页</a>
-					<a onclick = "show(${cartPage.getPreviousPage()})">上一页</a>
-					<c:forEach  var="i" begin="1" end="${cartPage.getLastPage()}">
-						<c:if test="${cartPage.getPage() == ${i}" var="flag" scope="session">						
-							<span class="currentPage">${i}</span>
-						</c:if>
-						<c:if test="${not flag}">
-							<a onclick = "show(${i})">${i}</a>
-						</c:if>			
-					</c:forEach>
-					<a onclick = "show(${cartPage.getNextPage()})" >下一页</a>
-					<a onclick = "show(${cartPage.getLastPage()})">尾页</a>
-					第${cartPage.getPage()}/${cartPage.getLastPage()}页
-				</div>
-			</div>
+		<div class="help-r fr" id="help-r-cart">
+			<jsp:include page="cartData.jsp"></jsp:include>
 		</div>
 	</div>
 </div>

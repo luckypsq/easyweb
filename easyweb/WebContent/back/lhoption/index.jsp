@@ -81,6 +81,7 @@
 			</ul>
 		</div>
 	</div>
+	<div id="index-book-show">
 	<div class="item clearfix" id="item1">
 		<h1>教材区<span></span>
 		</h1>
@@ -103,25 +104,9 @@
 			</ul>
 		</div>
 		<div class="book-wrap fr">
-			<div class="book clearfix">
-				<c:forEach   items="${teachBook}" var="teach">
-					<dl>
-						<dt><a href="${path}/detail.jsp?bid=${teach.bid}"><img src="${teach.bimg}" /></a></dt>
-						<dd>
-							<p style="width:150px;height:100px;"><a href="${path}/detail.jsp?bid=${teach.bid}" >${teach.bname}</a></p>
-							<p>数量：${teach.bnum}</p>
-							<p><s>价格：￥${teach.bprice}</s> ${teach.bprice}</p>
-						</dd>
-					</dl>
-				</c:forEach>
+			<div class="book clearfix" id="teachBook">
+				<jsp:include page="indexTeach.jsp"></jsp:include>
 			</div>
-			<%-- <div id="ball_footer" class="ball_footer">
-				 <a href="javascript:;" class="firstPage" onclick = "show(1,0,0,${teachPage.getFirstPage()})">首页</a>
-					<a href="javascript:;" class="previousPage" onclick = "show(1,0,0,${teachPage.getPreviousPage()})">上一页</a>
-					<a class="nextPage" href="javascript:;"onclick = "show(1,0,0,${teachPage.getNextPage()})" >下一页</a>
-					<a class="lastPage" href="javascript:;" onclick = "show(1,0,0,${teachPage.getLastPage()})">尾页</a>
-					第${teachPage.getPage()}/${teachPage.getLastPage()}页
-			</div>	 --%>
 		</div>
 	</div>	
 	
@@ -131,33 +116,18 @@
 			<c:forEach items="${btypes}" var="bookTypes">
 				<c:if test="${bookTypes.btname.equals('工具书区')}" var="flag" scope="session">	
 					<c:if test="${bookTypes.btnamesecond != null}" var="flag" scope="session">	
-						<li><a class=""  href="javascript:;" onclick="show(0,${bookTypes.btid})">${bookTypes.btnamesecond}</a></li>	
+						<li><a   href="javascript:;" onclick="show(0,${bookTypes.btid},this)">${bookTypes.btnamesecond}</a></li>	
 					</c:if>
 				</c:if>
 			</c:forEach>
 		</ul>
 		
 		<div class="tab0 tabs clearfix">
-			<div class="book clearfix">
-			<c:forEach   items="${toolBook}" var="tool">
-				<dl>
-					<dt><a href="${path}/detail.jsp?bid=${tool.bid}"><img src="${tool.bimg}" /></a></dt>
-					<dd>
-						<p><a href="${path}/detail.jsp?bid=${tool.bid}">${tool.bname}</a></p>
-						<p>数量：${tool.bnum}</p>
-						<p><s>价格：￥${tool.bprice}</s> ${tool.bprice}</p>
-					</dd>
-				</dl>
-			</c:forEach>
+			<div class="book clearfix" id="toolBook">
+				<jsp:include page="indexTool.jsp"></jsp:include>
 			</div>
-			<%-- <div id="ball_footer" class="ball_footer">
-					<a class="firstPage" href="javascript:;" onclick = "show(0,2,0,${toolPage.getFirstPage()})">首页</a>
-					<a class="previousPage" href="javascript:;" onclick = "show(0,2,0,${toolPage.getPreviousPage()})">上一页</a>
-					<a class="nextPage" href="javascript:;" onclick = "show(0,2,0,${toolPage.getNextPage()})" >下一页</a>
-					<a class="lastPage" href="javascript:;" onclick = "show(0,2,0,${toolPage.getLastPage()})">尾页</a>
-					第${toolPage.getPage()}/${toolPage.getLastPage()}页
-			</div> --%>
 		</div>
+	</div>
 	</div>
 	<div class="item clearfix" id="item3">
 		<h1>分享区<span></span></h1>
@@ -173,13 +143,6 @@
 				</dl>
 			</c:forEach>
 		</div>
-		<%-- <div id="ball_footer" class="ball_footer">
-			<a class="firstPage" href="javascript:;" onclick = "show(0,0,3,${sharePage.getFirstPage()})">首页</a>
-					<a class="previousPage" href="javascript:;" onclick = "show(0,0,3,${sharePage.getPreviousPage()})">上一页</a>
-					<a class="nextPage" href="javascript:;" onclick = "show(0,0,3,${sharePage.getNextPage()})" >下一页</a>
-					<a class="lastPage" href="javascript:;" onclick = "show(0,0,3,${sharePage.getLastPage()})">尾页</a>
-					第${sharePage.getPage()}/${sharePage.getLastPage()}页
-		</div> --%>
 	</div>
 </div>
 <div class="fixnav">
@@ -208,8 +171,12 @@
 			bns: ['.prev', '.next'],//** 前后按钮配置class
 			interval: 2750  //** 停顿时间
 		})
-	})
-function show(btid1,btid2){
+	});
+$("#index-book-show a").on('click',function(){
+	$("#index-book-show a").addClass(""); 
+});
+function show(btid1,btid2,obj){
+	$(obj).addClass("on"); 
 	var param = "btid="+btid1 ;
 	if(btid1 != 0){
 		param = "&btid1=" +btid1;
@@ -232,7 +199,12 @@ function show(btid1,btid2){
             	alert(result.msg);
             }
         	if(result.code == 1){
-        		window.location.href = location.href;
+        		if(btid1 != 0){
+        			$('#teachBook').load('${path}/back/lhoption/indexTeach.jsp');
+        		}
+        		if(btid2 != 0){
+        			$('#toolBook').load('${path}/back/lhoption/indexTool.jsp');
+        		}
         	}
         }
     });

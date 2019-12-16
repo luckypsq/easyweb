@@ -1,14 +1,8 @@
 package com.yc.easyweb.bean;
 
-import java.io.Serializable;
 
-import jdk.nashorn.internal.codegen.ObjectClassGenerator;
 
-public class Result implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Result {
 	// 返回的消息
 	private String msg;
 	// 返回的结果码 0 失败  1 成功

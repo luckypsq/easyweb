@@ -26,7 +26,7 @@ public class ControlBiz {
 		if(control == null){
 			throw new BizException("请填写管理权限信息");
 		}
-		if(control.getConid() == 0){
+		if(control.getConid() == 0 && control.getConame() == null && control.getUid() == 0){
 			throw new BizException("请指定查询的管理权限！！！");
 		}
 		return dao.selectSingle(control);

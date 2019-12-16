@@ -16,12 +16,19 @@ public class Bought implements Serializable{
 	private String carttime;//下单时间
 	private String bucollege;//书籍分类学院
 	private String bumajor;//书籍分类专业
-	private String bclass;//书籍分类年级
+	private String buniversity;//书籍分类大学
 	private String bname;//书名
 	private double bprice;//价格
 	private String bimg;//图片
 	private String uname;//用户名
+	private String eoid;
 	
+	public String getEoid() {
+		return eoid;
+	}
+	public void setEoid(String eoid) {
+		this.eoid = eoid;
+	}
 	public String getUname() {
 		return uname;
 	}
@@ -96,24 +103,25 @@ public class Bought implements Serializable{
 	public void setBumajor(String bumajor) {
 		this.bumajor = bumajor;
 	}
-	public String getBclass() {
-		return bclass;
-	}
-	public void setBclass(String bclass) {
-		this.bclass = bclass;
-	}
 	public String getBname() {
 		return bname;
 	}
 	public void setBname(String bname) {
 		this.bname = bname;
 	}
+	
+	public String getBuniversity() {
+		return buniversity;
+	}
+	public void setBuniversity(String buniversity) {
+		this.buniversity = buniversity;
+	}
 	@Override
 	public String toString() {
 		return "Bought [itemid=" + itemid + ", count=" + count + ", bid=" + bid + ", total=" + total + ", uid=" + uid
 				+ ", cartstate=" + cartstate + ", carttime=" + carttime + ", bucollege=" + bucollege + ", bumajor="
-				+ bumajor + ", bclass=" + bclass + ", bname=" + bname + ", bprice=" + bprice + ", bimg=" + bimg
-				+ ", uname=" + uname + "]";
+				+ bumajor + ", buniversity=" + buniversity + ", bname=" + bname + ", bprice=" + bprice + ", bimg="
+				+ bimg + ", uname=" + uname + ", eoid=" + eoid + "]";
 	}
 	@Override
 	public int hashCode() {

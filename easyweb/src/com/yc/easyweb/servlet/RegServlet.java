@@ -34,7 +34,7 @@ public class RegServlet extends BaseServlet {
 	public void checkName(HttpServletRequest request, HttpServletResponse response){
 		 User user = new User();
 		 HttpSession session = request.getSession();
-		String username = request.getParameter("username");
+		String username = request.getParameter("username").trim();
 		try {
 			if(username != null && !username.isEmpty()){
 				user.setUname(username);
@@ -102,7 +102,7 @@ public class RegServlet extends BaseServlet {
 	 */
 	public void checkPhone(HttpServletRequest request, HttpServletResponse response){
 		 HttpSession session = request.getSession();
-		String uphone = request.getParameter("uphone");
+		String uphone = request.getParameter("uphone").trim();
 		String regphone = "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$";
 		 User user = new User();
 		 try {
@@ -160,7 +160,7 @@ public class RegServlet extends BaseServlet {
 	//ºÏ≤È” œ‰
 	public void checkEmail(HttpServletRequest request, HttpServletResponse response){
 		
-		String uemail = request.getParameter("uemail");
+		String uemail = request.getParameter("uemail").trim();
 		HttpSession session = request.getSession();
 		User user = new User();
 		String regemail = "^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$";
@@ -224,7 +224,7 @@ public class RegServlet extends BaseServlet {
 	//ºÏ≤È√‹¬Î
 	public void checkPassword(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
-		String upassword = request.getParameter("upassword");
+		String upassword = request.getParameter("upassword").trim();
 		String regpassword = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$";
 		try {
 			if(upassword != null && !upassword.isEmpty()){
@@ -268,7 +268,7 @@ public class RegServlet extends BaseServlet {
 	//»∑»œ√‹¬Î
 	public void checkPassword01(HttpServletRequest request, HttpServletResponse response){
 		String confirm = request.getParameter("passwordsignup_confirm");
-		String upassword = request.getParameter("upassword");
+		String upassword = request.getParameter("upassword").trim();
 		try {
 			if(upassword == null ||  upassword.isEmpty()){
 				result = Result.failure("«Î ‰»Î√‹¬Î£°£°£°");

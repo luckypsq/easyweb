@@ -44,7 +44,7 @@ public class EorderBiz {
 			if(detial == null){
 				throw new BizException("请输入订单信息");
 			}
-			if(detial.getBid() == 0 && detial.getEoid() == null && detial.getUid() ==0 && detial.getUname() == null && detial.getUphone() == null ){
+			if(detial.getBid() == 0 && detial.getEoid() == null && detial.getUid() ==0 && detial.getUname() == null && detial.getEotemp() == null ){
 				throw new BizException("请输入需要查询的订单信息");
 			}
 			return dao.selectSingleDetail(detial);
@@ -119,6 +119,9 @@ public class EorderBiz {
 	//分页
 	public Page<Eorder> eorderPage(int page, int rows,Eorder eorder) throws IOException {
 		return dao.eorderPage(page, rows, eorder);
+	}
+	public Page<OrderDetial> eorderPage(int page, int rows,OrderDetial eorder) throws IOException {
+		return dao.orderPage(page, rows, eorder);
 	}
 	// 其他
 }

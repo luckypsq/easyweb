@@ -25,8 +25,8 @@ public class BookTypeBiz {
 			if(bookType ==null){
 				throw new BizException("请填写类型信息！！！");
 			}
-			if(bookType.getBtname() == null){
-				throw new BizException("请填写主类型信息！！！");
+			if(bookType.getBtname() == null && bookType.getBtnamesecond() == null){
+				throw new BizException("请填写类型信息！！！");
 			}
 				return book.insert(bookType);
 			
@@ -36,7 +36,7 @@ public class BookTypeBiz {
 			if(bookType ==null){
 				throw new BizException("请填写需要删除的类型信息！！！");
 			}
-			if(bookType.getBtname() == null && bookType.getBtid() == 0){
+			if(bookType.getBtname() == null && bookType.getBtid() == 0 && bookType.getBtnamesecond() == null && bookType.getBtnamethird() == null){
 				throw new BizException("请指定需要删除的类型！！！");
 			}
 				return book.delete(bookType);
@@ -46,7 +46,7 @@ public class BookTypeBiz {
 			if(bookTypeOld ==null){
 				throw new BizException("请填写类型信息！！！");
 			}
-			if(bookTypeOld.getBtname() == null && bookTypeOld.getBtid() == 0){
+			if(bookTypeOld.getBtname() == null && bookTypeOld.getBtid() == 0 && bookTypeOld.getBtnamesecond() == null && bookTypeOld.getBtnamethird() == null){
 				throw new BizException("请指定需要修改的类型！！！");
 			}
 			if(bookTypeNew ==null){

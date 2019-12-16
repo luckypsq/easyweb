@@ -64,7 +64,7 @@ public class EorderDao {
 	public List<OrderDetial> selectAllDetail(OrderDetial detial) throws IOException {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
-				" select e.eoid,bname,u.uid,b.bid,total,eotime,eotype,eoaddr,uphone,e.uname,count,eostate,eoespress,eopayname,bimg "
+				" select e.eoid,bname,u.uid,b.bid,total,eotime,eotype,eoaddr,uphone,e.uname,count,eostate,eoespress,eopayname,bimg,eotemp "
 						+ " from eorder e,book b,eorderitem eo,user u,paytype pay "
 						+ " where  e.eoid = eo.eoid and b.bid = eo.bid  and pay.eopaytypeid = e.eopaytypeid "
 						+ " and u.uid = e.uid and 1=1 ");
@@ -321,5 +321,34 @@ public class EorderDao {
 		sb.append("  order by  eoid asc");
 		return db.selectPageForMysql(page, rows, Eorder.class, sb.toString());
 	}
+	// Eorder详情分页
+		@SuppressWarnings({ "unchecked", "static-access" })
+		public Page<OrderDetial> orderPage(int page, int rows, OrderDetial detial) throws IOException {
+			StringBuffer sb = new StringBuffer();
+			sb.append(
+					" select e.eoid,bname,u.uid,b.bid,total,eotime,eotype,eoaddr,uphone,e.uname,count,eostate,eoespress,eopayname,bimg "
+							+ " from eorder e,book b,eorderitem eo,user u,paytype pay "
+							+ " where  e.eoid = eo.eoid and b.bid = eo.bid  and pay.eopaytypeid = e.eopaytypeid "
+							+ " and u.uid = e.uid and 1=1 ");
+			if (detial != null) {
+				if (detial.getEoid() != null) {
+					sb.append(" and e.eoid = '" + detial.getEoid() + "'");
+				}
+				if (detial.getEotime() != null) {
+					sb.append(" and eotime like '%" + detial.getEotime() + "%'");
+				}
+				if (detial.getEostate() != 0) {
+					sb.append(" and eostate = " + detial.getEostate());
+				}
+				if (detial.getUid() != 0) {
+					sb.append(" and u.uid = " + detial.getUid());
+				}
+				if (detial.getBid() != 0) {
+					sb.append(" and b.bid = " + detial.getBid());
+				}
+			}
+			sb.append("  order by  eoid asc");
+			return db.selectPageForMysql(page, rows, OrderDetial.class, sb.toString());
+		}
 	// 其他
 }

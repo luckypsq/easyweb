@@ -14,7 +14,6 @@ public class OrderDetial implements Serializable{
 	private String eotime;//时间
 	private String eotype;//配送类型
 	private String eoaddr;//地址
-	private String uphone;//电话
 	private String uname;//用户名
 	private long uid;//用户id
 	private long bid;//书id
@@ -23,7 +22,14 @@ public class OrderDetial implements Serializable{
 	private String eoespress;//快递名字
 	private String eopayname;//支付类型
 	private String bimg;//图片
+	private String eotemp;//电话
 	
+	public String getEotemp() {
+		return eotemp;
+	}
+	public void setEotemp(String eotemp) {
+		this.eotemp = eotemp;
+	}
 	public String getBimg() {
 		return bimg;
 	}
@@ -78,12 +84,6 @@ public class OrderDetial implements Serializable{
 	public void setEoaddr(String eoaddr) {
 		this.eoaddr = eoaddr;
 	}
-	public String getUphone() {
-		return uphone;
-	}
-	public void setUphone(String uphone) {
-		this.uphone = uphone;
-	}
 	public String getUname() {
 		return uname;
 	}
@@ -117,7 +117,7 @@ public class OrderDetial implements Serializable{
 	@Override
 	public String toString() {
 		return "OrderDetial [eoid=" + eoid + ", bname=" + bname + ", total=" + total + ", eotime=" + eotime
-				+ ", eotype=" + eotype + ", eoaddr=" + eoaddr + ", uphone=" + uphone + ", uname=" + uname + ", uid="
+				+ ", eotype=" + eotype + ", eoaddr=" + eoaddr +  ", uname=" + uname + ", uid="
 				+ uid + ", bid=" + bid + ", count=" + count + ", eostate=" + eostate + "]";
 	}
 	@Override

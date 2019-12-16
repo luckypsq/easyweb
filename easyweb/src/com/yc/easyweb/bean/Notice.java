@@ -9,7 +9,7 @@ public class Notice implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private long nid;//公告id
 	private String ntime;//发布时间
-	private String nnumber;//浏览量
+	private long nnumber;//浏览量
 	private String nauthor;//发布者
 	private String ncontent;//内容
 	private int nstate;//状态（1.未过期2.已过期）
@@ -34,10 +34,11 @@ public class Notice implements Serializable{
 	public void setNtime(String ntime) {
 		this.ntime = ntime;
 	}
-	public String getNnumber() {
+	
+	public long getNnumber() {
 		return nnumber;
 	}
-	public void setNnumber(String nnumber) {
+	public void setNnumber(long nnumber) {
 		this.nnumber = nnumber;
 	}
 	public String getNauthor() {

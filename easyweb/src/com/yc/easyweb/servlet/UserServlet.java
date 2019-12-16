@@ -65,7 +65,7 @@ public class UserServlet extends BaseServlet {
 						return;
 					}
 				} catch (BizException e) {
-					
+
 					e.printStackTrace();
 				}
 			} else {
@@ -125,10 +125,10 @@ public class UserServlet extends BaseServlet {
 				request.getRequestDispatcher(url).forward(request, response);
 				return;
 			} catch (SQLException e) {
-				
+
 				e.printStackTrace();
 			} catch (BizException e) {
-				
+
 				e.printStackTrace();
 			}
 		}
@@ -143,10 +143,10 @@ public class UserServlet extends BaseServlet {
 			}
 			request.getRequestDispatcher(url).forward(request, response);
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} catch (BizException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
@@ -171,7 +171,7 @@ public class UserServlet extends BaseServlet {
 							return;
 						}
 					} catch (BizException e) {
-						
+
 						e.printStackTrace();
 					}
 				}
@@ -200,10 +200,10 @@ public class UserServlet extends BaseServlet {
 				out.print(0);
 			}
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} catch (BizException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
@@ -236,10 +236,10 @@ public class UserServlet extends BaseServlet {
 				out.print(0);
 			}
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} catch (BizException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
@@ -295,7 +295,7 @@ public class UserServlet extends BaseServlet {
 						return;
 					}
 				} catch (BizException e) {
-					
+
 					e.printStackTrace();
 				}
 			} else {
@@ -382,10 +382,10 @@ public class UserServlet extends BaseServlet {
 				request.getRequestDispatcher(url).forward(request, response);
 				return;
 			} catch (SQLException e) {
-				
+
 				e.printStackTrace();
 			} catch (BizException e) {
-				
+
 				e.printStackTrace();
 			}
 		}
@@ -399,10 +399,10 @@ public class UserServlet extends BaseServlet {
 			}
 			request.getRequestDispatcher(url).forward(request, response);
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} catch (BizException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
@@ -472,14 +472,10 @@ public class UserServlet extends BaseServlet {
 			out.print(1);
 		}
 	}
+	// TODO Auto-generated catch block
 
-	
-
-	
-	
-	
 	// 修改个人密码
-	public void updatePwd(HttpServletRequest request, HttpServletResponse response){
+	public void updatePwd(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loginedUser");
 		User userNew = new User();
@@ -487,25 +483,27 @@ public class UserServlet extends BaseServlet {
 		try {
 			if (newpassword != null && !newpassword.isEmpty()) {
 				userNew.setUpassword(newpassword);
-			}else{
+			} else {
 				result = Result.failure("新密码未输入或不合法");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			}
 			int code = userBiz.update(userNew, user);
-			if(code <= 0){
+			if (code <= 0) {
 				result = Result.failure("修改失败！！！");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
-				return ;
+				return;
 			}
 			result = Result.success("修改成功！！！");
+			User user2 = userBiz.selectSingle(user);
+			session.setAttribute("longinedUser", user2);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
-			
+			return;
 		} catch (SQLException e) {
 			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
 			String json = gson.toJson(result);
@@ -514,7 +512,7 @@ public class UserServlet extends BaseServlet {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
-				
+
 			}
 			e.printStackTrace();
 		} catch (BizException e) {
@@ -538,53 +536,55 @@ public class UserServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 	}
+
 	// 检查个人密码输入
-		public void checkPwd(HttpServletRequest request, HttpServletResponse response){
-			HttpSession session = request.getSession();
-			User user = (User) session.getAttribute("loginedUser");
-			try {
-				String oldpassword = request.getParameter("oldpassword");
-				if (oldpassword != null && !oldpassword.isEmpty()) {
-					if (oldpassword.equals(user.getUpassword())) {
-						result = Result.success("原密码正确！！！");
-						String json = gson.toJson(result);
-						// 返回json格式数据
-						response.setContentType("application/json;charset=UTF-8");
-						response.getWriter().append(json);
-					} else {
-						result = Result.failure("原密码输入错误！！！");
-						String json = gson.toJson(result);
-						// 返回json格式数据
-						response.setContentType("application/json;charset=UTF-8");
-						response.getWriter().append(json);
-					}
-				} else {
-					result = Result.failure("请输入原密码！！！");
+	public void checkPwd(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("loginedUser");
+		try {
+			String oldpassword = request.getParameter("oldpassword");
+			if (oldpassword != null && !oldpassword.isEmpty()) {
+				if (oldpassword.equals(user.getUpassword())) {
+					result = Result.success("原密码正确！！！");
 					String json = gson.toJson(result);
-					// 返回json格式数据
+
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+				} else {
+					result = Result.failure("原密码输入错误！！！");
+					String json = gson.toJson(result);
+
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 				}
-			} catch (IOException e) {
-				result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+			} else {
+				result = Result.failure("请输入原密码！！！");
 				String json = gson.toJson(result);
+
 				response.setContentType("application/json;charset=UTF-8");
-				try {
-					response.getWriter().append(json);
-				} catch (IOException e1) {
-					throw new RuntimeException(e1);
-					
-				}
-				e.printStackTrace();
+				response.getWriter().append(json);
 			}
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+
+			}
+			e.printStackTrace();
 		}
+	}
+
 	// 更新个人信息
 	public void updateUser(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = new User();
-		String age = request.getParameter("uage").trim() ;
-		String  phone = request.getParameter("uphone").trim() ;
-		String email = request.getParameter("uemail").trim() ;
+		String age = request.getParameter("uage").trim();
+		String phone = request.getParameter("uphone").trim();
+		String email = request.getParameter("uemail").trim();
 		String minname = request.getParameter("uminname").trim();
 		String sex = request.getParameter("usex").trim();
 		String uni = request.getParameter("university").trim();
@@ -593,52 +593,52 @@ public class UserServlet extends BaseServlet {
 		String uclass = request.getParameter("uclass").trim();
 		User userOld = (User) session.getAttribute("loginedUser");
 		String check = "1";
-		//电话
+		// 电话
 		if (phone != null && !phone.isEmpty()) {
-			if( !phone.equals(userOld.getUphone())){
+			if (!phone.equals(userOld.getUphone())) {
 				phone = (String) session.getAttribute("updateUphone");
-				if(phone != null && !phone.isEmpty() ){
+				if (phone != null && !phone.isEmpty()) {
 					user.setUphone(phone);
 					check = check + "/1";
-				}else{
+				} else {
 					check = check + "/-1";
 				}
-			}else{
+			} else {
 				user.setUphone(phone);
 				check = check + "/1";
 			}
 		} else {
 			check = check + "/-1";
 		}
-		
-		//年龄
+
+		// 年龄
 		if (age != null && !age.isEmpty()) {
-			if( !age.equals(userOld.getUage())){
+			if (!age.equals(userOld.getUage())) {
 				age = (String) session.getAttribute("updateUage");
-				if(age != null && !age.isEmpty() ){
+				if (age != null && !age.isEmpty()) {
 					user.setUage(Integer.parseInt(age));
 					check = check + "/1";
-				}else{
+				} else {
 					check = check + "/-1";
 				}
-			}else{
+			} else {
 				user.setUage(Integer.parseInt(age));
 				check = check + "/1";
 			}
 		} else {
 			check = check + "/-1";
 		}
-		//邮箱
+		// 邮箱
 		if (email != null && !email.isEmpty()) {
-			if( !email.equals(userOld.getUemail())){
+			if (!email.equals(userOld.getUemail())) {
 				email = (String) session.getAttribute("updateUemail");
-				if(email != null && !email.isEmpty() ){
+				if (email != null && !email.isEmpty()) {
 					user.setUemail(email);
 					check = check + "/1";
-				}else{
+				} else {
 					check = check + "/-1";
 				}
-			}else{
+			} else {
 				user.setUemail(email);
 				check = check + "/1";
 			}
@@ -672,9 +672,9 @@ public class UserServlet extends BaseServlet {
 			if (umajor != null && !umajor.isEmpty()) {
 				user.setUmajor(umajor);
 			}
-	
+
 			// 进行更新操作
-			
+
 			int code = userBiz.update(user, userOld);
 			if (code > 0) {
 				User user2 = userBiz.selectSingle(user);
@@ -684,7 +684,7 @@ public class UserServlet extends BaseServlet {
 				result = Result.failure("修改失败");
 			}
 			String json = gson.toJson(result);
-			// 返回json格式数据
+
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 		} catch (SQLException e) {
@@ -695,7 +695,7 @@ public class UserServlet extends BaseServlet {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
-				
+
 			}
 			e.printStackTrace();
 		} catch (BizException e) {
@@ -706,7 +706,7 @@ public class UserServlet extends BaseServlet {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
-				
+
 			}
 		} catch (IOException e) {
 			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
@@ -716,14 +716,14 @@ public class UserServlet extends BaseServlet {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
-				
+
 			}
 			e.printStackTrace();
 		}
 	}
 
 	// 更新检验年龄
-	public void checkUage(HttpServletRequest request, HttpServletResponse response){
+	public void checkUage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
 		String uage = request.getParameter("uage");
@@ -733,7 +733,7 @@ public class UserServlet extends BaseServlet {
 				if (!uage.matches(regage)) {
 					result = Result.failure("年龄输入不合法！！！");
 					String json = gson.toJson(result);
-					// 返回json格式数据
+
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
@@ -741,14 +741,11 @@ public class UserServlet extends BaseServlet {
 				session.setAttribute("updateUage", uage);
 				result = Result.success("输入正确！！！");
 				String json = gson.toJson(result);
-				// 返回json格式数据
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
-				
 			} else {
 				result = Result.failure("请输入年龄！！！");
 				String json = gson.toJson(result);
-				// 返回json格式数据
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			}
@@ -764,69 +761,72 @@ public class UserServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 	}
+
 	/*
 	 * 更新检验电话
+	 * 
 	 * @param request
+	 * 
 	 * @param response
 	 */
-	public void checkPhone(HttpServletRequest request, HttpServletResponse response){
-		 HttpSession session = request.getSession();
+	public void checkPhone(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		String uphone = request.getParameter("uphone");
 		String regphone = "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$";
 		User userOld = (User) session.getAttribute("loginedUser");
 		User user = new User();
-		 try {
-			if(uphone != null && !uphone.isEmpty()){
-				//电话未修改
-				if(uphone.equals(userOld.getUphone())){
+		try {
+			if (uphone != null && !uphone.isEmpty()) {
+				// 电话未修改
+				if (uphone.equals(userOld.getUphone())) {
 					result = Result.success("", uphone);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					session.setAttribute("updateUphone", uphone);
-					return ;
+					return;
 				}
 				if (!uphone.matches(regphone)) {
-					result = Result.failure("电话号码不合法！！！",uphone);
+					result = Result.failure("电话号码不合法！！！", uphone);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
-					return ;
-				} 
+					return;
+				}
 				user.setUphone(uphone);
 				User user2 = userBiz.selectSingle(user);
-				if(user2.getUid() != 0){
-					result = Result.failure("电话号码已被使用！！！",uphone);
+				if (user2.getUid() != 0) {
+					result = Result.failure("电话号码已被使用！！！", uphone);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
-					return ;
+					return;
 				}
 				result = Result.success("该电话号码可以使用！！！", uphone);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				session.setAttribute("updateUphone", uphone);
-			}else{
-				result = Result.failure("请输入电话号码！！！",uphone);
+			} else {
+				result = Result.failure("请输入电话号码！！！", uphone);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			}
-		 } catch (BizException e) {
-			 result = Result.error(e.getMessage(),uphone);
-			 String json = gson.toJson(result);
-			 response.setContentType("application/json;charset=UTF-8");
-			 try {
+		} catch (BizException e) {
+			result = Result.error(e.getMessage(), uphone);
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			 result = Result.error("业务繁忙,请稍等几分钟再操作");
-			 String json = gson.toJson(result);
-			 response.setContentType("application/json;charset=UTF-8");
-			 try {
+			result = Result.error("业务繁忙,请稍等几分钟再操作");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
 				response.getWriter().append(json);
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
@@ -835,57 +835,57 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	//更新检查邮箱
-	public void checkEmail(HttpServletRequest request, HttpServletResponse response){
+	// 更新检查邮箱
+	public void checkEmail(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User userOld = (User) session.getAttribute("loginedUser");
 		String uemail = request.getParameter("uemail");
 		User user = new User();
 		String regemail = "^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$";
 		try {
-			if(uemail !=null && !uemail.isEmpty()){
+			if (uemail != null && !uemail.isEmpty()) {
 				user.setUemail(uemail);
-			}else{
-				result = Result.failure("请输入邮箱！！！",uemail);
+			} else {
+				result = Result.failure("请输入邮箱！！！", uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			//邮箱格式不合法！
+			// 邮箱格式不合法！
 			if (!uemail.matches(regemail)) {
-				result = Result.failure("邮箱格式不合法！！！",uemail);
+				result = Result.failure("邮箱格式不合法！！！", uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			//邮箱未修改
-			if(uemail.equals(userOld.getUemail())){
+			// 邮箱未修改
+			if (uemail.equals(userOld.getUemail())) {
 				result = Result.success("");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				session.setAttribute("updateUemail", uemail);
-				return ;
+				return;
 			}
 			User user2 = userBiz.selectSingle(user);
-			//该邮箱已被注册！
+			// 该邮箱已被注册！
 			if (user2.getUid() != 0) {
-				result = Result.failure("该邮箱已被注册！！！",uemail);
+				result = Result.failure("该邮箱已被注册！！！", uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
-			} 
-			//该邮箱可以注册!
+			}
+			// 该邮箱可以注册!
 			session.setAttribute("updateUemail", uemail);
-			result = Result.success("该邮箱可以使用",uemail);
+			result = Result.success("该邮箱可以使用", uemail);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 		} catch (BizException e) {
-			result = Result.error(e.getMessage(),uemail);
+			result = Result.error(e.getMessage(), uemail);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -905,5 +905,5 @@ public class UserServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

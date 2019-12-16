@@ -23,20 +23,27 @@ public class PayTypeBiz {
 		//添加
 		public int insert(PayType payType) throws SQLException, BizException {
 			if(payType == null){
-				throw new BizException("请输入支付类型信息");
+				throw new BizException("请输入支付类型信息！！！");
+			}
+			if(payType.getEopayname() == null ){
+				throw new BizException("请输入支付类型信息！！！");
 			}
 			return dao.insert(payType);
 			
 		}
 		//删除
-		public int delete(PayType payType){
-			return 0;
+		public int delete(PayType payType) throws SQLException, BizException{
+			if(payType == null){
+				throw new BizException("请指定支付类型信息！！！");
+			}
+			if(payType.getEopayname() == null && payType.getEopaytypeid() == 0){
+				throw new BizException("请指定支付类型信息！！！");
+			}
+			return dao.delete(payType);
 			
 		}
-		//更新
+		/*//更新
 		public  int update (PayType payType) {
 			return 0;
-			
-		}
-		//其他
+		}*/
 }

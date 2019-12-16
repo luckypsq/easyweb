@@ -17,11 +17,11 @@ public class Book implements Serializable  {
 	private String bcontent;//描述
 	private String bimg;//图片
 	private double bprice;//价格
-	private int bstate;//状态(1已上架，2.已下架3.售罄4.审核不通过5.未审核6.已删除)
-	private Long btid;//类别
+	private int bstate;//状态(1已上架，2.已下架3.售罄4.审核不通过5.未审核)
+	private long btid;//类别
 	private String btemp;//所属系列
 	private String btemp1;//预留字段
-	private Long bnum;//库存
+	private long bnum;//库存
 	private String bauthor ;//作者或出版社
 	private String bdate;//上传时间
 	private long uid;//上传者
@@ -50,10 +50,10 @@ public class Book implements Serializable  {
 	public void setBauthor(String bauthor) {
 		this.bauthor = bauthor;
 	}
-	public Long getBnum() {
+	public long getBnum() {
 		return bnum;
 	}
-	public void setBnum(Long bnum) {
+	public void setBnum(long bnum) {
 		this.bnum = bnum;
 	}
 	public String getBname() {
@@ -118,10 +118,10 @@ public class Book implements Serializable  {
 		this.bimg = bimg;
 	}
 	
-	public Long getBtid() {
+	public long getBtid() {
 		return btid;
 	}
-	public void setBtid(Long btid) {
+	public void setBtid(long btid) {
 		this.btid = btid;
 	}
 	public String getBtemp1() {

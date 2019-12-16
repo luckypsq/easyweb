@@ -70,10 +70,8 @@ public class ControlServlet extends BaseServlet {
 				out.print(0);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (BizException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -121,10 +119,8 @@ public class ControlServlet extends BaseServlet {
 				}
 				out.print(1);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (BizException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

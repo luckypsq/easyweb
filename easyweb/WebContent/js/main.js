@@ -1,18 +1,18 @@
 $(function(){
-    //ÉÏ´«ÏÔÊ¾Í¼Æ¬
+    //ï¿½Ï´ï¿½ï¿½ï¿½Ê¾Í¼Æ¬
     function   show(){
         var p=document.getElementById("file1").value;
         document.getElementById("s").innerHTML="<input type=image id=pic width=150 height=100 /> ";
         document.getElementById("pic").src=p;
         //alert(p);
     }
-    //½Ì²ÄÇø
+    //ï¿½Ì²ï¿½ï¿½ï¿½
     $(".one li").hover(function(){
         $(this).find(".two").show();
     },function(){
         $(this).find(".two").hide();
     });
-    //¹¤¾ßÊéÇø
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     $(".tab li").click(function(){
         $(this).find("a").addClass("on");
         $(this).siblings().find("a").removeClass("on");
@@ -21,19 +21,19 @@ $(function(){
         $(".tab"+index).show()
     });
 
-    //ÓÒ²àµ¼º½
+    //ï¿½Ò²àµ¼ï¿½ï¿½
     $(".fixnav a").click(function(){
         var index = $(this).attr("title");
         var id = "#item"+index;
         $("html,body").animate({scrollTop: $(id).offset().top}, 500);
     });
-    //Í¼Êé±à¼­ÉÏ´«
+    //Í¼ï¿½ï¿½à¼­ï¿½Ï´ï¿½
     $(".product-edit-item").hover(function(){
         $(this).find("p").css("color","#333");
     },function(){
         $(this).find("p").css("color","#BBB")
     });
-    //Ñ¡Ôñ¹ºÂòÊé¼®
+    //Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½é¼®
     $(".pay").click(function(){
         $(".full").show();
     });
@@ -72,7 +72,7 @@ $(function(){
         $('.select-book .send').attr('data-counter',$('li.selected').length);
     }
 
-    //Ìõ¼þÉ¸Ñ¡
+    //listç‚¹å‡»äº‹ä»¶
     $("#select1 dd").click(function () {
         $(this).addClass("selected").siblings().removeClass("selected");
         if ($(this).hasClass("select-all")) {

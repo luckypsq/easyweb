@@ -1,6 +1,5 @@
 package com.yc.easyweb.bean;
 
-import java.io.Serializable;
 import java.util.*;
 
 
@@ -8,11 +7,7 @@ import java.util.*;
  * 分页查询结果封装类（共有的静态的内部类）
  * @param <T>
  */
-public class Page<T> implements Serializable{
-	 /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Page<T> {
 	// 当前页数
     private  List<T> data;
     // 总行

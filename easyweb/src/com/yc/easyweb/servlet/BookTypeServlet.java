@@ -95,7 +95,6 @@ public class BookTypeServlet extends BaseServlet {
 		} catch (BizException e) {
 			e.printStackTrace();
 		}catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -120,7 +119,6 @@ public class BookTypeServlet extends BaseServlet {
 		} catch (BizException e) {
 			e.printStackTrace();
 		}catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -188,7 +186,6 @@ public class BookTypeServlet extends BaseServlet {
 		} catch (BizException e) {
 			e.printStackTrace();
 		}catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
