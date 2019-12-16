@@ -3,7 +3,6 @@ package com.yc.easyweb.biz;
 import java.io.IOException;
 import java.util.List;
 
-import com.yc.easyweb.bean.Eorderitem;
 import com.yc.easyweb.bean.Notice;
 import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.dao.NoticeDao;

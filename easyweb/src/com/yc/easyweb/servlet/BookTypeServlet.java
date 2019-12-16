@@ -3,7 +3,6 @@ package com.yc.easyweb.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -12,12 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.sun.glass.ui.Size;
-import com.yc.easyweb.bean.Book;
-import com.yc.easyweb.bean.BookType;
-import com.yc.easyweb.bean.BookTypeChild;
-import com.yc.easyweb.bean.Result;
+import com.yc.easyweb.bean.*;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.BookTypeBiz;
 

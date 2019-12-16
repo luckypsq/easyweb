@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-import com.sun.org.apache.xerces.internal.util.EntityResolver2Wrapper;
 import com.yc.easyweb.bean.Control;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.bean.Usercontrol;
@@ -79,7 +76,6 @@ public class ControlServlet extends BaseServlet {
 	// 更新管理员权限
 	public void addUserControl(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Control control = new Control();
 		PrintWriter out = response.getWriter();
 		String[] uid = null;
 		String[] utype = null;
@@ -98,7 +94,6 @@ public class ControlServlet extends BaseServlet {
 		}
 		// 查询管理员所拥有的权限
 		Usercontrol userm = null;
-		int num = 0;
 		if (uid.length != 0 && uid != null) {
 			try {
 				for (String suid : uid) {

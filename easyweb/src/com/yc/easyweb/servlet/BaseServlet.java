@@ -1,7 +1,6 @@
 package com.yc.easyweb.servlet;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 
 import javax.servlet.ServletException;
