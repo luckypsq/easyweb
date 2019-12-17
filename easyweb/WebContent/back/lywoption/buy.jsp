@@ -96,7 +96,7 @@
 						<label class="form-label col-2">数&nbsp;&nbsp;&nbsp;&nbsp;量:</label>
 						<div class="formControls col-2">
 							<input type="number" class="input-text"
-								id="count" name="count" value="${customerOrderAdd['count'] }" onchange="checkCount(${customerOrderAdd['count'] });">本
+								id="count" name="count" value="${customerOrderAdd['count'] }" oninput="checkCount(${customerOrderAdd['count'] });">本
 							<span id="countTishi"></span>
 						</div>
 					</div>
@@ -302,7 +302,8 @@ $("#uphone").on('input',function(){
 //数量
 function checkCount(num){
 	var count = $("#count").val().replace(/\ +/g,"");
-	var param = "count=" +count;
+	var price =  document.getElementById("bprice").innerText;
+	var param = "count=" +count+"&price=" + price;
 	$.ajax({
 	        type: "post",
 	        url: "${path}/eorder.s?op=checkCount",
@@ -313,9 +314,7 @@ function checkCount(num){
 	        success: function(result) {
 					if(result.code == 1){
 						$("#countTishi").text(result.msg).css("color", 'green');
-		        		var price =  document.getElementById("price").value;
-		        		var number =  document.getElementById("count").value;
-		        		document.getElementById("total").innerText = price * number;
+		        		document.getElementById("total").value = result.data;
 		        		return ;
 		        	}
 		        	if(result.code == 0){
@@ -343,16 +342,36 @@ function addEorder(){
         dataType: 'json', // 返回对象
         success: function(result) {
             if(result.code == 1){
+            	$("#countTishi").text("");
+				$("#eoaddrTishi").text("");
+				$("#unameTishi").text("");
+				$("#uphoneTishi").text("");
             	alert(result.msg);
+            	return ;
             }
             if(result.code == -1){
             	alert(result.msg);
+            	return ;
             }
             if(result.code == 0){
             	alert(result.msg);
+            	return ;
             }
             if(result.code == -2){
-            	
+            	var check = result.data.split("/");
+            	if(check[1] == "-1"){
+            		$("#countTishi").text("输入不合法或为输入！！！").css("color", 'red');
+            	}
+				if(check[2] == "-1"){
+					$("#eoaddrTishi").text("输入不合法或为输入！！！").css("color", 'red');
+            	}
+				if(check[3] == "-1"){
+					$("#unameTishi").text("输入不合法或为输入！！！").css("color", 'red');
+				}
+				if(check[4] == "-1"){
+					$("#uphoneTishi").text("输入不合法或为输入！！！").css("color", 'red');
+				}
+				return;
             }
         }
     }); 

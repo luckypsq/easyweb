@@ -33,10 +33,10 @@ public class EorderitemDao {
 			if(eorderitem.getCartstate() != 0){
 				sb.append(" and cartstate="+eorderitem.getCartstate());
 			}
-			if(eorderitem.getEoid() != null){
+			if(eorderitem.getEoid() != null && !eorderitem.getEoid().isEmpty()){
 				sb.append(" and eoid like'%"+eorderitem.getEoid() +"%'");
 			}
-			if(eorderitem.getItemid() != null){
+			if(eorderitem.getItemid() != null && !eorderitem.getItemid().isEmpty()){
 				sb.append(" and itemid like '%"+eorderitem.getItemid()+"%'");
 			}
 		}
@@ -58,10 +58,10 @@ public class EorderitemDao {
 				if(eorderitem.getUid() != 0){
 					sb.append(" and uid="+eorderitem.getUid());
 				}
-				if(eorderitem.getEoid() != null){
+				if(eorderitem.getEoid() != null && !eorderitem.getEoid().isEmpty()){
 					sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
 				}
-				if(eorderitem.getItemid() != null){
+				if(eorderitem.getItemid() != null && !eorderitem.getItemid().isEmpty()){
 					sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
 				}
 			}
@@ -72,11 +72,11 @@ public class EorderitemDao {
 		}
 	//添加
 	public int insert(Eorderitem eorderitem) throws SQLException {
-		String sql = "insert into eorderitem(itemid,bid,count,total,eitemp,uid,carttime,cartstate) " 
-					+ " values(?,?,?,?,?,?,?,?);";
+		String sql = "insert into eorderitem(itemid,bid,count,total,eitemp,uid,carttime,cartstate,eoid) " 
+					+ " values(?,?,?,?,?,?,?,?,?);";
 		return DbHelper.update(sql, eorderitem.getItemid(),eorderitem.getBid(),eorderitem.getCount(),
 				eorderitem.getTotal(),eorderitem.getEitemp()
-				,eorderitem.getUid(),eorderitem.getCarttime(),eorderitem.getCartstate());
+				,eorderitem.getUid(),eorderitem.getCarttime(),eorderitem.getCartstate(),eorderitem.getEoid());
 	}
 	//删除
 	public int delete(Eorderitem eorderitem) throws SQLException {
@@ -88,13 +88,13 @@ public class EorderitemDao {
 		if(eorderitem.getBid() != 0){
 			sb.append(" and bid="+eorderitem.getBid());
 		}
-		if(eorderitem.getEoid() != null){
-			sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
-		}
 		if(eorderitem.getUid() != 0){
 			sb.append(" and uid="+eorderitem.getUid());
 		}
-		if(eorderitem.getItemid() != null){
+		if(eorderitem.getEoid() != null && !eorderitem.getEoid().isEmpty()){
+			sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
+		}
+		if(eorderitem.getItemid() != null && !eorderitem.getItemid().isEmpty()){
 			sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
 		}
 		return DbHelper.update(sb.toString(), null);
@@ -112,14 +112,14 @@ public class EorderitemDao {
 			if(eorderitem.getBid() != 0){
 				sb.append(" and bid="+eorderitem.getBid());
 			}
-			if(eorderitem.getEoid() != null){
-				sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
-			}
-			if(eorderitem.getItemid() != null){
-				sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
-			}
 			if(eorderitem.getUid() != 0){
 				sb.append(" and uid="+eorderitem.getUid());
+			}
+			if(eorderitem.getEoid() != null && !eorderitem.getEoid().isEmpty()){
+				sb.append(" and eoid ='"+eorderitem.getEoid() +"'");
+			}
+			if(eorderitem.getItemid() != null && !eorderitem.getItemid().isEmpty()){
+				sb.append(" and itemid ='"+eorderitem.getItemid()+"'");
 			}
 			sqList.add(sb.toString());
 		}
@@ -145,17 +145,24 @@ public class EorderitemDao {
 		if(eoNew.getCartstate() != 0){
 			sb.append(" , cartstate="+eoNew.getCartstate());
 		}
-		if(eoNew.getCarttime() != null){
-			sb.append(" , carttime ='"+eoOld.getCarttime() +"'");
+		if(eoNew.getCarttime() != null && !eoNew.getCarttime().isEmpty()){
+			sb.append(" , carttime ='"+eoNew.getCarttime() +"'");
 		}
+		if(eoNew.getEoid() != null && !eoNew.getEoid().isEmpty()){
+			sb.append(" , eoid ='"+eoNew.getEoid() +"'");
+		}
+		if(eoNew.getEitemp() != null && !eoNew.getEitemp().isEmpty()){
+			sb.append(" , eitemp ='"+eoNew.getEitemp() +"'");
+		}
+		
 		sb.append(" where 1=1 ");
 		if(eoOld.getBid() != 0){
 			sb.append(" and bid="+eoOld.getBid());
 		}
-		if(eoOld.getEoid() != null){
+		if(eoOld.getEoid() != null && !eoOld.getEoid().isEmpty()){
 			sb.append(" and eoid ='"+eoOld.getEoid() +"'");
 		}
-		if(eoOld.getItemid() != null){
+		if(eoOld.getItemid() != null && !eoOld.getItemid().isEmpty()){
 			sb.append(" and itemid ='"+eoOld.getItemid()+"'");
 		}
 		if(eoOld.getUid() != 0){
@@ -163,52 +170,49 @@ public class EorderitemDao {
 		}
 		return DbHelper.update(sb.toString(), null);
 	}
-	//查询购物车所有信息
-	public List<Bought> selectbAll(Eorderitem eorderitem) throws IOException {
-		StringBuffer sb = new StringBuffer();
-		sb.append("select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eoid,total,eitemp,"
-				+ " eo.uid,cartstate,carttime "
-				+ " from book b,eorderitem eo  where eo.bid=b.bid and 1=1");
-		if(eorderitem != null){
-			if(eorderitem.getUid() != 0){
-				sb.append(" and e.uid="+eorderitem.getUid());
-			}
-		}
-		sb.append("  order by  itemid desc");
-		List<Bought> list = DbHelper.selectAll(sb.toString(),null,Bought.class);
-		return  list;
-	}
 	//查询购物车详情
-		public List<Bought> selectAllCart(Bought bought) throws IOException {
+		public List<Bought> selectAll(Bought bought) throws IOException {
 			StringBuffer sb = new StringBuffer();
 			String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
 					+ " eo.uid,cartstate,carttime "
 					+ " from book b,eorderitem eo  where 1=1 and eo.bid=b.bid  ";
 			sb.append(sql);
 			if(bought != null){
+				if(bought.getBid() != 0){
+					sb.append(" and eo.bid="+bought.getBid());
+				}
+				if(bought.getEoid() != null && !bought.getEoid().isEmpty()){
+					sb.append(" and eoid ='"+bought.getEoid() +"'");
+				}
+				if(bought.getItemid() != null && !bought.getItemid().isEmpty()){
+					sb.append(" and itemid ='"+bought.getItemid()+"'");
+				}
 				if(bought.getUid() != 0){
-					sb.append(" and e.uid=" + bought.getUid());
+					sb.append(" and eo.uid="+bought.getUid());
 				}
 			}
 			sb.append("order by  itemid desc");
 			return DbHelper.selectAll(sb.toString(), null, Bought.class);
 		}
 		//查询单个购物车详情
-		public Bought selectSingleCart(Bought bought) throws IOException {
+		public Bought selectSingle(Bought bought) throws IOException {
 			StringBuffer sb = new StringBuffer();
 			String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
 					+ " eo.uid,cartstate,carttime "
 					+ " from book b,eorderitem eo  where 1=1 and eo.bid=b.bid  ";
 			sb.append(sql);
 			if(bought != null){
+				if(bought.getBid() != 0){
+					sb.append(" and eo.bid="+bought.getBid());
+				}
+				if(bought.getEoid() != null && !bought.getEoid().isEmpty()){
+					sb.append(" and eoid ='"+bought.getEoid() +"'");
+				}
+				if(bought.getItemid() != null && !bought.getItemid().isEmpty()){
+					sb.append(" and itemid ='"+bought.getItemid()+"'");
+				}
 				if(bought.getUid() != 0){
-					sb.append(" and e.uid=" + bought.getUid());
-				}
-				if(bought.getItemid() != null){
-					sb.append(" and itemid = '" + bought.getItemid()+"'");
-				}
-				if(bought.getCartstate() != 0){
-					sb.append(" and cartstate="+bought.getCartstate());
+					sb.append(" and eo.uid="+bought.getUid());
 				}
 			}
 			sb.append("order by  itemid desc");
@@ -218,20 +222,23 @@ public class EorderitemDao {
 		//购物车分页
 		@SuppressWarnings({ "unchecked", "static-access" })
 		public Page<Bought> eoPage(int page, int rows,Bought bought) throws IOException {
-			String sql1 = "select bucollege,bumajor,buniversity,bname,bprice,bimg,itemid,count,eo.bid,eoid,total,eitemp,eo.uid,cartstate,carttime"
-					+ " from book b,eorderitem eo"
-					+ " where eo.bid=b.bid and 1=1 ";
+			String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
+					+ " eo.uid,cartstate,carttime "
+					+ " from book b,eorderitem eo  where 1=1 and eo.bid=b.bid  ";
 			StringBuffer sb = new StringBuffer();
-			sb.append(sql1);
+			sb.append(sql);
 			if(bought != null){
+				if(bought.getBid() != 0){
+					sb.append(" and eo.bid="+bought.getBid());
+				}
+				if(bought.getEoid() != null && !bought.getEoid().isEmpty()){
+					sb.append(" and eoid ='"+bought.getEoid() +"'");
+				}
+				if(bought.getItemid() != null && !bought.getItemid().isEmpty()){
+					sb.append(" and itemid ='"+bought.getItemid()+"'");
+				}
 				if(bought.getUid() != 0){
-					sb.append(" and eo.uid=" + bought.getUid());
-				}
-				if(bought.getItemid() != null){
-					sb.append(" and itemid = '" + bought.getItemid()+"'");
-				}
-				if(bought.getCartstate() != 0){
-					sb.append(" and cartstate="+bought.getCartstate());
+					sb.append(" and eo.uid="+bought.getUid());
 				}
 			}
 			sb.append(" order by  itemid asc");

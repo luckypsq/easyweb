@@ -96,7 +96,7 @@ public class UserDao {
 	// 添加
 	public int insert(User user) throws SQLException  {
 		String sql = "insert into user(uid,uname,uminname,uphone,university,ucollege,umajor,uclass,upassword,"
-				+ " utemp,utype,uemail,utime,usex,uage) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				+ " utemp,utype,uemail,utime,usex,uage,ustate) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,null);";
 		return DbHelper.update(sql, user.getUname(), user.getUminname(), user.getUphone(), user.getUniversity(),
 				user.getUcollege(), user.getUmajor(), user.getUclass(), user.getUpassword(), 
 				user.getUtemp(), user.getUtype(), user.getUemail(), user.getUtime(), user.getUsex(), user.getUage());
@@ -112,14 +112,18 @@ public class UserDao {
 		if (user.getUminname() != null) {
 			sb.append(" and uminname ='" + user.getUminname() + "'");
 		}
+		if (user.getUphone() != null) {
+			sb.append(" and uphone = '" + user.getUphone() + "'");
+		}
 		if (user.getUname() != null) {
 			sb.append(" and uname ='" + user.getUname() + "'");
 		}
 		if (user.getUid() != 0) {
 			sb.append(" and uid = " + user.getUid());
 		}
-		if (user.getUstate() != 0) {
-			sb.append(" and ustate = " + user.getUstate());
+		//邮箱
+		if (user.getUemail()!= null) {
+			sb.append(" and uemail = '" + user.getUemail() + "'");
 		}
 		return db.update(sb.toString(), null);
 
@@ -139,14 +143,18 @@ public class UserDao {
 			if (user.getUminname() != null) {
 				sb.append(" and uminname ='" + user.getUminname() + "'");
 			}
+			if (user.getUphone() != null) {
+				sb.append(" and uphone = '" + user.getUphone() + "'");
+			}
 			if (user.getUname() != null) {
 				sb.append(" and uname ='" + user.getUname() + "'");
 			}
 			if (user.getUid() != 0) {
 				sb.append(" and uid = " + user.getUid());
 			}
-			if (user.getUstate() != 0) {
-				sb.append(" and ustate = " + user.getUstate());
+			//邮箱
+			if (user.getUemail()!= null) {
+				sb.append(" and uemail = '" + user.getUemail() + "'");
 			}
 			sqList.add(sb.toString());
 		}
@@ -160,46 +168,66 @@ public class UserDao {
 			return 0;
 		}
 		sb.append("update user set utemp='' ");
-		if (userNew.getUminname() != null) {
+		//昵称
+		if (userNew.getUminname() != null && !userNew.getUminname().isEmpty()) {
 			sb.append(" , uminname ='" + userNew.getUminname() + "'");
 		}
-		if (userNew.getUname() != null) {
+		//用户名
+		if (userNew.getUname() != null && !userNew.getUname().isEmpty()) {
 			sb.append(" , uname ='" + userNew.getUname() + "'");
 		}
-		if (userNew.getUphone() != null) {
+		//电话
+		if (userNew.getUphone() != null && !userNew.getUphone().isEmpty()) {
 			sb.append(" , uphone ='" + userNew.getUphone() + "'");
 		}
-		if (userNew.getUniversity() != null) {
+		//大学
+		if (userNew.getUniversity() != null && !userNew.getUniversity().isEmpty()) {
 			sb.append(" , university ='" + userNew.getUniversity() + "'");
 		}
-		if (userNew.getUcollege() != null) {
+		//学院
+		if (userNew.getUcollege() != null && !userNew.getUcollege().isEmpty()) {
 			sb.append(" , ucollege ='" + userNew.getUcollege() + "'");
 		}
-		if (userNew.getUmajor() != null) {
+		//专业
+		if (userNew.getUmajor() != null && !userNew.getUmajor().isEmpty()) {
 			sb.append(" , umajor ='" + userNew.getUmajor() + "'");
 		}
+		//状态
 		if (userNew.getUstate() != 0) {
 			sb.append(" , ustate = " + userNew.getUstate());
 		}
-		if (userNew.getUclass() != null) {
+		//年级
+		if (userNew.getUclass() != null && !userNew.getUclass().isEmpty()) {
 			sb.append(" , uclass = '" + userNew.getUclass() + "'");
 		}
+		//类型
 		if (userNew.getUtype() != 0) {
 			sb.append(" , utype = " + userNew.getUtype());
 		}
+		//年龄
 		if (userNew.getUage() != 0) {
 			sb.append(" , uage = " + userNew.getUage());
 		}
+		//性别
 		if (userNew.getUsex() != 0) {
 			sb.append(" , usex = " + userNew.getUsex());
 		}
-		if (userNew.getUemail() != null) {
+		//邮箱
+		if (userNew.getUemail() != null && !userNew.getUemail().isEmpty()) {
 			sb.append(" , uemail = '" + userNew.getUemail() + "'");
 		}
-		if (userNew.getUpassword() != null) {
+		//密码
+		if (userNew.getUpassword() != null && !userNew.getUpassword().isEmpty()) {
 			sb.append(" , upassword = '" + userNew.getUpassword() + "'");
 		}
-		
+		//备用
+		if (userNew.getUtemp() != null && !userNew.getUtemp().isEmpty()) {
+			sb.append(" , utemp = '" + userNew.getUtemp() + "'");
+		}
+		//时间
+		if (userNew.getUtime() != null && !userNew.getUtime().isEmpty()) {
+			sb.append(" , utime = '" + userNew.getUtime() + "'");
+		}
 		
 		sb.append(" where 1=1 ");
 		

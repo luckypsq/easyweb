@@ -17,7 +17,10 @@ public class BookTypeBiz {
 	private BookTypeDao book = new BookTypeDao();
 	
 	//查询所有
-		public List<BookType> selectAll(BookType bookType) throws IOException{
+		public List<BookType> selectAll(BookType bookType) throws IOException, BizException{
+			if(bookType ==null){
+				throw new BizException("请填写类型信息！！！");
+			}
 				return book.selectAll(bookType);
 		}
 		//添加
@@ -25,10 +28,17 @@ public class BookTypeBiz {
 			if(bookType ==null){
 				throw new BizException("请填写类型信息！！！");
 			}
-			if(bookType.getBtname() == null && bookType.getBtnamesecond() == null){
-				throw new BizException("请填写类型信息！！！");
+			if(bookType.getBtname() == null ){
+				throw new BizException("请填写主类型信息！！！");
+			}else if(bookType.getBtname().isEmpty() ){
+				throw new BizException("请填写主类型信息！！！");
 			}
-				return book.insert(bookType);
+			if(bookType.getBtnamesecond() == null ){
+				throw new BizException("请填写副类型信息！！！");
+			}else if(bookType.getBtnamesecond().isEmpty()){
+				throw new BizException("请填写副类型信息！！！");
+			}
+			return book.insert(bookType);
 			
 		}
 		//删除

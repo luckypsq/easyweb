@@ -3,6 +3,7 @@ package com.yc.easyweb.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -185,6 +186,15 @@ public class EorderServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 			e.printStackTrace();
+		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
 		}
 	}
 
@@ -332,6 +342,7 @@ public class EorderServlet extends BaseServlet {
 		String reg = "^[0-9]{1,10}$";
 		HttpSession session = request.getSession();
 		String count = request.getParameter("count");
+		String price = request.getParameter("price");
 		try {
 			if (count != null && !count.isEmpty()) {
 				if (!count.matches(reg)) {
@@ -343,8 +354,10 @@ public class EorderServlet extends BaseServlet {
 					response.getWriter().append(json);
 					return;
 				}
+				double total = Double.parseDouble(price) * Double.parseDouble(count);
+				DecimalFormat df = new DecimalFormat("#.00");
 				session.setAttribute("addOrderCount", count);
-				result = Result.success("输入合法！！！");
+				result = Result.success("输入合法！！！",df.format(total));
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -430,10 +443,73 @@ public class EorderServlet extends BaseServlet {
 
 		String type = request.getParameter("payType");// 送货方式
 		String payType = request.getParameter("payOption");// 支付方式
-		String total = request.getParameter("total");// 总价
+		String totalOld = request.getParameter("total");// 总价
 
-		//3.判断是通过书本下单还是购物车下单
+		double total = 0;
+		String sendType ;
+		int pay = 0;
 		try {
+			//3.判断数据的合法
+			String check = "1";
+			//a.验证数量的输入
+			if(count != null && !count.isEmpty()){
+				check = check + "/1";
+			}else{
+				if(request.getParameter("count") != null && !request.getParameter("count").isEmpty()){
+					count = request.getParameter("count");
+					check = check + "/1";
+				}else{
+					check = check + "/-1";
+				}
+			}
+			//b.验证地址的输入
+			if(eoaddr != null && !eoaddr.isEmpty()){
+				check = check + "/1";
+			}else{
+				check = check + "/-1";
+			}
+			//c.验证收货人的输入
+			if(uname != null && !uname.isEmpty()){
+				check = check + "/1";
+			}else{
+				check = check + "/-1";
+			}
+			//d.验证电话的输入
+			if(uphone != null && !uphone.isEmpty()){
+				check = check + "/1";
+			}else{
+				check = check + "/-1";
+			}
+			if(!check.equals("1/1/1/1/1")){
+				result = Result.lack("输入信息不足！！！",check);
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			//判断总价是否为空
+			if(totalOld != null && !totalOld.isEmpty()){
+				total = Double.parseDouble(totalOld);
+			}else{
+				result = Result.failure("系统繁忙,请稍后再试！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			//判断送货方式
+			if(!type.equals("请选择")){
+				sendType = type;
+			}else{
+				sendType = "在线支付";
+			}
+			//判断支付方式
+			if(!payType.equals("请选择")){
+				pay = Integer.parseInt(payType);
+			}else{
+				pay = 2;
+			}
+			//4.判断是通过书本下单还是购物车下单
 			if(userOld == null){
 				result = Result.failure("请您先登录！！！");
 				String json = gson.toJson(result);
@@ -449,7 +525,7 @@ public class EorderServlet extends BaseServlet {
 				Book bookOld = biz.selectSingle(checkBook);
 				if (bookOld != null && bookOld.getBstate() == 1 && bookOld.getBnum() > 0) {
 					eoitem.setCount(Integer.parseInt(count));// 添加数量值
-					eoitem.setTotal(Double.parseDouble(total));// 添加总价
+					eoitem.setTotal(total);// 添加总价
 				} else {
 					result = Result.failure("该书已下架或售罄,请重新选择！！！");
 					String json = gson.toJson(result);
@@ -472,9 +548,7 @@ public class EorderServlet extends BaseServlet {
 				eoitem.setCarttime(df.format(date));//添加购物车加入时间
 				// 生成订单号
 				String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
-				eoitem.setItemid(uuid);//添加购物车id条件
-				eoitem.setCartstate(2);//添加状态
-				eoitem.setEoid(uuidOrder);//添加订单号
+				eoitem.setItemid(uuid);//添加购物车号
 				eoitem.setBid(Long.parseLong(bid));//添加书id
 				int i = itemBiz.insert(eoitem);
 				if (i <= 0) {
@@ -491,9 +565,7 @@ public class EorderServlet extends BaseServlet {
 				Eorderitem itemNew = new Eorderitem();
 				if(item.getBid() != 0 && item.getUid() == userOld.getUid() &&item.getCartstate()!=2){
 					itemNew.setCount(Integer.parseInt(count));
-					itemNew.setTotal(Double.parseDouble(total));
-					itemNew.setEoid(uuidOrder);
-					itemNew.setCartstate(2);
+					itemNew.setTotal(total);
 				}
 				int k = itemBiz.update(itemNew, item);
 				if (k <= 0) {
@@ -513,8 +585,7 @@ public class EorderServlet extends BaseServlet {
 			}
 			
 			
-			//4.给eorder填数据
-			// eoReal为购物车的信息
+			//5.给eorder填数据
 			// 获取系统时间
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
@@ -523,8 +594,8 @@ public class EorderServlet extends BaseServlet {
 			eorder.setEostate(2);//订单状态(待发货)
 			eorder.setUid(userOld.getUid());//用户id
 			eorder.setEoaddr(eoaddr);//地址
-			eorder.setEotype(type);//送货类型
-			eorder.setEopaytypeid(Long.parseLong(payType));//支付方式
+			eorder.setEotype(sendType);//送货类型
+			eorder.setEopaytypeid(pay);//支付方式
 			eorder.setUname(uname);//收货人
 			eorder.setEotemp(uphone);//收货电话
 
@@ -554,11 +625,20 @@ public class EorderServlet extends BaseServlet {
 			}
 			int j = eorderBiz.insert(eorder);
 			if (j > 0) {
-				result = Result.success("下单成功！！！");
-				String json = gson.toJson(result);
-				response.setContentType("application/json;charset=UTF-8");
-				response.getWriter().append(json);
-				return ;
+				//将购物车信息更新(eoReal为购物车的信息)
+				Eorderitem eoRealNew = new Eorderitem();
+				eoRealNew.setCartstate(2);
+				eoRealNew.setEoid(uuidOrder);
+				int n = itemBiz.update(eoRealNew, eoReal);
+				if(n > 0){
+					result = Result.success("下单成功！！！");
+					Eorderitem eorderitem = null ;
+					session.setAttribute("userOrderAddItem", eorderitem);
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return ;
+				}
 			}
 			bookNew.setBnum(bookOld.getBnum());
 			int p = biz.update(bookNew, bookOld);
@@ -607,7 +687,7 @@ public class EorderServlet extends BaseServlet {
 
 	// TODO: handle exception
 	// 查询
-	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		OrderDetial orderDetial = new OrderDetial();
@@ -682,7 +762,7 @@ public class EorderServlet extends BaseServlet {
 
 	// 查询退货订单
 	public void queryReorder(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, BizException {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		OrderDetial orderDetial = new OrderDetial();

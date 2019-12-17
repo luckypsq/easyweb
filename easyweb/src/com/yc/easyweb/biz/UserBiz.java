@@ -18,7 +18,10 @@ public class UserBiz {
 	private UserDao dao = new UserDao();
 
 	// 查询所有
-	public List<User> selectAll(User user) throws IOException {
+	public List<User> selectAll(User user) throws IOException, BizException {
+		if (user == null) {
+			throw new BizException("请输入用户信息");
+		}
 		return dao.selectAll(user);
 	}
 
@@ -29,11 +32,17 @@ public class UserBiz {
 		}
 		if(user.getUemail() == null && user.getUphone() == null){
 			throw new BizException("请输入您的邮箱或电话号码，方便以后验证");
+		}else if(user.getUemail().isEmpty() && user.getUphone().isEmpty() ){
+			throw new BizException("请输入您的邮箱或电话号码，方便以后验证");
 		}
-		if(user.getUname() == null){
+		if(user.getUname() == null ){
+			throw new BizException("请输入您的用户名");
+		}else if(user.getUname().isEmpty()){
 			throw new BizException("请输入您的用户名");
 		}
-		if(user.getUpassword() == null){
+		if(user.getUpassword() == null ){
+			throw new BizException("请输入您的密码");
+		}else if( user.getUpassword().isEmpty() ){
 			throw new BizException("请输入您的密码");
 		}
 		return dao.insert(user);

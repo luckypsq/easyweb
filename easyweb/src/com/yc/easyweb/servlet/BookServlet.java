@@ -705,7 +705,7 @@ public class BookServlet extends BaseServlet {
 	}
 	// TODO Auto-generated catch block
 	// ≤È—Ø
-	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		String bauthor = null;

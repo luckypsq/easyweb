@@ -166,7 +166,7 @@ public class JoinServlet extends BaseServlet {
 		}
 	}
 
-	private void init(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void init(HttpServletRequest request, HttpServletResponse response) throws IOException, BizException {
 		// 获取系统当前时间
 		HttpSession session = request.getSession();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");

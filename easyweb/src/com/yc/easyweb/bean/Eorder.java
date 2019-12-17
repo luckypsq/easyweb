@@ -77,10 +77,13 @@ public class Eorder implements Serializable{
 	public void setEostate(int eostate) {
 		this.eostate = eostate;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "Eorder [eoid=" + eoid + ", uid=" + uid + ", eostate=" + eostate + ", eotime=" + eotime + ", eotemp="
-				+ eotemp + ", uname=" + uname + ", eoaddr=" + eoaddr + ", eotype=" + eotype + "]";
+				+ eotemp + ", uname=" + uname + ", eoaddr=" + eoaddr + ", eotype=" + eotype + ", eoespress=" + eoespress
+				+ ", eopaytypeid=" + eopaytypeid + "]";
 	}
 	@Override
 	public int hashCode() {

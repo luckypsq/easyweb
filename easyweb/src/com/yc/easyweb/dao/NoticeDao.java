@@ -28,7 +28,7 @@ public class NoticeDao {
 		sb.append(" select nid,ntime,nnumber,nauthor,ncontent,nstate,ntemp,ntitle " + " from notice where 1=1 ");
 		if (notice != null) {
 			// 按发布者查
-			if (notice.getNauthor() != null) {
+			if (notice.getNauthor() != null ) {
 				sb.append(" and nauthor like '%" + notice.getNauthor() + "%'");
 			}
 			// 按时间查
@@ -73,8 +73,8 @@ public class NoticeDao {
 
 	// 添加
 	public int insert(Notice notice) {
-		String sql = "insert into notice(nid,ntime,nauthor,ncontent,ntitle) " + " values(null,?,?,?,?);";
-		return DbHelper.update(sql, notice.getNtime(), notice.getNauthor(), notice.getNcontent(), notice.getNtitle());
+		String sql = "insert into notice(nid,ntime,nnumber,nauthor,ncontent,ntitle,ntemp,nstate) " + " values(null,?,?,?,?,?,?,null);";
+		return DbHelper.update(sql, notice.getNtime(),notice.getNnumber(), notice.getNauthor(), notice.getNcontent(), notice.getNtitle(),notice.getNtemp());
 	}
 
 	// 删除
@@ -121,24 +121,33 @@ public class NoticeDao {
 			return 0;
 		}
 		sb.append("update notice set ctemp='' ");
-		if (noticeNew.getNauthor() != null) {
+		if (noticeNew.getNauthor() != null && !noticeNew.getNauthor().isEmpty()) {
 			sb.append(" , nauthor = '" + noticeNew.getNauthor() +"'");
 		}
-		if (noticeNew.getNtitle() != null) {
+		if (noticeNew.getNtitle() != null && !noticeNew.getNtitle().isEmpty()) {
 			sb.append(" , ntitle = '" + noticeNew.getNtitle() + "'");
 		}
-		if (noticeNew.getNcontent() != null) {
+		if (noticeNew.getNcontent() != null && !noticeNew.getNcontent().isEmpty()) {
 			sb.append(" and ncontent = '" + noticeNew.getNcontent() + "'");
 		}
 		if(noticeNew.getNnumber() != 0){
 			sb.append(" and nnumber = " + noticeNew.getNnumber());
+		}
+		if(noticeNew.getNstate() != 0){
+			sb.append(" and nstate = " + noticeNew.getNstate());
+		}
+		if(noticeNew.getNtemp() != null && !noticeNew.getNtemp().isEmpty()){
+			sb.append(" and ntemp = '" + noticeNew.getNtemp() + "'");
+		}
+		if(noticeNew.getNtime() != null && !noticeNew.getNtime().isEmpty()){
+			sb.append(" and ntime = '" + noticeNew.getNtime() + "'");
 		}
 		sb.append(" where 1=1 ");
 		
 		if(noticeOld.getNid() != 0){
 			sb.append(" and nid = " + noticeOld.getNid());
 		}
-		if(noticeOld.getNtitle() != null){
+		if(noticeOld.getNtitle() != null && !noticeNew.getNtitle().isEmpty()){
 			sb.append(" and ntitle = '"+noticeOld.getNtitle() + "'");
 		}
 		return DbHelper.update(sb.toString(), null);
@@ -148,7 +157,7 @@ public class NoticeDao {
 	@SuppressWarnings({ "unchecked", "static-access" })
 	public Page<Notice> noticePage(int page, int rows, Notice notice) throws IOException {
 		StringBuffer sb = new StringBuffer();
-		sb.append("select * from notice where 1=1 ");
+		sb.append("select nid,ntime,nnumber,nauthor,ncontent,nstate,ntemp,ntitle from notice where 1=1 ");
 		if (notice != null) {
 			if (notice.getNtime() != null) {
 				sb.append(" and ntime like '%" + notice.getNtime() + " %' ");

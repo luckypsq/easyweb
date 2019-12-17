@@ -65,10 +65,11 @@ public class Notice implements Serializable{
 	public void setNstate(int nstate) {
 		this.nstate = nstate;
 	}
+	
 	@Override
 	public String toString() {
 		return "Notice [nid=" + nid + ", ntime=" + ntime + ", nnumber=" + nnumber + ", nauthor=" + nauthor
-				+ ", ncontent=" + ncontent + ", nstate=" + nstate + ", ntemp=" + ntemp + "]";
+				+ ", ncontent=" + ncontent + ", nstate=" + nstate + ", ntemp=" + ntemp + ", ntitle=" + ntitle + "]";
 	}
 	@Override
 	public int hashCode() {

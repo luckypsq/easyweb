@@ -12,13 +12,13 @@ public class ControlDao {
 	// 查询所有
 	public List<Control> selectAll(Control control) throws IOException  {
 		StringBuffer sb = new StringBuffer();
-		sb.append(
-				" select conid,coname,conamesecond,conadd,condelete,coninsert,conupdate,concheck,uid,constate,contemp from control where 1=1 ");
+		sb.append(" select conid,coname,conamesecond,conadd,condelete,coninsert,conupdate,concheck,uid,"
+					+ "constate,contemp from control where 1=1 ");
 		if (control != null) {
-			if (control.getConame() != null) {
+			if (control.getConame() != null && !control.getConame().isEmpty() ) {
 				sb.append(" and coname like '%" + control.getConame() + "%'");
 			}
-			if (control.getConamesecond() != null) {
+			if (control.getConamesecond() != null && !control.getConamesecond().isEmpty()) {
 				sb.append(" and conamesecond like '%" + control.getConamesecond() + "%'");
 			}
 			if (control.getConadd() != 0) {
@@ -42,7 +42,7 @@ public class ControlDao {
 			if (control.getConstate() != 0) {
 				sb.append(" and constate=" + control.getConstate());
 			}
-			if (control.getContemp() != null) {
+			if (control.getContemp() != null && !control.getContemp().isEmpty()) {
 				sb.append(" and contemp like '%" + control.getContemp() + "%'");
 			}
 		}
@@ -53,13 +53,12 @@ public class ControlDao {
 
 	public Control selectSingle(Control control) throws IOException  {
 		StringBuffer sb = new StringBuffer();
-		sb.append(
-				" select conid,coname,conamesecond,conadd,condelete,coninsert,conupdate,concheck,uid,constate,contemp from control where 1=1 ");
+		sb.append(" select conid,coname,conamesecond,conadd,condelete,coninsert,conupdate,concheck,uid,constate,contemp from control where 1=1 ");
 		if (control != null) {
-			if (control.getConame() != null) {
+			if (control.getConame() != null && !control.getConame().isEmpty()) {
 				sb.append(" and coname = '" + control.getConame() + "'");
 			}
-			if (control.getConamesecond() != null) {
+			if (control.getConamesecond() != null && !control.getConamesecond().isEmpty()) {
 				sb.append(" and conamesecond = '" + control.getConamesecond() + "'");
 			}
 			if (control.getConadd() != 0) {
@@ -83,7 +82,7 @@ public class ControlDao {
 			if (control.getConstate() != 0) {
 				sb.append(" and constate=" + control.getConstate());
 			}
-			if (control.getContemp() != null) {
+			if (control.getContemp() != null && !control.getContemp().isEmpty()) {
 				sb.append(" and contemp = '" + control.getContemp() + "'");
 			}
 			if (control.getConid() != 0) {
@@ -96,8 +95,8 @@ public class ControlDao {
 
 	// 添加
 	public int insert(Control control) throws SQLException  {
-		String sql = "insert into Control(conid,coname,conamesecond,uid,contemp) "
-				+ " values(null,?,?,?,?);";
+		String sql = "insert into control(conid,coname,conamesecond,uid,contemp,conadd,condelete,coninsert,conupdate,concheck,constate) "
+				+ " values(null,?,?,?,?,null,null,null,null,null,null);";
 		return DbHelper.update(sql, control.getConame(), control.getConamesecond(), control.getUid(),
 				 control.getContemp());
 	}
@@ -165,10 +164,10 @@ public class ControlDao {
 			return 0;
 		}
 		sb.append("update Control set ctemp='' ");
-		if (controlNew.getConame() != null) {
+		if (controlNew.getConame() != null && !controlNew.getConame().isEmpty()) {
 			sb.append(" , coname = '" + controlNew.getConame() + "'");
 		}
-		if (controlNew.getConamesecond() != null) {
+		if (controlNew.getConamesecond() != null && !controlNew.getConamesecond().isEmpty()) {
 			sb.append(" , conamesecond ='" + controlNew.getConamesecond() + "'");
 		}
 		if (controlNew.getConadd() != 0) {
@@ -192,7 +191,7 @@ public class ControlDao {
 		if (controlNew.getConstate() != 0) {
 			sb.append(" , constate=" + controlNew.getConstate());
 		}
-		if (controlNew.getContemp() != null) {
+		if (controlNew.getContemp() != null && !controlNew.getContemp().isEmpty()) {
 			sb.append(" , contemp ='" + controlNew.getContemp() + "'");
 		}
 		sb.append(" where 1=1 ");
@@ -206,10 +205,10 @@ public class ControlDao {
 		if (controlOld.getConid() != 0) {
 			sb.append(" and conid=" + controlOld.getConid());
 		}
-		if (controlOld.getConame() != null) {
+		if (controlOld.getConame() != null && !controlOld.getConame().isEmpty()) {
 			sb.append(" and coname ='" + controlOld.getConame() + "'");
 		}
-		if (controlOld.getConamesecond() != null) {
+		if (controlOld.getConamesecond() != null && !controlOld.getConamesecond().isEmpty()) {
 			sb.append(" and conamesecond = '" + controlOld.getConamesecond() + "'");
 		}
 		return DbHelper.update(sb.toString(), null);

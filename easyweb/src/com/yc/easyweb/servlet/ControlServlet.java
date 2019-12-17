@@ -26,7 +26,7 @@ public class ControlServlet extends BaseServlet {
 	UsercontrolBiz userc = new UsercontrolBiz();
 
 	// 查询
-	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		UserBiz userBiz = new UserBiz();
@@ -124,7 +124,7 @@ public class ControlServlet extends BaseServlet {
 	}
 
 	//administrator页面数据显示
-	public void queryAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void queryAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		UserBiz userBiz = new UserBiz();
@@ -176,7 +176,7 @@ public class ControlServlet extends BaseServlet {
 	}
 	
 	//Competence页面数据显示
-	public void queryCom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void queryCom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		//查询所有的权限

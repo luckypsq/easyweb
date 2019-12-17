@@ -54,6 +54,7 @@ public class BookType implements Serializable{
 		return "BookType [btid=" + btid + ", btname=" + btname + ", btnamesecond=" + btnamesecond + ", btnamethird="
 				+ btnamethird + ", bttemp=" + bttemp + "]";
 	}
+	//重写hashCode和equals方法
 	@Override
 	public int hashCode() {
 		final int prime = 31;

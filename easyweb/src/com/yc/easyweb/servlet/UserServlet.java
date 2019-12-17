@@ -429,7 +429,7 @@ public class UserServlet extends BaseServlet {
 	}
 
 	public void queryUser(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, BizException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 

@@ -90,6 +90,7 @@ public class Control implements Serializable {
 				+ conadd + ", condelete=" + condelete + ", coninsert=" + coninsert + ", conupdate=" + conupdate
 				+ ", concheck=" + concheck + ", uid=" + uid + ", constate=" + constate + ", contemp=" + contemp + "]";
 	}
+	//重写hashCode和equals方法
 	@Override
 	public int hashCode() {
 		final int prime = 31;

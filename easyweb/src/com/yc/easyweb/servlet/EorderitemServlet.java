@@ -232,6 +232,15 @@ public class EorderitemServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 			e.printStackTrace();
+		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
 		}
 	}
 

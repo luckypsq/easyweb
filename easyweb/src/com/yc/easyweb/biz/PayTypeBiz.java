@@ -9,41 +9,55 @@ import com.yc.easyweb.dao.PayTypeDao;
 
 /**
  * 操作PayType表的事务类
+ * 
  * @author psq
  *
  */
 public class PayTypeBiz {
 
-	private PayTypeDao dao= new PayTypeDao();
-	
-	//查询所有
-		public List<PayType> selectAll(PayType payType) throws IOException {
-			return dao.selectAll(payType);
+	private PayTypeDao dao = new PayTypeDao();
+
+	// 查询所有
+	public List<PayType> selectAll(PayType payType) throws IOException, BizException {
+		if (payType == null) {
+			throw new BizException("请输入支付类型信息！！！");
 		}
-		//添加
-		public int insert(PayType payType) throws SQLException, BizException {
-			if(payType == null){
-				throw new BizException("请输入支付类型信息！！！");
-			}
-			if(payType.getEopayname() == null ){
-				throw new BizException("请输入支付类型信息！！！");
-			}
-			return dao.insert(payType);
-			
+		return dao.selectAll(payType);
+	}
+
+	// 添加
+	public int insert(PayType payType) throws SQLException, BizException {
+		if (payType == null) {
+			throw new BizException("请输入支付类型信息！！！");
 		}
-		//删除
-		public int delete(PayType payType) throws SQLException, BizException{
-			if(payType == null){
-				throw new BizException("请指定支付类型信息！！！");
-			}
-			if(payType.getEopayname() == null && payType.getEopaytypeid() == 0){
-				throw new BizException("请指定支付类型信息！！！");
-			}
-			return dao.delete(payType);
-			
+		if (payType.getEopayname() == null ) {
+			throw new BizException("请输入支付类型信息！！！");
+		}else if(payType.getEopayname().isEmpty()){
+			throw new BizException("请输入支付类型信息！！！");
 		}
-		/*//更新
-		public  int update (PayType payType) {
-			return 0;
-		}*/
+		return dao.insert(payType);
+	}
+
+	// 删除
+	public int delete(PayType payType) throws SQLException, BizException {
+		if (payType == null) {
+			throw new BizException("请指定支付类型信息！！！");
+		}
+		if (payType.getEopayname() == null && payType.getEopaytypeid() == 0) {
+			throw new BizException("请指定支付类型信息！！！");
+		}
+		return dao.delete(payType);
+
+	}
+	//更新
+	public int update (PayType payTypeNew,PayType  payTypeOld) throws BizException {
+		if (payTypeOld == null || payTypeNew == null) {
+			throw new BizException("请输入支付类型信息！！！");
+		}
+		if (payTypeOld.getEopayname() == null && !payTypeOld.getEopayname().isEmpty()) {
+			throw new BizException("请输入支付类型信息！！！");
+		}
+		return dao.update(payTypeNew, payTypeOld); 
+	}
+	 
 }

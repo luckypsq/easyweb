@@ -18,7 +18,10 @@ public class NoticeBiz {
 	private NoticeDao dao = new NoticeDao();
 
 	// 查询所有
-	public List<Notice> selectAll(Notice notice) throws IOException  {
+	public List<Notice> selectAll(Notice notice) throws IOException, BizException  {
+		if(notice == null){
+			throw new BizException("请填写公告信息！！！");
+		}
 		return dao.selectAll(notice);
 	}
 
@@ -40,14 +43,25 @@ public class NoticeBiz {
 		}
 		if(notice.getNtime() == null ){
 			throw new BizException("请填写公告的发布时间！！！");
+		}else if(notice.getNtime().isEmpty() ){
+			throw new BizException("请填写公告的发布时间！！！");
 		}
-		if (notice.getNcontent() == null) {
+		
+		if (notice.getNcontent() == null ) {
+			throw new BizException("请填写公告的发布内容！！！");
+		}else if(notice.getNcontent().isEmpty()){
 			throw new BizException("请填写公告的发布内容！！！");
 		}
-		if (notice.getNauthor() == null) {
+		
+		if (notice.getNauthor() == null ) {
 			throw new BizException("请填写公告的发布者！！！");
+		}else if(notice.getNauthor().isEmpty()){
+			throw new BizException("请填写公告的发布标题！！！");
 		}
-		if (notice.getNtitle()== null) {
+		
+		if (notice.getNtitle()== null ) {
+			throw new BizException("请填写公告的发布标题！！！");
+		}else if(notice.getNtitle().isEmpty()){
 			throw new BizException("请填写公告的发布标题！！！");
 		}
 		return dao.insert(notice);
@@ -76,7 +90,10 @@ public class NoticeBiz {
 
 	}
 	//公告分页
-		public Page<Notice> noticePage(int page, int rows,Notice notice) throws IOException {
+		public Page<Notice> noticePage(int page, int rows,Notice notice) throws IOException, BizException {
+			if(notice == null){
+				throw new BizException("请填写需要删除的公告信息！！！");
+			}
 			return dao.noticePage(page, rows, notice);
 		}
 	// 其他

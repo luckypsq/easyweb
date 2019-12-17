@@ -18,17 +18,20 @@ public class UsercontrolBiz {
 	private UsercontrolDao dao = new UsercontrolDao();
 
 	// 查询所有
-	public List<Usercontrol> selectAll(Usercontrol usercontrol) throws IOException {
+	public List<Usercontrol> selectAll(Usercontrol usercontrol) throws IOException, BizException {
+		if(usercontrol == null){
+			throw new BizException("请填写用户权限信息！！！");
+		}
 		return dao.selectAll(usercontrol);
 	}
 
 	// 查询单个
 	public Usercontrol selectSingle(Usercontrol usercontrol) throws IOException, BizException {
 		if(usercontrol == null){
-			throw new BizException("请填写用户权限信息");
+			throw new BizException("请填写用户权限信息！！！");
 		}
 		if(usercontrol.getConid() == 0 && usercontrol.getUid() == 0 && usercontrol.getUcon() ==0){
-			throw new BizException("请填写用户权限信息");
+			throw new BizException("请填写用户权限信息！！！");
 		}
 		return dao.selectSingle(usercontrol);
 	}
@@ -36,7 +39,7 @@ public class UsercontrolBiz {
 	// 添加
 	public int insert(Usercontrol usercontrol) throws SQLException, BizException {
 		if(usercontrol == null){
-			throw new BizException("请填写用户权限信息");
+			throw new BizException("请填写用户权限信息！！！");
 		}
 		if(usercontrol.getUid() == 0){
 			throw new BizException("请选择管理员！！！");
@@ -51,10 +54,10 @@ public class UsercontrolBiz {
 	// 删除
 	public int delete(Usercontrol usercontrol) throws SQLException, BizException {
 		if(usercontrol == null){
-			throw new BizException("请填写用户权限信息");
+			throw new BizException("请填写用户权限信息！！！");
 		}
 		if(usercontrol.getConid() == 0 && usercontrol.getUid() == 0 && usercontrol.getUcon() ==0){
-			throw new BizException("请填写需要删除的用户权限信息");
+			throw new BizException("请填写需要删除的用户权限信息！！！");
 		}
 		return dao.delete(usercontrol);
 
@@ -63,11 +66,11 @@ public class UsercontrolBiz {
 	// 删除多条
 	public int deleteAll(List<Usercontrol> list) throws SQLException, BizException {
 		if(list.size() == 0){
-			throw new BizException("请填写用户权限信息");
+			throw new BizException("请填写用户权限信息！！！");
 		}
 		for (Usercontrol usercontrol : list) {
 			if(usercontrol.getConid() == 0 && usercontrol.getUid() == 0 && usercontrol.getUcon() ==0){
-				throw new BizException("请填写需要删除的用户权限信息");
+				throw new BizException("请填写需要删除的用户权限信息！！！");
 			}
 		}
 		return dao.delete(list);
@@ -77,13 +80,13 @@ public class UsercontrolBiz {
 	// 更新
 	public int update(Usercontrol usercontrolNew, Usercontrol usercontrolOld) throws SQLException, BizException {
 		if(usercontrolNew == null){
-			throw new BizException("请填写修改的用户权限信息");
+			throw new BizException("请填写修改的用户权限信息！！！");
 		}
 		if(usercontrolOld == null){
-			throw new BizException("请填写需要修改的用户权限");
+			throw new BizException("请填写需要修改的用户权限！！！");
 		}
 		if(usercontrolOld.getConid() == 0 && usercontrolOld.getUid() == 0 && usercontrolOld.getUcon() ==0){
-			throw new BizException("请填写需要修改的用户权限信息");
+			throw new BizException("请填写需要修改的用户权限信息！！！");
 		}
 		return dao.update(usercontrolNew, usercontrolOld);
 

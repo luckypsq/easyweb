@@ -2,7 +2,7 @@ package com.yc.easyweb.bean;
 
 import java.io.Serializable;
 
-public class Eorderitem implements Serializable{
+public class Eorderitem implements Serializable {
 	/**
 	 * 
 	 */
@@ -16,9 +16,7 @@ public class Eorderitem implements Serializable{
 	private String eitemp;// 预备字段
 	private long uid;// 用户名
 	private int cartstate;// 状态
-	private String carttime;
-	
-	
+	private String carttime;// 加入时间
 
 	public String getCarttime() {
 		return carttime;
@@ -95,7 +93,8 @@ public class Eorderitem implements Serializable{
 	@Override
 	public String toString() {
 		return "Eorderitem [itemid=" + itemid + ", count=" + count + ", bid=" + bid + ", eoid=" + eoid + ", total="
-				+ total + ", eitemp=" + eitemp + "]";
+				+ total + ", eitemp=" + eitemp + ", uid=" + uid + ", cartstate=" + cartstate + ", carttime=" + carttime
+				+ "]";
 	}
 
 	@Override
@@ -128,5 +127,5 @@ public class Eorderitem implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }

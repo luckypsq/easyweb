@@ -20,7 +20,7 @@ public class BookTypeServlet extends BaseServlet {
 	private BookTypeBiz bookTypeBiz = new BookTypeBiz();
 
 	// 查询
-	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		BookType bookType = new BookType();
@@ -43,7 +43,7 @@ public class BookTypeServlet extends BaseServlet {
 	}
 
 	// 添加
-	public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		BookType bookType = new BookType();
 		PrintWriter out = response.getWriter();
 		String realType = null;
@@ -118,7 +118,7 @@ public class BookTypeServlet extends BaseServlet {
 	}
 
 	// 更新
-	public void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		BookType bookType = new BookType();
 		BookType bookTypeOld = new BookType();
 		PrintWriter out = response.getWriter();

@@ -116,6 +116,7 @@ public class Bought implements Serializable{
 	public void setBuniversity(String buniversity) {
 		this.buniversity = buniversity;
 	}
+	
 	@Override
 	public String toString() {
 		return "Bought [itemid=" + itemid + ", count=" + count + ", bid=" + bid + ", total=" + total + ", uid=" + uid

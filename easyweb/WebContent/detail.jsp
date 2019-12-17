@@ -30,35 +30,35 @@
 			<div class="attr fl">
 				<p style="width:450px;">书名：<span>${bookDetail.bname}</span></p>
 				<p>所属学校：<span>
-					<c:if test="${bookDetail.buniversity.isEmpty()}" var="flag" scope="session">						
-						<c:out value="暂无信息"></c:out>
+					<c:if test="${!bookDetail.buniversity.isEmpty() &&  bookDetail.buniversity != null}" var="flag" scope="session">						
+						<c:out value="${bookDetail.buniversity}"></c:out>	
 					</c:if>
 					<c:if test="${not flag}">
-						<c:out value="${bookDetail.buniversity}"></c:out>	
+						<c:out value="暂无信息"></c:out>
 					</c:if>
 				</span></p>
 				<p>所属学院：<span>
-					<c:if test="${bookDetail.bucollege.isEmpty()}" var="flag" scope="session">						
-						<c:out value="暂无信息"></c:out>
+					<c:if test="${!bookDetail.bucollege.isEmpty() && bookDetail.bucollege != null}" var="flag" scope="session">						
+						<c:out value="${bookDetail.bucollege}"></c:out>	
 					</c:if>
 					<c:if test="${not flag}">
-						<c:out value="${bookDetail.bucollege}"></c:out>	
+						<c:out value="暂无信息"></c:out>
 					</c:if>
 				</span></p>
 				<p>所属专业：<span>
-					<c:if test="${bookDetail.bumajor.isEmpty()}" var="flag" scope="session">						
-						<c:out value="暂无信息"></c:out>
+					<c:if test="${!bookDetail.bumajor.isEmpty() && bookDetail.bumajor != null}" var="flag" scope="session">						
+						<c:out value="${bookDetail.bumajor}"></c:out>	
 					</c:if>
 					<c:if test="${not flag}">
-						<c:out value="${bookDetail.bumajor}"></c:out>	
+						<c:out value="暂无信息"></c:out>
 					</c:if>
 				</span></p>
 				<p>所属年级：<span>
-					<c:if test="${bookDetail.bclass.isEmpty()}" var="flag" scope="session">						
-						<c:out value="暂无信息"></c:out>
+					<c:if test="${!bookDetail.bclass.isEmpty() && bookDetail.bclass != null}" var="flag" scope="session">						
+						<c:out value="${bookDetail.bclass}"></c:out>	
 					</c:if>
 					<c:if test="${not flag}">
-						<c:out value="${bookDetail.bclass}"></c:out>	
+						<c:out value="暂无信息"></c:out>
 					</c:if>
 				</span></p>
 				<p>拥有者：<span>

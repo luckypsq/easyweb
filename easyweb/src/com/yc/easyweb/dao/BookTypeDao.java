@@ -19,7 +19,7 @@ public class BookTypeDao {
 	@SuppressWarnings("static-access")
 	public List<BookType> selectAll(BookType bookType) throws IOException{
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select btid,btname,btnamesecond,btnamethird,btstate "
+		sb.append(" select btid,btname,btnamesecond,btnamethird,btstate,bttemp "
 				+ " from booktype where 1=1 ");
 		if(bookType != null){
 			if(bookType.getBtname() != null && !bookType.getBtname().isEmpty()){
@@ -44,9 +44,9 @@ public class BookTypeDao {
 	}
 	//Ìí¼Ó
 	public int insert(BookType bookType) throws SQLException {
-		String sql = "insert into booktype(btid,btname,btnamesecond,btnamethird) " 
-					+ " values(null,?,?,?);";
-		return DbHelper.update(sql, bookType.getBtname(),bookType.getBtnamesecond(),bookType.getBtnamethird());
+		String sql = "insert into booktype(btid,btname,btnamesecond,btnamethird,bttemp,btstate) " 
+					+ " values(null,?,?,?,?,null);";
+		return DbHelper.update(sql, bookType.getBtname(),bookType.getBtnamesecond(),bookType.getBtnamethird(),bookType.getBttemp());
 	}
 	//É¾³ý
 	public int delete(BookType bookType) throws SQLException {

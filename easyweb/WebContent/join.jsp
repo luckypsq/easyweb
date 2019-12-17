@@ -259,14 +259,17 @@ function checkReg(){
 				}
 				if(result.code == -2){
 					alert(result.msg);
-					var m = rusult.data;
+					var m = rusult.data.split("/");
 					if(m[1] == "-1"){
 						$("#span1").text("用户名未输入或不合法！").css("color", 'red');
-					}else if(m[2] == "-1"){
+					}
+					if(m[2] == "-1"){
 						$("#span2").text("电话未输入或不合法！").css("color", 'red');
-					}else if(m[3] == "-1"){
+					}
+					if(m[3] == "-1"){
 						$("#span01").text("密码未输入或不合法！").css("color", 'red');
-					}else if(m[4] == "-1"){
+					}
+					if(m[4] == "-1"){
 						$("#span3").text("邮箱未输入或不合法！").css("color", 'red');
 					}
 					return ;

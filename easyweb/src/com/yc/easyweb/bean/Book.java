@@ -131,6 +131,7 @@ public class Book implements Serializable  {
 		this.btemp1 = btemp1;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "Book [bid=" + bid + ", bname=" + bname + ", buniversity=" + buniversity + ", bucollege=" + bucollege
@@ -138,6 +139,7 @@ public class Book implements Serializable  {
 				+ ", bprice=" + bprice + ", bstate=" + bstate + ", btid=" + btid + ", btemp=" + btemp + ", btemp1="
 				+ btemp1 + ", bnum=" + bnum + ", bauthor=" + bauthor + ", bdate=" + bdate + ", uid=" + uid + "]";
 	}
+	//重写hashCode 和equals方法 判断书籍是否相同
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -147,8 +149,6 @@ public class Book implements Serializable  {
 		result = prime * result + (int) (uid ^ (uid >>> 32));
 		return result;
 	}
-	
-	//重写hashCode 和equals方法 判断书籍是否相同
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
