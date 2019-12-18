@@ -17,7 +17,7 @@
 <script src="${path}/back/assets/js/bootstrap.min.js"></script>
 <title></title>
 </head>
-<body onload="show()">
+<body >
 	<div class="page-content clearfix">
 		<div class="alert alert-block alert-success">
 			<button type="button" class="close" data-dismiss="alert">
@@ -30,7 +30,7 @@
 		</div>
 		<div class="state-overview clearfix">
 			<div class="col-lg-3 col-sm-6">
-				<section class="panel"> <a href="${path}/back/user/user_list.jsp" title="商城会员">
+				<section class="panel"> <a href="${path}/back/user/user_list.jsp" title="商城用户">
 					<div class="symbol terques">
 						<i class="icon-user"></i>
 					</div>
@@ -41,12 +41,12 @@
 				</a> </section>
 			</div>
 			<div class="col-lg-3 col-sm-6">
-				<section class="panel"><a href="${path}/back/book/Products_List.jsp" title="商城订单">
+				<section class="panel"><a href="${path}/back/book/Products_List.jsp" title="书籍管理">
 				<div class="symbol red">
 					<i class="icon-tags"></i>
 				</div>
 				<div class="value">
-					<h1>${bookExit.size() }</h1>
+					<h1>${bookAll.size() }</h1>
 					<p>书籍数量</p>
 				</div>
 				</section>
@@ -109,7 +109,7 @@
 					<tbody>
 						<tr>
 							<td class="name">书籍总数：</td>
-							<td class="munber"><a href="${path}/back/book/Products_List.jsp">${bookExit.size() }</a>&nbsp;本</td>
+							<td class="munber"><a href="${path}/back/book/Products_List.jsp">${bookAll.size() }</a>&nbsp;本</td>
 						</tr>
 						<tr>
 							<td class="name">售罄书籍：</td>
@@ -206,47 +206,6 @@
 			</div>
 		</div>
 	</div>
-<script>
-//定义xml对象
-var xmlhttp;
-// ajax 
-try {
-	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-} catch (e) {
-	try {
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new XMLHttpRequest();
-		} catch (e) {
-		}
-	}
-}
-	//当页面打开时执行此函数
-function show(){
-		if (xmlhttp != null) {
-			// 定义请求地址
-			var url = "${path}/show.s?op=queryHome";
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST", url, true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					/* var msg = xmlhttp.responseText.replace(/\s/gi, "");
-					if(msg == 0){
-						alert("暂无数据");
-					} */
-				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		} else {
-			alert("不能创建XMLHttpRequest对象实例")
-		}
-	}
-</script>
 </body>
 </html>
 <script type="text/javascript">

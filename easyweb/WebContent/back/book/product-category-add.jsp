@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.*"%>
-<%@page import="com.yc.easyweb.biz.*"%>
-<%@page import="com.yc.easyweb.bean.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -25,6 +22,71 @@
 <link
 	href="${path}/back/Widget/icheck/icheck.css"
 	rel="stylesheet" type="text/css" />
+<title>添加书籍分类</title>
+</head>
+<body >
+<div class="type_style">
+ <div class="type_title">书籍类型信息</div>
+  <div class="type_content">
+  <form class="form form-horizontal" id="form-user-add">
+  	<div class="Operate_cont clearfix">
+      <label class="form-label" ><span class="c-red"></span>已有分类名:</label>
+      <div class="formControls " id="formControls-btypes">
+      		<jsp:include page="book_type_show.jsp"></jsp:include>
+      </div>
+    </div>
+    <div class="Operate_cont clearfix" id = "showState">
+      <label class="form-label" ><span class="c-red"></span>状&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
+      <div class="formControls ">
+        	<div class="btn  btn-success" style="margin-left:10px;">
+				<input type="button"onclick="updateState()" id="type_state" style="background:none;outline:none;border:0px;width:100px;height:20px;color:white;" value="已启用">
+			</div>
+      </div>
+    </div>
+    <div class="Operate_cont clearfix" style="display:none;">
+        <input type="text" class="input-text" value="" id="nameid" name="nameid">
+    </div>
+    <div class="Operate_cont clearfix">
+      <label class="form-label" ><span class="c-red">*</span>一级分类名:</label>
+      <div class="formControls ">
+     	<span class="input-text">&nbsp;&nbsp;&nbsp;&nbsp;教材区</span>
+     	<span id="firstTishi"style="margin-left:15px;"></span>
+      </div>
+    </div>
+    <div class="Operate_cont clearfix">
+      <label class="form-label"><span class="c-red">*</span>二级分类名:</label>
+      <div class="formControls ">
+        <input type="text" class="input-text" value="" placeholder="请输入最多10个汉字" id="namesecond" name="namesecond">
+      	<span id="secondTishi"style="margin-left:15px;width:200px;"></span>
+      </div>
+    </div>
+    <div class="Operate_cont clearfix">
+      <label class="form-label"><span class="c-red"></span>三级分类名:</label>
+      <div class="formControls ">
+        <input type="text" class="input-text" value="" placeholder="请输入最多10个汉字" id="namethird" name="namethird">
+      	<span id="thirdTishi" style="margin-left:15px;width:200px;display:inline-block"></span>
+      	</div>
+      
+    </div>
+    
+    <div class="Operate_cont clearfix">
+		  	<div class="btn  btn-warning" id="add">
+		  	 		<i class="icon-edit align-top bigger-125"></i>
+					<input onclick = "add()" id="type_add" name="type_add" type="button" class="type-add" style="background:none;outline:none;border:0px;color: white;"value="新增子类型"/>
+			</div>
+			<div class="btn  btn-success" id="update">
+					<i class="icon-ok align-top bigger-125"></i>
+					<input onclick = "update()" id="type_update" name="type_update" type="button" class="type-add" style="background:none;outline:none;border:0px;color: white;"value="修改子类型"/>
+			</div>
+		  <div class="btn  btn-danger" id="delete">
+		  	 		<i class="icon-trash   align-top bigger-125"></i>
+					<input   id="type_delete" name="type_delete" type="button" class="type-add" style="background:none;outline:none;border:0px;color: white;"value="删除子类型" onclick = "deleteType()"/>
+			</div>
+ 	 </div>
+  </form>
+  </div>
+  </div>
+</body>
 <script
 	src="${path}/back/js/jquery-1.9.1.min.js"></script>
 <script
@@ -58,8 +120,8 @@
 			}
 		});
 	});
+	//点击赋值
 	function gradeChange(){
-		document.getElementById("namefrist").value = "";
     	document.getElementById("namesecond").value = "";
     	document.getElementById("namethird").value = "";
 		var objS = document.getElementById("btype").value; 
@@ -72,16 +134,13 @@
         	 document.getElementById("showState").style.background="lightgrey";
         }
         if(btype.length == 5){
-        	document.getElementById("namefrist").value = btype[1];
         	document.getElementById("namesecond").value = btype[2];
         	document.getElementById("namethird").value = btype[3];
         }else if(btype.length == 4){
-        	document.getElementById("namefrist").value = btype[1];
         	document.getElementById("namesecond").value = btype[2];
-        }else if(btype.length == 3){
-        	document.getElementById("namefrist").value = btype[1];
         }
 	};
+	//更新状态
 	function updateState(){
 		var state =  document.getElementById("type_state").value;
 		if(state == "已启用"){
@@ -97,105 +156,46 @@
 				});
 			return;
 		}
-		if (xmlhttp != null) {
-			// 定义请求地址
-			var url = "${path}/bookType.s?op=update&btid="+btid+"&state="+state;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST", url, true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					// 替换空格
-					var msg = xmlhttp.responseText.replace(/\s/gi, "");
-					if(msg == "更新成功！！！"){
-						layer.msg(msg, {
-							icon : 6,
-							time : 1000
-							});
-						window.location.href='${path}/back/book/product-category-add.jsp';
-					}else{
-						layer.msg(msg, {
+		var param ="btid="+btid+"&state="+state;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/bookType.s?op=update",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$('#formControls-btypes').load('${path}/back/book/book_type_show.jsp');
+						layer.msg(result.msg, {
+							icon :6,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
 							icon : 5,
-							time : 1000
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
 							});
-					}
+		        	return;
+		        	}
 				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		} else {
-			layer.msg("不能创建XMLHttpRequest对象实例", {
-				icon : 5,
-				time : 1000
-				});
-		}
-		
+			});
 	}
-	var xmlhttp;
-	// ajax 验证用户名是否存在
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (e) {
-			try {
-				xmlhttp = new XMLHttpRequest();
-			} catch (e) {
-			}
-		}
-	}
-	function add(){
-		var btname = document.getElementById("namefrist").value;
-		var btname1 = document.getElementById("namesecond").value;
-		var btname2 = document.getElementById("namethird").value;
-		if(btname == null ){
-			layer.msg('请选择您要添加的类型名!!!', {
-				icon : 7,
-				time : 1000
-				});
-			return;
-		}
-		if (xmlhttp != null) {
-			// 定义请求地址
-			var url = "${path}/bookType.s?op=add&namefrist="+btname+"&namesecond="+btname1+"&namethird="+btname2 ;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST", url, true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					// 替换空格
-					var msg = xmlhttp.responseText.replace(/\s/gi, "");
-					if(msg == "添加成功！！！"){
-						layer.msg(msg, {
-							icon : 6,
-							time : 1000
-							});
-						window.location.href='${path}/back/book/product-category-add.jsp';
-					}else{
-						layer.msg(msg, {
-							icon : 5,
-							time : 1000
-							});
-					}
-				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		} else {
-			layer.msg("不能创建XMLHttpRequest对象实例", {
-				icon : 2,
-				time : 1000
-				});
-		}
-	};
+	//更新
 	function update(){
 		var btid = document.getElementById("nameid").value;
-		var btname = document.getElementById("namefrist").value;
 		var btname1 = document.getElementById("namesecond").value;
 		var btname2 = document.getElementById("namethird").value;
 		if(btid == null ){
@@ -205,41 +205,93 @@
 				});
 			return;
 		}
-		if (xmlhttp != null) {
-			// 定义请求地址
-			var url = "${path}/bookType.s?op=update&btid="+btid+"&namefrist="+btname+"&namesecond="+btname1+"&namethird="+btname2 ;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST", url, true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					// 替换空格
-					var msg = xmlhttp.responseText.replace(/\s/gi, "");
-					if(msg == "更新成功！！！"){
-						layer.msg(msg, {
-							icon : 6,
-							time : 1000
-							});
-						window.location.href='${path}/back/book/product-category-add.jsp';
-					}else{
-						layer.msg(msg, {
+		var param ="btid="+btid+"&namesecond="+btname1+"&namethird="+btname2 ;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/bookType.s?op=update",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$('#formControls-btypes').load('${path}/back/book/book_type_show.jsp');
+						layer.msg(result.msg, {
+							icon :6,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
 							icon : 5,
-							time : 1000
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
 							});
-					}
+		        	return;
+		        	}
 				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		} else {
-			layer.msg("不能创建XMLHttpRequest对象实例", {
-				icon : 2,
+			});
+	};
+	//添加
+	function add(){
+		var btname1 = document.getElementById("namesecond").value;
+		var btname2 = document.getElementById("namethird").value;
+		if(btname1 == null ){
+			layer.msg('请选择您要添加的类型名!!!', {
+				icon : 7,
 				time : 1000
 				});
+			return;
 		}
+		var param ="namesecond="+btname1+"&namethird="+btname2 ;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/bookType.s?op=add",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						//需要重新查值和赋值
+						$('#formControls-btypes').load('${path}/back/book/book_type_show.jsp');
+						layer.msg(result.msg, {
+							icon :6,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
+							icon : 5,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        	return;
+		        	}
+				}
+			});
 	};
+	//删除
 	function deleteType(){
 		var btid = document.getElementById("nameid").value;
 		if(btid == null ){
@@ -249,139 +301,106 @@
 				});
 			return;
 		}
-		if (xmlhttp != null) {
-			// 定义请求地址
-			var url = "${path}/bookType.s?op=delete&btid="+btid;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST", url, true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					// 替换空格
-					var msg = xmlhttp.responseText.replace(/\s/gi, "");
-					if(msg == "删除成功！！！"){
-						layer.msg(msg, {
-							icon : 6,
-							time : 1000
-							});
-						window.location.href='${path}/back/book/product-category-add.jsp';
-					}else{
-						layer.msg(msg, {
+		var param ="btid="+btid;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/bookType.s?op=delete",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$('#formControls-btypes').load('${path}/back/book/book_type_show.jsp');
+				    	document.getElementById("namesecond").value = "";
+				    	document.getElementById("namethird").value = "";	
+						layer.msg(result.msg, {
+							icon :6,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
 							icon : 5,
-							time : 1000
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
 							});
-					}
+		        	return;
+		        	}
 				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		} else {
-			layer.msg("不能创建XMLHttpRequest对象实例", {
-				icon : 2,
-				time : 1000
-				});
-		}
+			});
 	};
-	function show(){
-		if (xmlhttp != null) {
-			// 定义请求地址
-			var url = "${path}/bookType.s?op=query";
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST", url, true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					// 替换空格
-					var msg = xmlhttp.responseText.replace(/\s/gi, "");
-					if(msg == "0"){
-						layer.msg("暂无数据", {
-							icon : 5,
-							time : 1000
+	//类型二修改验证
+	$("#namesecond").on('input',function(){
+		var namesecond = $("#namesecond").val().replace(/\ +/g,"");
+		var param ="namesecond="+namesecond;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/bookType.s?op=checkNamesecond",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$("#secondTishi").text(result.msg).css("color", 'green');
+						return;
+		        	}
+		        	if(result.code == 0){
+		        		$("#secondTishi").text(result.msg).css("color", 'red');
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
 							});
-					}
+		        		return;
+		        	}
 				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		} else {
-			layer.msg("不能创建XMLHttpRequest对象实例", {
-				icon : 2,
-				time : 1000
-				});
-		}
-	}
+			});
+	});
+	//类型三修改验证
+	$("#namethird").on('input',function(){
+		var namethird = $("#namethird").val().replace(/\ +/g,"");
+		var param ="namethird="+namethird;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/bookType.s?op=checkNamethird",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$("#thirdTishi").text(result.msg).css("color", 'green');
+						return;
+		        	}
+		        	if(result.code == 0){
+		        		$("#thirdTishi").text(result.msg).css("color", 'red');
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        		return;
+		        	}
+				}
+			});
+	});
 </script>
-<title>添加书籍分类</title>
-</head>
-<body onload="show()">
-<div class="type_style">
- <div class="type_title">书籍类型信息</div>
-  <div class="type_content">
-  <form action="" method="post" class="form form-horizontal" id="form-user-add">
-  	<div class="Operate_cont clearfix">
-      <label class="form-label" ><span class="c-red"></span>已有分类名:</label>
-      <div class="formControls ">
-      		<select class="select"id="btype" name="btype" onblur="gradeChange()">
-					<option>请选择</option>
-					<c:forEach items="${bookTypeShow}" var="bt">
-						<option value="${bt }">${bt }</option>
-					</c:forEach>
-		</select>
-      </div>
-    </div>
-    <div class="Operate_cont clearfix" id = "showState">
-      <label class="form-label" ><span class="c-red"></span>状&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
-      <div class="formControls ">
-        	<div class="btn  btn-success" style="margin-left:10px;">
-				<input type="button"onclick="updateState()" id="type_state" style="background:none;outline:none;border:0px;width:100px;height:20px;color:white;" value="已启用">
-			</div>
-      </div>
-    </div>
-    <div class="Operate_cont clearfix" style="display:none;">
-        <input type="text" class="input-text" value="" id="nameid" name="nameid">
-    </div>
-    <div class="Operate_cont clearfix">
-      <label class="form-label" ><span class="c-red">*</span>一级分类名:</label>
-      <div class="formControls ">
-        <input type="text" class="input-text" value="" placeholder="请输入最多10个汉字" id="namefrist" name="namefrist">
-      </div>
-    </div>
-    <div class="Operate_cont clearfix">
-      <label class="form-label"><span class="c-red"></span>二级分类名:</label>
-      <div class="formControls ">
-        <input type="text" class="input-text" value="" placeholder="请输入最多10个汉字" id="namesecond" name="namesecond">
-      </div>
-    </div>
-    <div class="Operate_cont clearfix">
-      <label class="form-label"><span class="c-red"></span>三级分类名:</label>
-      <div class="formControls ">
-        <input type="text" class="input-text" value="" placeholder="请输入最多10个汉字" id="namethird" name="namethird">
-      </div>
-      
-    </div>
-    
-    <div class="Operate_cont clearfix">
-		  	<div class="btn  btn-warning" id="add">
-		  	 		<i class="icon-edit align-top bigger-125"></i>
-					<input onclick = "add()" id="type_add" name="type_add" type="button" class="type-add" style="background:none;outline:none;border:0px;color: white;"value="新增子类型"/>
-			</div>
-			<div class="btn  btn-success" id="update">
-					<i class="icon-ok align-top bigger-125"></i>
-					<input onclick = "update()" id="type_update" name="type_update" type="button" class="type-add" style="background:none;outline:none;border:0px;color: white;"value="修改子类型"/>
-			</div>
-		  <div class="btn  btn-danger" id="delete">
-		  	 		<i class="icon-trash   align-top bigger-125"></i>
-					<input   id="type_delete" name="type_delete" type="button" class="type-add" style="background:none;outline:none;border:0px;color: white;"value="删除子类型" onclick = "deleteType()"/>
-			</div>
- 	 </div>
-  </form>
- 
-  </div>
-  </div>
-	
-</body>
 </html>

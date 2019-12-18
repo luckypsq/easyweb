@@ -108,7 +108,7 @@ public class BookBiz {
 		if (oldBook == null ) {
 			throw new BizException("请填写需要修改的书籍！！！");
 		}
-		if(oldBook.getBid() == 0 && oldBook.getBname() == null){
+		if(oldBook.getBid() == 0 && oldBook.getBname() == null && oldBook.getBtid() == 0){
 			throw new BizException("请填写需要修改的书籍信息！！！");
 		}
 		return dao.update(newBook, oldBook);

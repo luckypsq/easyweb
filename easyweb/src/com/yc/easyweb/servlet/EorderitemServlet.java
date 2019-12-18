@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -49,6 +50,7 @@ public class EorderitemServlet extends BaseServlet {
 			int code = eBiz.delete(eorderitem);
 			if (code > 1) {
 				result = Result.success("删除成功！！！");
+				//数据刷新
 				User userOld = (User) session.getAttribute("loginedUser");
 				Bought bou = new Bought();
 				bou.setUid(userOld.getUid());
@@ -97,9 +99,10 @@ public class EorderitemServlet extends BaseServlet {
 		}
 	}
 
-	// 添加
+	// 用户添加购物信息
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		Eorderitem eod = new Eorderitem();
+		HttpSession session = request.getSession();
 		try {
 			Book bookOld;
 			if (request.getParameter("bid") != null && !request.getParameter("bid").isEmpty()) {
@@ -125,11 +128,11 @@ public class EorderitemServlet extends BaseServlet {
 				response.getWriter().append(json);
 				return;
 			}
-			User user = null;
+			User userOld = null;
 			if (request.getSession().getAttribute("loginedUser") != null) {
-				user = (User) request.getSession().getAttribute("loginedUser");
-				if (user.getUid() != 0) {
-					eod.setUid(user.getUid());
+				userOld = (User) request.getSession().getAttribute("loginedUser");
+				if (userOld.getUid() != 0) {
+					eod.setUid(userOld.getUid());
 				} else {
 					result = Result.lack("请先登录！！！");
 					String json = gson.toJson(result);
@@ -155,6 +158,20 @@ public class EorderitemServlet extends BaseServlet {
 			int i = eBiz.insert(eod);
 			if (i > 0) {
 				result = Result.success("添加成功！！！");
+				//会话还原
+				Map<String, String> map = new HashMap<String, String>();
+				session.setAttribute("customerOrderAdd", map);
+				Bought eo = new Bought();
+				session.setAttribute("userOrderAddItem", eo);
+				//数据刷新
+				// 购物车信息显示
+				Bought bought = new Bought();
+				List<Bought> listEo = eBiz.selectAllCart(bought);
+				session.setAttribute("userCart", listEo);
+				bought.setCartstate(1);
+				bought.setUid(userOld.getUid());
+				Page<Bought> pageCart =  eBiz.ePage(1, 6, bought);
+				session.setAttribute("cartPage", pageCart);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -274,6 +291,7 @@ public class EorderitemServlet extends BaseServlet {
 				if (code > 0) {
 					DecimalFormat df = new DecimalFormat("#.00");
 					result = Result.success("修改成功！！！", df.format(total));
+					//数据刷新
 					User userOld = (User) session.getAttribute("loginedUser");
 					Bought bou = new Bought();
 					bou.setUid(userOld.getUid());

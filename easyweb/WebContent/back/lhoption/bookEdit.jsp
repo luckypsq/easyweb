@@ -262,12 +262,16 @@
 	            }
 	        });
 		}
-		//发布书籍
+		//更新
 		function insertBook(){
 			var param = $('#user-addBook').serialize();
+			var bid = "${param.bid}";
+			if(bid != ""){
+				$("#bid").val(bid);
+			}
 			$.ajax({
 	            type: "post",
-	            url: "${path}/book.s?op=userAddBook",
+	            url: "${path}/book.s?op=updateBook",
 	            data: param,
 	            async:true, // 异步请求
 	            cache:true, // 设置为 false 将不缓存此页面
@@ -311,8 +315,9 @@
 		}
 		$(function(){
 			var bid = "${param.bid}";
-			var param="bid=" +bid;
 			if(bid != ""){
+				$("#bid").val(bid);
+			}
 				$.ajax({
 		            type: "post",
 		            url: "${path}/book.s?op=bookDetail",
@@ -338,11 +343,9 @@
 		            	}
 		            }
 				});
-				
-			}
 		});
 	</script>
-	<title>发布书籍</title>
+	<title>编辑书籍</title>
 </head>
 <style>
 	.help-main {
@@ -374,7 +377,12 @@
 						<div class="product-edit-item-r fl">
 						
 						<select style="width: 150px" name="buniversity" >
-							<option >图书所属大学</option>
+							<c:if test="${bookDetail != null}" var="flag" scope="session">
+								<option >${bookDetail.buniversity }</option>			
+							</c:if>
+							<c:if test="${not flag}">			
+								<option >请选择</option>
+							</c:if>
 							<c:forEach items="${userUni}" var="uni">
 								<option >${uni }</option>
 							</c:forEach>
@@ -388,7 +396,12 @@
 						</div>
 						<div class="product-edit-item-r fl">
 							<select name="bucollege" style="width: 150px" >
-								<option >图书所属学院</option>
+							<c:if test="${bookDetail != null}" var="flag" scope="session">
+								<option >${bookDetail.bucollege}</option>			
+							</c:if>
+							<c:if test="${not flag}">			
+								<option >请选择</option>
+							</c:if>
 							
 							<c:forEach items="${userUcol}" var="ucol">
 								<option >${ucol }</option>
@@ -402,7 +415,12 @@
 						</div>
 						<div class="product-edit-item-r fl">
 							<select name="bumajor" style="width: 150px">
-									<option >图书所属专业</option>
+								<c:if test="${bookDetail != null}" var="flag" scope="session">
+								<option >${bookDetail.bumajor}</option>			
+								</c:if>
+								<c:if test="${not flag}">			
+									<option >请选择</option>
+								</c:if>
 								
 								<c:forEach items="${userUmar}" var="umar">
 										<option >${umar }</option>
@@ -416,7 +434,12 @@
 						</div>
 						<div class="product-edit-item-r fl">
 							<select name="bclass" style="width: 150px" >
-									<option >图书所属年级</option>
+								<c:if test="${bookDetail != null}" var="flag" scope="session">
+								<option >${bookDetail.bclass}</option>			
+								</c:if>
+								<c:if test="${not flag}">			
+									<option >请选择</option>
+								</c:if>
 								
 								<option >大一</option>
 								<option >大二</option>
@@ -431,7 +454,12 @@
 						</div>
 						<div class="product-edit-item-r fl">
 							<select name="btid" style="width: 150px" >
-									<option >图书所属类型</option>					   	
+								<c:if test="${bookDetail != null}" var="flag" scope="session">						
+									<option value="${bookDetail.btid }">${btTypeEdit[bookDetail.btid]}</option>
+								</c:if>
+								<c:if test="${not flag}">
+									<option >请选择</option>					   	
+								</c:if>
 								
 								<c:forEach items="${btypes}" var="btType">
 										<option value="${btType.btid }">${btTypeEdit[btType.btid]}</option>
@@ -444,7 +472,7 @@
 							<div class="fr">图书分类6：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<input type="text" name="btemp" id="btemp"style="width: 200px"  onblur="checkBtemp();">
+							<input type="text" name="btemp" id="btemp"style="width: 200px" value="${bookDetail.btemp}" onblur="checkBtemp();">
 							<span id="btempMsg" style="width: 200px;margin-left:10px;"></span>
 							<p >图书专属系列名称长度至少3个字符，最长10个汉字</p>
 						</div>
@@ -454,7 +482,7 @@
 							<div class="fr"><i class="middle">*</i>图书名称：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<input type="text"  name="bname" id="bname"style="width: 200px" onblur="checkBname();">
+							<input type="text" value="${bookDetail.bname}" name="bname" id="bname"style="width: 200px" onblur="checkBname();">
 							<span id="bnameMsg" style="width: 200px;margin-left:10px;"></span>
 							<p >图书标题名称长度至少1个字符，最长50个汉字</p>
 						</div>
@@ -464,7 +492,7 @@
 							<div class="fr"><i class="middle">*</i>图书作者：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<input type="text"  name="bauthor" id="bauthor"style="width: 200px"onblur="checkBauthor();">
+							<input type="text" value="${bookDetail.bauthor}" name="bauthor" id="bauthor"style="width: 200px"onblur="checkBauthor();">
 							<span id="bauthorMsg" style="width: 200px;margin-left:10px;"></span>
 							<p >图书作者名称长度至少1个字符，最长10个汉字</p>
 						</div>
@@ -474,7 +502,7 @@
 							<div class="fr"><i class="middle">*</i>图书价格：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<input type="text" name="bprice" id="bprice"style="width: 200px" onblur="checkBprice();" >
+							<input type="text" name="bprice" id="bprice"style="width: 200px" onblur="checkBprice();" value="${bookDetail.bprice}">
 							<span id="bpriceMsg" style="width: 200px;margin-left:10px;"></span>
 							<p >图书价格为整数或至多带两位小数</p>
 						</div>
@@ -484,7 +512,7 @@
 							<div class="fr"></i>图书数量：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<input type="text" name="bnum" id="bnum"style="width: 200px" onblur="checkBnum();" >
+							<input type="text" name="bnum" id="bnum"style="width: 200px" onblur="checkBnum();" value="${bookDetail.bnum}">
 							<span id="bnumMsg" style="width: 200px;margin-left:10px;"></span>
 							<p >图书数量为整数且在1-100000000之间(输入为空时默认为1)</p>
 						</div>
@@ -495,6 +523,7 @@
 						</div>
 						<div class="product-edit-item-r fl">
 							<textarea name="bcontent"  cols="30" rows="10" >
+							${bookDetail.bcontent}
 							</textarea>
 							<p >请如实描述你所发布书籍的详细情况，以方便其他会员购买！</p>
 						</div>
@@ -505,9 +534,15 @@
 						</div>
 						<div class="product-edit-item-r fl">
 							<div id="preview">
+								<c:if test="${bookDetail != null}" var="flag" scope="session">						
+									<img id="imghead" border=0 src="${bookDetail.bimg }" />
+								</c:if>
+								<c:if test="${not flag}">
 									<img id="imghead" border=0 src="${path }/images/book.jpg" /> 	
+								</c:if>
 							</div>
 							<input type="text" id ="img_path" name="img_path" style="dispaly:none;" />
+							<input type="text" id ="bid" name="bid" style="dispaly:none;" />
 							<input type="file" name="bimg" id ="bimg"onchange="previewImage(this)" />
 							<p >请上传图书封面，尽量保持图片清晰</p>
 						</div>

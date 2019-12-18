@@ -52,7 +52,7 @@ public class PayTypeDao {
 		}
 	// Ìí¼Ó
 	public int insert(PayType payType) throws SQLException  {
-		String sql = "insert into paytype(eopaytypeid,eopayname,eostatetemp,eopaystate) " + " values(null,?,?,null);";
+		String sql = "insert into paytype(eopaytypeid,eopayname,eostatetemp,eopaystate) " + " values(null,?,?,default);";
 		return DbHelper.update(sql, payType.getEopayname(),payType.getEopaytemp());
 	}
 	// É¾³ý

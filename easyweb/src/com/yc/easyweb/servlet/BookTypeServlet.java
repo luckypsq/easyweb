@@ -1,186 +1,579 @@
 package com.yc.easyweb.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.yc.easyweb.bean.*;
 import com.yc.easyweb.biz.BizException;
+import com.yc.easyweb.biz.BookBiz;
 import com.yc.easyweb.biz.BookTypeBiz;
 
 public class BookTypeServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private BookTypeBiz bookTypeBiz = new BookTypeBiz();
-
-	// 查询
-	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
-		HttpSession session = request.getSession();
-		PrintWriter out = response.getWriter();
-		BookType bookType = new BookType();
-		BookTypeBiz btBiz = new BookTypeBiz();
-		List<BookType> btList = btBiz.selectAll(bookType);
-		HashSet<String> btType = new HashSet<String>();
-		for(BookType bt : btList){
-			if(bt.getBtnamethird() != null && !bt.getBtnamethird() .isEmpty()){
-				btType.add(bt.getBtid()+"-"+bt.getBtname()+"-"+bt.getBtnamesecond()+"-"+bt.getBtnamethird()+"-"+bt.getBtstate());
-			}else if(bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()){
-				btType.add(bt.getBtid()+"-"+bt.getBtname()+"-"+bt.getBtnamesecond()+"-"+bt.getBtstate());
-			}else{
-				btType.add(bt.getBtid()+"-"+bt.getBtname()+"-"+bt.getBtstate());
-			}
-		}
-		session.setAttribute("bookTypeShow", btType);
-		if(btType.size() ==0 ){
-			out.print(0);
-		}
-	}
+	private BookBiz bookBiz = new BookBiz();
+	private Gson gson = new Gson();
+	private Result result;
 
 	// 添加
-	public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
+	public void add(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		BookType bookType = new BookType();
-		PrintWriter out = response.getWriter();
-		String realType = null;
-		if (request.getParameter("namefrist") != null && !request.getParameter("namefrist").isEmpty()) {
-			bookType.setBtname(request.getParameter("namefrist"));
-			realType = request.getParameter("namefrist");
-		}
-		if (request.getParameter("namesecond") != null && !request.getParameter("namesecond").isEmpty()) {
-			bookType.setBtnamesecond(request.getParameter("namesecond"));
-			realType = request.getParameter("namesecond");
-		}
-		if (request.getParameter("namethird") != null && !request.getParameter("namethird").isEmpty()) {
-			bookType.setBtnamethird(request.getParameter("namethird"));
-			realType = request.getParameter("namethird");
-		}
-		// 查询数据库的类型
-		BookType bookType1 = new BookType();
-		bookType1.setBtstate(1);
-		List<BookType> btList = bookTypeBiz.selectAll(bookType1);
-		HashSet<String> btType = new HashSet<String>();
-		for (BookType bt : btList) {
-			if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
-				btType.add(bt.getBtnamethird());
-			} else if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
-				btType.add(bt.getBtnamesecond());
-			} else {
-				btType.add(bt.getBtname());
-			}
-		}
-		int lengthOld = btType.size();
-		btType.add(realType);
+		String nameSecond = (String) session.getAttribute("namesecond");
+		String nameThird = (String) session.getAttribute("namethird");
+		String realType = "";
 		try {
-			if (lengthOld != btType.size()) {
-				int code = bookTypeBiz.insert(bookType);
-				if (code > 0) {
-					out.print("添加成功！！！");
-				} else {
-					out.print("添加失败！！！");
-				}
+			// 1.判断输入合法
+			if (nameSecond != null && !nameSecond.isEmpty()) {
+				bookType.setBtnamesecond(nameSecond);
+				realType = nameSecond;
+			} else if (request.getParameter("namesecond") != null && !request.getParameter("namesecond").isEmpty()) {
+				bookType.setBtnamesecond(request.getParameter("namesecond"));
+				realType = request.getParameter("namesecond");
 			} else {
-				out.print("已存在该类型！！！");
+				result = Result.failure("未填写数据或数据不合法！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
 			}
+			if (nameThird != null && !nameThird.isEmpty()) {
+				bookType.setBtnamethird(nameThird);
+				realType = nameThird;
+			}
+			// 2.查重
+			// a.查询数据库的类型(adminBtypesEdit中包含所有的书籍类型的数据)
+			String[] btypes = (String[]) session.getAttribute("adminBtypesEdit");
+			// b.比较
+			for (String string : btypes) {
+				if (string != null && !string.isEmpty()) {
+					if (string.equals(realType)) {
+						result = Result.failure("已存在该类型！！！");
+						String json = gson.toJson(result);
+						response.setContentType("application/json;charset=UTF-8");
+						response.getWriter().append(json);
+						return;
+					}
+				}
+			}
+			// 3.添加
+			bookType.setBtname("教材区");
+			int code = bookTypeBiz.insert(bookType);
+			if (code > 0) {
+				result = Result.success("添加成功！！！");
+				// 会话还原
+				String st = null;
+				session.setAttribute("namesecond", st);
+				session.setAttribute("namethird", st);
+				// 将数据重新查询和赋值
+				BookType bType = new BookType();
+				bType.setBtname("教材区");
+				List<BookType> btypes1 = bookTypeBiz.selectAll(bType);
+				for (int i = 0; i < btypes1.size(); i++) {
+					if (btypes1.get(i).getBtnamesecond() != null && !btypes1.get(i).getBtnamesecond().isEmpty()) {
+						continue;
+					}
+					btypes1.remove(i);
+					// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
+					i--;
+				}
+				String[] btShow = new String[1000];
+				String bType1 = "";
+				for (BookType bt : btypes1) {
+					if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
+						bType1 = bType1 + bt.getBtid() + "-" + bt.getBtname() + "-" + bt.getBtnamesecond();
+					}
+					if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
+						bType1 = bType1 + "-" + bt.getBtnamethird();
+					}
+					bType1 = bType1 + "-" + bt.getBtstate();
+					btShow[(int) bt.getBtid()] = bType1;
+					bType1 = "";
+				}
+				session.setAttribute("adminRealBtypes", btShow);
+				session.setAttribute("adminShowBtypes", btypes1);
+				// 管理员初始化书籍类型
+				BookType bookType1 = new BookType();
+				List<BookType> bookTypes = bookTypeBiz.selectAll(bookType1);
+				session.setAttribute("adminBtypes", bookTypes);
+				String[] type = new String[1000];
+				String btname;
+				for (BookType bt : bookTypes) {
+					if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
+						btname = bt.getBtnamethird();
+					} else if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
+						btname = bt.getBtnamesecond();
+					} else {
+						btname = bt.getBtname();
+					}
+					type[(int) bt.getBtid()] = btname;
+				}
+				session.setAttribute("adminBtypesEdit", type);
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			result = Result.failure("添加失败！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
 		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
+			String json = gson.toJson(result);
+
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
 			e.printStackTrace();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
+			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
+			String json = gson.toJson(result);
+
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
 			e.printStackTrace();
 		}
 	}
 
 	// 删除
-	public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		BookType bookTypeOld = new BookType();
-		PrintWriter out = response.getWriter();
-		if (request.getParameter("btid") != null && !request.getParameter("btid").isEmpty()) {
-			bookTypeOld.setBtid(Long.parseLong(request.getParameter("btid")));
-		} else {
-			out.print("请选择删除的类型名！！！");
-			return;
-		}
+		HttpSession session = request.getSession();
+		String btid = request.getParameter("btid");
 		try {
-			int code = bookTypeBiz.delete(bookTypeOld);
-			if (code > 0) {
-				out.print("删除成功！！！");
+			if (btid != null && !btid.isEmpty()) {
+				bookTypeOld.setBtid(Long.parseLong(btid));
 			} else {
-				out.print("删除失败！！！");
+				result = Result.failure("请选择删除的类型！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
 			}
+			Book bookNew = new Book();
+			bookNew.setBtid(1);
+			Book bookOld = new Book();
+			bookOld.setBtid(Long.parseLong(btid));
+			//1.判断该类型是否有书籍
+			List<Book> list = bookBiz.selectAll(bookOld);
+			if(list.size() > 0){
+				// 2.将上架的该类型书籍归于教材区
+				int j = bookBiz.update(bookNew, bookOld);
+				// a.失败则不能删除
+				if (j <= 0) {
+					result = Result.failure("删除失败！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return;
+				}
+			}
+			//3.进行删除操作
+			// b.成功
+			int code = bookTypeBiz.delete(bookTypeOld);
+			if (code <= 0) {
+				result = Result.failure("删除失败！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			result = Result.success("删除成功！！！");
+			// 数据刷新
+			BookType bType = new BookType();
+			bType.setBtname("教材区");
+			List<BookType> btypes1 = bookTypeBiz.selectAll(bType);
+			for (int i = 0; i < btypes1.size(); i++) {
+				if (btypes1.get(i).getBtnamesecond() != null && !btypes1.get(i).getBtnamesecond().isEmpty()) {
+					continue;
+				}
+				btypes1.remove(i);
+				// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
+				i--;
+			}
+			String[] btShow = new String[1000];
+			String bType1 = "";
+			for (BookType bt : btypes1) {
+				if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
+					bType1 = bType1 + bt.getBtid() + "-" + bt.getBtname() + "-" + bt.getBtnamesecond();
+				}
+				if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
+					bType1 = bType1 + "-" + bt.getBtnamethird();
+				}
+				bType1 = bType1 + "-" + bt.getBtstate();
+				btShow[(int) bt.getBtid()] = bType1;
+				bType1 = "";
+			}
+			session.setAttribute("adminRealBtypes", btShow);
+			session.setAttribute("adminShowBtypes", btypes1);
+			// 管理员初始化书籍类型
+			BookType bookType1 = new BookType();
+			List<BookType> bookTypes = bookTypeBiz.selectAll(bookType1);
+			session.setAttribute("adminBtypes", bookTypes);
+			String[] type = new String[1000];
+			String btname;
+			for (BookType bt : bookTypes) {
+				if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
+					btname = bt.getBtnamethird();
+				} else if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
+					btname = bt.getBtnamesecond();
+				} else {
+					btname = bt.getBtname();
+				}
+				type[(int) bt.getBtid()] = btname;
+			}
+			session.setAttribute("adminBtypesEdit", type);
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
 		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
+			String json = gson.toJson(result);
+
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
 			e.printStackTrace();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
+			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
+			String json = gson.toJson(result);
+
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
 			e.printStackTrace();
 		}
 	}
 
 	// 更新
-	public void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
+	public void update(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		BookType bookType = new BookType();
 		BookType bookTypeOld = new BookType();
-		PrintWriter out = response.getWriter();
-		String realType = null;
-		if (request.getParameter("btid") != null && !request.getParameter("btid").isEmpty()) {
-			bookTypeOld.setBtid(Long.parseLong(request.getParameter("btid")));
-		} else {
-			out.print("请选择修改的类型名！！！");
-			return;
-		}
-		if (request.getParameter("namefrist") != null && !request.getParameter("namefrist").isEmpty()) {
-			bookType.setBtname(request.getParameter("namefrist"));
-			realType = request.getParameter("namefrist");
-		}
-		if (request.getParameter("state") != null && !request.getParameter("state").isEmpty()) {
-			bookType.setBtstate(Integer.parseInt(request.getParameter("state")));;
-		}
-		if (request.getParameter("namesecond") != null && !request.getParameter("namesecond").isEmpty()) {
-			bookType.setBtnamesecond(request.getParameter("namesecond"));
-			realType = request.getParameter("namesecond");
-		}
-		if (request.getParameter("namethird") != null && !request.getParameter("namethird").isEmpty()) {
-			bookType.setBtnamethird(request.getParameter("namethird"));
-			realType = request.getParameter("namethird");
-		}
-		// 查询数据库的类型
-		BookType bookType1 = new BookType();
-		bookType1.setBtstate(1);
-		List<BookType> btList = bookTypeBiz.selectAll(bookType1);
-		HashSet<String> btType = new HashSet<String>();
-		for (BookType bt : btList) {
-			if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
-				btType.add(bt.getBtnamethird());
-			} else if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
-				btType.add(bt.getBtnamesecond());
-			} else {
-				btType.add(bt.getBtname());
-			}
-		}
-		int lengthOld = btType.size();
-		btType.add(realType);
+		String btid = request.getParameter("btid");
+		String state = request.getParameter("state");
+		String nameSecond = (String) session.getAttribute("namesecond");
+		String nameThird = (String) session.getAttribute("namethird");
+		String realType = "";
+
 		try {
-			if (lengthOld != btType.size()) {
-				int code = bookTypeBiz.update(bookType, bookTypeOld);
-				if (code > 0) {
-					out.print("更新成功！！！");
-				} else {
-					out.print("更新失败！！！");
-				}
+			// 1.判断输入合法
+			if (state != null && !state.isEmpty()) {
+				bookType.setBtstate(Integer.parseInt(state));
+			} else if (nameSecond != null && !nameSecond.isEmpty()) {
+				bookType.setBtnamesecond(nameSecond);
+				realType = nameSecond;
+			} else if (request.getParameter("namesecond") != null && !request.getParameter("namesecond").isEmpty()) {
+				bookType.setBtnamesecond(request.getParameter("namesecond"));
+				realType = request.getParameter("namesecond");
 			} else {
-				bookType.setBtstate(1);
+				result = Result.failure("未填写修改的数据或修改的数据不合法！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			if (nameThird != null && !nameThird.isEmpty()) {
+				bookType.setBtnamethird(nameThird);
+				realType = nameThird;
+			}
+			// id
+			if (btid != null && !btid.isEmpty()) {
+				bookTypeOld.setBtid(Long.parseLong(btid));
+			} else {
+				result = Result.failure("未选择书籍类型！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+
+			// 更新状态
+			if (state != null && !state.isEmpty()) {
 				int code = bookTypeBiz.update(bookType, bookTypeOld);
 				if (code > 0) {
-					out.print("更新成功！！！");
-				} else {
-					out.print("更新失败！！！");
+					result = Result.success("操作成功！！！");
+					// 将数据重新查询和赋值
+					BookType bType = new BookType();
+					bType.setBtname("教材区");
+					List<BookType> btypes = bookTypeBiz.selectAll(bType);
+					for (int i = 0; i < btypes.size(); i++) {
+						if (btypes.get(i).getBtnamesecond() != null && !btypes.get(i).getBtnamesecond().isEmpty()) {
+							continue;
+						}
+						btypes.remove(i);
+						// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
+						i--;
+					}
+					String[] btShow = new String[1000];
+					String bType1 = "";
+					for (BookType bt : btypes) {
+						if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
+							bType1 = bType1 + bt.getBtid() + "-" + bt.getBtname() + "-" + bt.getBtnamesecond();
+						}
+						if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
+							bType1 = bType1 + "-" + bt.getBtnamethird();
+						}
+						bType1 = bType1 + "-" + bt.getBtstate();
+						btShow[(int) bt.getBtid()] = bType1;
+						bType1 = "";
+					}
+					session.setAttribute("adminRealBtypes", btShow);
+					session.setAttribute("adminShowBtypes", btypes);
+					// 管理员初始化书籍类型
+					BookType bookType1 = new BookType();
+					List<BookType> bookTypes = bookTypeBiz.selectAll(bookType1);
+					session.setAttribute("adminBtypes", bookTypes);
+					String[] type = new String[1000];
+					String btname;
+					for (BookType bt : bookTypes) {
+						if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
+							btname = bt.getBtnamethird();
+						} else if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
+							btname = bt.getBtnamesecond();
+						} else {
+							btname = bt.getBtname();
+						}
+						type[(int) bt.getBtid()] = btname;
+					}
+					session.setAttribute("adminBtypesEdit", type);
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return;
+				}
+				result = Result.failure("操作失败！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			// 更新类型名称
+			// 2.查重
+			// a.查询数据库的类型(adminBtypesEdit中包含所有的书籍类型的数据)
+			String[] btypes = (String[]) session.getAttribute("adminBtypesEdit");
+			// b.比较
+			for (String string : btypes) {
+				if (string != null && !string.isEmpty()) {
+					if (string.equals(realType)) {
+						result = Result.failure("已存在该类型！！！");
+						String json = gson.toJson(result);
+						response.setContentType("application/json;charset=UTF-8");
+						response.getWriter().append(json);
+						return;
+					}
 				}
 			}
+			// 3.更新
+			int code = bookTypeBiz.update(bookType, bookTypeOld);
+			if (code > 0) {
+				result = Result.success("更新成功！！！");
+				// 会话还原
+				String st = null;
+				session.setAttribute("namesecond", st);
+				session.setAttribute("namethird", st);
+				// 将数据重新查询和赋值
+				BookType bType = new BookType();
+				bType.setBtname("教材区");
+				List<BookType> btypes1 = bookTypeBiz.selectAll(bType);
+				for (int i = 0; i < btypes1.size(); i++) {
+					if (btypes1.get(i).getBtnamesecond() != null && !btypes1.get(i).getBtnamesecond().isEmpty()) {
+						continue;
+					}
+					btypes1.remove(i);
+					// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
+					i--;
+				}
+				String[] btShow = new String[1000];
+				String bType1 = "";
+				for (BookType bt : btypes1) {
+					if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
+						bType1 = bType1 + bt.getBtid() + "-" + bt.getBtname() + "-" + bt.getBtnamesecond();
+					}
+					if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
+						bType1 = bType1 + "-" + bt.getBtnamethird();
+					}
+					bType1 = bType1 + "-" + bt.getBtstate();
+					btShow[(int) bt.getBtid()] = bType1;
+					bType1 = "";
+				}
+				session.setAttribute("adminRealBtypes", btShow);
+				session.setAttribute("adminShowBtypes", btypes1);
+				// 管理员初始化书籍类型
+				BookType bookType1 = new BookType();
+				List<BookType> bookTypes = bookTypeBiz.selectAll(bookType1);
+				session.setAttribute("adminBtypes", bookTypes);
+				String[] type = new String[1000];
+				String btname;
+				for (BookType bt : bookTypes) {
+					if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
+						btname = bt.getBtnamethird();
+					} else if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
+						btname = bt.getBtnamesecond();
+					} else {
+						btname = bt.getBtname();
+					}
+					type[(int) bt.getBtid()] = btname;
+				}
+				session.setAttribute("adminBtypesEdit", type);
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			result = Result.failure("更新失败！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
 		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
+			String json = gson.toJson(result);
+
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
 			e.printStackTrace();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
+			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
+			String json = gson.toJson(result);
+
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
 			e.printStackTrace();
 		}
 	}
+
+	// 检验类型名二
+	public void checkNamesecond(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String name = request.getParameter("namesecond");
+		String reg = "^[\u4e00-\u9fa5]{2,20}$";
+		try {
+			if (name != null && !name.isEmpty()) {
+				if (!name.matches(reg)) {
+					result = Result.failure("类型二输入不合法！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return;
+				}
+				result = Result.success("输入合法！！！");
+				session.setAttribute("namesecond", name);
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			result = Result.failure("类型二输入为空！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
+			e.printStackTrace();
+		}
+	}
+
+	// 检验类型名三
+	public void checkNamethird(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String name = request.getParameter("namethird");
+		String reg = "^[\u4e00-\u9fa5]{2,20}$";
+		try {
+			if (name != null && !name.isEmpty()) {
+				if (!name.matches(reg)) {
+					result = Result.failure("类型三输入不合法！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return;
+				}
+				result = Result.success("输入合法！！！");
+				session.setAttribute("namethird", name);
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e);
+			}
+			e.printStackTrace();
+		}
+	}
+
 }

@@ -1,8 +1,3 @@
-<%@page import="com.yc.easyweb.common.DbHelper"%>
-<%@page import="com.yc.easyweb.biz.*"%>
-<%@page import="com.yc.easyweb.bean.*"%>
-<%@page import="com.yc.easyweb.bean.*"%>
-<%@page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -30,33 +25,10 @@
 <link
 	href="${path}/back/Widget/icheck/icheck.css"
 	rel="stylesheet" type="text/css" />
-<script
-	src="${path}/back/js/jquery-1.9.1.min.js"></script>
-<script
-	src="${path}/back/assets/js/bootstrap.min.js"></script>
-<script
-	src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
-<script
-	src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
-<script
-	src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
-<script type="text/javascript"
-	src="${path}/back/js/H-ui.js"></script>
-<script type="text/javascript"
-	src="${path}/back/js/H-ui.admin.js"></script>
-<script
-	src="${path}/back/assets/layer/layer.js"
-	type="text/javascript"></script>
-<script
-	src="${path}/back/assets/laydate/laydate.js"
-	type="text/javascript"></script>
-<script type="text/javascript"
-	src="${path}/back/Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script>
-<script src="${path}/back/js/lrtk.js"
-	type="text/javascript"></script>
+
 <title>书籍列表</title>
 </head>
-<body onload="show()">
+<body >
 	<div class=" page-content clearfix">
 		<div id="products_style">
 			<div class="search_style">
@@ -77,7 +49,7 @@
 					title="添加书籍" class="btn btn-warning Order_form"><i
 						class="icon-plus"></i>添加书籍</a> <a onclick="selectDelete();"
 					class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>
-				</span> <span class="r_f">共：<b>${bookList.size() }</b>本书
+				</span> <span class="r_f">共：<b>${bookAll.size() }</b>本书
 				</span>
 			</div>
 			<!--书籍列表展示-->
@@ -103,75 +75,36 @@
 					</div>
 				</div>
 				<div class="table_menu_list" id="testIframe">
-					<table class="table table-striped table-bordered table-hover"
-						id="sample-table">
-						<thead>
-							<tr>
-								<th width="25px"><label><input type="checkbox"
-										class="ace"><span class="lbl"></span></label></th>
-								<th width="80px">书籍编号</th>
-								<th width="250px">书名</th>
-								<th width="100px">价格</th>
-								<th width="100px">所属类别</th>
-								<th width="100px">所属系列</th>
-								<th width="100px">作者</th>
-								<th width="180px">库存</th>
-								<th width="80px">审核状态</th>
-								<th width="70px">状态</th>
-								<th width="200px">操作</th>
-							</tr>
-						</thead>
-						<tbody >
-							<c:forEach items="${bookList}" var="b">
-								<tr>
-									<td width="25px"><label><input type="checkbox"
-											class="ace"><span class="lbl"></span></label></td>
-									<td width="80px">${b.bid }</td>
-									<td width="250px"><u style="cursor: pointer"
-										class="text-primary" onclick="window.location.href='${path}/detail.jsp?bid=${b.bid }';">${b.bname }</u></td>
-									<td width="100px">${b.bprice }</td>
-									<td width="100px">${bookType.get(b.btid) }</td>
-									<td width="100px">${b.btemp}</td>
-									<td width="100px">${b.bauthor }</td>
-									<td width="180px">${b.bnum}</td>
-									<td class="text-l">${bookState[b.bstate] }</td>
-									<td class="td-status">
-										<c:if test="${b.bstate == 1}" var="flag" scope="session">
-											<span class="label label-success radius">${bookState[b.bstate] }</span>
-										</c:if>
-										<c:if test="${not flag}">
-											<span class="label label-defaunt radius">${bookState[b.bstate] }</span>
-										</c:if>
-									</td>
-									<td class="td-manage">
-										<c:if test="${b.bstate == 1}" var="flag" scope="session">
-											<a onClick="member_stop(this,${b.bid })" 
-											title="下架" class="btn btn-xs btn-success">
-											<i class="icon-ok bigger-120"></i></a> 
-										</c:if>
-										<c:if test="${not flag}">
-											<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,${b.bid })" href="javascript:;" title="上架">
-											<i class="icon-ok bigger-120"></i></a>
-										</c:if>
-										<a title="编辑"
-										onclick="member_edit('编辑','${path}/back/book/bookEdit.jsp?bid=${b.bid }','','300')"
-										 class="btn btn-xs btn-info"><i
-											class="icon-edit bigger-120"></i></a> <a title="删除"
-										href="javascript:;" onclick="member_del(this,${b.bid })"
-										class="btn btn-xs btn-warning"><i
-											class="icon-trash  bigger-120"></i></a></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+					<jsp:include page="book_list_show.jsp"></jsp:include>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
-</html>
-
-
+<script
+	src="${path}/back/js/jquery-1.9.1.min.js"></script>
+<script
+	src="${path}/back/assets/js/bootstrap.min.js"></script>
+<script
+	src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
+<script
+	src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
+<script
+	src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+<script type="text/javascript"
+	src="${path}/back/js/H-ui.js"></script>
+<script type="text/javascript"
+	src="${path}/back/js/H-ui.admin.js"></script>
+<script
+	src="${path}/back/assets/layer/layer.js"
+	type="text/javascript"></script>
+<script
+	src="${path}/back/assets/laydate/laydate.js"
+	type="text/javascript"></script>
+<script type="text/javascript"
+	src="${path}/back/Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<script src="${path}/back/js/lrtk.js"
+	type="text/javascript"></script>
 <script type="text/javascript">
 //全选
 var sbox = -1;
@@ -243,63 +176,48 @@ var sbox = -1;
 			spacingh : 260,//设置显示时间距
 		});
 	});
-	var xmlhttp;
-	// ajax 
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (e) {
-			try {
-				xmlhttp = new XMLHttpRequest();
-			} catch (e) {
-			}
-		}
-	}
-	
-
+//查询
 function show(){
 	var bauthor = document.getElementById("queryName").value;
 	var btime = document.getElementById("start").value;
-	if(xmlhttp!=null){
-		// 定义请求地址
-		var url;
-		if(btime == "" && bauthor == ""){
-			url ="${path}/book.s?op=query";
-		}else if(btime == ""){
-			url ="${path}/book.s?op=query&bauthor="+bauthor;
-		}else if(bauthor == ""){
-			url ="${path}/book.s?op=query&btime="+btime;
-		}else{
-			url ="${path}/book.s?op=query&btime="+btime+"&bauthor="+bauthor;
-		}
-		// 以 POST 方式 开启连接
-		// POST 请求 更安全（编码）  提交的数据大小没有限制
-		xmlhttp.open("POST",url,true);
-		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-		// 每次的状态改变都会调用该方法
-		xmlhttp.onreadystatechange=function(){
-			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-				// 替换空格
-				var msg = xmlhttp.responseText.replace(/\s/gi,"");
-				if(msg == '0'){
-					layer.msg('暂无数据', {
+	var param = "bauthor=" + bauthor + "&btime=" +btime;
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=query",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$('#testIframe').load('${path}/back/book/book_list_show.jsp');
+					layer.msg(result.msg, {
+						icon : 6,
+						time : 1000,
+						title: "提示"
+					});
+	        		return ;
+	        	}
+	        	if(result.code == 0){
+	        		layer.msg(result.msg, {
 						icon : 5,
-						time : 1000
-						});
-				}
+						time : 1000,
+						title: "提示"
+					});
+	        		return ;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+					});
+	        		return ;
+	        	}
 			}
-		};
-		// 发送请求
-		xmlhttp.send(null);
-	}else{
-		layer.msg('不能创建XMLHttpRequest对象实例', {
-			icon : 2,
-			time : 1000
-			});
-	} 
+	});
 }
+//删除
 function selectDelete(){
 	layer.confirm('确认要删除吗？', function(index) {
 	if(sbox != "/"){
@@ -314,55 +232,55 @@ function selectDelete(){
 	}else{
 		layer.msg("不能进行此操作！！！", {
 			icon : 2,
-			time : 1000
+			time : 1000,
+			title: "警告"
 			});
 		return;
 	}
 	if(sbox == -1){
-		layer.msg("请选择要删除的书籍！！！", {
+		layer.msg("请选择您要删除的书籍！！！", {
 			icon : 7,
-			time : 1000
-			});
+			time : 1000,
+			title: "提示"
+		});
 		return;
 	}
-	if (xmlhttp != null) {
-		// 定义请求地址
-		var url = "${path}/book.s?op=delete&bid="+sbox;
-		// 以 POST 方式 开启连接
-		// POST 请求 更安全（编码）  提交的数据大小没有限制
-		xmlhttp.open("POST", url, true);
-		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-		// 每次的状态改变都会调用该方法
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				var msg = xmlhttp.responseText.replace(/\s/gi, "");
-				if(msg == "删除成功！"){
-					layer.msg(msg, {
+	var param = "bid="+sbox;
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=delete",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$('#testIframe').load('${path}/back/book/book_list_show.jsp');
+					layer.msg(result.msg, {
 						icon : 6,
-						time : 1000
-						});
-					window.location.href='${path}/back/book/Products_List.jsp';
-				}else if(msg == 0){
-					layer.msg("不能进行此操作！！！", {
-						icon : 2,
-						time : 1000
-						});
-				}else{
-					layer.msg(msg, {
+						time : 1000,
+						title: "提示"
+					});
+	        		return ;
+	        	}
+	        	if(result.code == 0){
+	        		layer.msg(result.msg, {
 						icon : 5,
-						time : 1000
+						time : 1000,
+						title: "提示"
+					});
+	        		return ;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
 						});
-				}
+	        		return ;
+	        	}
 			}
-		};
-		// 发送请求
-		xmlhttp.send(null);
-	} else {
-		layer.msg("不能创建XMLHttpRequest对象实例", {
-			icon : 2,
-			time : 1000
-			});
-	}
+		});
 	});
 }
 </script>
@@ -501,43 +419,44 @@ function selectDelete(){
 		name : "分享区",
 		btid : 3
 	} ];
-	
-	var xmlhttp;
-	// ajax
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (e) {
-			try {
-				xmlhttp = new XMLHttpRequest();
-			} catch (e) {
-			}
-		}
-	}
+//点击类型
 function typeClick(id){
-	if(xmlhttp!=null){
-		// 定义请求地址
-		var url ="${path}/book.s?op=query&btid="+id;
-		// 以 POST 方式 开启连接
-		// POST 请求 更安全（编码）  提交的数据大小没有限制
-		xmlhttp.open("POST",url,true);
-		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-		// 每次的状态改变都会调用该方法
-		xmlhttp.onreadystatechange=function(){
-			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-				
+	var param ="btid="+id;
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=query",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$('#testIframe').load('${path}/back/book/book_list_show.jsp');
+					layer.msg(result.msg, {
+						icon : 6,
+						time : 1000,
+						title: "提示"
+					});
+	        		return ;
+	        	}
+	        	if(result.code == 0){
+	        		layer.msg(result.msg, {
+						icon : 5,
+						time : 1000,
+						title: "提示"
+					});
+	        		return ;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+						});
+	        		return ;
+	        	}
 			}
-		};
-		// 发送请求
-		xmlhttp.send(null);
-	}else{
-		layer.msg('不能创建XMLHttpRequest对象实例', {
-			icon : 2,
-			time : 1000
-			});
-	} 
+		});
 }
 var code;
 	function showCode(str) {
@@ -557,161 +476,169 @@ var code;
 	
 	/*产品-下架*/
 	function member_stop(obj, id) {
-		var soldBook = null;
-		layer.confirm(
-			'确认要下架吗？',
-			function(index) {
-				if(xmlhttp!=null){
-					// 定义请求地址
-					var url ="${path}/book.s?op=update&bstate=2&bid="+id;
-					// 以 POST 方式 开启连接
-					// POST 请求 更安全（编码）  提交的数据大小没有限制
-					xmlhttp.open("POST",url,true);
-					// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-					// 每次的状态改变都会调用该方法
-					xmlhttp.onreadystatechange=function(){
-						if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-							// 替换空格
-							var msg = xmlhttp.responseText.replace(/\s/gi,"");
-							if(msg == '0'){
-								layer.msg('修改失败!', {
-									icon : 5,
-									time : 1000
-									});
-							}else if(msg == '-1'){
-								layer.msg('该条数据不能修改!', {
-									icon : 2,
-									time : 1000
-									});
-							}else{
+		layer.confirm('确认要下架吗？',function(index) {
+				var param ="bstate=2&bid="+id;
+				$.ajax({
+			        type: "post",
+			        url: "${path}/book.s?op=update",
+			        data: param,
+			        async:true, // 异步请求
+			        cache:true, // 设置为 false 将不缓存此页面
+			        dataType: 'json', // 返回对象
+			        success: function(result) {
+							if(result.code == 1){
 								$(obj)
 								.parents("tr")
 								.find(".td-manage")
 								.prepend(
-								'<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,${bookShow.bid })" href="javascript:;" title="上架"><i class="icon-ok bigger-120"></i></a>');
+								'<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,'+id+')" href="javascript:;" title="上架"><i class="icon-ok bigger-120"></i></a>');
 								$(obj)
 								.parents("tr")
 								.find(".td-status")
 								.html(
 								'<span class="label label-defaunt radius">已下架</span>');
 								$(obj).remove();
-								layer.msg('已下架!', {
-									icon : 1,
-									time : 1000
+								layer.msg(result.msg, {
+									icon : 6,
+									time : 1000,
+									title: "提示"
 									});
-							}
+				        	}
+				        	if(result.code == 0){
+				        		layer.msg(result.msg, {
+									icon : 5,
+									time : 1000,
+									title: "提示"
+									});
+				        	}
+				        	if(result.code == -1){
+				        		layer.msg(result.msg, {
+									icon : 2,
+									time : 1000,
+									title: "提示"
+									});
+				        	}
 						}
-					};
-					// 发送请求
-					xmlhttp.send(null);
-				}else{
-					layer.msg('不能创建XMLHttpRequest对象实例', {
-						icon : 2,
-						time : 1000
-						});
-				} 
+					});
 			});
 	}
 
 	/*产品-上架*/
 	function member_start(obj, id) {
 		layer.confirm('确认要上架吗？',function(index) {
-			if(xmlhttp!=null){
-				// 定义请求地址
-				var url ="${path}/book.s?op=update&bstate=1&bid="+id;
-				// 以 POST 方式 开启连接
-				// POST 请求 更安全（编码）  提交的数据大小没有限制
-				xmlhttp.open("POST",url,true);
-				// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-				// 每次的状态改变都会调用该方法
-				xmlhttp.onreadystatechange=function(){
-					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-						// 替换空格
-						var msg = xmlhttp.responseText.replace(/\s/gi,"");
-						if(msg == '0'){
-							layer.msg('修改失败!', {
-								icon : 5,
-								time : 1000
-								});
-						} else if(msg == '-1'){
-							layer.msg('该条数据不能修改!', {
-								icon : 2,
-								time : 1000
-								});
-						}else{
-							$(obj)
-							.parents("tr")
-							.find(".td-manage")
-							.prepend(
-									'<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,${bookShow.bid })" javascript:;" title="下架"><i class="icon-ok bigger-120"></i></a>');
-							$(obj)
-									.parents("tr")
-									.find(".td-status")
-									.html(
-											'<span class="label label-success radius">已上架</span>');
+			var param ="bstate=1&bid="+id;
+			$.ajax({
+		        type: "post",
+		        url: "${path}/book.s?op=update",
+		        data: param,
+		        async:true, // 异步请求
+		        cache:true, // 设置为 false 将不缓存此页面
+		        dataType: 'json', // 返回对象
+		        success: function(result) {
+						if(result.code == 1){
+							$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,'+id+')" javascript:;" title="下架"><i class="icon-ok bigger-120"></i></a>');
+							$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已上架</span>');
 							$(obj).remove();
-							layer.msg('已上架!', {
-								icon : 1,
-								time : 1000
+							layer.msg(result.msg, {
+								icon : 6,
+								time : 1000,
+								title: "提示"
 							});
-									
-								}
-								
-							}
-				};
-				// 发送请求
-				xmlhttp.send(null);
-			}else{
-				layer.msg('不能创建XMLHttpRequest对象实例', {
-					icon : 2,
-					time : 1000
-					});
-			} 
-							
+			        		return ;
+			        	}
+			        	if(result.code == 0){
+			        		layer.msg(result.msg, {
+								icon : 5,
+								time : 1000,
+								title: "提示"
+							});
+			        		return ;
+			        	}
+			        	if(result.code == -1){
+			        		layer.msg(result.msg, {
+								icon : 2,
+								time : 1000,
+								title: "提示"
+								});
+			        		return ;
+			        	}
+					}
+				});
 		});
 	}
 	/*产品-编辑*/
-	function member_edit(title, url, w, h) {
-		layer_show(title, url, w, h);
+	function member_edit(title, url, id,w, h) {
+		var param ="bid="+id;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/book.s?op=bookDetail",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						layer_show(title, url, w, h);
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
+							icon : 5,
+							time : 1000,
+							title: "提示"
+						});
+		        		
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        	
+		        	}
+				}
+			});
 	}
 
 	/*产品-删除*/
 	function member_del(obj, id) {
 		layer.confirm('确认要删除吗？', function(index) {
-			if(xmlhttp!=null){
-				// 定义请求地址
-				var url ="${path}/book.s?op=delete&bid="+id;
-				// 以 POST 方式 开启连接
-				// POST 请求 更安全（编码）  提交的数据大小没有限制
-				xmlhttp.open("POST",url,true);
-				// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-				// 每次的状态改变都会调用该方法
-				xmlhttp.onreadystatechange=function(){
-					if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-						// 替换空格
-						var msg = xmlhttp.responseText.replace(/\s/gi,"");
-						if(msg == '0'){
-							layer.msg('删除失败!', {
-								icon : 5,
-								time : 1000
-								});
-						}else{
+			var param ="bid="+id;
+			$.ajax({
+		        type: "post",
+		        url: "${path}/book.s?op=delete",
+		        data: param,
+		        async:true, // 异步请求
+		        cache:true, // 设置为 false 将不缓存此页面
+		        dataType: 'json', // 返回对象
+		        success: function(result) {
+						if(result.code == 1){
 							$(obj).parents("tr").remove();
-							layer.msg('已删除!', {
-								icon : 1,
-								time : 1000
+							layer.msg(result.msg, {
+								icon : 6,
+								time : 1000,
+								title: "提示"
 							});
-						}
+			        		return ;
+			        	}
+			        	if(result.code == 0){
+			        		layer.msg(result.msg, {
+								icon : 5,
+								time : 1000,
+								title: "提示"
+							});
+			        		return ;
+			        	}
+			        	if(result.code == -1){
+			        		layer.msg(result.msg, {
+								icon : 2,
+								time : 1000,
+								title: "提示"
+								});
+			        		return ;
+			        	}
 					}
-				};
-				// 发送请求
-				xmlhttp.send(null);
-			}else{
-				layer.msg('不能创建XMLHttpRequest对象实例', {
-					icon :2,
-					time : 1000
-					});
-			} 
+				});
 		});
 	}
 	//面包屑返回值
@@ -734,6 +661,6 @@ var code;
 			"cursor" : "pointer"
 		});
 		parent.layer.close(index);
-
 	});
 </script>
+</html>

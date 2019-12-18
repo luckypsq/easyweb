@@ -45,7 +45,7 @@ public class BookTypeDao {
 	//Ìí¼Ó
 	public int insert(BookType bookType) throws SQLException {
 		String sql = "insert into booktype(btid,btname,btnamesecond,btnamethird,bttemp,btstate) " 
-					+ " values(null,?,?,?,?,null);";
+					+ " values(null,?,?,?,?,default);";
 		return DbHelper.update(sql, bookType.getBtname(),bookType.getBtnamesecond(),bookType.getBtnamethird(),bookType.getBttemp());
 	}
 	//É¾³ý

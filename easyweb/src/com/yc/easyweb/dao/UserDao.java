@@ -96,7 +96,7 @@ public class UserDao {
 	// Ìí¼Ó
 	public int insert(User user) throws SQLException  {
 		String sql = "insert into user(uid,uname,uminname,uphone,university,ucollege,umajor,uclass,upassword,"
-				+ " utemp,utype,uemail,utime,usex,uage,ustate) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,null);";
+				+ " utemp,utype,uemail,utime,usex,uage,ustate) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default);";
 		return DbHelper.update(sql, user.getUname(), user.getUminname(), user.getUphone(), user.getUniversity(),
 				user.getUcollege(), user.getUmajor(), user.getUclass(), user.getUpassword(), 
 				user.getUtemp(), user.getUtype(), user.getUemail(), user.getUtime(), user.getUsex(), user.getUage());

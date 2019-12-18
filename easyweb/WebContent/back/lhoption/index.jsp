@@ -172,10 +172,8 @@
 			interval: 2750  //** 停顿时间
 		})
 	});
-$("#index-book-show a").on('click',function(){
-	$("#index-book-show a").addClass(""); 
-});
 function show(btid1,btid2,obj){
+	$("#index-book-show a").removeClass("on");
 	$(obj).addClass("on"); 
 	var param = "btid="+btid1 ;
 	if(btid1 != 0){

@@ -140,8 +140,20 @@
 						btn : [ '是', '否' ],//按钮
 						icon : 2,
 					}, function() {
-						location.href = "${path}/join.jsp";
-
+						$.ajax({
+				            type: "post",
+				            url: "${path}/show.s?op=quit",
+				            data: "",
+				            async:true, // 异步请求
+				            cache:true, // 设置为 false 将不缓存此页面
+				            dataType: 'json', // 返回对象
+				            success: function(result) {
+				            	if(result.code == 1){
+				            		location.href="join.jsp";
+				            		return;
+				            	}
+				            }
+						});
 					});
 				});
 			});
@@ -185,7 +197,7 @@
 					<li class="light-blue"><a data-toggle="dropdown" href="#"
 						class="dropdown-toggle">
 						 <span class="time"><em id="time"></em></span>
-							<span class="user-info"><small>欢迎光临,</small>${adminType }</span>
+							<span class="user-info"><small>欢迎光临,</small>${loginedUser.uname }</span>
 							<i class="icon-caret-down"></i>
 					</a>
 						<ul

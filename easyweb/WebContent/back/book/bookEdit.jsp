@@ -33,12 +33,202 @@
 	rel="stylesheet" type="text/css" />
 <link href="${path}/back/css/button.css"
 	rel="stylesheet" type="text/css" />
-<script
-	src="${path}/back/assets/layer/layer.js"
-	type="text/javascript"></script>
-<script
-	src="${path}/back/assets/laydate/laydate.js"
-	type="text/javascript"></script>
+<title>修改书籍信息</title>
+</head>
+<body >
+	<div class="page_right_style">
+		<div class="type_title">修改书籍信息</div>
+		<form class="form form-horizontal"
+			id="form-article-add">
+			<div class="clearfix cl">
+				<label class="form-label col-2"><span class="c-red">*</span>书名：</label>
+				<div class="formControls col-10">
+					<input type="text" class="input-text"
+						placeholder="请输入至少两个字符至多五十个的汉字" id="bname" name="bname" value="${bookDetail.bname}"
+						style="margin-left: 40px;width:600px;">
+						<span id="bnameTishi"></span>
+				</div>
+			</div>
+			<div class=" clearfix cl">
+				
+				<div class="Add_p_s">
+					<label class="form-label col-2">所属大学:</label>
+					<div class="formControls col-2">
+						<span class="select-box"> <select class="select"
+							id="buniversity" name="buniversity">
+								<c:if test="${bookDetail.buniversity != null && !bookDetail.buniversity.isEmpty()}" var="flag" scope="session">
+										<option>${bookDetail.buniversity}</option>
+								</c:if>
+								<c:if test="${not flag}">
+									<option>请选择</option>
+								</c:if>
+								<c:forEach items="${userUni}" var="uni">
+									<option >${uni }</option>
+								</c:forEach>
+						</select>
+						</span>
+					</div>
+				</div>
+				<div class="Add_p_s">
+					<label class="form-label col-2">所属学院:</label>
+					<div class="formControls col-2">
+						<span class="select-box"> <select class="select"
+							id="bucollege" name="bucollege">
+								<c:if test="${bookDetail.bucollege != null && !bookDetail.bucollege.isEmpty() }" var="flag" scope="session">
+									<option>${bookDetail.bucollege}</option>
+								</c:if>
+								<c:if test="${not flag}">
+									<option>请选择</option>
+								</c:if>
+								<c:forEach items="${userUcol}" var="ucl">
+									<option >${ucl }</option>
+								</c:forEach>
+						</select>
+						</span>
+					</div>
+				</div>
+				<div class="Add_p_s">
+					<label class="form-label col-2">所属专业:</label>
+					<div class="formControls col-2">
+						<span class="select-box"> <select class="select"
+							name="bumajor" id="bumajor">
+							<c:if test="${bookDetail.bumajor != null && !bookDetail.bumajor.isEmpty()}" var="flag" scope="session">
+									<option>${bookDetail.bumajor}</option>
+								</c:if>
+								<c:if test="${not flag}">
+									<option>请选择</option>
+								</c:if>
+								<c:forEach items="${userUmar}" var="uma">
+									<option>${uma }</option>
+								</c:forEach>
+						</select>
+						</span>
+					</div>
+				</div>
+				<div class="Add_p_s">
+					<label class="form-label col-2">所属年级:</label>
+					<div class="formControls col-2">
+						<span class="select-box"> <select class="select"
+							id="bclass" name="bclass">
+								<c:if test="${bookDetail.bclass != null && !bookDetail.bclass.isEmpty()}" var="flag" scope="session">
+									<option>${bookDetail.bclass}</option>
+								</c:if>
+								<c:if test="${not flag}">
+									<option>请选择</option>
+								</c:if>
+								<option value="大一">大一</option>
+								<option value="大二">大二</option>
+								<option value="大三">大三</option>
+								<option value="大四">大四</option>
+						</select>
+						</span>
+					</div>
+				</div>
+				<div class="Add_p_s">
+					<label class="form-label col-2">所属类别:</label>
+					<div class="formControls col-2">
+						<span class="select-box"> <select class="select"
+							id="btid" name="btid">
+								<c:if test="${bookDetail.btid != null && !bookDetail.bclass.isEmpty()}" var="flag" scope="session">
+									<option value="${bookDetail.btid }">${btTypeEdit[bookDetail.btid] }</option>
+								</c:if>
+								<c:if test="${not flag}">
+									<option>请选择</option>
+								</c:if>
+								<c:forEach items="${btypes}" var="bty">
+									<option value="${bty.btid}">${btTypeEdit[bty.btid] }</option>
+								</c:forEach>
+						</select>
+						</span>
+					</div>
+				</div>
+				<div class="Add_p_s">
+					<label class="form-label col-2">所属系列:</label>
+					<div class="formControls col-2">
+						<input type="text" class="input-text"
+							placeholder="请输入字符或汉字" id="btemp" name="btemp" value="${bookDetail.btemp }">
+						<span id="btempTishi"></span>
+						</div>
+				</div>
+
+				<div class="Add_p_s">
+					<label class="form-label col-2">作&nbsp;&nbsp;&nbsp;&nbsp;者：</label>
+					<div class="formControls col-2">
+						<input type="text" class="input-text" value="${bookDetail.bauthor }"
+							placeholder="请输入字符或汉字" id="bauthor" name="bauthor">
+						<span id="bauthorTishi"></span>
+					</div>
+				</div>
+				<div class="Add_p_s">
+					<label class="form-label col-2">*价&nbsp;&nbsp;&nbsp;&nbsp;格:</label>
+					<div class="formControls col-2">
+						<input type="text" class="input-text" value="${bookDetail.bprice }" placeholder="请输入数字"
+							id="bprice" name="bprice">元
+							<span id="bpriceTishi"></span>
+					</div>
+				</div>
+				<div class="Add_p_s">
+					<label class="form-label col-2">库&nbsp;&nbsp;&nbsp;&nbsp;存:</label>
+					<div class="formControls col-2">
+						<input type="number" class="input-text"
+							id="bnum" name="bnum" value="${bookDetail.bnum }">本
+							<span id="bnumTishi"></span>
+					</div>
+				</div>
+				<div class="Add_p_s">
+					<label class="form-label col-2">上传时间:</label>
+					<div class="formControls col-2">
+						<input class="inline laydate-icon" id="bdate" name="bdate"
+							type="date" style="width: 150px;" value="${bookDetail.bdate }">
+					</div>
+				</div>
+				<div style="display:none;">
+					<input type="text" id="img_path" name="img_path" >
+				</div>
+				<div style="display:none;">
+					<input type="text" id="bid" name="bid" value="${bookDetail.bid }">
+				</div>
+			</div>
+			<div class="clearfix cl">
+				<label class="form-label col-2">图片上传：</label>
+				<div class="formControls col-10">
+					<div class="uploader-list-container">
+						<div class="queueList">
+							<div id="dndArea" class="placeholder">
+							<c:if test="${bookDetail.bimg == null }" var="flag" scope="session">
+									<img id="imghead" name="imghead"border=0 src="${path }/images/book.jpg" style="width:300px;height:200px;"/>
+								</c:if>
+								<c:if test="${not flag}">
+									<img id="imghead" name="imghead"border=0 src="${bookDetail.bimg }" 
+									style="width:300px;height:200px;"/>
+								</c:if>
+								<div class="new-contentarea tc">
+									<a href="javascript:void(0)" class="upload-img"><label
+										for="upload-file">点击选择图片</label></a> <input type="file" class=""
+										name="upload-file" id="upload-file" onblur="upImg();" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix cl">
+				<label class="form-label col-2">描述：</label>
+				<div class="formControls col-10">
+				<textarea rows="3" cols="30" id="bcontent"name="bcontent">
+				${bookDetail.bcontent}
+				</textarea>
+				</div>
+			</div>
+			<div class="clearfix cl">
+				<div class="Button_operation">
+					<input class="btn btn-primary radius" type="button" onclick="updateBook();"
+						id="btn btn-primary radius" value="保存并提交审核">
+					<button onClick="window.location.href='${path}/back/book/Products_List.jsp';" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+				</div>
+			</div>
+		</form>
+	</div>
 <script
 	src="${path}/back/js/jquery-1.9.1.min.js"></script>
 <script
@@ -69,335 +259,166 @@
 	src="${path}/back/js/H-ui.js"></script>
 <script type="text/javascript"
 	src="${path}/back/js/H-ui.admin.js"></script>
-<title>修改书籍信息</title>
-</head>
-<body onload="show()">
-	<div class="page_right_style">
-		<div class="type_title">修改书籍信息</div>
-		<form action="${path }/book.s?op=updateBook&bid=${showBookEdit.bid}" method="post" class="form form-horizontal"
-			id="form-article-add">
-			<div class="clearfix cl">
-				<label class="form-label col-2"><span class="c-red">*</span>书名：</label>
-				<div class="formControls col-10">
-					<input type="text" class="input-text"
-						placeholder="请输入至少两个字符至多五十个的汉字" id="bname" name="bname" value="${showBookEdit.bname}"
-						style="margin-left: 40px;">
-				</div>
-			</div>
-			<div class=" clearfix cl">
-				
-				<div class="Add_p_s">
-					<label class="form-label col-2">所属大学:</label>
-					<div class="formControls col-2">
-						<span class="select-box"> <select class="select"
-							id="buniversity" name="buniversity">
-								<c:if test="${showBookEdit.buniversity == null}" var="flag" scope="session">
-									<option>请选择</option>
-								</c:if>
-								<c:if test="${not flag}">
-									<option>${showBookEdit.buniversity}</option>
-								</c:if>
-								<c:forEach items="${bookUniverEdit}" var="uni">
-									<option value="${uni }">${uni }</option>
-								</c:forEach>
-						</select>
-						</span>
-					</div>
-				</div>
-				<div class="Add_p_s">
-					<label class="form-label col-2">所属学院:</label>
-					<div class="formControls col-2">
-						<span class="select-box"> <select class="select"
-							id="bcollege" name="bcollege">
-								<c:if test="${showBookEdit.bucollege == null}" var="flag" scope="session">
-									<option>请选择</option>
-								</c:if>
-								<c:if test="${not flag}">
-									<option>${showBookEdit.bucollege}</option>
-								</c:if>
-								<c:forEach items="${bookUcollageEdit}" var="ucl">
-									<option value="${ucl }">${ucl }</option>
-								</c:forEach>
-						</select>
-						</span>
-					</div>
-				</div>
-				<div class="Add_p_s">
-					<label class="form-label col-2">所属专业:</label>
-					<div class="formControls col-2">
-						<span class="select-box"> <select class="select"
-							name="bmajor" id="bmajor">
-							<c:if test="${showBookEdit.bumajor == null}" var="flag" scope="session">
-									<option>请选择</option>
-								</c:if>
-								<c:if test="${not flag}">
-									<option>${showBookEdit.bumajor}</option>
-								</c:if>
-								<c:forEach items="${bookUmagorEdit}" var="uma">
-									<option value="${uma }">${uma }</option>
-								</c:forEach>
-						</select>
-						</span>
-					</div>
-				</div>
-				<div class="Add_p_s">
-					<label class="form-label col-2">所属年级:</label>
-					<div class="formControls col-2">
-						<span class="select-box"> <select class="select"
-							id="bclass" name="bclass">
-								<option value="${showBookEdit.bclass }">${showBookEdit.bclass }</option>
-								<option value="大一">大一</option>
-								<option value="大二">大二</option>
-								<option value="大三">大三</option>
-								<option value="大四">大四</option>
-						</select>
-						</span>
-					</div>
-				</div>
-				<div class="Add_p_s">
-					<label class="form-label col-2">所属类别:</label>
-					<div class="formControls col-2">
-						<span class="select-box"> <select class="select"
-							id="btype" name="btype">
-								<c:if test="${showTypeEdit == ''}" var="flag" scope="session">
-									<option>请选择</option>
-								</c:if>
-								<c:if test="${not flag}">
-									<option>${showTypeEdit}</option>
-								</c:if>
-								<c:forEach items="${btTypeEdit}" var="bty">
-									<option value="${bty}">${bty }</option>
-								</c:forEach>
-						</select>
-						</span>
-					</div>
-				</div>
-				<div class="Add_p_s">
-					<label class="form-label col-2">所属系列:</label>
-					<div class="formControls col-2">
-						<input type="text" class="input-text"
-							placeholder="请输入字符或汉字" id="btemp" name="btemp" value="${showBookEdit.btemp }">
-					</div>
-				</div>
-
-				<div class="Add_p_s">
-					<label class="form-label col-2">作&nbsp;&nbsp;&nbsp;&nbsp;者：</label>
-					<div class="formControls col-2">
-						<input type="text" class="input-text" value="${showBookEdit.bauthor }"
-							placeholder="请输入字符或汉字" id="bauthor" name="bauthor">
-					</div>
-				</div>
-				<div class="Add_p_s">
-					<label class="form-label col-2">*价&nbsp;&nbsp;&nbsp;&nbsp;格:</label>
-					<div class="formControls col-2">
-						<input type="text" class="input-text" value="${showBookEdit.bprice }" placeholder="请输入数字"
-							id="bprice" name="bprice">元
-					</div>
-				</div>
-				<div class="Add_p_s">
-					<label class="form-label col-2">库&nbsp;&nbsp;&nbsp;&nbsp;存:</label>
-					<div class="formControls col-2">
-						<input type="number" class="input-text"
-							id="bnum" name="bnum" value="${showBookEdit.bnum }">本
-					</div>
-				</div>
-				<div class="Add_p_s">
-					<label class="form-label col-2">上传时间:</label>
-					<div class="formControls col-2">
-						<input class="inline laydate-icon" id="bdate" name="bdate"
-							type="date" style="width: 150px;" value="${showBookEdit.bdate }">
-					</div>
-				</div>
-				<div style="display:none;">
-					<input type="text" id="img_path" name="img_path" >
-				</div>
-			</div>
-			<div >
-					<span id="tishi"
-						style="margin-left: 80px; font-size: 18px; width: 300px;"></span>
-				</div>
-			<div class="clearfix cl">
-				<label class="form-label col-2">图片上传：</label>
-				<div class="formControls col-10">
-					<div class="uploader-list-container">
-						<div class="queueList">
-							<div id="dndArea" class="placeholder">
-							<c:if test="${showBookEdit.bimg == null}" var="flag" scope="session">
-									<img id="imghead" name="imghead"border=0 src="${path }/images/book.jpg" style="width:300px;height:200px;"/>
-								</c:if>
-								<c:if test="${not flag}">
-									<img id="imghead" name="imghead"border=0 src="${showBookEdit.bimg }" 
-									style="width:300px;height:200px;"/>
-								</c:if>
-								<div class="new-contentarea tc">
-									<a href="javascript:void(0)" class="upload-img"><label
-										for="upload-file">点击选择图片</label></a> <input type="file" class=""
-										name="upload-file" id="upload-file" onblur="upImg();" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="clearfix cl">
-				<label class="form-label col-2">描述：</label>
-				<div class="formControls col-10">
-				<textarea rows="3" cols="30" id="bcontent"name="bcontent">
-				${showBookEdit.bcontent}
-				</textarea>
-				</div>
-			</div>
-			<div class="clearfix cl">
-				<div class="Button_operation">
-					<input class="btn btn-primary radius" type="submit"
-						id="btn btn-primary radius" value="保存并提交审核">
-					<button onClick="window.location.href='${path}/back/book/Products_List.jsp';" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-				</div>
-			</div>
-		</form>
-	</div>
+	<script
+	src="${path}/back/assets/layer/layer.js"
+	type="text/javascript"></script>
+<script
+	src="${path}/back/assets/laydate/laydate.js"
+	type="text/javascript"></script>
 <script type="text/javascript">
 var booType = 0;//书籍类型
 /********添加书籍的输入框失去焦点正则判断********/
 $("#bname").on('input',function(){
-	var bnameReg = /^[\w\u4e00-\u9fa5]{2,50}$/;
-	var bnameText = $("#bname").val().replace(/\ +/g,"");
-	document.getElementById("tishi").style.color = "red";
-   if((bnameText =='')){
-       document.getElementById("tishi").innerText = "请输入书名！！！";
-       
-   }else if(!bnameReg.test(bnameText)){
-       document.getElementById("tishi").innerText = "请输入合法书名(至少两个字符或50个汉字)！！！";
-       
-   }else {
-	   document.getElementById("tishi").innerText = "";
-   }
+	var bname = $("#bname").val().replace(/\ +/g,"");
+	var param ="bname="+bname;
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=checkBname",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$("#bnameTishi").text(result.msg).css("color", 'green');
+					return;
+	        	}
+	        	if(result.code == 0){
+	        		$("#bnameTishi").text(result.msg).css("color", 'red');
+	        		return;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+						});
+	        		return;
+	        	}
+			}
+		});
 });
 $("#btemp").on('input',function(){
-	var btempReg = /^[\u4e00-\u9fa5]{0,20}$/;
-	var btempText = $("#btemp").val().replace(/\ +/g,"");
-	document.getElementById("tishi").style.color = "red";
-   if(!btempReg.test(btempText)){
-	   document.getElementById("tishi").innerText = "请输入合法系列名(只能输入汉字且最多20个汉字)！！！";
-   }else if(btempText=""){
-	   document.getElementById("tishi").innerText = "";
-   } else {
-	   document.getElementById("tishi").innerText = "";
-   }
+	var btemp = $("#btemp").val().replace(/\ +/g,"");
+	var param ="btemp="+btemp;
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=checkBtemp",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$("#btempTishi").text(result.msg).css("color", 'green');
+					return;
+	        	}
+	        	if(result.code == 0){
+	        		$("#btempTishi").text(result.msg).css("color", 'red');
+	        		return;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+						});
+	        		return;
+	        	}
+			}
+		});
 });
 $("#bauthor").on('input',function(){
-	var bauthorReg = /^[\u4e00-\u9fa5A-Za-z\w]{1,20}$/;
-	var bauthorText = $("#bauthor").val().replace(/\ +/g,"");
-	document.getElementById("tishi").style.color = "red";
-   if(!bauthorReg.test(bauthorText)){
-	   document.getElementById("tishi").innerText = "请输入合法作者名(只能输入汉字或字母且最多20个汉字)！！！";
-   }else if(bauthorText=""){
-	   document.getElementById("tishi").innerText = "";
-   }else {
-	   document.getElementById("tishi").innerText = "";
-   }
+	var bauthor = $("#bauthor").val().replace(/\ +/g,"");
+	var param ="bauthor="+bauthor;
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=checkBauthor",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$("#bauthorTishi").text(result.msg).css("color", 'green');
+					return;
+	        	}
+	        	if(result.code == 0){
+	        		$("#bauthorTishi").text(result.msg).css("color", 'red');
+	        		return;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+						});
+	        		return;
+	        	}
+			}
+		});
 });
 $("#bprice").on('input',function(){
-	var bpriceReg = /^[0-9]+(.[0-9]{0,2})?$/;
-	var bpriceText = $("#bprice").val().replace(/\ +/g,"");
-	
-	document.getElementById("tishi").style.color = "red";
-   if(bpriceText ==''){
-       document.getElementById("tishi").innerText = "请输入价格！！！";
-   }else if(!bpriceReg.test(bpriceText)){
-       document.getElementById("tishi").innerText = "请输入合法价格(小数点后最多有两位，数值最大不超过十位)！！！";
-   }else {
-	   document.getElementById("tishi").innerText = "";
-   }
-});
-$("#bname").on('blur',function(){
-	var bnameReg = /^[\w\u4e00-\u9fa5]{2,50}$/;
-	var bnameText = $("#bname").val().replace(/\ +/g,"");
-	document.getElementById("tishi").style.color = "red";
-   if((bnameText =='')){
-       document.getElementById("tishi").innerText = "请输入书名！！！";
-       
-   }else if(!bnameReg.test(bnameText)){
-       document.getElementById("tishi").innerText = "请输入合法书名(至少两个字符或50个汉字)！！！";
-       
-   }else {
-	   document.getElementById("tishi").innerText = "";
-   }
-});
-$("#btemp").on('blur',function(){
-	var btempReg = /^[\u4e00-\u9fa5]{0,20}$/;
-	var btempText = $("#btemp").val().replace(/\ +/g,"");
-	document.getElementById("tishi").style.color = "red";
-   if(!btempReg.test(btempText)){
-	   document.getElementById("tishi").innerText = "请输入合法系列名(只能输入汉字且最多20个汉字)！！！";
-   }else if(btempText=""){
-	   document.getElementById("tishi").innerText = "";
-   } else {
-	   document.getElementById("tishi").innerText = "";
-   }
-});
-$("#bauthor").on('blur',function(){
-	var bauthorReg = /^[\u4e00-\u9fa5A-Za-z\w]{1,20}$/;
-	var bauthorText = $("#bauthor").val().replace(/\ +/g,"");
-	document.getElementById("tishi").style.color = "red";
-   if(!bauthorReg.test(bauthorText)){
-	   document.getElementById("tishi").innerText = "请输入合法作者名(只能输入汉字或字母且最多20个汉字)！！！";
-   }else if(bauthorText=""){
-	   document.getElementById("tishi").innerText = "";
-   }else {
-	   document.getElementById("tishi").innerText = "";
-   }
-});
-$("#bprice").on('blur',function(){
-	var bpriceReg = /^[0-9]+(.[0-9]{0,2})?$/;
-	var bpriceText = $("#bprice").val().replace(/\ +/g,"");
-	
-	document.getElementById("tishi").style.color = "red";
-   if(bpriceText ==''){
-       document.getElementById("tishi").innerText = "请输入价格！！！";
-   }else if(!bpriceReg.test(bpriceText)){
-       document.getElementById("tishi").innerText = "请输入合法价格(小数点后最多有两位，数值最大不超过十位)！！！";
-   }else {
-	   document.getElementById("tishi").innerText = "";
-   }
-});
-var xmlhttp;
-// ajax
-try {
-	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-} catch (e) {
-	try {
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new XMLHttpRequest();
-		} catch (e) {
-		}
-	}
-}
-function show(){
-	var id='${param.bid}';
-	if(xmlhttp!=null){
-		// 定义请求地址
-		var url ="${path}/book.s?op=editShow&bid="+id;
-		// 以 POST 方式 开启连接
-		// POST 请求 更安全（编码）  提交的数据大小没有限制
-		xmlhttp.open("POST",url,true);
-		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-		// 每次的状态改变都会调用该方法
-		xmlhttp.onreadystatechange=function(){
-			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+	var bprice = $("#bprice").val().replace(/\ +/g,"");
+	var param ="bprice="+bprice;
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=checkBprice",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$("#bpriceTishi").text(result.msg).css("color", 'green');
+					return;
+	        	}
+	        	if(result.code == 0){
+	        		$("#bpriceTishi").text(result.msg).css("color", 'red');
+	        		return;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+						});
+	        		return;
+	        	}
 			}
-		};
-		// 发送请求
-		xmlhttp.send(null);
-	}else{
-		layer.msg('不能创建XMLHttpRequest对象实例', {
-			icon : 2,
-			time : 1000
-			});
-	} 
-}
+		});
+});
+//库存
+$("#bnum").on('input',function(){
+	var bnum = $("#bnum").val().replace(/\ +/g,"");
+	var param ="bnum="+bnum;
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=checkBnum",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$("#bnumTishi").text(result.msg).css("color", 'green');
+					return;
+	        	}
+	        	if(result.code == 0){
+	        		$("#bnumTishi").text(result.msg).css("color", 'red');
+	        		return;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+						});
+	        		return;
+	        	}
+			}
+		});
+});
 
 $(function() { 
 	$("#add_picture").fix({
@@ -422,14 +443,6 @@ $( document).ready(function(){
 	 $(".page_right_style").width($(window).width()-220); 
 	});	
 });
-/* //初始化UEditor
-$(function(){
-	var ue = UE.getEditor('editor');
-	ue.ready(function() {
-	    //设置默认值
-	    ue.setContent('默认值....');
-	});
-}); */
 
 /******书籍数据保存数据库********/
 
@@ -451,6 +464,64 @@ function upImg(){
 			}
         }
     });
+}
+function updateBook(){
+	var param = $('#form-article-add').serialize();
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=updateBook",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$("#bnumTishi").text(""); 
+                	$("#btempTishi").text(""); 
+                	$("#bnameTishi").text(""); 
+                	$("#bauthorTishi").text(""); 
+                	$("#bpriceTishi").text(""); 
+					layer.msg(result.msg, {
+						icon :6,
+						time : 1000,
+						title: "提示"
+					});
+	        		return;
+	        	}
+	        	if(result.code == 0){
+	        	layer.msg(result.msg, {
+						icon : 5,
+						time : 1000,
+						title: "提示"
+					});
+	        		return;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+						});
+	        		return;
+	        	}
+	        	 if(result.code == -2){
+	                	var check = result.data.split("/");
+	                	if(check[1] == "-1"){
+	                		$("#bnameTishi").text("书名未输入或不合法！！！").css("color", 'red'); 
+	                	}
+	                	if(check[2] == "-1"){
+							$("#bpriceTishi").text("价格未输入或不合法！！！").css("color", 'red'); 
+						}
+						if(check[3] == "-1"){
+							$("#bauthorTishi").text("作者未输入或不合法！！！").css("color", 'red'); 
+	                	}
+						if(check[4] == "-1"){
+							$("#bauthorTishi").text("库存未输入或不合法！！！").css("color", 'red'); 
+	                	}
+						return ;
+	                }
+			}
+		});
 }
 </script>
 </body>

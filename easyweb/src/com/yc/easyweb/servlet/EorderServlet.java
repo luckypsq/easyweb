@@ -49,6 +49,7 @@ public class EorderServlet extends BaseServlet {
 						int i = eorderBiz.delete(eorder1);
 						if (i > 0) {
 							result = Result.success("删除成功！！！");
+							//数据刷新
 							Eorder eorder3 = new Eorder();
 							Page<Eorder> page = eorderBiz.eorderPage(1, 5, eorder3);
 							session.setAttribute("userOrderPage", page);
@@ -632,7 +633,20 @@ public class EorderServlet extends BaseServlet {
 				int n = itemBiz.update(eoRealNew, eoReal);
 				if(n > 0){
 					result = Result.success("下单成功！！！");
-					Eorderitem eorderitem = null ;
+				
+					//数据刷新
+					Eorder eorder1 = new Eorder();
+					eorder1.setUid(userOld.getUid());
+					Page<Eorder> Page = eorderBiz.eorderPage(1, 3, eorder1);
+					session.setAttribute("userOrderPage", Page);
+					//会话还原
+					String string = null;
+					session.setAttribute("addOrderCount", string);
+					session.setAttribute("addOrderEoaddr", string);
+					session.setAttribute("addOrderUname", string);
+					session.setAttribute("addOrderUphone", string);
+
+					Eorderitem eorderitem = new Eorderitem() ;
 					session.setAttribute("userOrderAddItem", eorderitem);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");

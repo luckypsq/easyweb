@@ -1,8 +1,7 @@
 package com.yc.easyweb.bean;
 
 
-
-public class Result {
+public class Result{
 	// 返回的消息
 	private String msg;
 	// 返回的结果码 0 失败  1 成功

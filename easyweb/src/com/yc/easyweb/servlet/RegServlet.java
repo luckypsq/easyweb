@@ -34,7 +34,7 @@ public class RegServlet extends BaseServlet {
 	public void checkName(HttpServletRequest request, HttpServletResponse response){
 		 User user = new User();
 		 HttpSession session = request.getSession();
-		String username = request.getParameter("username").trim();
+		String username = request.getParameter("username");
 		try {
 			if(username != null && !username.isEmpty()){
 				user.setUname(username);
@@ -102,7 +102,7 @@ public class RegServlet extends BaseServlet {
 	 */
 	public void checkPhone(HttpServletRequest request, HttpServletResponse response){
 		 HttpSession session = request.getSession();
-		String uphone = request.getParameter("uphone").trim();
+		String uphone = request.getParameter("uphone");
 		String regphone = "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$";
 		 User user = new User();
 		 try {
@@ -160,7 +160,7 @@ public class RegServlet extends BaseServlet {
 	//检查邮箱
 	public void checkEmail(HttpServletRequest request, HttpServletResponse response){
 		
-		String uemail = request.getParameter("uemail").trim();
+		String uemail = request.getParameter("uemail");
 		HttpSession session = request.getSession();
 		User user = new User();
 		String regemail = "^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$";
@@ -224,7 +224,7 @@ public class RegServlet extends BaseServlet {
 	//检查密码
 	public void checkPassword(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
-		String upassword = request.getParameter("upassword").trim();
+		String upassword = request.getParameter("upassword");
 		String regpassword = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$";
 		try {
 			if(upassword != null && !upassword.isEmpty()){
@@ -268,7 +268,7 @@ public class RegServlet extends BaseServlet {
 	//确认密码
 	public void checkPassword01(HttpServletRequest request, HttpServletResponse response){
 		String confirm = request.getParameter("passwordsignup_confirm");
-		String upassword = request.getParameter("upassword").trim();
+		String upassword = request.getParameter("upassword");
 		try {
 			if(upassword == null ||  upassword.isEmpty()){
 				result = Result.failure("请输入密码！！！");
@@ -386,6 +386,12 @@ public class RegServlet extends BaseServlet {
 				return ;
 			}
 			result = Result.success("注册成功！！！");
+			//会话还原
+			String string = null;
+			session.setAttribute("regUname", string);
+			session.setAttribute("regUphone", string);
+			session.setAttribute("regUpwd", string);
+			session.setAttribute("regUemail", string);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);

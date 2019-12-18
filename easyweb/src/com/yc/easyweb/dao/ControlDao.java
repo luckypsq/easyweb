@@ -96,7 +96,7 @@ public class ControlDao {
 	// Ìí¼Ó
 	public int insert(Control control) throws SQLException  {
 		String sql = "insert into control(conid,coname,conamesecond,uid,contemp,conadd,condelete,coninsert,conupdate,concheck,constate) "
-				+ " values(null,?,?,?,?,null,null,null,null,null,null);";
+				+ " values(null,?,?,?,?,default,default,default,default,default,default);";
 		return DbHelper.update(sql, control.getConame(), control.getConamesecond(), control.getUid(),
 				 control.getContemp());
 	}

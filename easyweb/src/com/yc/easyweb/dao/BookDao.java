@@ -154,7 +154,7 @@ public class BookDao {
 	// Ìí¼Ó
 	public int insert(Book book) throws SQLException  {
 		String sql = "insert into book(bid,bname,buniversity,bucollege," + "bumajor,bclass,bcontent,bimg,bprice,btid,"
-				+ "btemp,bnum,bauthor,bdate,uid,null,btemp1) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				+ "btemp,bnum,bauthor,bdate,uid,bstate,btemp1) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default,?);";
 
 		return DbHelper.update(sql, book.getBname(), book.getBuniversity(), book.getBucollege(), book.getBumajor(),
 				book.getBclass(), book.getBcontent(), book.getBimg(), book.getBprice(), book.getBtid(), book.getBtemp(),

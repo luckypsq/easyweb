@@ -28,10 +28,10 @@ public class UserServlet extends BaseServlet {
 			throws ServletException, IOException, InvocationTargetException {
 		User user = new User();
 		HttpSession session = request.getSession();
-		String name = request.getParameter("username").trim();
-		String phone = request.getParameter("uphone").trim();
-		String email = request.getParameter("uemail").trim();
-		String uid = request.getParameter("uid").trim();
+		String name = request.getParameter("username");
+		String phone = request.getParameter("uphone");
+		String email = request.getParameter("uemail");
+		String uid = request.getParameter("uid");
 		String url = "/back/user/userAdd.jsp?name=" + name + "&phone=" + phone + "&email=" + email;
 		if (!uid.equals("-1")) {
 			User user2 = new User();
@@ -247,14 +247,14 @@ public class UserServlet extends BaseServlet {
 	// 添加管理员
 	public void addAdmin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, InvocationTargetException {
-		String name = request.getParameter("user-name").trim();
-		String pwd = request.getParameter("userpassword").trim();
-		String sex = request.getParameter("form-field-radio").trim();
-		String phone = request.getParameter("user-tel").trim();
-		String email = request.getParameter("email").trim();
-		String type = request.getParameter("admin-role").trim();
-		String uid = request.getParameter("uid").trim();
-		String utime = request.getParameter("bdate").trim();
+		String name = request.getParameter("user-name");
+		String pwd = request.getParameter("userpassword");
+		String sex = request.getParameter("form-field-radio");
+		String phone = request.getParameter("user-tel");
+		String email = request.getParameter("email");
+		String type = request.getParameter("admin-role");
+		String uid = request.getParameter("uid");
+		String utime = request.getParameter("bdate");
 		int message = Integer.parseInt(uid);
 		HttpSession session = request.getSession();
 		session.setAttribute("uidAdd", message);
@@ -498,6 +498,7 @@ public class UserServlet extends BaseServlet {
 				return;
 			}
 			result = Result.success("修改成功！！！");
+			//数据刷新
 			User user2 = userBiz.selectSingle(user);
 			session.setAttribute("longinedUser", user2);
 			String json = gson.toJson(result);
@@ -582,15 +583,15 @@ public class UserServlet extends BaseServlet {
 	public void updateUser(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = new User();
-		String age = request.getParameter("uage").trim();
-		String phone = request.getParameter("uphone").trim();
-		String email = request.getParameter("uemail").trim();
-		String minname = request.getParameter("uminname").trim();
-		String sex = request.getParameter("usex").trim();
-		String uni = request.getParameter("university").trim();
-		String ucol = request.getParameter("ucollege").trim();
-		String umajor = request.getParameter("umajor").trim();
-		String uclass = request.getParameter("uclass").trim();
+		String age = request.getParameter("uage");
+		String phone = request.getParameter("uphone");
+		String email = request.getParameter("uemail");
+		String minname = request.getParameter("uminname");
+		String sex = request.getParameter("usex");
+		String uni = request.getParameter("university");
+		String ucol = request.getParameter("ucollege");
+		String umajor = request.getParameter("umajor");
+		String uclass = request.getParameter("uclass");
 		User userOld = (User) session.getAttribute("loginedUser");
 		String check = "1";
 		// 电话
@@ -677,6 +678,7 @@ public class UserServlet extends BaseServlet {
 
 			int code = userBiz.update(user, userOld);
 			if (code > 0) {
+				//数据刷新
 				User user2 = userBiz.selectSingle(user);
 				session.setAttribute("longinedUser", user2);
 				result = Result.success("修改成功！！！");
@@ -764,10 +766,6 @@ public class UserServlet extends BaseServlet {
 
 	/*
 	 * 更新检验电话
-	 * 
-	 * @param request
-	 * 
-	 * @param response
 	 */
 	public void checkPhone(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();

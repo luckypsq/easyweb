@@ -73,7 +73,7 @@ public class NoticeDao {
 
 	// Ìí¼Ó
 	public int insert(Notice notice) {
-		String sql = "insert into notice(nid,ntime,nnumber,nauthor,ncontent,ntitle,ntemp,nstate) " + " values(null,?,?,?,?,?,?,null);";
+		String sql = "insert into notice(nid,ntime,nnumber,nauthor,ncontent,ntitle,ntemp,nstate) " + " values(null,?,?,?,?,?,?,default);";
 		return DbHelper.update(sql, notice.getNtime(),notice.getNnumber(), notice.getNauthor(), notice.getNcontent(), notice.getNtitle(),notice.getNtemp());
 	}
 
