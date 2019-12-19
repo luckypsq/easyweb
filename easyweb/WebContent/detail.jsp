@@ -6,8 +6,120 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="${path }/css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
+<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
 	<script src="${path }/js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="${path }/js/mz-packed.js"></script>
+	<script type="text/javascript">
+
+function addCart(id){
+	var id = "bid="+id;
+	$.ajax({
+        type: "post",
+        url: "${path}/eorderitem.s?op=add",
+        data: id,
+        async:true, // 异步请求
+        cache:false, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+            if(result.code == -1){
+            	$.messager.show({
+    				title:'提示',
+    				msg:result.msg,
+    				showType:'fade',
+					timeout:200,
+    				style:{
+    					right:'',
+    					bottom:''
+    				}
+    			});
+            }
+            if(result.code == 0){
+            	$.messager.show({
+    				title:'提示',
+    				msg:result.msg,
+    				showType:'fade',
+					timeout:200,
+    				style:{
+    					right:'',
+    					bottom:''
+    				}
+    			});
+            }
+            if(result.code == 1){
+            	$.messager.show({
+    				title:'提示',
+    				msg:result.msg,
+    				showType:'fade',
+					timeout:200,
+    				style:{
+    					right:'',
+    					bottom:''
+    				}
+    			});
+            }
+            if(result.code == -2){
+            	$.messager.show({
+    				title:'提示',
+    				msg:result.msg,
+    				showType:'fade',
+					timeout:200,
+    				style:{
+    					right:'',
+    					bottom:''
+    				}
+    			});
+            }
+        }
+    });
+}
+$(function(){  
+	var bid = "bid="+"${param.bid}";
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=bookDetail",
+        data: bid,
+        async:true, // 异步请求
+        cache:false, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+            if(result.code == -1){
+            	$.messager.show({
+    				title:'提示',
+    				msg:result.msg,
+    				showType:'fade',
+					timeout:200,
+    				style:{
+    					right:'',
+    					bottom:''
+    				}
+    			});
+            }
+            if(result.code == 0){
+            	$.messager.show({
+    				title:'提示',
+    				msg:result.msg,
+    				showType:'fade',
+					timeout:200,
+    				style:{
+    					right:'',
+    					bottom:''
+    				}
+    			});
+            }
+            if(result.code == 1){
+        	    if(location.href.indexOf('#main')==-1){
+        	        location.href=location.href+"#main";
+        	        location.reload();
+        	     }   
+           }
+        }
+    });
+});
+
+</script>
 	<title>书籍详情</title>
 </head>
 <body >
@@ -128,62 +240,5 @@
 		</div>
 	</div>
 </div> -->
-<script type="text/javascript">
-
-function addCart(id){
-	var id = "bid="+id;
-	$.ajax({
-        type: "post",
-        url: "${path}/eorderitem.s?op=add",
-        data: id,
-        async:true, // 异步请求
-        cache:false, // 设置为 false 将不缓存此页面
-        dataType: 'json', // 返回对象
-        success: function(result) {
-            if(result.code == -1){
-            	alert(result.msg);
-            }
-            if(result.code == 0){
-            	alert(result.msg);
-            }
-            if(result.code == 1){
-            	alert(result.msg);
-            }
-            if(result.code == -2){
-            	alert(result.msg);
-            }
-        }
-    });
-}
-$(function(){  
-	var bid = "bid="+"${param.bid}";
-	$.ajax({
-        type: "post",
-        url: "${path}/book.s?op=bookDetail",
-        data: bid,
-        async:true, // 异步请求
-        cache:false, // 设置为 false 将不缓存此页面
-        dataType: 'json', // 返回对象
-        success: function(result) {
-            if(result.code == -1){
-            	alert(result.msg);
-            }
-            if(result.code == 0){
-            	alert(result.msg);
-            }
-            if(result.code == -2){
-            	alert(result.msg);
-            }
-            if(result.code == 1){
-        	    if(location.href.indexOf('#main')==-1){
-        	        location.href=location.href+"#main";
-        	        location.reload();
-        	     }   
-           }
-        }
-    });
-});
-
-</script>
 </body>
 </html>

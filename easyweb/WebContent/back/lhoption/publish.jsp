@@ -9,15 +9,10 @@
 	src="${path}/back/js/jquery-1.9.1.min.js"></script>
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<link rel="stylesheet" href="${path}/css/font-awesome.min.css"/>
-	<script src="${path}/js/jquery-1.11.2.min.js"></script>
-	<style type="text/css">
-			#img_path{
-				display:none;
-			}
-			#notice{
-				display:none;
-			}
-	</style>
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
+	<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript">
 		//图片上传预览    IE是用了滤镜。
 		function previewImage(file){
@@ -111,11 +106,29 @@
 		        		return ;
 					}
 		        	if(result.code == -1){
-		        		alert(result.msg);
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 		        		return ;
 		        	}
 		        	if(result.code == 0){
-		        		alert(result.msg);
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 		        		return ;
 		        	}
 		        }
@@ -139,7 +152,16 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -168,7 +190,16 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -196,7 +227,16 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -224,7 +264,16 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -252,7 +301,16 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -274,7 +332,16 @@
 	            dataType: 'json', // 返回对象
 	            success: function(result) {
 	                if(result.code == 1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	$("#bnumMsg").text(""); 
 	                	$("#btempMsg").text(""); 
 	                	$("#bnameMsg").text(""); 
@@ -283,27 +350,55 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == -2){
 	                	var check = result.data.split("/");
-	                	if(check[1] != -1){
+	                	if(check[1] == "-1"){
 	                		$("#bnameMsg").text("书名未输入或不合法！！！").css("color", 'red'); 
 	                	}
-	                	if(check[2] != -1){
+	                	if(check[2] == "-1"){
 							$("#bpriceMsg").text("价格未输入或不合法！！！").css("color", 'red'); 
 						}
-						if(check[3] != -1){
+						if(check[3] == "-1"){
 							$("#bauthorMsg").text("作者未输入或不合法！！！").css("color", 'red'); 
 	                	}
-						if(check[4] != -1){
-							$("#bauthorMsg").text("库存未输入或不合法！！！").css("color", 'red'); 
+						if(check[4] == "-1"){
+							$("#bnumMsg").text("库存未输入或不合法！！！").css("color", 'red'); 
 	                	}
+						$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 						return ;
 	                }
 	            }
@@ -329,11 +424,29 @@
 		            		return ;
 		            	}
 		            	if(result.code == -1){
-		            		alert(result.msg);
+		            		$.messager.show({
+			    				title:'提示',
+			    				msg:result.msg,
+			    				showType:'fade',
+			    				timeout:200,
+			    				style:{
+			    					right:'',
+			    					bottom:''
+			    				}
+			    			});
 		            		return ;
 		            	}
 		            	if(result.code == 0){
-		            		alert(result.msg);
+		            		$.messager.show({
+			    				title:'提示',
+			    				msg:result.msg,
+			    				showType:'fade',
+			    				timeout:200,
+			    				style:{
+			    					right:'',
+			    					bottom:''
+			    				}
+			    			});
 		            		return ;
 		            	}
 		            }
@@ -350,6 +463,18 @@
 	}
 	select{
 		padding: 3px 10px;
+		height:30px;
+		width:200px;
+	}
+	.product-edit-item-r input {
+  	  height: 30px;
+	}
+	
+	#img_path{
+		display:none;
+	}
+	#notice{
+		display:none;
 	}
 </style>
 <body>
@@ -373,7 +498,7 @@
 						</div>
 						<div class="product-edit-item-r fl">
 						
-						<select style="width: 150px" name="buniversity" >
+						<select name="buniversity" >
 							<option >图书所属大学</option>
 							<c:forEach items="${userUni}" var="uni">
 								<option >${uni }</option>
@@ -387,7 +512,7 @@
 							<div class="fr">图书分类2：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name="bucollege" style="width: 150px" >
+							<select name="bucollege"  >
 								<option >图书所属学院</option>
 							
 							<c:forEach items="${userUcol}" var="ucol">
@@ -401,7 +526,7 @@
 							<div class="fr">图书分类3：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name="bumajor" style="width: 150px">
+							<select name="bumajor" >
 									<option >图书所属专业</option>
 								
 								<c:forEach items="${userUmar}" var="umar">
@@ -415,7 +540,7 @@
 							<div class="fr"></i>图书分类4：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name="bclass" style="width: 150px" >
+							<select name="bclass"  >
 									<option >图书所属年级</option>
 								
 								<option >大一</option>
@@ -430,7 +555,7 @@
 							<div class="fr"><i class="middle">*</i>图书分类5：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name="btid" style="width: 150px" >
+							<select name="btid"  >
 									<option >图书所属类型</option>					   	
 								
 								<c:forEach items="${btypes}" var="btType">

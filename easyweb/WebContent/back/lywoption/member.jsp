@@ -7,7 +7,208 @@
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<link rel="stylesheet" href="${path}/css/member.css"/>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
+	<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript">
+	
+	//检验年龄
+	function checkAge(){
+		//校验电话号码格式
+	    // 获取用户填写的电话号码
+		var age = document.getElementById("uage").value;
+	    age = age.replace(/\s/gi,"");
+	    var param = "uage="+age;
+	    $.ajax({
+	        type: "post",
+	        url: "${path}/user.s?op=checkUage",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+	        	if(result.code == -1){
+					$.messager.show({
+	    				title:'提示',
+	    				msg:result.msg,
+	    				showType:'fade',
+	    				timeout:200,
+	    				style:{
+	    					right:'',
+	    					bottom:''
+	    				}
+	    			});
+					return ;
+				}
+				if(result.code == 1){
+					$("#agetishi").text(result.msg).css("color", 'green'); 
+					return ;
+				}
+				if(result.code == 0){
+					$("#agetishi").text(result.msg).css("color", 'red'); 
+					return ;
+				}
+	        }
+		});
+	}
+	
+	//检验电话号码格式
+	function checkPhone(){
+		//校验电话号码格式
+	    // 获取用户填写的电话号码
+	    var phone = document.getElementById("uphone").value;
+	    phone = phone.replace(/\s/gi,"");
+	    var param = "uphone="+phone;
+	    $.ajax({
+	        type: "post",
+	        url: "${path}/user.s?op=checkPhone",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+				if(result.code == 1){
+					$("#phonetishi").text(result.msg).css("color", 'green'); 
+					return ;
+				}
+				if(result.code == 0){
+					$("#phonetishi").text(result.msg).css("color", 'red'); 
+					return ;
+				}
+		        	if(result.code == -1){
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+							timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
+		        	return;
+		        	}
+				}
+			});
+	}
+	//检验电子邮箱
+	function checkEmail(){
+		//校验电子邮箱
+	    var uemail = document.getElementById("uemail").value;
+	    uemail = uemail.replace(/\s/gi,"");
+	    var param = "uemail="+uemail;
+	    $.ajax({
+	        type: "post",
+	        url: "${path}/user.s?op=checkEmail",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+	        	if(result.code == 1){
+					$("#emailtishi").text(result.msg).css("color", 'green'); 
+					return ;
+				}
+				if(result.code == 0){
+					$("#emailtishi").text(result.msg).css("color", 'red'); 
+					return ;
+				}
+		        	if(result.code == -1){
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+							timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
+		        	return;
+		        	}
+				}
+			});
+	}
+	function updateMember(){
+		var param = $('#member-update').serialize();
+		  $.ajax({
+	            type: "post",
+	            url: "${path}/user.s?op=updateUser",
+	            data: param,
+	            async:true, // 异步请求
+	            cache:true, // 设置为 false 将不缓存此页面
+	            dataType: 'json', // 返回对象
+	            success: function(result) {
+	                if(result.code == 1){
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
+	                	$("#agetishi").text("");
+	                	$("#phonetishi").text("");
+	                	$("#emailtishi").text("");
+	                	return ;
+	                }
+	                if(result.code == 0){
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
+	                	return ;
+	                }
+	                if(result.code == -1){
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
+	                	return ;
+	                }
+	                if(result.code == -2){
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
+	                	var mess = result.data.split("/");
+	                	if(mess[2] == "-1"){
+	                		$("#agetishi").text("年龄不合法或未输入").css("color", 'red');
+	                	}
+						if(mess[1] == "-1"){
+							$("#phonetishi").text("电话号码不合法或未输入！").css("color", 'red');
+	                	}
+						if(mess[3] == "-1"){
+							$("#emailtishi").text("邮箱不合法或未输入！").css("color", 'red');
+	                	}
+	                }
+	            }
+	        });
+	}
+	
+</script>
 	<title>个人信息</title>
 </head>
 
@@ -94,160 +295,5 @@
 	</div>
 </div>
 <jsp:include page="../common/footer.jsp"></jsp:include>
-<script type="text/javascript">
-	var xmlhttp;
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (e) {
-			try {
-				xmlhttp = new XMLHttpRequest();
-			} catch (e) {
-			}
-		}
-	}
-	//检验年龄
-	function checkAge(){
-		//校验电话号码格式
-	    // 获取用户填写的电话号码
-		var age = document.getElementById("uage").value;
-	    age = age.replace(/\s/gi,"");
-	    if(xmlhttp!=null){
-			var url ="${path}/user.s?op=checkUage&uage="+age;
-			xmlhttp.open("POST",url,true);
-			xmlhttp.onreadystatechange=function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					eval("var result = " + msg);
-					if(result.code == -1){
-						alert(result.msg);
-						return ;
-					}
-					if(result.code == 1){
-						$("#agetishi").text(result.msg).css("color", 'green'); 
-						return ;
-					}
-					if(result.code == 0){
-						$("#agetishi").text(result.msg).css("color", 'red'); 
-						return ;
-					}
-				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		}else{
-			alert("不能创建XMLHttpRequest对象实例")
-		}
-	}
-	
-	//检验电话号码格式
-	function checkPhone(){
-		//校验电话号码格式
-	    // 获取用户填写的电话号码
-	    var phone = document.getElementById("uphone").value;
-	    phone = phone.replace(/\s/gi,"");
-	    if(xmlhttp!=null){
-			var url ="${path}/user.s?op=checkPhone&uphone="+phone;
-			xmlhttp.open("POST",url,true);
-			xmlhttp.onreadystatechange=function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					eval("var result = " + msg);
-					if(result.code == -1){
-						alert(result.msg);
-						return ;
-					}
-					if(result.code == 1){
-						$("#phonetishi").text(result.msg).css("color", 'green'); 
-						return ;
-					}
-					if(result.code == 0){
-						$("#phonetishi").text(result.msg).css("color", 'red'); 
-						return ;
-					}
-				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		}else{
-			alert("不能创建XMLHttpRequest对象实例")
-		}
-	}
-	//检验电子邮箱
-	function checkEmail(){
-		//校验电子邮箱
-	    var uemail = document.getElementById("uemail").value;
-	    uemail = uemail.replace(/\s/gi,"");
-	    if(xmlhttp!=null){
-			// 定义请求地址
-			var url ="${path}/user.s?op=checkEmail&uemail="+uemail;
-			xmlhttp.open("POST",url,true);
-			xmlhttp.onreadystatechange=function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					eval("var result = " + msg);
-					if(result.code == -1){
-						alert(result.msg);
-						return ;
-					}
-					if(result.code == 1){
-						$("#emailtishi").text(result.msg).css("color", 'green'); 
-						return ;
-					}
-					if(result.code == 0){
-						$("#emailtishi").text(result.msg).css("color", 'red'); 
-						return ;
-					}
-				}
-			};
-			xmlhttp.send(null);
-		}else{
-			alert("不能创建XMLHttpRequest对象实例")
-		}
-	}
-	function updateMember(){
-		var param = $('#member-update').serialize();
-		  $.ajax({
-	            type: "post",
-	            url: "${path}/user.s?op=updateUser",
-	            data: param,
-	            async:true, // 异步请求
-	            cache:true, // 设置为 false 将不缓存此页面
-	            dataType: 'json', // 返回对象
-	            success: function(result) {
-	                if(result.code == 1){
-	                	alert(result.msg);
-	                	$("#agetishi").text("");
-	                	$("#phonetishi").text("");
-	                	$("#emailtishi").text("");
-	                	return ;
-	                }
-	                if(result.code == 0){
-	                	alert(result.msg);
-	                	return ;
-	                }
-	                if(result.code == -1){
-	                	alert(result.msg);
-	                	return ;
-	                }
-	                if(result.code == -2){
-	                	var mess = result.data.split("/");
-	                	if(mess[2] == "-1"){
-	                		$("#agetishi").text("年龄不合法或未输入").css("color", 'red');
-	                	}
-						if(mess[1] == "-1"){
-							$("#phonetishi").text("电话号码不合法或未输入！").css("color", 'red');
-	                	}
-						if(mess[3] == "-1"){
-							$("#emailtishi").text("邮箱不合法或未输入！").css("color", 'red');
-	                	}
-	                }
-	            }
-	        });
-	}
-	
-</script>
 </body>
 </html>

@@ -8,6 +8,62 @@
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<link rel="stylesheet" href="${path}/css/font-awesome.min.css"/>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+function deleteBook(obj,id){
+	var param = "bid=" + id;
+	if(confirm("确定删除本书？？？")){
+		$.ajax({
+	        type: "post",
+	        url: "${path}/book.s?op=delete",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:false, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+	           if(result.code == 0){
+	        	   	alert(result.msg);
+	            	return ;
+	            }
+	           if(result.code == -1){
+	        		alert(result.msg);
+		           	return ;
+	           }
+	           if(result.code == 1){
+	        		alert(result.msg);
+					return ;
+	           }
+	        }
+	    });
+	}
+}
+function show(page){
+	var param = "page=" +page;
+	$.ajax({
+        type: "post",
+        url: "${path}/show.s?op=userPublishedBookShow",
+        data: param,
+        async:true, // 异步请求
+        cache:false, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+           if(result.code == 0){
+        		alert(result.msg);
+            	return ;
+            }
+           if(result.code == -1){
+        		alert(result.msg);
+           	return ;
+           }
+           if(result.code == 1){
+        		alert(result.msg);
+        	 //刷新子页面
+           		$('#published-show').load('${path}/back/lhoption/publishedChild.jsp');
+				return ;
+           }
+        }
+    });
+}
+</script>
 	<title>易书网</title>
 </head>
 <style>
@@ -36,60 +92,5 @@
 		</div>
 	</div>
 <jsp:include page="../common/footer.jsp"></jsp:include>
-<script type="text/javascript">
-function deleteBook(obj,id){
-	var param = "bid=" + id;
-	if(confirm("确定删除本书？？？")){
-		$.ajax({
-	        type: "post",
-	        url: "${path}/book.s?op=delete",
-	        data: param,
-	        async:true, // 异步请求
-	        cache:false, // 设置为 false 将不缓存此页面
-	        dataType: 'json', // 返回对象
-	        success: function(result) {
-	           if(result.code == 0){
-	            	alert(result.msg);
-	            	return ;
-	            }
-	           if(result.code == -1){
-		           	alert(result.msg);
-		           	return ;
-	           }
-	           if(result.code == 1){
-	        		alert(result.msg);
-					return ;
-	           }
-	        }
-	    });
-	}
-}
-function show(page){
-	var param = "page=" +page;
-	$.ajax({
-        type: "post",
-        url: "${path}/show.s?op=userPublishedBookShow",
-        data: param,
-        async:true, // 异步请求
-        cache:false, // 设置为 false 将不缓存此页面
-        dataType: 'json', // 返回对象
-        success: function(result) {
-           if(result.code == 0){
-            	alert(result.msg);
-            	return ;
-            }
-           if(result.code == -1){
-           	alert(result.msg);
-           	return ;
-           }
-           if(result.code == 1){
-        	 //刷新子页面
-           		$('#published-show').load('${path}/back/lhoption/publishedChild.jsp');
-				return ;
-           }
-        }
-    });
-}
-</script>
 </body>
 </html>

@@ -47,7 +47,7 @@
 											<span class="sell">${bookState[t.bstate]} </span>
 								</c:if> 
 								<c:if test="${not flag}">
-										<span> <a href="${path}/back/lhoption/publish.jsp?bid=${t.bid }"> <i class="icon-edit"></i>
+										<span> <a href="${path}/back/lhoption/bookEdit.jsp?bid=${t.bid }"> <i class="icon-edit"></i>
 										<p>编辑</p></a></span>
 								<span class="line"></span>
 								<span> <a onclick="deleteBook(this,${t.bid });"> <i

@@ -17,6 +17,59 @@
 			margin: 0 auto;
 		}
 	</style>
+	<script type="text/javascript">
+	Qfast.add('widgets', { path: "${path}/js/terminator2.2.min.js", type: "js", requires: ['fx'] });
+	Qfast(false, 'widgets', function () {
+		K.tabs({
+			id: 'fsD1',   //焦点图包裹id
+			conId: "D1pic1",  //** 大图域包裹id
+			tabId:"D1fBt",
+			tabTn:"a",
+			conCn: '.fcon', //** 大图域配置class
+			auto: 1,   //自动播放 1或0
+			effect: 'fade',   //效果配置
+			eType: 'click', //** 鼠标事件
+			pageBt:true,//是否有按钮切换页码
+			bns: ['.prev', '.next'],//** 前后按钮配置class
+			interval: 2750  //** 停顿时间
+		})
+	});
+function show(btid1,btid2,obj){
+	$("#index-book-show a").removeClass("on");
+	$(obj).addClass("on"); 
+	var param = "btid="+btid1 ;
+	if(btid1 != 0){
+		param = "&btid1=" +btid1;
+	}
+	if(btid2 != 0){
+		param = "&btid2=" +btid2;
+	}
+	$.ajax({
+        type: "post",
+        url: "${path}/show.s?op=queryUserIndex",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+        	if(result.code == -1){
+        		alert(result.msg);
+            }
+        	if(result.code == 0){
+        		alert(result.msg);
+            }
+        	if(result.code == 1){
+        		if(btid1 != 0){
+        			$('#teachBook').load('${path}/back/lhoption/indexTeach.jsp');
+        		}
+        		if(btid2 != 0){
+        			$('#toolBook').load('${path}/back/lhoption/indexTool.jsp');
+        		}
+        	}
+        }
+    });
+}
+</script>
 	<title>易书网</title>
 </head>
 <body>
@@ -155,58 +208,5 @@
 	</ul>
 </div>
 <jsp:include page="../common/footer.jsp"></jsp:include>
-<script type="text/javascript">
-	Qfast.add('widgets', { path: "${path}/js/terminator2.2.min.js", type: "js", requires: ['fx'] });
-	Qfast(false, 'widgets', function () {
-		K.tabs({
-			id: 'fsD1',   //焦点图包裹id
-			conId: "D1pic1",  //** 大图域包裹id
-			tabId:"D1fBt",
-			tabTn:"a",
-			conCn: '.fcon', //** 大图域配置class
-			auto: 1,   //自动播放 1或0
-			effect: 'fade',   //效果配置
-			eType: 'click', //** 鼠标事件
-			pageBt:true,//是否有按钮切换页码
-			bns: ['.prev', '.next'],//** 前后按钮配置class
-			interval: 2750  //** 停顿时间
-		})
-	});
-function show(btid1,btid2,obj){
-	$("#index-book-show a").removeClass("on");
-	$(obj).addClass("on"); 
-	var param = "btid="+btid1 ;
-	if(btid1 != 0){
-		param = "&btid1=" +btid1;
-	}
-	if(btid2 != 0){
-		param = "&btid2=" +btid2;
-	}
-	$.ajax({
-        type: "post",
-        url: "${path}/show.s?op=queryUserIndex",
-        data: param,
-        async:true, // 异步请求
-        cache:true, // 设置为 false 将不缓存此页面
-        dataType: 'json', // 返回对象
-        success: function(result) {
-        	if(result.code == -1){
-            	alert(result.msg);
-            }
-        	if(result.code == 0){
-            	alert(result.msg);
-            }
-        	if(result.code == 1){
-        		if(btid1 != 0){
-        			$('#teachBook').load('${path}/back/lhoption/indexTeach.jsp');
-        		}
-        		if(btid2 != 0){
-        			$('#toolBook').load('${path}/back/lhoption/indexTool.jsp');
-        		}
-        	}
-        }
-    });
-}
-</script>
 </body>
 </html>

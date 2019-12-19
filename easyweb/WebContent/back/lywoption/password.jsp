@@ -5,28 +5,16 @@
 <head>
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/css/index.css"/>
-	<script type="text/javascript" src="${path}/js/jquery-1.7.2.min.js"></script>
-	<script src="${path}/js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
+	<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
 	<title>修改密码</title>
 	<script type="text/javascript">
 	var xmlhttp;
 	var old =0;
 	var re =0;
 	var ne =0;
-	// ajax 验证原密码是否正确
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (e) {
-			try {
-				xmlhttp = new XMLHttpRequest();
-			} catch (e) {
-			}
-		}
-	}
-	
 	//校验原密码是否存在
 	function checkPassWord(){
 		// 获取用户填写的原密码
@@ -36,41 +24,41 @@
 			alert("请填写原密码！");
 			return;
 		}
-		if(xmlhttp!=null){
-			// 定义请求地址
-			var url ="${path}/user.s?op=checkPwd&oldpassword="+oldpassword ;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST",url,true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange=function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					// 替换空格
-					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					eval("var result = " + msg);
-					if(result.code == 1){
-						old=1;
-						$("#span1").text(result.msg).css("color", 'green');
-						return ;
-					}
-					if(result.code == -1){
-						old=0;
-						alert(result.msg);
-						return ;
-					}
-					if(result.code == 0){
-						old=0;
-						$("#span1").text(result.msg).css("color", 'red'); 
-						return ;
-					}
+		var param = "oldpassword="+oldpassword ;
+	    $.ajax({
+	        type: "post",
+	        url: "${path}/user.s?op=checkPwd",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+	        	if(result.code == 1){
+					old=1;
+					$("#span1").text(result.msg).css("color", 'green');
+					return ;
 				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		}else{
-			alert("不能创建XMLHttpRequest对象实例")
-		}
+				if(result.code == -1){
+					old=0;
+					$.messager.show({
+	    				title:'提示',
+	    				msg:result.msg,
+	    				showType:'fade',
+						timeout:200,
+	    				style:{
+	    					right:'',
+	    					bottom:''
+	    				}
+	    			});
+					return ;
+				}
+				if(result.code == 0){
+					old=0;
+					$("#span1").text(result.msg).css("color", 'red'); 
+					return ;
+				}
+				}
+			});
 	}
 	
 	function newPassword(){
@@ -86,7 +74,16 @@
 		        success: function(result) {
 		        	if(result.code == -1){
 						ne=0;
-						alert(result.msg);
+						$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+							timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 						return ;
 					}
 					if(result.code == 1){
@@ -139,10 +136,28 @@
 					location.href="${path}/join.jsp";
 				}
 				if(user.code== 0){
-					alert(user.msg);  
+					$.messager.show({
+	    				title:'提示',
+	    				msg:result.msg,
+	    				showType:'fade',
+						timeout:200,
+	    				style:{
+	    					right:'',
+	    					bottom:''
+	    				}
+	    			});
 				}
 				if(user.code == -1){
-					alert(user.msg); 
+					$.messager.show({
+	    				title:'提示',
+	    				msg:result.msg,
+	    				showType:'fade',
+						timeout:200,
+	    				style:{
+	    					right:'',
+	    					bottom:''
+	    				}
+	    			}); 
 				}
 	  	 	}
 		});

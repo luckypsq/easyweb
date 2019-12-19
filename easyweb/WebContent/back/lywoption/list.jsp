@@ -9,15 +9,13 @@
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<script src="${path}/js/jquery-1.7.2.min.js"></script>
 	<script src="${path}/js/main.js"></script>
-	<title>Document</title>
+	<title>书籍展示</title>
 	<script type="text/javascript">
 		$(function(){
 			$(".selected").each(function(){
 					$("#selectedDd").append($(this).clone()[0])
 			})
 		})
-	
-		
 		function show(page){
 			var uni = $("#selectA").text();
 			var ucol = $("#selectB").text();

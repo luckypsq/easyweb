@@ -69,7 +69,7 @@ public class JoinServlet extends BaseServlet {
 			User userShow = userBiz.selectSingle(user);// 保存用户信息
 			if (userShow.getUid() == 0) {
 				// 用户名不存在
-				result = Result.failure("用户名不存在！！！", username);
+				result = Result.failure("用户名或密码错误！！！", username);
 				String json = gson.toJson(result);
 				// 返回json格式数据
 				response.setContentType("application/json;charset=UTF-8");

@@ -8,9 +8,8 @@
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<link rel="stylesheet" href="${path}/css/font-awesome.min.css"/>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<title>易书网</title>
+	<title>购物车</title>
 	<script type="text/javascript">
-
 	function deleteCart(obj,itemid){
 		if(confirm("确实要删除吗？")){
 			var param = "itemid="+itemid;

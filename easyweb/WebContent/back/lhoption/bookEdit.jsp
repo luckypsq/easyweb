@@ -9,14 +9,30 @@
 	src="${path}/back/js/jquery-1.9.1.min.js"></script>
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<link rel="stylesheet" href="${path}/css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
+<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
+	
 	<script src="${path}/js/jquery-1.11.2.min.js"></script>
 	<style type="text/css">
-			#img_path{
-				display:none;
-			}
-			#notice{
-				display:none;
-			}
+	select{
+		padding: 3px 10px;
+		height:30px;
+		width:200px;
+	}
+	.product-edit-item-r input {
+  	  height: 30px;
+	}
+	.help-main {
+		padding: 0;
+	}
+	#img_path{
+		display:none;
+	}
+	#bid{
+		display:none;
+	}
 	</style>
 	<script type="text/javascript">
 		//图片上传预览    IE是用了滤镜。
@@ -111,11 +127,30 @@
 		        		return ;
 					}
 		        	if(result.code == -1){
-		        		alert(result.msg);
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 		        		return ;
 		        	}
 		        	if(result.code == 0){
-		        		alert(result.msg);
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    		
+		    					bottom:''
+		    				}
+		    			});
 		        		return ;
 		        	}
 		        }
@@ -139,7 +174,17 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    		
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -168,7 +213,17 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    		
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -196,7 +251,17 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    		
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -224,7 +289,16 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -252,7 +326,16 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
@@ -278,7 +361,16 @@
 	            dataType: 'json', // 返回对象
 	            success: function(result) {
 	                if(result.code == 1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	$("#bnumMsg").text(""); 
 	                	$("#btempMsg").text(""); 
 	                	$("#bnameMsg").text(""); 
@@ -287,14 +379,43 @@
 	                	return ;
 	                }
 	                if(result.code == -1){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == 0){
-	                	alert(result.msg);
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 	                	return ;
 	                }
 	                if(result.code == -2){
+	                	$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    		
+		    					bottom:''
+		    				}
+		    			});
 	                	var check = result.data.split("/");
 	                	if(check[1] != -1){
 	                		$("#bnameMsg").text("书名未输入或不合法！！！").css("color", 'red'); 
@@ -334,11 +455,31 @@
 		            		return ;
 		            	}
 		            	if(result.code == -1){
-		            		alert(result.msg);
+		            		$.messager.show({
+			    				title:'提示',
+			    				msg:result.msg,
+			    				showType:'fade',
+			    				timeout:200,
+			    				style:{
+			    					right:'',
+			    		
+			    					bottom:''
+			    				}
+			    			});
 		            		return ;
 		            	}
 		            	if(result.code == 0){
-		            		alert(result.msg);
+		            		$.messager.show({
+			    				title:'提示',
+			    				msg:result.msg,
+			    				showType:'fade',
+			    				timeout:200,
+			    				style:{
+			    					right:'',
+			    		
+			    					bottom:''
+			    				}
+			    			});
 		            		return ;
 		            	}
 		            }
@@ -347,14 +488,6 @@
 	</script>
 	<title>编辑书籍</title>
 </head>
-<style>
-	.help-main {
-		padding: 0;
-	}
-	select{
-		padding: 3px 10px;
-	}
-</style>
 <body>
 <jsp:include page="../common/header.jsp"></jsp:include>
 
@@ -376,7 +509,7 @@
 						</div>
 						<div class="product-edit-item-r fl">
 						
-						<select style="width: 150px" name="buniversity" >
+						<select  name="buniversity" >
 							<c:if test="${bookDetail != null}" var="flag" scope="session">
 								<option >${bookDetail.buniversity }</option>			
 							</c:if>
@@ -395,7 +528,7 @@
 							<div class="fr">图书分类2：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name="bucollege" style="width: 150px" >
+							<select name="bucollege" >
 							<c:if test="${bookDetail != null}" var="flag" scope="session">
 								<option >${bookDetail.bucollege}</option>			
 							</c:if>
@@ -414,7 +547,7 @@
 							<div class="fr">图书分类3：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name="bumajor" style="width: 150px">
+							<select name="bumajor" >
 								<c:if test="${bookDetail != null}" var="flag" scope="session">
 								<option >${bookDetail.bumajor}</option>			
 								</c:if>
@@ -433,7 +566,7 @@
 							<div class="fr"></i>图书分类4：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name="bclass" style="width: 150px" >
+							<select name="bclass" >
 								<c:if test="${bookDetail != null}" var="flag" scope="session">
 								<option >${bookDetail.bclass}</option>			
 								</c:if>
@@ -453,7 +586,7 @@
 							<div class="fr"><i class="middle">*</i>图书分类5：</div>
 						</div>
 						<div class="product-edit-item-r fl">
-							<select name="btid" style="width: 150px" >
+							<select name="btid" >
 								<c:if test="${bookDetail != null}" var="flag" scope="session">						
 									<option value="${bookDetail.btid }">${btTypeEdit[bookDetail.btid]}</option>
 								</c:if>

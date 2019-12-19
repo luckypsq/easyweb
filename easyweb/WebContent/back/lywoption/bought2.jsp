@@ -7,7 +7,10 @@
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<link rel="stylesheet" href="${path}/css/font-awesome.min.css"/>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
+	<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
 	<title>易书网</title>
 	<script type="text/javascript">
 	function deleteone(obj,eoid){
@@ -22,16 +25,43 @@
 		        dataType: 'json', // 返回对象
 		        success: function(result) {
 		        	if(result.code == 1){
-		        		$(obj).parents("tr").remove();
-		        		alert(result.msg);
+		        		$('#order-show').load('${path}/back/lywoption/orderData.jsp');
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 		        		return ;
 		        	}
 		        	if(result.code == 0){
-		        		alert(result.msg);
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 		        		return ;
 		        	}
 		        	if(result.code == -1){
-		        		alert(result.msg);
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 		        		return ;
 		        	}
 				}
@@ -49,11 +79,29 @@
 	        dataType: 'json', // 返回对象
 	        success: function(result) {
 	        	if(result.code == -1){
-	        		alert(result.msg);
+	        		$.messager.show({
+	    				title:'提示',
+	    				msg:result.msg,
+	    				showType:'fade',
+	    				timeout:200,
+	    				style:{
+	    					right:'',
+	    					bottom:''
+	    				}
+	    			});
 	        		return ;
 	        	}
 	        	if(result.code == 0){
-	        		alert(result.msg);
+	        		$.messager.show({
+	    				title:'提示',
+	    				msg:result.msg,
+	    				showType:'fade',
+	    				timeout:200,
+	    				style:{
+	    					right:'',
+	    					bottom:''
+	    				}
+	    			});
 	        		return ;
 	        	}
 	        	if(result.code == 1){

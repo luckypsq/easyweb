@@ -50,8 +50,6 @@
 <script type="text/javascript" src="${path}/back/js/H-ui.js"></script>
 <script type="text/javascript" src="${path}/back/js/H-ui.admin.js"></script>
 
-<style type="text/css">
-</style>
 <title>填写订单</title>
 </head>
 <body >
@@ -165,29 +163,8 @@
 		</form>
 		</div>
 	</div>
+</body>
 <script type="text/javascript">
-$(function() { 
-	$("#add_picture").fix({
-		float : 'left',
-		skin : 'green',	
-		durationTime :false,
-		stylewidth:'220',
-		spacingw:0,
-		spacingh:260,
-	});
-});
-$( document).ready(function(){
-//初始化宽度、高度
-   $(".widget-box").height($(window).height()); 
-   $(".page_right_style").height($(window).height()); 
-   $(".page_right_style").width($(window).width()-220); 
-  //当文档窗口发生改变时 触发  
-    $(window).resize(function(){
-	 $(".widget-box").height($(window).height()); 
-	 $(".page_right_style").height($(window).height()); 
-	 $(".page_right_style").width($(window).width()-220); 
-	});	
-});
 $(function(){  
 	var bid ="${param.bid}";
 	 if(bid != ''){
@@ -346,7 +323,7 @@ function addEorder(){
 				$("#eoaddrTishi").text("");
 				$("#unameTishi").text("");
 				$("#uphoneTishi").text("");
-            	alert(result.msg);
+				alert(result.msg);
             	return ;
             }
             if(result.code == -1){
@@ -358,6 +335,7 @@ function addEorder(){
             	return ;
             }
             if(result.code == -2){
+            	alert(result.msg);
             	var check = result.data.split("/");
             	if(check[1] == "-1"){
             		$("#countTishi").text("输入不合法或为输入！！！").css("color", 'red');
@@ -377,5 +355,4 @@ function addEorder(){
     }); 
 }
 </script>
-</body>
 </html>

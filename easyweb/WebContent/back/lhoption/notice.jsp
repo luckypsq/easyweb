@@ -1,13 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
 	<link rel="stylesheet" href="${path}/css/index.css"/>
 	<title>网站公告</title>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
+	<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript">
 		function show(page){
 			var page1 = "page="+page;
@@ -20,10 +24,28 @@
 		        dataType: 'json', // 返回对象
 		        success: function(result) {
 		        	if(result.code == -1){
-		            	alert(result.msg);
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 		            }
 		        	if(result.code == 0){
-		            	alert(result.msg);
+		        		$.messager.show({
+		    				title:'提示',
+		    				msg:result.msg,
+		    				showType:'fade',
+		    				timeout:200,
+		    				style:{
+		    					right:'',
+		    					bottom:''
+		    				}
+		    			});
 		            }
 		        	if(result.code == 1){
 		        		$('#notice-show').load('${path}/back/lhoption/noticeChild.jsp');	

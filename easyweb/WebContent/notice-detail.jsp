@@ -6,7 +6,56 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="${path}/css/index.css"/>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
+<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+$(function(){  
+	var nid = "nid="+"${param.nid}";
+	$.ajax({
+        type: "post",
+        url: "${path}/notice.s?op=query",
+        data: nid,
+        async:true, // 异步请求
+        cache:false, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+            if(result.code == -1){
+            	$.messager.show({
+    				title:'提示',
+    				msg:result.msg,
+    				showType:'fade',
+    				timeout:200,
+    				style:{
+    					left:'',
+    					right:0,
+    					bottom:''
+    				}
+    			});
+            }
+            if(result.code == 0){
+            	$.messager.show({
+    				title:'提示',
+    				msg:result.msg,
+    				showType:'fade',
+    				timeout:200,
+    				style:{
+    					right:'',
+    					bottom:''
+    				}
+    			});
+            }
+            if(result.code == 1){
+        	    if(location.href.indexOf('#mainbody')==-1){
+        	        location.href=location.href+"#mainbody";
+        	        location.reload();
+        	     }   
+           }
+        }
+    });
+});
+</script>
 	<title>公告详情</title>
 </head>
 <body >
@@ -114,32 +163,5 @@
 	</div>
 </div>
 <jsp:include page="back/common/footer.jsp"></jsp:include>
-<script type="text/javascript">
-$(function(){  
-	var nid = "nid="+"${param.nid}";
-	$.ajax({
-        type: "post",
-        url: "${path}/notice.s?op=query",
-        data: nid,
-        async:true, // 异步请求
-        cache:false, // 设置为 false 将不缓存此页面
-        dataType: 'json', // 返回对象
-        success: function(result) {
-            if(result.code == -1){
-            	alert(result.msg);
-            }
-            if(result.code == 0){
-            	alert(result.msg);
-            }
-            if(result.code == 1){
-        	    if(location.href.indexOf('#mainbody')==-1){
-        	        location.href=location.href+"#mainbody";
-        	        location.reload();
-        	     }   
-           }
-        }
-    });
-});
-</script>
 </body>
 </html>
