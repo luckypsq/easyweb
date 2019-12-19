@@ -1,26 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
-		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>   
-        <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>		
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="<%=application.getContextPath() %>/back/assets/dist/echarts.js"></script>
-      
+ <link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${path}/back/css/style.css"/>       
+        <link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="${path}/back/font/css/font-awesome.min.css" />
 <title>会员等级</title>
 </head>
 
@@ -37,16 +29,15 @@
       </div>
       <div class="widget-body">
          <ul class="b_P_Sort_list">
-             <li><i class="orange  fa fa-user-secret"></i><a href="#">全部(235)</a></li>
-             <li><i class="fa fa-diamond pink "></i> <a href="#">普通会员(235)</a></li>
-             <li> <i class="fa fa-diamond pink "></i> <a href="#">铁牌会员(2215)</a> </li>
-             <li> <i class="fa fa-diamond pink "></i> <a href="#">铜牌会员(3456)</a></li>
-             <li><i class="fa fa-diamond pink "></i> <a href="#">银牌会员(4332)</a></li>
-             <li><i class="fa fa-diamond pink "></i> <a href="#">金牌会员(1332)</a></li>
-             <li> <i class="fa fa-diamond grey"></i> <a href="#">钻石会员(4543)</a></li>
-             <li> <i class="fa fa-diamond red"></i> <a href="#">红钻会员(343)</a></li>
-             <li> <i class="fa fa-diamond blue"></i> <a href="#">蓝钻会员(2343)</a></li>
-             <li> <i class="fa fa-diamond grey"></i> <a href="#">黑钻会员(53)</a></li>
+             <li><i class="orange  fa fa-user-secret"></i><a href="javascript:;" onclick="show();">全部(235)</a></li>
+             <li><i class="fa fa-diamond pink "></i> <a href="javascript:;"  onclick="show(2);">普通会员(235)</a></li>
+             <li> <i class="fa fa-diamond pink "></i> <a href="javascript:;"  onclick="show(3);">铁牌会员(2215)</a> </li>
+             <li> <i class="fa fa-diamond pink "></i> <a href="javascript:;"  onclick="show(4);">铜牌会员(3456)</a></li>
+             <li><i class="fa fa-diamond pink "></i> <a href="javascript:;"  onclick="show(6);">银牌会员(4332)</a></li>
+             <li><i class="fa fa-diamond pink "></i> <a href="javascript:;"  onclick="show(7);">金牌会员(1332)</a></li>
+             <li> <i class="fa fa-diamond grey"></i> <a href="javascript:;"  onclick="show(8);">钻石会员(4543)</a></li>
+             <li> <i class="fa fa-diamond red"></i> <a href="javascript:;"  onclick="show(9);">红钻会员(343)</a></li>
+             <li> <i class="fa fa-diamond blue"></i> <a href="javascript:;"  onclick="show(10);">蓝钻会员(2343)</a></li>
             </ul>
   </div>
   </div>
@@ -64,114 +55,21 @@
       <!--列表样式-->
       <div class="grading_list">
        <div class="type_title">全部会员等级列表</div>
-         <div class="table_menu_list">
-       <table class="table table-striped table-bordered table-hover" id="sample-table">
-		<thead>
-		 <tr>
-				<th width="25"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
-				<th width="80">ID</th>
-				<th width="100">用户名</th>
-				<th width="80">性别</th>
-				<th width="120">手机</th>
-				<th width="150">邮箱</th>
-				
-				<th width="180">加入时间</th>
-                <th width="100">等级</th>
-                <th width="100">积分</th>
-				<th width="70">状态</th>                
-				<th width="250">操作</th>
-			</tr>
-		</thead>
-	<tbody>
-		<tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>1</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','member-show.html','10001','500','400')">张三</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>         
-          <td>2014-6-11 11:11:42</td>
-          <td>普通用户</td>
-          <td class="text-l">345</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a> 
-          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-        <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>2</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张小泉','member-show.html','1031','500','400')">张小泉</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>
-          <td>2014-6-11 11:11:42</td>
-          <td>普通用户</td>
-           <td class="text-l">1345</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a>       
-          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-         <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>3</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张小泉','member-show.html','10301','500','400')">张小泉</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>
-          <td>2014-6-11 11:11:42</td>
-          <td>银牌用户</td>
-           <td class="text-l">645</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a>         
-          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-         <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>4</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张小泉','member-show.html','10001','500','400')">张小泉</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>
-          <td>2014-6-11 11:11:42</td>
-          <td>银牌用户</td>
-           <td class="text-l">645</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check bigger-120"></i></a>       
-          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-         <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>5</td>
-          <td><u style="cursor:pointer" class="text-primary" onclick="member_show('张小泉','member-show.html','10001','500','400')">张小泉</u></td>
-          <td>男</td>
-          <td>13000000000</td>
-          <td>admin@mail.com</td>
-          <td>2014-6-11 11:11:42</td>
-          <td>银牌用户</td>
-           <td class="text-l">345</td>
-          <td class="td-status"><span class="label label-success radius">已启用</span></td>
-          <td class="td-manage">
-          <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>        
-          <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-		</tr>
-      </tbody>
-	</table>
-   </div>
+         <div class="table_menu_list" id="table_menu_list_child">
+  				<jsp:include page="member_grading_show.jsp"></jsp:include>
+   		</div>
       </div>
    </div> 
   </div>
 </div>
 </body>
-</html>
+<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+		<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script>   
+        <script src="${path}/back/js/lrtk.js" type="text/javascript" ></script>		
+		<script src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="${path}/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="${path}/back/assets/dist/echarts.js"></script>
 <script type="text/javascript"> 
 $(function() { 
 	$("#category").fix({
@@ -201,25 +99,155 @@ $(function() {
 });
 /*用户-查看*/
 function member_show(title,url,id,w,h){
-	layer_show(title,url+'#?='+id,w,h);
+	var param ="uid="+id;
+	$.ajax({
+        type: "post",
+        url: "${path}/book.s?op=showUserMessage",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					layer_show(title,url,w,h);
+	        		return;
+	        	}
+	        	if(result.code == 0){
+	        	layer.msg(result.msg, {
+						icon : 5,
+						time : 1000,
+						title: "提示"
+					});
+	        		return;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+						});
+	        	return;
+	        	}
+			}
+		});
 }
 /*用户-停用*/
 function member_stop(obj,id){
 	layer.confirm('确认要停用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-		$(obj).remove();
-		layer.msg('已停用!',{icon: 5,time:1000});
+		var param ="ustate=2&uid="+id;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/user.s?op=updateState",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,'+id+')" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
+						$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
+						$(obj).remove();
+						layer.msg('已停用!',{icon: 1,time:1000});
+		        		return;
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
+							icon : 5,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        	return;
+		        	}
+				}
+			});
 	});
 }
+
 /*用户-启用*/
 function member_start(obj,id){
 	layer.confirm('确认要启用吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="fa fa-check  bigger-120"></i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-		$(obj).remove();
-		layer.msg('已启用!',{icon: 6,time:1000});
+		var param ="ustate=1&uid="+id;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/user.s?op=updateState",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,'+id+')" href="javascript:;" title="停用"><i class="fa fa-check bigger-120"></i></i></a>');
+						$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+						$(obj).remove();
+						layer.msg('已启用!',{icon: 6,time:1000});
+		        		return;
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
+							icon : 5,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        	return;
+		        	}
+				}
+			});
 	});
+}
+/*类型查看*/
+function show(type){
+	var param = "utype="+type;
+	$.ajax({
+        type: "post",
+        url: "${path}/user.s?op=queryUser",
+        data: param,
+        async:true, // 异步请求
+        cache:true, // 设置为 false 将不缓存此页面
+        dataType: 'json', // 返回对象
+        success: function(result) {
+				if(result.code == 1){
+					$('#table_menu_list_child').load('${path}/back/user/member_grading_show.jsp');
+					layer.msg(result.msg, {
+						icon :6,
+						time : 1000,
+						title: "提示"
+					});
+	        		return;
+	        	}
+	        	if(result.code == 0){
+	        	layer.msg(result.msg, {
+						icon : 5,
+						time : 1000,
+						title: "提示"
+					});
+	        		return;
+	        	}
+	        	if(result.code == -1){
+	        		layer.msg(result.msg, {
+						icon : 2,
+						time : 1000,
+						title: "提示"
+						});
+	        	return;
+	        	}
+			}
+		});
 }
 </script>
 <script type="text/javascript">
@@ -236,7 +264,7 @@ function member_start(obj,id){
 /**************/
      require.config({
             paths: {
-                echarts: '<%=application.getContextPath() %>/back/assets/dist'
+                echarts: '${path}/back/assets/dist'
             }
         });
         require(
@@ -260,7 +288,6 @@ function member_start(obj,id){
         formatter: "{a} <br/>{b} : {c} ({d}%)"
     },
     legend: {
-        
         x : 'center',
         y : 'bottom',
         data:['普通用户','铁牌用户','铜牌用户','银牌用户','金牌用户','钻石用户','蓝钻用户','红钻用户']
@@ -348,3 +375,4 @@ $(function($) {
 				}
 			});
 </script>
+</html>

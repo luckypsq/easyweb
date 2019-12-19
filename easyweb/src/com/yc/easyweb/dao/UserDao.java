@@ -42,6 +42,9 @@ public class UserDao {
 			if (user.getUmajor() != null) {
 				sb.append(" and umajor like '%" + user.getUmajor() + "%'");
 			}
+			if (user.getUemail()!= null) {
+				sb.append(" and uemail like '%" + user.getUemail() + "%'");
+			}
 			if (user.getUstate() != 0) {
 				sb.append(" and ustate = " + user.getUstate());
 			}
@@ -57,6 +60,7 @@ public class UserDao {
 			if (user.getUsex() != 0) {
 				sb.append(" and usex = " + user.getUsex());
 			}
+			
 		}
 		sb.append("  order by  uid desc");
 		List<User> list = db.selectAll(sb.toString(), null, User.class);

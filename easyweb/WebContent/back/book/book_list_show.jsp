@@ -10,10 +10,10 @@
 					class="ace"><span class="lbl"></span></label></th>
 			<th width="80px">书籍编号</th>
 			<th width="250px">书名</th>
-			<th width="100px">价格</th>
+			<th width="100px">作者</th>
 			<th width="100px">所属类别</th>
 			<th width="100px">所属系列</th>
-			<th width="100px">作者</th>
+			<th width="100px">价格</th>
 			<th width="180px">库存</th>
 			<th width="80px">审核状态</th>
 			<th width="70px">状态</th>
@@ -29,10 +29,10 @@
 				<td width="250px"><u style="cursor: pointer"
 					class="text-primary"
 					onclick="window.location.href='${path}/detail.jsp?bid=${b.bid }';">${b.bname }</u></td>
-				<td width="100px">${b.bprice }</td>
+				<td width="100px">${b.bauthor }</td>
 				<td width="100px">${btTypeEdit[b.btid] }</td>
 				<td width="100px">${b.btemp}</td>
-				<td width="100px">${b.bauthor }</td>
+				<td width="100px">${b.bprice }</td>
 				<td width="180px">${b.bnum}</td>
 				<td class="text-l">
 					<c:if test="${b.bstate == 4 || b.bstate == 5}" var="flag"

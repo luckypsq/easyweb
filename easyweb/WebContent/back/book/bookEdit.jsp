@@ -505,6 +505,11 @@ function updateBook(){
 	        		return;
 	        	}
 	        	 if(result.code == -2){
+	        		 layer.msg(result.msg, {
+							icon :5,
+							time : 1000,
+							title: "提示"
+							});
 	                	var check = result.data.split("/");
 	                	if(check[1] == "-1"){
 	                		$("#bnameTishi").text("书名未输入或不合法！！！").css("color", 'red'); 

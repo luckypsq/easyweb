@@ -177,10 +177,12 @@ public class JoinServlet extends BaseServlet {
 		// 将登录时间放入会话中
 		session.setAttribute("date", dateStr);
 		// 将各种状态的类型放入会话中
-		String[] userType = { "", "", "普通用户", "普通会员", "钻石会员" };
-		String[] uType = { "", "", "2-普通用户", "3-普通会员", "4-钻石会员" };
+		String[] userType = { "", "", "普通用户", "铁牌用户", "铜牌用户",  "","银牌用户","金牌用户", "钻石用户", "蓝钻用户", "红钻用户" };
+		int[] uType = { 2, 3, 4, 6, 7,8,9 ,10};
 		session.setAttribute("userType", userType);
 		session.setAttribute("uType", uType);
+		String[] adminType = { "", "超级管理员", "", "", "" ,"管理员"};
+		session.setAttribute("adminType", adminType);
 		String[] userSex = { "保密", "男", "女" };
 		session.setAttribute("userSex", userSex);
 		String[] adminState = { "", "已启用", "已冻结", "已删除" };
@@ -318,8 +320,6 @@ public class JoinServlet extends BaseServlet {
 		// 获取用户信息
 		User user = new User();
 		// 获取user表所有信息存储在会话中
-		List<User> userListAll = userBiz.selectAll(user);
-		session.setAttribute("userAll", userListAll);// 存储有user表的所有信息
 		List<User> customerExit = userBiz.selectAll(user);// 存储所有用户信息
 		// 存储管理员所有信息
 		user.setUtype(1);
@@ -331,19 +331,18 @@ public class JoinServlet extends BaseServlet {
 				adminListAll.add(u);
 			}
 		}
-		session.setAttribute("adminExit", adminListAll);// 存储所有管理员信息
+		session.setAttribute("adminAll", adminListAll);// 存储所有管理员信息
 		// 存储所有用户信息
 		for (int i = 0; i < customerExit.size(); i++) {
 			for (int j = 0; j < adminListAll.size(); j++) {
-				if (customerExit.get(i).equals(adminListAll.get(j))
-						&& customerExit.get(i).hashCode() == adminListAll.hashCode()) {
+				if (customerExit.get(i).equals(adminListAll.get(j)) &&  customerExit.get(i).hashCode() == adminListAll.get(j).hashCode()) {
 					customerExit.remove(i);
 					// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
 					i--;
 				}
 			}
 		}
-		session.setAttribute("customerExit", customerExit);// 存储所有用户信息
+		session.setAttribute("customerAll", customerExit);// 存储所有用户信息
 		// 获取书籍信息
 		Book book = new Book();
 		List<Book> bookAll = bookBiz.selectAll(book);

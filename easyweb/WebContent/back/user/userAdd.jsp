@@ -1,7 +1,6 @@
-<%@page import="com.yc.easyweb.biz.UserBiz"%>
-<%@page import="com.yc.easyweb.bean.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -41,153 +40,138 @@
 <script
 	src="${path}/back/assets/layer/layer.js"
 	type="text/javascript"></script>
-<script
-	src="${path}/back/assets/laydate/laydate.js"
-	type="text/javascript"></script>
 	
 <script type="text/javascript">
-	//监听input框的变化
-	window.onload = function()
-	{
-		 var msg =  document.getElementById("notice").value;
-		 if (msg == 0) {
-			alert("添加失败！！！");
-	     }else if(msg == 1){
-	    	 alert("添加成功！！！");
-		}else if(msg == 2){
-			document.getElementById("tishi").innerText = "请输入用户名！！！";
-		}else if(msg == 3){
-			document.getElementById("tishi").innerText = "请输入电话！！！";
-		}else if(msg == 4){
-			document.getElementById("tishi").innerText = "用户名不合法！！！";
-		}else if(msg == 5){
-			document.getElementById("tishi").innerText ="用户名已存在！！！";
-		}else if(msg == 6){
-			document.getElementById("tishi").innerText = "电话不合法！！！";
-		}else if(msg == 7){
-			document.getElementById("tishi").innerText = "邮箱不合法！！！";
-		}else if(msg == 10){
-	    	 alert("更新成功！！！");
-		}else if(msg == 9){
-	    	 alert("更新失败！！！");
-		}
-	}
-	var xmlhttp;
-	// ajax
-	try {
-		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} catch (e) {
-			try {
-				xmlhttp = new XMLHttpRequest();
-			} catch (e) {
-			}
-		}
-	}
-	function doupdate(id){
-		if(id == ''){
-			alert("不能进行次操作！！！");
-			return;
-		}
-		if(xmlhttp!=null){
-			// 定义请求地址
-			var url ="${path}/user.s?op=updateState&upassword=1&uid="+id;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST",url,true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange=function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					// 替换空格
-					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					if(msg == 1){
-						alert("重置成功！！！");
-					}else{
-						alert("重置失败！！！");
-					}
+	//用户名判断
+	function checkUname(){
+		var uname = $("#uname").val().replace(/\ +/g,"");
+		var param ="username="+uname;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/reg.s?op=checkName",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$("#unameTishi").text(result.msg).css("color", 'green');
+						return;
+		        	}
+		        	if(result.code == 0){
+		        		$("#unameTishi").text(result.msg).css("color", 'red');
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        		return;
+		        	}
 				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		}else{
-			alert('不能创建XMLHttpRequest对象实例');
-		} 
+			});
 	}
-	function show(){
-		var uid = "${param.uid}";
-		if (xmlhttp != null) {
-			if(uid == ""){
-				uid= -1;
-			}
-			// 定义请求地址
-			var url = "${path}/user.s?op=add&uid="+uid;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST", url, true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					/* var msg = xmlhttp.responseText.replace(/\s/gi, "");
-					if(msg == 0){
-						alert("暂无数据");
-					} */
+	//邮箱判断
+	function checkEmail(){
+		var uemail = $("#uemail").val().replace(/\ +/g,"");
+		var param ="uemail="+uemail;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/reg.s?op=checkEmail",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$("#uemailTishi").text(result.msg).css("color", 'green');
+						return;
+		        	}
+		        	if(result.code == 0){
+		        		$("#uemailTishi").text(result.msg).css("color", 'red');
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        		return;
+		        	}
 				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		} else {
-			alert("不能创建XMLHttpRequest对象实例")
-		}
+			});
 	}
-	</script>
+	//电话判断
+	function checkPhone(){
+		var uphone = $("#uphone").val().replace(/\ +/g,"");
+		var param ="uphone="+uphone;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/reg.s?op=checkPhone",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$("#uphoneTishi").text(result.msg).css("color", 'green');
+						return;
+		        	}
+		        	if(result.code == 0){
+		        		$("#uphoneTishi").text(result.msg).css("color", 'red');
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        		return;
+		        	}
+				}
+			});
+	}
+</script>
 <title>用户添加</title>
 </head>
-<body onload="show()">
-	<form action="${path }/user.s?op=add" method="post" >
-	<div class="add_menber" id="add_menber_style" >
+<body >
+	<form >
+	<div class="add_menber" id="add_menber_style_child" >
 		<ul class=" page-content">
 			<li><label class="label_name">用&nbsp;&nbsp;户 &nbsp;名：</label><span
 				class="add_name">
-				<input placeholder="请输入10个以内字母,汉字" id ="username_add"type="text"class="text_add" name="username" value="${userShowAdd.uname}"/></span>
+				<input placeholder="请输入10个以内字母,汉字" id ="uname"type="text"class="text_add" name="uname" oninput="checkUname()"/>
+				<span id="unameTishi" style="width:100px;margin-left:5px;"></span></span>
 				<div class="prompt r_f"></div></li>
 				<li><label class="label_name">电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</label><span
 				class="add_name"><input placeholder="请输入11位数字" name="uphone" id ="uphone" type="text"
-					class="text_add" value="${userShowAdd.uphone }"/></span>
+					class="text_add" oninput="checkPhone();"/><span id="uphoneTishi"style="width:100px;margin-left:5px;"></span>
+				</span>
+				<div class="prompt r_f"></div>
+				</li>
+				<li><label class="label_name">电子邮箱：</label>
+				<span
+				class="add_name"><input placeholder="请输入电子邮箱" name="uemail" id ="uemail"type="text"oninput="checkEmail()"
+					class="text_add" /><span id="uemailTishi"style="width:100px;margin-left:5px;" ></span>
+				</span>
 				<div class="prompt r_f"></div></li>
-				<li><label class="label_name">电子邮箱：</label><span
-				class="add_name"><input placeholder="请输入电子邮箱" name="uemail" id ="uemail"type="text"
-					class="text_add" value="${userShowAdd.uemail }"/></span>
-				<div class="prompt r_f"></div></li>
-				
-				<li><label class="label_name">加入时间：</label><span
-				class="add_name"><input class="inline laydate-icon" id="bdate" name="bdate"
-							type="date" style="width: 150px;" value="${userShowAdd.utime }">
-					</span>
-				<div class="prompt r_f"></div></li>
-				
-				
-						
 				<li ><label class="label_name">级&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label><span
 				class="add_name">
-				<select style="width:100px;margin-left:10px;" class="text_add"name="utype">
-					<option>${uType[userShowAdd.utype] }</option>
-					<option>2-用户</option>
-					<option>3-会员</option>
-					<option>4-钻石会员</option>
+				<select style="width:150px;margin-left:10px;" class="text_add"name="utype" id="utype">
+					<c:forEach items="${uType}" var="uType">
+						<option value="${uType }">${userType[uType ]}</option>
+					</c:forEach>
 				</select>
 				</span>
 				<div class="prompt r_f"></div></li>
-				<li>
-				<input type="submit" value="提交" style="width:80px;">
-				<input type="button" value="重置密码" style="width:80px;"onclick="doupdate(${param.uid})" >
+				<%-- <li>
+				<input type="button" value="提交" style="width:80px;" onclick="addUser();">
 				<input type="button" value="返回" style="width:80px;" onclick="window.location.href='${path}/back/user/user_list.jsp'">
-				</li>
-				<li><label id="tishi" style="color: red;font-size:18px; margin-left:20px;padding-bottom: 20px;"></label>
-				</li>
+				</li> --%>
 		</ul>
 	</div>
 	</form>

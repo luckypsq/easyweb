@@ -490,24 +490,5 @@ public class RegServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		}
-		/**
-			getOutputStream() has already been called for this response
-			在JSP中输出图片，控制台会抛出该异常，必须添加以下代码，解决错误
-			String path = this.getServletContext().getContextPath();
-		// 随机生成验证码
-		String verifyCode = VerifyCodeUtils.outputImage(response);
-		// 将验证码添加到会话中，注意：在会话中保存的验证码的名称 vscode
-		session.setAttribute("vcode", verifyCode);
-		out.clearError();
-		out = pageContext.pushBody();
-		String url = path+"/images";
-		// 定义图片目录
-		File dir = new File(url);
-		// 生成图片文件
-		File file = new File(dir, verifyCode + ".jpg");
-		String img = verifyCode + ".jpg";
-		session.setAttribute("codeImg", img);
-		*/ 
-		
 	}
 }
