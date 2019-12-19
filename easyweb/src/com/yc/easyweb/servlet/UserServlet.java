@@ -1,25 +1,29 @@
 package com.yc.easyweb.servlet;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.yc.easyweb.bean.Book;
+import com.yc.easyweb.bean.OrderDetial;
 import com.yc.easyweb.bean.Result;
 import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
+import com.yc.easyweb.biz.BookBiz;
+import com.yc.easyweb.biz.EorderBiz;
 import com.yc.easyweb.biz.UserBiz;
 
 public class UserServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private UserBiz userBiz = new UserBiz();
+	private BookBiz bookBiz = new BookBiz();
+	private EorderBiz eorderBiz = new EorderBiz();
 	private Gson gson = new Gson();
 	private Result result;
 
@@ -48,6 +52,32 @@ public class UserServlet extends BaseServlet {
 							response.getWriter().append(json);
 							return;
 						}
+						//b.是否发布了书籍
+						Book book = new Book();
+						book.setUid(Long.parseLong(string));
+						List<Book> books = bookBiz.selectAll(book);
+						if(books.size()>0){
+							result = Result.failure("该用户还有尚未售完或下架的书籍,不能进行此操作！！！");
+							String json = gson.toJson(result);
+							response.setContentType("application/json;charset=UTF-8");
+							response.getWriter().append(json);
+							return;
+						}
+						//c.是否有订单未处理完
+						OrderDetial orderDetial = new OrderDetial();
+						orderDetial.setUid(Long.parseLong(string));
+						List<OrderDetial> orderDetials = eorderBiz.selectAllDetail(orderDetial);
+						if(orderDetials.size() >0 ){
+							for (OrderDetial order : orderDetials) {
+								if(order.getEostate() != 5 && order.getEostate() != 6){
+									result = Result.failure("该用户还有尚未完成的订单,不能进行此操作！！！");
+									String json = gson.toJson(result);
+									response.setContentType("application/json;charset=UTF-8");
+									response.getWriter().append(json);
+									return;
+								}
+							}
+						}
 						user.setUstate(3);
 						list.add(user);
 					}
@@ -70,11 +100,16 @@ public class UserServlet extends BaseServlet {
 					List<User> adminListAll = userBiz.selectAll(user1);
 					user1.setUtype(5);
 					List<User> adminList = userBiz.selectAll(user1);
+					int[] adminSize = new int[1000];
+					adminSize[0] = adminListAll.size();
+					adminSize[1] = adminList.size();
+					session.setAttribute("adminSize", adminSize);
 					if (adminList.size() != 0) {
 						for (User u : adminList) {
 							adminListAll.add(u);
 						}
 					}
+					session.setAttribute("adminAll", adminListAll);// 存储所有管理员信息
 					// 剔除管理员
 					for (int i = 0; i < customerExit.size(); i++) {
 						for (int j = 0; j < adminListAll.size(); j++) {
@@ -83,6 +118,7 @@ public class UserServlet extends BaseServlet {
 								customerExit.remove(i);
 								// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
 								i--;
+								break;
 							}
 						}
 					}
@@ -155,17 +191,17 @@ public class UserServlet extends BaseServlet {
 			}
 			if (ustate != null && !ustate.isEmpty()) {
 				userNew.setUstate(Integer.parseInt(ustate));
-			}else if (upwd != null && !upwd.isEmpty()) {
+			} else if (upwd != null && !upwd.isEmpty()) {
 				if (upwd.equals("1")) {
 					userNew.setUpassword("aaaa8888");
-				}else {
+				} else {
 					result = Result.failure("更新失败！！！");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-			}else {
+			} else {
 				result = Result.failure("更新失败！！！");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
@@ -177,16 +213,22 @@ public class UserServlet extends BaseServlet {
 				result = Result.success("操作成功！！！");
 				// 更新数据
 				User user = new User();
+				// 更新管理员数据
 				List<User> customerExit = userBiz.selectAll(user);// 存储所有用户信息
 				user.setUtype(1);
 				List<User> adminListAll = userBiz.selectAll(user);
 				user.setUtype(5);
 				List<User> adminList = userBiz.selectAll(user);
+				int[] adminSize = new int[1000];
+				adminSize[0] = adminListAll.size();
+				adminSize[1] = adminList.size();
+				session.setAttribute("adminSize", adminSize);
 				if (adminList.size() != 0) {
 					for (User u : adminList) {
 						adminListAll.add(u);
 					}
 				}
+				session.setAttribute("adminAll", adminListAll);// 存储所有管理员信息
 				// 剔除管理员
 				for (int i = 0; i < customerExit.size(); i++) {
 					for (int j = 0; j < adminListAll.size(); j++) {
@@ -195,10 +237,12 @@ public class UserServlet extends BaseServlet {
 							customerExit.remove(i);
 							// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
 							i--;
+							break;
 						}
 					}
 				}
 				session.setAttribute("customerAll", customerExit);// 存储所有用户信息
+
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -306,8 +350,8 @@ public class UserServlet extends BaseServlet {
 		if (uemail != null && !uemail.isEmpty()) {
 			userShow.setUemail(uemail);
 		}
-		if(utype != null && !utype.isEmpty()){
-			userShow.setUtype(Integer.parseInt(utype));	
+		if (utype != null && !utype.isEmpty()) {
+			userShow.setUtype(Integer.parseInt(utype));
 		}
 		try {
 			List<User> customerExit = userBiz.selectAll(userShow);// 存储所有用户信息
@@ -329,6 +373,7 @@ public class UserServlet extends BaseServlet {
 						customerExit.remove(i);
 						// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
 						i--;
+						break;
 					}
 				}
 			}
@@ -441,13 +486,12 @@ public class UserServlet extends BaseServlet {
 				if (oldpassword.equals(user.getUpassword())) {
 					result = Result.success("原密码正确！！！");
 					String json = gson.toJson(result);
-
+					session.setAttribute("updateOldPwd", oldpassword);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 				} else {
 					result = Result.failure("原密码输入错误！！！");
 					String json = gson.toJson(result);
-
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 				}
@@ -881,6 +925,7 @@ public class UserServlet extends BaseServlet {
 							customerExit.remove(i);
 							// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
 							i--;
+							break;
 						}
 					}
 				}
@@ -1173,16 +1218,15 @@ public class UserServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 	}
-	
 
-	// 管理员更新用户信息
+	// 管理员更新用户和管理员信息
 	public void adminUpdateUser(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String uid = request.getParameter("uid");
 		String utype = request.getParameter("utype");
+		String usex = request.getParameter("form-field-radio");
 		User userNew = new User();
 		User userOld = new User();
-
 		String uname = (String) session.getAttribute("adminUpdateUname");
 		String uemail = (String) session.getAttribute("adminUpdateUemail");
 		String uphone = (String) session.getAttribute("adminUpdateUphone");
@@ -1228,46 +1272,54 @@ public class UserServlet extends BaseServlet {
 		try {
 			// 数据不合法
 			if (!check.equals("1/1/1/1")) {
-				result = Result.lack("数据不合法！！！",check);
+				result = Result.lack("数据不合法！！！", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			//用户存在
-			if(uid != null && !uid.isEmpty()){
+			// 用户存在
+			if (uid != null && !uid.isEmpty()) {
 				userOld.setUid(Long.parseLong(uid));
-			}else{
+			} else {
 				result = Result.failure("未选择用户！！！");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			//2.进行更新操作
-			if(utype != null && !utype.isEmpty()){
+			// 2.进行更新操作
+			if (utype != null && !utype.isEmpty()) {
 				userNew.setUtype(Integer.parseInt(utype));
 			}
+			if (usex != null && !usex.isEmpty()) {
+				userNew.setUsex(Integer.parseInt(usex));
+			}
 			int code = userBiz.update(userNew, userOld);
-			if(code > 0 ){
+			if (code > 0) {
 				result = Result.success("更新成功！！！");
-				//会话还原
-				String string = null; 
+				// 会话还原
+				String string = null;
 				session.setAttribute("adminUpdateUname", string);
 				session.setAttribute("adminUpdateUemail", string);
 				session.setAttribute("adminUpdateUphone", string);
-				//数据更新
+				// 数据更新
 				User user1 = new User();
 				List<User> customerExit = userBiz.selectAll(user1);// 存储所有用户信息
 				user1.setUtype(1);
 				List<User> adminListAll = userBiz.selectAll(user1);
 				user1.setUtype(5);
 				List<User> adminList = userBiz.selectAll(user1);
+				int[] adminSize = new int[1000];
+				adminSize[0] = adminListAll.size();
+				adminSize[1] = adminList.size();
+				session.setAttribute("adminSize", adminSize);
 				if (adminList.size() != 0) {
 					for (User u : adminList) {
 						adminListAll.add(u);
 					}
 				}
+				session.setAttribute("adminAll", adminListAll);// 存储所有管理员信息
 				// 剔除管理员
 				for (int i = 0; i < customerExit.size(); i++) {
 					for (int j = 0; j < adminListAll.size(); j++) {
@@ -1276,6 +1328,7 @@ public class UserServlet extends BaseServlet {
 							customerExit.remove(i);
 							// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
 							i--;
+							break;
 						}
 					}
 				}
@@ -1321,170 +1374,424 @@ public class UserServlet extends BaseServlet {
 			}
 		}
 	}
-	// TODO Auto-generated catch block
 
-
-	// 添加管理员
-	public void addAdmin(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, InvocationTargetException {
-		String name = request.getParameter("user-name");
-		String pwd = request.getParameter("userpassword");
-		String sex = request.getParameter("form-field-radio");
-		String phone = request.getParameter("user-tel");
-		String email = request.getParameter("email");
-		String type = request.getParameter("admin-role");
-		String uid = request.getParameter("uid");
-		String utime = request.getParameter("bdate");
-		int message = Integer.parseInt(uid);
+	// administrator页面数据显示
+	public void queryAdmin(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		session.setAttribute("uidAdd", message);
-		if (!uid.equals("-1")) {
-			User user2 = new User();
-			user2.setUid(Long.parseLong(uid));
-			try {
-				User userShow = userBiz.selectSingle(user2);
-				session.setAttribute("adminShowAdd", userShow);
-			} catch (BizException e) {
-				e.printStackTrace();
-			}
-		} else {
-			Map<String, String> show = new HashMap<String, String>();
-			show.put("uname", name);
-			show.put("usex", sex);
-			show.put("uphone", phone);
-			show.put("uemail", email);
-			show.put("utype", type);
-			show.put("utime", utime);
-			session.setAttribute("adminShowAdd", show);
-		}
 		User user = new User();
-		String url = "/back/admin/userAdd.jsp?name=" + name + "&phone=" + phone + "&email=" + email;
-		// 验证用户名 1.是否为空 2. 是否合法 3.是否存在
-		if (name != null && !name.isEmpty()) {
-			String reg = "^[\u4e00-\u9fa5a-zA-Z]{0,20}$";
-			if (name.matches(reg)) {
-				User user2 = new User();
-				user2.setUname(name);
-				try {
-					User user3 = userBiz.selectSingle(user2);
-					if (user3.getUid() == 0) {
-						user.setUname(name);
-					} else if (user3.getUid() != 0 && uid.equals("-1")) {
-						url = url + "&msg=" + 5;// 名字重复
-						request.getRequestDispatcher(url).forward(request, response);
-						return;
-					}
-				} catch (BizException e) {
-
-					e.printStackTrace();
+		String uname = request.getParameter("uname");
+		String uphone = request.getParameter("uphone");
+		String utype = request.getParameter("utype");
+		if (uname != null && !uname.isEmpty()) {
+			user.setUname(uname);
+		}
+		if (uphone != null && !uphone.isEmpty()) {
+			user.setUphone(uphone);
+		}
+		if (utype != null && !utype.isEmpty()) {
+			user.setUtype(Integer.parseInt(utype));
+		}
+		try {
+			// 刷新数据
+			user.setUtype(1);
+			List<User> adminListAll = userBiz.selectAll(user);
+			user.setUtype(5);
+			List<User> adminList = userBiz.selectAll(user);
+			int[] adminSize = new int[1000];
+			adminSize[0] = adminListAll.size();
+			adminSize[1] = adminList.size();
+			session.setAttribute("adminSize", adminSize);
+			if (adminList.size() != 0) {
+				for (User u : adminList) {
+					adminListAll.add(u);
 				}
-			} else {
-				url = url + "&msg=" + 4;// 名字不合法
-				request.getRequestDispatcher(url).forward(request, response);
+			}
+			session.setAttribute("adminAll", adminListAll);// 存储所有管理员信息
+			if (adminListAll.size() > 0) {
+				result = Result.success("查询成功！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
 				return;
 			}
-		} else {
-			url = url + "&msg=" + 2;// 名字为空
-			request.getRequestDispatcher(url).forward(request, response);
+			result = Result.failure("暂无数据！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
 			return;
-		}
-		// 验证电话 1.是否为空 2.是否合法
-		if (phone != null && !phone.isEmpty()) {
-			String reg = "^[0-9]{11}$";
-			if (phone.matches(reg)) {
-				user.setUphone(phone);
-			} else {
-				url = url + "&msg=" + 6;// 电话不合法
-				request.getRequestDispatcher(url).forward(request, response);
-				return;
+		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
 			}
-		} else {
-			url = url + "&msg=" + 3;// 电话为空
-			request.getRequestDispatcher(url).forward(request, response);
-			return;
-		}
-		if (email != null && !email.isEmpty()) {
-			String reg = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
-			if (email.matches(reg)) {
-				user.setUemail(email);
-			} else {
-				url = url + "&msg=" + 7;// 邮箱不合法
-				request.getRequestDispatcher(url).forward(request, response);
-				return;
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
 			}
-		} else {
-			url = url + "&msg=" + 8;// 邮箱为空
-			request.getRequestDispatcher(url).forward(request, response);
-			return;
+			e.printStackTrace();
 		}
-		// 密码
-		if (pwd != null && !pwd.isEmpty()) {
-			String reg = "^[A-Za-z0-9_.]{6,20}$";
-			if (pwd.matches(reg)) {
-				user.setUpassword(pwd);
-			} else {
-				url = url + "&msg=" + 11;// 密码不合法
-				request.getRequestDispatcher(url).forward(request, response);
-				return;
-			}
-		} else {
-			url = url + "&msg=" + 12;// 密码为空
-			request.getRequestDispatcher(url).forward(request, response);
-			return;
-		}
-		// 性别
-		if (sex != null && !sex.isEmpty()) {
-			user.setUsex(Integer.parseInt(sex));
-		}
-		// 时间
-		if (utime != null) {
-			user.setUtime(utime);
-		}
-		// 级别
-		if (type != null && !type.isEmpty()) {
-			user.setUtype(Integer.parseInt(type));
+
+	}
+
+	// 管理员添加管理员
+	public void addAdmin(HttpServletRequest request, HttpServletResponse response) {
+		User user = new User();
+		HttpSession session = request.getSession();
+		String uname = (String) session.getAttribute("regUname");
+		String uphone = (String) session.getAttribute("regUphone");
+		String uemail = (String) session.getAttribute("regUemail");
+		String usex = request.getParameter("form-field-radio");
+		String utype = request.getParameter("utype");
+
+		if (utype != null && !utype.isEmpty()) {
+			user.setUtype(Integer.parseInt(utype));
 		} else {
 			user.setUtype(5);
 		}
-		if (request.getParameter("bate") != null && !request.getParameter("bate").isEmpty()) {
-			user.setUtime(request.getParameter("bate"));
+		if (usex != null && !usex.isEmpty()) {
+			user.setUsex(Integer.parseInt(usex));
+		} else {
+			user.setUsex(0);
 		}
-		if (!uid.equals("-1")) {
-			User userOld = new User();
-			userOld.setUid(Long.parseLong(uid));
-			try {
-				int j = userBiz.update(user, userOld);
-				if (j > 0) {
-					url = url + "&msg=" + 10;
-				} else {
-					url = url + "&msg=" + 9;
-				}
-				request.getRequestDispatcher(url).forward(request, response);
-				return;
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			} catch (BizException e) {
-
-				e.printStackTrace();
-			}
+		// 1.验证数据的合法性
+		String check = "1";
+		// 用户名
+		if (uname != null && !uname.isEmpty()) {
+			user.setUname(uname);
+			check = check + "/1";
+		} else {
+			check = check + "/-1";
+		}
+		// 电话
+		if (uphone != null && !uphone.isEmpty()) {
+			user.setUphone(uphone);
+			check = check + "/1";
+		} else {
+			check = check + "/-1";
+		}
+		// 邮箱
+		if (uemail != null && !uemail.isEmpty()) {
+			user.setUemail(uemail);
+			check = check + "/1";
+		} else {
+			check = check + "/-1";
 		}
 		try {
-			user.setUstate(1);
-			int i = userBiz.insert(user);
-			if (i > 0) {
-				url = url + "&msg=" + 1;
-			} else {
-				url = url + "&msg=" + -1;
+			if (!check.equals("1/1/1/1")) {
+				result = Result.lack("信息不完整！！！", check);
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
 			}
-			request.getRequestDispatcher(url).forward(request, response);
-		} catch (SQLException e) {
-
-			e.printStackTrace();
+			// 2.添加
+			// 获取系统当前时间
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			user.setUtime(df.format(date));
+			user.setUpassword("aaaa8888");
+			user.setUstate(1);
+			int code = userBiz.insert(user);
+			if (code > 0) {
+				result = Result.success("添加成功！！！");
+				// 会话还原
+				String string = null;
+				session.setAttribute("regUname", string);
+				session.setAttribute("regUphone", string);
+				session.setAttribute("regUpwd", string);
+				session.setAttribute("regUemail", string);
+				// 数据刷新
+				User user1 = new User();
+				user1.setUtype(1);
+				List<User> adminListAll = userBiz.selectAll(user1);
+				user1.setUtype(5);
+				List<User> adminList = userBiz.selectAll(user1);
+				int[] adminSize = new int[1000];
+				adminSize[0] = adminListAll.size();
+				adminSize[1] = adminList.size();
+				session.setAttribute("adminSize", adminSize);
+				if (adminList.size() != 0) {
+					for (User u : adminList) {
+						adminListAll.add(u);
+					}
+				}
+				session.setAttribute("adminAll", adminListAll);// 存储所有管理员信息
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			result = Result.failure("添加失败！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
 		} catch (BizException e) {
-
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+			e.printStackTrace();
+		} catch (SQLException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
 			e.printStackTrace();
 		}
 	}
 
+	// 管理员更新个人密码
+	public void adminUpdatePwd(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String upassword = (String) session.getAttribute("regUpwd");
+		String oldpwd = (String) session.getAttribute("updateOldPwd");
+		String checkPwd = (String) session.getAttribute("checkPwd");
+		User user = new User();
+		User userOld = (User) session.getAttribute("loginedUser");
+		// 1.验证数据的合法性
+		String check = "1";
+		if (upassword != null && !upassword.isEmpty()) {
+			user.setUpassword(upassword);
+			check = check + "/1";
+		} else {
+			check = check + "/-1";
+		}
+		if (oldpwd != null && !oldpwd.isEmpty()) {
+			check = check + "/1";
+		} else {
+			check = check + "/-1";
+		}
+		if (checkPwd != null && !checkPwd.isEmpty()) {
+			check = check + "/1";
+		} else {
+			check = check + "/-1";
+		}
+		try {
+			if (!check.equals("1/1/1/1")) {
+				result = Result.lack("信息不完整！！!", check);
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			if (userOld.getUid() == 0) {
+				result = Result.failure("更新失败！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			// 2.更新
+			int code = userBiz.update(user, userOld);
+			if (code > 0) {
+				result = Result.success("更新成功,为避免数据显示有误,请您稍后重新登录！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			result = Result.failure("更新失败！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+			e.printStackTrace();
+		} catch (SQLException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+			e.printStackTrace();
+		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+		}
+	}
+
+	// 管理员更新个人信息
+	public void adminUpdate(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		User userNew = new User();
+		User userOld = (User) session.getAttribute("loginedUser");
+		String uname = (String) session.getAttribute("adminUpdateUname");
+		String uemail = (String) session.getAttribute("updateUemail");
+		String uage = (String) session.getAttribute("updateUage");
+		String uphone = (String) session.getAttribute("updateUphone");
+		String usex = request.getParameter("usex");
+		try {
+			// 1.验证数据的合法性
+			String check = "1";
+			// a.用户名
+			if (uname != null && !uname.isEmpty()) {
+				userNew.setUname(uname);
+				check = check + "/1";
+			} else if (request.getParameter("uname") != null && !request.getParameter("uname").isEmpty()) {
+				userNew.setUname(request.getParameter("uname"));
+				check = check + "/1";
+			} else {
+				check = check + "/-1";
+			}
+			// b.邮箱
+			if (uemail != null && !uemail.isEmpty()) {
+				userNew.setUemail(uemail);
+				check = check + "/1";
+			} else if (request.getParameter("uemail") != null && !request.getParameter("uemail").isEmpty()) {
+				userNew.setUemail(request.getParameter("uemail"));
+				check = check + "/1";
+			} else {
+				check = check + "/-1";
+			}
+			// c.年龄
+			if (uage != null && !uage.isEmpty()) {
+				userNew.setUage(Integer.parseInt(uage));
+				check = check + "/1";
+			} else if (request.getParameter("uage") != null && !request.getParameter("uage").isEmpty()) {
+				userNew.setUage(Integer.parseInt(request.getParameter("uage")));
+				check = check + "/1";
+			} else {
+				check = check + "/-1";
+			}
+			// d.电话
+			if (uphone != null && !uphone.isEmpty()) {
+				userNew.setUphone(uphone);
+				check = check + "/1";
+			} else if (request.getParameter("uphone") != null && !request.getParameter("uphone").isEmpty()) {
+				userNew.setUphone(request.getParameter("uphone"));
+				check = check + "/1";
+			} else {
+				check = check + "/-1";
+			}
+			if (!check.equals("1/1/1/1/1")) {
+				result = Result.lack("信息不完整！！！", check);
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			// 2.检验是否登录
+			if (userOld.getUid() == 0) {
+				result = Result.failure("更新失败！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			// 3.更新
+			if (usex != null && !usex.isEmpty()) {
+				userNew.setUsex(Integer.parseInt(usex));
+			}
+			int code = userBiz.update(userNew, userOld);
+			if (code <= 0) {
+				result = Result.failure("更新失败！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			result = Result.success("更新成功！！！");
+			// a.会话还原
+			String string = null;
+			session.setAttribute("adminUpdateUname", string);
+			session.setAttribute("updateUemail", string);
+			session.setAttribute("updateUage", string);
+			session.setAttribute("updateUphone", string);
+			// b.数据更新
+			User user = userBiz.selectSingle(userNew);
+			session.setAttribute("loginedUser", user);
+			User user1 = new User();
+			user1.setUtype(1);
+			List<User> adminListAll = userBiz.selectAll(user1);
+			user1.setUtype(5);
+			List<User> adminList = userBiz.selectAll(user1);
+			int[] adminSize = new int[1000];
+			adminSize[0] = adminListAll.size();
+			adminSize[1] = adminList.size();
+			session.setAttribute("adminSize", adminSize);
+			if (adminList.size() != 0) {
+				for (User u : adminList) {
+					adminListAll.add(u);
+				}
+			}
+			session.setAttribute("adminAll", adminListAll);// 存储所有管理员信息
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+			e.printStackTrace();
+		} catch (SQLException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+			e.printStackTrace();
+		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+		}
+	}
 }

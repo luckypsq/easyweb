@@ -203,7 +203,7 @@ function checkPasswordsignup_confirm(){
     var passwordsignup_confirm = document.getElementById("passwordsignup_confirm").value;
     	passwordsignup_confirm = passwordsignup_confirm.replace(/\s/gi,"");
     if(xmlhttp!=null){
-		var url ="reg.s?op=checkPassword01&passwordsignup_confirm="+passwordsignup_confirm+"&upassword="+upassword;
+		var url ="reg.s?op=checkRePassword&confirm="+passwordsignup_confirm+"&upassword="+upassword;
 		xmlhttp.open("POST",url,true);
 		xmlhttp.onreadystatechange=function(){
 			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){

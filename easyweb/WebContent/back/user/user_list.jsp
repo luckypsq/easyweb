@@ -228,10 +228,10 @@ function updatePwd(id){
 							if(m[1] == "-1"){
 								$("#unameTishi").text("用户名未输入或不合法！").css("color", 'red');
 							}
-							if(m[2] == "-1"){
+							if(m[3] == "-1"){
 								$("#uphoneTishi").text("电话未输入或不合法！").css("color", 'red');
 							}
-							if(m[3] == "-1"){
+							if(m[2] == "-1"){
 								$("#uemailTishi").text("邮箱未输入或不合法！").css("color", 'red');
 							}
 			        		return false;
@@ -409,8 +409,8 @@ function member_edit(id){
         cache:true, // 设置为 false 将不缓存此页面
         dataType: 'json', // 返回对象
         success: function(result) {
+        		$('#update_menber_style').load('${path}/back/user/userEdit.jsp');
 				if(result.code == 1){
-					$('#update_menber_style').load('${path}/back/user/userEdit.jsp');
 					  layer.open({
 					        type: 1,
 					        title: '修改用户信息',
@@ -471,10 +471,10 @@ function member_edit(id){
 												if(m[1] == "-1"){
 													$("#unameTishi").text("用户名未输入或不合法！").css("color", 'red');
 												}
-												if(m[2] == "-1"){
+												if(m[3] == "-1"){
 													$("#uphoneTishi").text("电话未输入或不合法！").css("color", 'red');
 												}
-												if(m[3] == "-1"){
+												if(m[2] == "-1"){
 													$("#uemailTishi").text("邮箱未输入或不合法！").css("color", 'red');
 												}
 								        		return false;

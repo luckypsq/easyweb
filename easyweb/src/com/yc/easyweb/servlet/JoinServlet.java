@@ -181,7 +181,7 @@ public class JoinServlet extends BaseServlet {
 		int[] uType = { 2, 3, 4, 6, 7,8,9 ,10};
 		session.setAttribute("userType", userType);
 		session.setAttribute("uType", uType);
-		String[] adminType = { "", "超级管理员", "", "", "" ,"管理员"};
+		String[] adminType = { "", "超级管理员", "", "", "" ,"普通管理员"};
 		session.setAttribute("adminType", adminType);
 		String[] userSex = { "保密", "男", "女" };
 		session.setAttribute("userSex", userSex);
@@ -326,6 +326,10 @@ public class JoinServlet extends BaseServlet {
 		List<User> adminListAll = userBiz.selectAll(user);
 		user.setUtype(5);
 		List<User> adminList = userBiz.selectAll(user);
+		int [] adminSize = new int[1000];
+		adminSize[0] = adminListAll.size();
+		adminSize[1] = adminList.size();
+		session.setAttribute("adminSize",adminSize);
 		if (adminList.size() != 0) {
 			for (User u : adminList) {
 				adminListAll.add(u);
@@ -338,7 +342,8 @@ public class JoinServlet extends BaseServlet {
 				if (customerExit.get(i).equals(adminListAll.get(j)) &&  customerExit.get(i).hashCode() == adminListAll.get(j).hashCode()) {
 					customerExit.remove(i);
 					// 此时需注意，因为list会动态变化不像数组会占位，所以当前索引应该后退一位
-					i--;
+						i--;
+						break ;
 				}
 			}
 		}

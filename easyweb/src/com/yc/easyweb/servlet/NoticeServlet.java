@@ -34,6 +34,10 @@ public class NoticeServlet extends BaseServlet {
 				Notice notice2 = noticeBiz.selectSingle(notice);
 				if(notice2.getNid() != 0){
 					session.setAttribute("noticeDetail", notice2);
+					Notice noticeNew = new Notice();
+					long num = notice2.getNnumber() + Long.parseLong("1");
+					noticeNew.setNnumber(num);
+					noticeBiz.update(notice2, noticeNew);
 					result = Result.success("≤È—Ø≥…π¶£°£°£°");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");

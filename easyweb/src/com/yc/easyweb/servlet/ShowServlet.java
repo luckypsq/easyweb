@@ -4,9 +4,6 @@ package com.yc.easyweb.servlet;
  * 综合信息展示的servlet
  */
 import java.io.IOException;
-import java.util.*;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,10 +15,7 @@ import com.yc.easyweb.biz.*;
 public class ShowServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();
-	private UserBiz userBiz = new UserBiz();
 	private BookBiz bookBiz = new BookBiz();
-	private EorderBiz eorderBiz = new EorderBiz();
-	private NoticeBiz noticeBiz = new NoticeBiz();
 	private Result result;
 
 	/*

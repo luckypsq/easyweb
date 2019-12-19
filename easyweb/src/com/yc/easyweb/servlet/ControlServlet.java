@@ -123,57 +123,7 @@ public class ControlServlet extends BaseServlet {
 
 	}
 
-	//administrator页面数据显示
-	public void queryAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
-		HttpSession session = request.getSession();
-		PrintWriter out = response.getWriter();
-		UserBiz userBiz = new UserBiz();
-		User user = new User();
-		String userName = null;
-		String userPhone = null;
-		int userType = 0;
-		if(request.getParameter("name") != null && !request.getParameter("name").toString().isEmpty()){
-			user.setUname(request.getParameter("name"));
-			userName = request.getParameter("name");
-		}
-		if(request.getParameter("phone") != null && !request.getParameter("phone").toString().isEmpty()){
-			user.setUphone(request.getParameter("phone"));
-			userPhone = request.getParameter("phone");
-		}
-		if(request.getParameter("type") != null && !request.getParameter("type").toString().isEmpty()){
-			userType = Integer.parseInt(request.getParameter("type"));
-		}
-		List<User> userList1 = null;
-		List<User> userList2 = null;
-		user.setUtype(1);
-		userList2 = userBiz.selectAll(user);
-		user.setUtype(5);
-		userList1 = userBiz.selectAll(user);
-		List<User> userList3 = userBiz.selectAll(user);
-		if(userList2.size() != 0){
-			for (User user2 : userList2) {
-				userList1.add(user2);
-			}
-		}
-		if(userType == 5 ){
-			session.setAttribute("adminAllExit", userList3);// 存储所有存在的管理员信息
-		}else if(userType == 1){
-			session.setAttribute("adminAllExit", userList2);// 存储所有存在的管理员信息
-		}else if(userType == 0){
-			session.setAttribute("adminAllExit", userList1);// 存储所有存在的管理员信息
-		}
-		
-		int [] numAdmin = {0,0,0};
-		numAdmin[0] = userList2.size();
-		numAdmin[1] = userList3.size();
-		numAdmin[2] = userList1.size();
-		session.setAttribute("numAdmin", numAdmin);// 存储所有存在的管理员信息
-		session.setAttribute("userName", userName);
-		session.setAttribute("userPhone", userPhone);
-		if(userList1.size() == 0 ){
-			out.print(1);
-		}
-	}
+	
 	
 	//Competence页面数据显示
 	public void queryCom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {

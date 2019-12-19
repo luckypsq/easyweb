@@ -48,7 +48,7 @@
 //用户名判断
 function checkUnameUpdate(id){
 	var uname = $("#unameUpdate").val().replace(/\ +/g,"");
-	var param ="username="+uname+"&uid"+id;
+	var param ="username="+uname+"&uid="+id;
 	$.ajax({
         type: "post",
         url: "${path}/user.s?op=adminCheckName",
@@ -165,7 +165,7 @@ function checkPhoneUpdate(id){
 				<li ><label class="label_name">级&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label><span
 				class="add_name">
 				<select style="width:100px;margin-left:10px;" class="text_add"name="utypeUpdate" id="utypeUpdate">
-					<option>${userType[userMessage.utype ]}</option>
+					<option value="${userMessage.utype }">${userType[userMessage.utype ]}</option>
 					<c:forEach items="${uType}" var="utype">
 						<option value="${utype }">${userType[utype ]}</option>
 					</c:forEach>

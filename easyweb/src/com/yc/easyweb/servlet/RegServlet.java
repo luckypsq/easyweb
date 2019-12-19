@@ -242,6 +242,7 @@ public class RegServlet extends BaseServlet {
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
+				return;
 			}else{
 				//输入为空
 				result = Result.failure("请输入密码！！！");
@@ -266,9 +267,10 @@ public class RegServlet extends BaseServlet {
 
 	
 	//确认密码
-	public void checkPassword01(HttpServletRequest request, HttpServletResponse response){
-		String confirm = request.getParameter("passwordsignup_confirm");
+	public void checkRePassword(HttpServletRequest request, HttpServletResponse response){
+		String confirm = request.getParameter("confirm");
 		String upassword = request.getParameter("upassword");
+		HttpSession session = request.getSession();
 		try {
 			if(upassword == null ||  upassword.isEmpty()){
 				result = Result.failure("请输入密码！！！");
@@ -292,9 +294,11 @@ public class RegServlet extends BaseServlet {
 				return ;
 			} 
 			result = Result.success("密码一致！！！");
+			session.setAttribute("checkPwd", "1");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
+			return ;
 		} catch (IOException e) {
 			result = Result.error("业务繁忙,请稍等几分钟再操作！");
 			String json = gson.toJson(result);
