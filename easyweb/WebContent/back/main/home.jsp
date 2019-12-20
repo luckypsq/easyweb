@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html >
 <head>
 <title>易书网后台管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -25,7 +25,7 @@
 			</button>
 			<i class="icon-ok green"></i>
 			欢迎使用
-			<strong class="green">易书网后台管理系统<small>(v1.1)</small></strong>
+			<strong class="green">易书网后台管理系统<small>(v1.2)</small></strong>
 			,你本次登录时间为${date[0] }年${date[1] }月${date[2] }日${date[3] }时${date[4] }分
 		</div>
 		<div class="state-overview clearfix">
@@ -35,7 +35,7 @@
 						<i class="icon-user"></i>
 					</div>
 					<div class="value">
-						<h1>${customerExit.size()}</h1>
+						<h1>${customerAll.size()}</h1>
 						<p>书城用户</p>
 					</div>
 				</a> </section>

@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -191,11 +191,6 @@ function show(){
         success: function(result) {
 				if(result.code == 1){
 					$('#testIframe').load('${path}/back/book/book_list_show.jsp');
-					layer.msg(result.msg, {
-						icon : 6,
-						time : 1000,
-						title: "提示"
-					});
 	        		return ;
 	        	}
 	        	if(result.code == 0){
@@ -432,11 +427,6 @@ function typeClick(id){
         success: function(result) {
 				if(result.code == 1){
 					$('#testIframe').load('${path}/back/book/book_list_show.jsp');
-					layer.msg(result.msg, {
-						icon : 6,
-						time : 1000,
-						title: "提示"
-					});
 	        		return ;
 	        	}
 	        	if(result.code == 0){
@@ -487,17 +477,7 @@ var code;
 			        dataType: 'json', // 返回对象
 			        success: function(result) {
 							if(result.code == 1){
-								$(obj)
-								.parents("tr")
-								.find(".td-manage")
-								.prepend(
-								'<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,'+id+')" href="javascript:;" title="上架"><i class="icon-ok bigger-120"></i></a>');
-								$(obj)
-								.parents("tr")
-								.find(".td-status")
-								.html(
-								'<span class="label label-defaunt radius">已下架</span>');
-								$(obj).remove();
+								$('#testIframe').load('${path}/back/book/book_list_show.jsp');
 								layer.msg(result.msg, {
 									icon : 6,
 									time : 1000,
@@ -536,9 +516,7 @@ var code;
 		        dataType: 'json', // 返回对象
 		        success: function(result) {
 						if(result.code == 1){
-							$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,'+id+')" javascript:;" title="下架"><i class="icon-ok bigger-120"></i></a>');
-							$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已上架</span>');
-							$(obj).remove();
+							$('#testIframe').load('${path}/back/book/book_list_show.jsp');
 							layer.msg(result.msg, {
 								icon : 6,
 								time : 1000,
@@ -579,6 +557,7 @@ var code;
 	        success: function(result) {
 					if(result.code == 1){
 						layer_show(title, url, w, h);
+						$('#testIframe').load('${path}/back/book/book_list_show.jsp');
 		        	}
 		        	if(result.code == 0){
 		        	layer.msg(result.msg, {
@@ -613,7 +592,7 @@ var code;
 		        dataType: 'json', // 返回对象
 		        success: function(result) {
 						if(result.code == 1){
-							$(obj).parents("tr").remove();
+							$('#testIframe').load('${path}/back/book/book_list_show.jsp');
 							layer.msg(result.msg, {
 								icon : 6,
 								time : 1000,

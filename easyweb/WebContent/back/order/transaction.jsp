@@ -1,33 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome.min.css" />
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
+<link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${path}/back/css/style.css"/>
+        <link rel="stylesheet" href="${path}/back/assets/css/font-awesome.min.css" />
+        <link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="${path}/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="${path}/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
 		<!--[if IE 7]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/font-awesome-ie7.min.css" />
+		  <link rel="stylesheet" href="${path}/back/assets/css/font-awesome-ie7.min.css" />
 		<![endif]-->
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="${path}/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="<%=application.getContextPath() %>/back/assets/js/ace-extra.min.js"></script>
+		<script src="${path}/back/assets/js/ace-extra.min.js"></script>
 		<!--[if lt IE 9]>
-		<script src="<%=application.getContextPath() %>/back/assets/js/html5shiv.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/respond.min.js"></script>
+		<script src="${path}/back/assets/js/html5shiv.js"></script>
+		<script src="${path}/back/assets/js/respond.min.js"></script>
 		<![endif]-->
         		<!--[if !IE]> -->
-		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js" type="text/javascript"></script>       
+		<script src="${path}/back/js/jquery-1.9.1.min.js" type="text/javascript"></script>       
 		<!-- <![endif]-->
-        <script src="<%=application.getContextPath() %>/back/assets/dist/echarts.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
+        <script src="${path}/back/assets/dist/echarts.js"></script>
+        <script src="${path}/back/assets/js/bootstrap.min.js"></script>
 <title>交易</title>
 </head>
 
@@ -37,19 +37,19 @@
    <ul class="state-overview clearfix">
     <li class="Info">
      <span class="symbol red"><i class="fa fa-jpy"></i></span>
-     <span class="value"><h4>交易金额</h4><p class="Quantity color_red">34565.68</p></span>
+     <span class="value"><h4>交易金额</h4><p class="Quantity color_red">${eorderTotal }</p></span>
     </li>
      <li class="Info">
      <span class="symbol  blue"><i class="fa fa-shopping-cart"></i></span>
-     <span class="value"><h4>订单数量</h4><p class="Quantity color_red">5656</p></span>
+     <span class="value"><h4>订单数量</h4><p class="Quantity color_red">${eorderAll.size() }</p></span>
     </li>
      <li class="Info">
      <span class="symbol terques"><i class="fa fa-shopping-cart"></i></span>
-     <span class="value"><h4>交易成功</h4><p class="Quantity color_red">34565</p></span>
+     <span class="value"><h4>交易成功</h4><p class="Quantity color_red">${eorderCount[3] }</p></span>
     </li>
      <li class="Info">
      <span class="symbol yellow"><i class="fa fa-shopping-cart"></i></span>
-     <span class="value"><h4>交易失败</h4><p class="Quantity color_red">34</p></span>
+     <span class="value"><h4>交易失败</h4><p class="Quantity color_red">${eorderCount[4] }</p></span>
     </li>
      <li class="Info">
      <span class="symbol darkblue"><i class="fa fa-jpy"></i></span>
@@ -77,7 +77,7 @@ $(window).resize(function(){
 
   require.config({
       paths: {
-          echarts: '<%=application.getContextPath() %>/back/assets/dist'
+          echarts: '${path}/back/assets/dist'
       }
   });
   require(

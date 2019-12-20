@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
@@ -30,7 +30,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -43,7 +43,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -56,7 +56,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -83,7 +83,7 @@
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-	    				timeout:200,
+	    				timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''
@@ -96,7 +96,7 @@
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-	    				timeout:200,
+	    				timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''

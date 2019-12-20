@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -258,11 +258,6 @@ function query(){
         success: function(result) {
 				if(result.code == 1){
 					$('#user_list_show_admin').load('${path}/back/user/user_list_show.jsp');
-					layer.msg(result.msg, {
-						icon :6,
-						time : 1000,
-						title: "提示"
-					});
 	        		return;
 	        	}
 	        	if(result.code == 0){
@@ -331,9 +326,7 @@ function member_stop(obj,id){
 	        dataType: 'json', // 返回对象
 	        success: function(result) {
 					if(result.code == 1){
-						$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,'+id+')" href="javascript:;" title="启用"><i class="icon-ok bigger-120"></i></a>');
-						$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-						$(obj).remove();
+						$('#user_list_show_admin').load('${path}/back/user/user_list_show.jsp');
 						layer.msg('已停用!',{icon: 1,time:1000});
 		        		return;
 		        	}
@@ -371,9 +364,7 @@ function member_start(obj,id){
 	        dataType: 'json', // 返回对象
 	        success: function(result) {
 					if(result.code == 1){
-						$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,'+id+')" href="javascript:;" title="停用"><i class="icon-ok bigger-120"></i></a>');
-						$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-						$(obj).remove();
+						$('#user_list_show_admin').load('${path}/back/user/user_list_show.jsp');
 						layer.msg('已启用!',{icon: 6,time:1000});
 		        		return;
 		        	}
@@ -517,7 +508,7 @@ function member_del(obj,id){
 	        dataType: 'json', // 返回对象
 	        success: function(result) {
 					if(result.code == 1){
-						$(obj).parents("tr").remove();
+						$('#user_list_show_admin').load('${path}/back/user/user_list_show.jsp');
 						layer.msg('已删除!',{icon:1,time:1000});
 		        		return;
 		        	}

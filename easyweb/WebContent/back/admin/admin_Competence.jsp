@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -201,36 +201,6 @@ jQuery(function($) {
 			return 'right';
 		return 'left';
 	}
-});
-$(function(){  
-	if(xmlhttp!=null){
-		// 定义请求地址
-		var url ="${path}/control.s?op=query";
-		// 以 POST 方式 开启连接
-		// POST 请求 更安全（编码）  提交的数据大小没有限制
-		xmlhttp.open("POST",url,true);
-		// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-		// 每次的状态改变都会调用该方法
-		xmlhttp.onreadystatechange=function(){
-			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-				// 替换空格
-				var msg = xmlhttp.responseText.replace(/\s/gi,"");
-				if(msg == 1){
-					layer.msg('暂无数据', {
-						icon : 5,
-						time : 1000
-						});
-				}
-			}
-		};
-		// 发送请求
-		xmlhttp.send(null);
-	}else{
-		layer.msg('不能创建XMLHttpRequest对象实例', {
-			icon : 2,
-			time : 1000
-			});
-	} 
 });
  /*权限-删除*/
 function Competence_del(obj,id){

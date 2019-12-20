@@ -123,6 +123,37 @@ public class UserServlet extends BaseServlet {
 						}
 					}
 					session.setAttribute("customerAll", customerExit);// 存储所有用户信息
+					Long [] userSize = new Long[100];
+					for (int i = 0; i < userSize.length; i++) {
+						userSize[i] = (long) 0;
+					}
+					for (User u : customerExit) {
+						if(u.getUtype() == 2){
+							userSize[0] = userSize[0] + 1;
+						}
+						if(u.getUtype() == 3){
+							userSize[1] = userSize[1] + 1;
+						}
+						if(u.getUtype() == 4){
+							userSize[2] = userSize[2] + 1;
+						}
+						if(u.getUtype() == 6){
+							userSize[3] = userSize[3] + 1;
+						}
+						if(u.getUtype() == 7){
+							userSize[4] = userSize[4] + 1;
+						}
+						if(u.getUtype() == 8){
+							userSize[5] = userSize[5] + 1;
+						}
+						if(u.getUtype() == 9){
+							userSize[6] = userSize[6] + 1;
+						}
+						if(u.getUtype() == 10){
+							userSize[7] = userSize[7] + 1;
+						}
+					}
+					session.setAttribute("userSize", userSize);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -242,7 +273,37 @@ public class UserServlet extends BaseServlet {
 					}
 				}
 				session.setAttribute("customerAll", customerExit);// 存储所有用户信息
-
+				Long [] userSize = new Long[100];
+				for (int i = 0; i < userSize.length; i++) {
+					userSize[i] = (long) 0;
+				}
+				for (User u : customerExit) {
+					if(u.getUtype() == 2){
+						userSize[0] = userSize[0] + 1;
+					}
+					if(u.getUtype() == 3){
+						userSize[1] = userSize[1] + 1;
+					}
+					if(u.getUtype() == 4){
+						userSize[2] = userSize[2] + 1;
+					}
+					if(u.getUtype() == 6){
+						userSize[3] = userSize[3] + 1;
+					}
+					if(u.getUtype() == 7){
+						userSize[4] = userSize[4] + 1;
+					}
+					if(u.getUtype() == 8){
+						userSize[5] = userSize[5] + 1;
+					}
+					if(u.getUtype() == 9){
+						userSize[6] = userSize[6] + 1;
+					}
+					if(u.getUtype() == 10){
+						userSize[7] = userSize[7] + 1;
+					}
+				}
+				session.setAttribute("userSize", userSize);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -378,6 +439,37 @@ public class UserServlet extends BaseServlet {
 				}
 			}
 			session.setAttribute("customerAll", customerExit);// 存储所有用户信息
+			Long [] userSize = new Long[100];
+			for (int i = 0; i < userSize.length; i++) {
+				userSize[i] = (long) 0;
+			}
+			for (User u : customerExit) {
+				if(u.getUtype() == 2){
+					userSize[0] = userSize[0] + 1;
+				}
+				if(u.getUtype() == 3){
+					userSize[1] = userSize[1] + 1;
+				}
+				if(u.getUtype() == 4){
+					userSize[2] = userSize[2] + 1;
+				}
+				if(u.getUtype() == 6){
+					userSize[3] = userSize[3] + 1;
+				}
+				if(u.getUtype() == 7){
+					userSize[4] = userSize[4] + 1;
+				}
+				if(u.getUtype() == 8){
+					userSize[5] = userSize[5] + 1;
+				}
+				if(u.getUtype() == 9){
+					userSize[6] = userSize[6] + 1;
+				}
+				if(u.getUtype() == 10){
+					userSize[7] = userSize[7] + 1;
+				}
+			}
+			session.setAttribute("userSize", userSize);
 			if (customerExit.size() > 0) {
 				result = Result.success("查询成功！！！");
 				String json = gson.toJson(result);
@@ -930,6 +1022,37 @@ public class UserServlet extends BaseServlet {
 					}
 				}
 				session.setAttribute("customerAll", customerExit);// 存储所有用户信息
+				Long [] userSize = new Long[100];
+				for (int i = 0; i < userSize.length; i++) {
+					userSize[i] = (long) 0;
+				}
+				for (User u : customerExit) {
+					if(u.getUtype() == 2){
+						userSize[0] = userSize[0] + 1;
+					}
+					if(u.getUtype() == 3){
+						userSize[1] = userSize[1] + 1;
+					}
+					if(u.getUtype() == 4){
+						userSize[2] = userSize[2] + 1;
+					}
+					if(u.getUtype() == 6){
+						userSize[3] = userSize[3] + 1;
+					}
+					if(u.getUtype() == 7){
+						userSize[4] = userSize[4] + 1;
+					}
+					if(u.getUtype() == 8){
+						userSize[5] = userSize[5] + 1;
+					}
+					if(u.getUtype() == 9){
+						userSize[6] = userSize[6] + 1;
+					}
+					if(u.getUtype() == 10){
+						userSize[7] = userSize[7] + 1;
+					}
+				}
+				session.setAttribute("userSize", userSize);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -1333,6 +1456,37 @@ public class UserServlet extends BaseServlet {
 					}
 				}
 				session.setAttribute("customerAll", customerExit);// 存储所有用户信息
+				Long [] userSize = new Long[100];
+				for (int i = 0; i < userSize.length; i++) {
+					userSize[i] = (long) 0;
+				}
+				for (User u : customerExit) {
+					if(u.getUtype() == 2){
+						userSize[0] = userSize[0] + 1;
+					}
+					if(u.getUtype() == 3){
+						userSize[1] = userSize[1] + 1;
+					}
+					if(u.getUtype() == 4){
+						userSize[2] = userSize[2] + 1;
+					}
+					if(u.getUtype() == 6){
+						userSize[3] = userSize[3] + 1;
+					}
+					if(u.getUtype() == 7){
+						userSize[4] = userSize[4] + 1;
+					}
+					if(u.getUtype() == 8){
+						userSize[5] = userSize[5] + 1;
+					}
+					if(u.getUtype() == 9){
+						userSize[6] = userSize[6] + 1;
+					}
+					if(u.getUtype() == 10){
+						userSize[7] = userSize[7] + 1;
+					}
+				}
+				session.setAttribute("userSize", userSize);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -1393,18 +1547,21 @@ public class UserServlet extends BaseServlet {
 		}
 		try {
 			// 刷新数据
-			user.setUtype(1);
-			List<User> adminListAll = userBiz.selectAll(user);
-			user.setUtype(5);
-			List<User> adminList = userBiz.selectAll(user);
-			int[] adminSize = new int[1000];
-			adminSize[0] = adminListAll.size();
-			adminSize[1] = adminList.size();
-			session.setAttribute("adminSize", adminSize);
-			if (adminList.size() != 0) {
-				for (User u : adminList) {
-					adminListAll.add(u);
+			List<User> adminListAll = null;
+			List<User> adminList = null;
+			if(user.getUtype() == 0){
+				user.setUtype(1);
+				adminListAll = userBiz.selectAll(user);
+				user.setUtype(5);
+				adminList = userBiz.selectAll(user);
+				if (adminList.size() != 0) {
+					for (User u : adminList) {
+						adminListAll.add(u);
+					}
 				}
+			}else{
+				adminListAll = userBiz.selectAll(user);
+				adminList = userBiz.selectAll(user);
 			}
 			session.setAttribute("adminAll", adminListAll);// 存储所有管理员信息
 			if (adminListAll.size() > 0) {

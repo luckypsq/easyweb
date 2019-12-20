@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.yc.easyweb.bean.Notice;
 import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.bean.Result;
+import com.yc.easyweb.bean.User;
 import com.yc.easyweb.biz.BizException;
 import com.yc.easyweb.biz.NoticeBiz;
 
@@ -22,6 +23,7 @@ public class NoticeServlet extends BaseServlet {
 	public void  query(HttpServletRequest request, HttpServletResponse response){
 		// 公告展示
 		HttpSession session = request.getSession();
+		User userOld = (User) session.getAttribute("loginedUser");
 		Notice notice = new Notice();
 		notice.setNstate(1);
 		try {
@@ -34,10 +36,12 @@ public class NoticeServlet extends BaseServlet {
 				Notice notice2 = noticeBiz.selectSingle(notice);
 				if(notice2.getNid() != 0){
 					session.setAttribute("noticeDetail", notice2);
-					Notice noticeNew = new Notice();
-					long num = notice2.getNnumber() + Long.parseLong("1");
-					noticeNew.setNnumber(num);
-					noticeBiz.update(notice2, noticeNew);
+					if(userOld.getUtype() != 1 && userOld.getUtype() != 5){
+						Notice noticeNew = new Notice();
+						long num = notice2.getNnumber() + Long.parseLong("1");
+						noticeNew.setNnumber(num);
+						noticeBiz.update(notice2,noticeNew );
+					}
 					result = Result.success("查询成功！！！");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
@@ -94,15 +98,4 @@ public class NoticeServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 	}
-	// TODO Auto-generated catch block
-	//添加
-	public void  add(HttpServletRequest request, HttpServletResponse response) {
-	}
-	//删除
-	public void  delete(HttpServletRequest request, HttpServletResponse response){
-	}
-	//更新
-	public void  update(HttpServletRequest request, HttpServletResponse response){
-	}
-	
 }

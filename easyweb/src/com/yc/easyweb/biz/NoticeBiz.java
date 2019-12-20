@@ -25,7 +25,7 @@ public class NoticeBiz {
 		return dao.selectAll(notice);
 	}
 
-	// 查询所有
+	// 查询单个
 	public Notice selectSingle(Notice notice) throws BizException, IOException  {
 		if(notice == null){
 			throw new BizException("请填写公告信息！！！");
@@ -81,7 +81,7 @@ public class NoticeBiz {
 	// 更新
 	public int update(Notice noticeOld, Notice noticeNew) throws BizException {
 		if(noticeNew ==null || noticeOld == null){
-			throw new BizException("请填写需要更新的公告信息！！！");
+			throw new BizException("请填写需要更新的公告！！！");
 		}
 		if(noticeOld.getNid() == 0 && noticeOld.getNtitle() == null){
 			throw new BizException("请填写需要更新的公告信息！！！");

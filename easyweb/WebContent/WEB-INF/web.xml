@@ -66,7 +66,7 @@
 		<servlet-name>公告NoticeServlet</servlet-name>
 		<url-pattern>/notice.s</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>用户UserServlet</servlet-name>
 		<servlet-class>com.yc.easyweb.servlet.UserServlet</servlet-class>
@@ -83,7 +83,7 @@
 		<servlet-name>权限ControlServlet</servlet-name>
 		<url-pattern>/control.s</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>信息展示ShowServlet</servlet-name>
 		<servlet-class>com.yc.easyweb.servlet.ShowServlet</servlet-class>
@@ -92,7 +92,7 @@
 		<servlet-name>信息展示ShowServlet</servlet-name>
 		<url-pattern>/show.s</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>登录的JoinServlet</servlet-name>
 		<servlet-class>com.yc.easyweb.servlet.JoinServlet</servlet-class>
@@ -101,7 +101,7 @@
 		<servlet-name>登录的JoinServlet</servlet-name>
 		<url-pattern>/join.s</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>注册验证的RegServlet</servlet-name>
 		<servlet-class>com.yc.easyweb.servlet.RegServlet</servlet-class>
@@ -110,15 +110,49 @@
 		<servlet-name>注册验证的RegServlet</servlet-name>
 		<url-pattern>/reg.s</url-pattern>
 	</servlet-mapping>
-	
+
+<servlet>
+		<servlet-name>验证码VcodeServlet</servlet-name>
+		<servlet-class>com.yc.easyweb.servlet.VcodeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>验证码VcodeServlet</servlet-name>
+		<url-pattern>/vcode.s</url-pattern>
+	</servlet-mapping>
 	<filter>
-    <filter-name>权限访问控制过滤器</filter-name>
-    <filter-class>com.yc.easyweb.servlet.JoinFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>权限访问控制过滤器</filter-name>
-    <url-pattern>/back/*</url-pattern>
-    <url-pattern>/notice-detail.jsp</url-pattern>
-    <url-pattern>/detail.jsp</url-pattern>
-  </filter-mapping>
+		<filter-name>权限访问控制过滤器</filter-name>
+		<filter-class>com.yc.easyweb.servlet.JoinFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>权限访问控制过滤器</filter-name>
+		<url-pattern>/back/*</url-pattern>
+		<url-pattern>/notice-detail.jsp</url-pattern>
+		<url-pattern>/detail.jsp</url-pattern>
+	</filter-mapping>
+	<!-- 配置错误处理 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/back/error/not-fund.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>505</error-code>
+		<location>/back/error/paramerror.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/back/error/error.jsp</location>
+	</error-page>
+	<!-- 配置异常处理 -->
+	<error-page>
+		<exception-type>javax.servle.ServletException</exception-type>
+		<location>/back/error/error.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.sql.SQLException;</exception-type>
+		<location>/back/error/error.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/back/error/error.jsp</location>
+	</error-page>
 </web-app>

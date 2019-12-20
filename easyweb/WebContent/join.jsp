@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=utf-8" isErrorPage="true"
     pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -33,7 +33,7 @@
    				title:'提示',
    				msg:result.msg,
    				showType:'fade',
-					timeout:200,
+					timeout:300,
    				style:{
    					right:'',
    					bottom:''
@@ -46,7 +46,7 @@
    				title:'提示',
    				msg:result.msg,
    				showType:'fade',
-					timeout:200,
+					timeout:300,
    				style:{
    					right:'',
    					bottom:''
@@ -90,7 +90,7 @@ function checkUserName(){
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-						timeout:200,
+						timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''
@@ -129,7 +129,7 @@ function checkPhone(){
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-						timeout:200,
+						timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''
@@ -167,7 +167,7 @@ function checkEmail(){
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-						timeout:200,
+						timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''
@@ -204,7 +204,7 @@ function checkPassword(){
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-							timeout:200,
+							timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -243,7 +243,7 @@ function checkPasswordsignup_confirm(){
     	    				title:'提示',
     	    				msg:result.msg,
     	    				showType:'fade',
-    						timeout:200,
+    						timeout:300,
     	    				style:{
     	    					right:'',
     	    					bottom:''
@@ -283,7 +283,7 @@ function checkReg(){
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-						timeout:200,
+						timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''
@@ -296,7 +296,7 @@ function checkReg(){
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-						timeout:200,
+						timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''
@@ -337,18 +337,16 @@ function checkReg(){
 			dataType : 'json', // 返回对象
 			success : function(result) {
 				if (result.code == 1) {
-					$.messager.alert('提示', result.data + ",欢迎您", 'info',
-							function fn() {
-								location.href = "back/lhoption/index.jsp";
-								return;
-							});
+					$.messager.alert('提示',result.data+",欢迎您",'info',function(){
+						location.href = "back/lhoption/index.jsp";
+					});
 				}
 				if (result.code == 0) {
 					$.messager.show({
 						title : '系统提示',
 						msg : result.msg,
 						showType : 'fade',
-						timeout : 200,
+						timeout : 300,
 						style : {
 							right : '',
 							bottom : ''
@@ -361,13 +359,17 @@ function checkReg(){
 					return;
 				}
 				if (result.code == 2) {
-					$.messager.alert('提示', result.msg, 'info', function fn() {
+					$.messager.alert('提示',result.msg,'info',function(){
 						location.href = "back/main/index.jsp";
-						return;
 					});
 				}
 			}
 		});
+	}
+	function changeImg(){
+		//需要加上时间，让服务器认为此次刷新是有必要的
+		  var time=new Date();
+	        document.getElementById("vcode-show").src="vcode.s?d="+time;
 	}
 </script>
 </head>
@@ -398,8 +400,17 @@ function checkReg(){
 					<label for="vcode" class="vcode" data-icon="p">请输入验证码</label>
 					<input id="vcode" name="vcode" required="required" type="text" 
 					placeholder="请输入验证码" />
-					<img alt="" src="${codeImg }" style="width:300px; height:100px;" onclick="show()">
 				</p>
+				<p>	</p>
+				<div style="height:100px;">
+					<div  style="float:left; width:240px;">
+							<img id="vcode-show" alt="" src="vcode.s" style="width: 230px; height: 100px;">
+					</div>
+					<div style="float:right; margin-top:57px;height:40px;">
+						<button style="height:40px;background:white;width:131px;" onclick="changeImg();">看不清?请点击我。。。 </button>
+					</div>
+				</div>
+				<p>	</p>
 				<p class="keeplogin"> 
 					<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
 					<label for="loginkeeping">保持登录状态</label>

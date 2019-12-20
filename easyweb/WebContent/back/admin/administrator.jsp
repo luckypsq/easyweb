@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -33,7 +33,7 @@
 							type="text" class="text_add"  style="width: 400px" /></li>
 						<li><label class="l_f">管理员电话</label><input style=" margin-left:10px;" name="adminType"id="adminType"
 							type="text" class="text_add"  style="width: 400px" /></li>
-						<li style="width: 90px;"><button type="button" onclick="selectAdmin();"
+						<li style="width: 90px;"><button type="button" onclick="selectAdmin('0');"
 								class="btn_search">
 								<i class="fa fa-search"></i>查询
 							</button></li>
@@ -62,21 +62,14 @@
 									<div class="widget-header header-color-green2">
 										<h4 class="lighter smaller">管理员分类列表</h4>
 									</div>
-									<div class="widget-body">
-										<ul class="b_P_Sort_list">
-											<li><i class="fa fa-users green"></i> <a href="javascript:;" onclick="selectAdmin();">全部管理员(${adminAll.size() })
-											</a></li>
-											<li><i class="fa fa-users orange"></i> <a href="javascript:;"onclick="selectAdmin(1);">超级管理员(${adminSize[0] })
-											</a></li>
-											<li><i class="fa fa-users orange"></i> <a href="javascript:;"onclick="selectAdmin(5);">普通管理员(${adminSize[1] })
-											</a></li>
-									</ul>
+									<div class="widget-body" id= "widget-body-admin-type">
+										<jsp:include page="admin-type.jsp"></jsp:include>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="table_menu_list" id="testIframe">
+					<div class="table_menu_list" id="testIframe-admin-show">
 						<jsp:include page="administrator_show.jsp"></jsp:include>
 					</div>
 				</div>
@@ -90,7 +83,7 @@
    		</div>
 	</div>
 </body>
-<script
+	<script
 	src="${path}/back/js/jquery-1.9.1.min.js"></script>
 <script
 	src="${path}/back/assets/js/bootstrap.min.js"></script>
@@ -98,12 +91,6 @@
 	src="${path}/back/Widget/Validform/5.3.2/Validform.min.js"></script>
 <script
 	src="${path}/back/assets/js/typeahead-bs2.min.js"></script>
-<script
-	src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
-	<script src="${path}/back/js/lrtk.js"
-	type="text/javascript"></script>
-<script
-	src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
 <script type="text/javascript"
 	src="${path}/back/js/H-ui.js"></script>
 <script type="text/javascript"
@@ -111,6 +98,12 @@
 <script
 	src="${path}/back/assets/layer/layer.js"
 	type="text/javascript"></script>
+	<script
+	src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
+	<script src="${path}/back/js/lrtk.js"
+	type="text/javascript"></script>
+<script
+	src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
 <script type="text/javascript">
 	var sbox = "";
 	jQuery(function($) {
@@ -211,6 +204,9 @@
 	})
 	//查询
 	function selectAdmin(utype){
+		if(utype == "0"){
+			utype= "";
+		}
 		var adminName = document.getElementById("adminName").value.trim();
 		var adminType = document.getElementById("adminType").value.trim();
 		var param ="uname="+adminName+"&uphone"+adminType+"&utype="+utype;
@@ -223,12 +219,7 @@
 	        dataType: 'json', // 返回对象
 	        success: function(result) {
 					if(result.code == 1){
-						$('#testIframe').load('${path}/back/admin/administrator_show.jsp');
-						layer.msg(result.msg, {
-							icon :6,
-							time : 1000,
-							title: "提示"
-						});
+						$('#testIframe-admin-show').load('${path}/back/admin/administrator_show.jsp');
 		        		return;
 		        	}
 		        	if(result.code == 0){
@@ -263,9 +254,7 @@
 		        dataType: 'json', // 返回对象
 		        success: function(result) {
 						if(result.code == 1){
-							$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,'+id+')" href="javascript:;" title="启用"><i class="fa fa-close bigger-120"></i></a>');
-							$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-							$(obj).remove();
+							$('#testIframe-admin-show').load('${path}/back/admin/administrator_show.jsp');
 							layer.msg('已停用!',{icon: 1,time:1000});
 			        		return;
 			        	}
@@ -302,9 +291,7 @@
 		        dataType: 'json', // 返回对象
 		        success: function(result) {
 						if(result.code == 1){
-							$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,'+id+')" href="javascript:;" title="停用"><i class="fa fa-check  bigger-120"></i></a>');
-							$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-							$(obj).remove();
+							$('#testIframe-admin-show').load('${path}/back/admin/administrator_show.jsp');
 							layer.msg('已启用!',{icon: 6,time:1000});
 			        		return;
 			        	}
@@ -343,7 +330,8 @@
 		        dataType: 'json', // 返回对象
 		        success: function(result) {
 						if(result.code == 1){
-							$(obj).parents("tr").remove();
+							$('#widget-body-admin-type').load('${path}/back/admin/admin-type.jsp');
+							$('#testIframe-admin-show').load('${path}/back/admin/administrator_show.jsp');
 							layer.msg('已删除!',{icon:1,time:1000});
 			        		return;
 			        	}
@@ -403,7 +391,8 @@
 		        dataType: 'json', // 返回对象
 		        success: function(result) {
 						if(result.code == 1){
-							$('#testIframe').load('${path}/back/admin/administrator_show.jsp');
+							$('#widget-body-admin-type').load('${path}/back/admin/admin-type.jsp');
+							$('#testIframe-admin-show').load('${path}/back/admin/administrator_show.jsp');
 								layer.msg(result.msg, {
 								icon :6,
 								time : 1000,
@@ -444,6 +433,7 @@
 	        dataType: 'json', // 返回对象
 	        success: function(result) {
 					if(result.code == 1){
+						$('#testIframe-admin-show').load('${path}/back/admin/administrator_show.jsp');
 						layer.msg("重置成功！！！", {
 							icon : 6,
 							time : 1000,
@@ -509,7 +499,8 @@
 														time : 1000,
 														title: "提示"
 													});
-													$('#testIframe').load('${path}/back/admin/administrator_show.jsp');
+													$('#widget-body-admin-type').load('${path}/back/admin/admin-type.jsp');
+													$('#testIframe-admin-show').load('${path}/back/admin/administrator_show.jsp');
 													layer.close(index);	
 									        		return;
 									        	}
@@ -597,7 +588,8 @@
 								time : 1000,
 								title: "提示"
 							});
-							$('#testIframe').load('${path}/back/admin/administrator_show.jsp');
+							$('#widget-body-admin-type').load('${path}/back/admin/admin-type.jsp');
+							$('#testIframe-admin-show').load('${path}/back/admin/administrator_show.jsp');
 							layer.close(index);	
 			        		return;
 			        	}

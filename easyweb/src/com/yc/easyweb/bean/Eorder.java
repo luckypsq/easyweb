@@ -11,7 +11,7 @@ public class Eorder implements Serializable{
 	private long uid;//用户id
 	private int eostate;//状态1.待付款2.待发货3.已发货4.退货申请中5.退款成功6.已接收7.退货失败
 	private String eotime;//下单时间
-	private String eotemp;//备用字段
+	private String eotemp;//电话
 	private String uname;//用户名
 	private String eoaddr;//地址
 	private String eotype;//配送方式(在线支付 ，货到付款 店面接取)

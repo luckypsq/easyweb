@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,22 +8,22 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
+ <link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${path}/back/css/style.css"/>       
+        <link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="${path}/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="${path}/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>           	
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="<%=application.getContextPath() %>/back/js/H-ui.js" type="text/javascript"></script>
-        <script src="<%=application.getContextPath() %>/back/js/displayPart.js" type="text/javascript"></script>
+		<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+        <script src="${path}/back/assets/js/bootstrap.min.js"></script>
+		<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script>           	
+		<script src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="${path}/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="${path}/back/js/H-ui.js" type="text/javascript"></script>
+        <script src="${path}/back/js/displayPart.js" type="text/javascript"></script>
 <title>文章分类</title>
 </head>
 
@@ -38,74 +39,7 @@
      </div>
      <!--分类类表-->
      <div class="article_sort_list">
-         <table class="table table-striped table-bordered table-hover" id="sample-table">
-       <thead>
-		 <tr>
-				<th width="25"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
-				<th width="80px">ID</th>
-                <th width="80px">排序</th>
-				<th width="150px">分类名称</th>
-				<th width="">简介</th>
-				<th width="150px">添加时间</th>
-                <th width="80px">状态</th>                
-				<th width="150px">操作</th>
-			</tr>
-		</thead>
-        <tbody>
-         <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>1234</td>
-          <td>1</td>
-          <td>帮助中心</td>
-          <td class="displayPart" displayLength="60">帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心</td>
-          <td>2016-7-25</td>
-          <td>启用</td>          
-          <td class="td-manage">   
-           <a title="编辑" onclick="member_edit('510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
-           <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-danger" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-         </tr>
-          <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>1234</td>
-          <td>1</td>
-          <td>帮助中心</td>
-          <td class="displayPart" displayLength="60">帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心</td>
-          <td>2016-7-25</td>
-          <td>启用</td>          
-          <td class="td-manage">   
-           <a title="编辑" onclick="member_edit('510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
-           <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'3')" class="btn btn-xs btn-danger" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-         </tr>
-          <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>1234</td>
-          <td>1</td>
-          <td>帮助中心</td>
-          <td class="displayPart" displayLength="60">帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心</td>
-          <td>2016-7-25</td>
-          <td>启用</td>          
-          <td class="td-manage">   
-           <a title="编辑" onclick="member_edit('510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
-           <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'4')" class="btn btn-xs btn-danger" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-         </tr>
-          <tr>
-          <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-          <td>1234</td>
-          <td>1</td>
-          <td>帮助中心</td>
-          <td class="displayPart" displayLength="60">帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心帮助中心</td>
-          <td>2016-7-25</td>
-          <td>启用</td>          
-          <td class="td-manage">   
-           <a title="编辑" onclick="member_edit('510')" href="<%=application.getContextPath() %>/back/javascript:;"  class="btn btn-xs btn-info" ><i class="fa fa-edit bigger-120"></i></a>      
-           <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'5')" class="btn btn-xs btn-danger" ><i class="fa fa-trash  bigger-120"></i></a>
-          </td>
-         </tr>
-        </tbody>
-        </table>
+       	<jsp:include page="article-sort-show.jsp"></jsp:include>
      </div>
  </div>
 </div>

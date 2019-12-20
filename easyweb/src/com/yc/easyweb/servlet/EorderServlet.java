@@ -1,13 +1,11 @@
 package com.yc.easyweb.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,13 +44,25 @@ public class EorderServlet extends BaseServlet {
 							response.getWriter().append(json);
 							return;
 						}
-						int i = eorderBiz.delete(eorder1);
-						if (i > 0) {
+						int code = eorderBiz.delete(eorder1);
+						if (code > 0) {
 							result = Result.success("删除成功！！！");
-							//数据刷新
+							// 数据刷新
 							Eorder eorder3 = new Eorder();
 							Page<Eorder> page = eorderBiz.eorderPage(1, 5, eorder3);
 							session.setAttribute("userOrderPage", page);
+							
+							//管理员界面数据刷新
+							OrderDetial orderDetial = new OrderDetial();
+							List<OrderDetial> order_show = eorderBiz.selectAllDetail(orderDetial);
+							for (int i = 0; i < order_show.size(); i++) {
+								if (order_show.get(i).getEostate() == 4 || order_show.get(i).getEostate() == 5
+										|| order_show.get(i).getEostate() == 7) {
+									order_show.remove(i);
+									i--;
+								}
+							}
+							session.setAttribute("eorderHand", order_show);
 							String json = gson.toJson(result);
 							response.setContentType("application/json;charset=UTF-8");
 							response.getWriter().append(json);
@@ -358,7 +368,7 @@ public class EorderServlet extends BaseServlet {
 				double total = Double.parseDouble(price) * Double.parseDouble(count);
 				DecimalFormat df = new DecimalFormat("#.00");
 				session.setAttribute("addOrderCount", count);
-				result = Result.success("输入合法！！！",df.format(total));
+				result = Result.success("输入合法！！！", df.format(total));
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -424,13 +434,13 @@ public class EorderServlet extends BaseServlet {
 
 	// 添加订单
 	public void add(HttpServletRequest request, HttpServletResponse response) {
-		//订单id
+		// 订单id
 		String uuidOrder = UUID.randomUUID().toString().replace("-", "").toLowerCase();
 		HttpSession session = request.getSession();
 		User userOld = (User) session.getAttribute("loginedUser");
-		Eorderitem eoitem = new Eorderitem();//通过书籍添加产生的购物车信息
-		Eorderitem eoReal = null;//真实的购物车信息
-		Eorder eorder = new Eorder();//订单信息
+		Eorderitem eoitem = new Eorderitem();// 通过书籍添加产生的购物车信息
+		Eorderitem eoReal = null;// 真实的购物车信息
+		Eorder eorder = new Eorder();// 订单信息
 
 		// 1.先从会话中获取书id或itemid
 		String bid = request.getParameter("bid");
@@ -447,71 +457,71 @@ public class EorderServlet extends BaseServlet {
 		String totalOld = request.getParameter("total");// 总价
 
 		double total = 0;
-		String sendType ;
+		String sendType;
 		int pay = 0;
 		try {
-			//3.判断数据的合法
+			// 3.判断数据的合法
 			String check = "1";
-			//a.验证数量的输入
-			if(count != null && !count.isEmpty()){
+			// a.验证数量的输入
+			if (count != null && !count.isEmpty()) {
 				check = check + "/1";
-			}else{
-				if(request.getParameter("count") != null && !request.getParameter("count").isEmpty()){
+			} else {
+				if (request.getParameter("count") != null && !request.getParameter("count").isEmpty()) {
 					count = request.getParameter("count");
 					check = check + "/1";
-				}else{
+				} else {
 					check = check + "/-1";
 				}
 			}
-			//b.验证地址的输入
-			if(eoaddr != null && !eoaddr.isEmpty()){
+			// b.验证地址的输入
+			if (eoaddr != null && !eoaddr.isEmpty()) {
 				check = check + "/1";
-			}else{
+			} else {
 				check = check + "/-1";
 			}
-			//c.验证收货人的输入
-			if(uname != null && !uname.isEmpty()){
+			// c.验证收货人的输入
+			if (uname != null && !uname.isEmpty()) {
 				check = check + "/1";
-			}else{
+			} else {
 				check = check + "/-1";
 			}
-			//d.验证电话的输入
-			if(uphone != null && !uphone.isEmpty()){
+			// d.验证电话的输入
+			if (uphone != null && !uphone.isEmpty()) {
 				check = check + "/1";
-			}else{
+			} else {
 				check = check + "/-1";
 			}
-			if(!check.equals("1/1/1/1/1")){
-				result = Result.lack("输入信息不足！！！",check);
+			if (!check.equals("1/1/1/1/1")) {
+				result = Result.lack("输入信息不足！！！", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			//判断总价是否为空
-			if(totalOld != null && !totalOld.isEmpty()){
+			// 判断总价是否为空
+			if (totalOld != null && !totalOld.isEmpty()) {
 				total = Double.parseDouble(totalOld);
-			}else{
+			} else {
 				result = Result.failure("系统繁忙,请稍后再试！！！");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			//判断送货方式
-			if(!type.equals("请选择")){
+			// 判断送货方式
+			if (!type.equals("请选择")) {
 				sendType = type;
-			}else{
+			} else {
 				sendType = "在线支付";
 			}
-			//判断支付方式
-			if(!payType.equals("请选择")){
+			// 判断支付方式
+			if (!payType.equals("请选择")) {
 				pay = Integer.parseInt(payType);
-			}else{
+			} else {
 				pay = 2;
 			}
-			//4.判断是通过书本下单还是购物车下单
-			if(userOld == null){
+			// 4.判断是通过书本下单还是购物车下单
+			if (userOld == null) {
 				result = Result.failure("请您先登录！！！");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
@@ -546,11 +556,11 @@ public class EorderServlet extends BaseServlet {
 				// 获取系统时间
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				Date date = new Date();
-				eoitem.setCarttime(df.format(date));//添加购物车加入时间
+				eoitem.setCarttime(df.format(date));// 添加购物车加入时间
 				// 生成订单号
 				String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
-				eoitem.setItemid(uuid);//添加购物车号
-				eoitem.setBid(Long.parseLong(bid));//添加书id
+				eoitem.setItemid(uuid);// 添加购物车号
+				eoitem.setBid(Long.parseLong(bid));// 添加书id
 				int i = itemBiz.insert(eoitem);
 				if (i <= 0) {
 					result = Result.failure("下单失败,请您稍后在操作！！！");
@@ -560,11 +570,11 @@ public class EorderServlet extends BaseServlet {
 					return;
 				}
 				eoReal = itemBiz.selectSingle(eoitem);
-			} else if ( itemOld != null ) {
-				//查询此购物车订单是否存在
+			} else if (itemOld != null) {
+				// 查询此购物车订单是否存在
 				Eorderitem item = itemBiz.selectSingle(itemOld);
 				Eorderitem itemNew = new Eorderitem();
-				if(item.getBid() != 0 && item.getUid() == userOld.getUid() &&item.getCartstate()!=2){
+				if (item.getBid() != 0 && item.getUid() == userOld.getUid() && item.getCartstate() != 2) {
 					itemNew.setCount(Integer.parseInt(count));
 					itemNew.setTotal(total);
 				}
@@ -584,86 +594,85 @@ public class EorderServlet extends BaseServlet {
 				response.getWriter().append(json);
 				return;
 			}
-			
-			
-			//5.给eorder填数据
+
+			// 5.给eorder填数据
 			// 获取系统时间
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
-			eorder.setEotime(df.format(date));//下单时间
-			eorder.setEoid(uuidOrder);//订单号
-			eorder.setEostate(2);//订单状态(待发货)
-			eorder.setUid(userOld.getUid());//用户id
-			eorder.setEoaddr(eoaddr);//地址
-			eorder.setEotype(sendType);//送货类型
-			eorder.setEopaytypeid(pay);//支付方式
-			eorder.setUname(uname);//收货人
-			eorder.setEotemp(uphone);//收货电话
+			eorder.setEotime(df.format(date));// 下单时间
+			eorder.setEoid(uuidOrder);// 订单号
+			eorder.setEostate(2);// 订单状态(待发货)
+			eorder.setUid(userOld.getUid());// 用户id
+			eorder.setEoaddr(eoaddr);// 地址
+			eorder.setEotype(sendType);// 送货类型
+			eorder.setEopaytypeid(pay);// 支付方式
+			eorder.setUname(uname);// 收货人
+			eorder.setEotemp(uphone);// 收货电话
 
-			//先将库存减去
+			// 先将库存减去
 			Book book = new Book();
 			book.setBid(eoReal.getBid());
 			Book bookOld = biz.selectSingle(book);
 			Book bookNew = new Book();
-			//库存不够不能下单
-			if(bookOld.getBnum() < Long.parseLong(count)){
+			// 库存不够不能下单
+			if (bookOld.getBnum() < Long.parseLong(count)) {
 				result = Result.failure("库存不够,请您重新选择数量！！！");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
-				return ;
+				return;
 			}
 			long number = bookOld.getBnum() - Long.parseLong(count);
 			bookNew.setBnum(number);
 			int q = biz.update(bookNew, bookOld);
-			//书籍信息没有更新，不能下单
+			// 书籍信息没有更新，不能下单
 			if (q <= 0) {
 				result = Result.failure("下单失败,请您稍后再试！！！");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
-				return ;
+				return;
 			}
 			int j = eorderBiz.insert(eorder);
 			if (j > 0) {
-				//将购物车信息更新(eoReal为购物车的信息)
+				// 将购物车信息更新(eoReal为购物车的信息)
 				Eorderitem eoRealNew = new Eorderitem();
 				eoRealNew.setCartstate(2);
 				eoRealNew.setEoid(uuidOrder);
 				int n = itemBiz.update(eoRealNew, eoReal);
-				if(n > 0){
+				if (n > 0) {
 					result = Result.success("下单成功！！！");
-				
-					//数据刷新
+
+					// 数据刷新
 					Eorder eorder1 = new Eorder();
 					eorder1.setUid(userOld.getUid());
 					Page<Eorder> Page = eorderBiz.eorderPage(1, 3, eorder1);
 					session.setAttribute("userOrderPage", Page);
-					//会话还原
+					// 会话还原
 					String string = null;
 					session.setAttribute("addOrderCount", string);
 					session.setAttribute("addOrderEoaddr", string);
 					session.setAttribute("addOrderUname", string);
 					session.setAttribute("addOrderUphone", string);
 
-					Eorderitem eorderitem = new Eorderitem() ;
+					Eorderitem eorderitem = new Eorderitem();
 					session.setAttribute("userOrderAddItem", eorderitem);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
-					return ;
+					return;
 				}
 			}
 			bookNew.setBnum(bookOld.getBnum());
 			int p = biz.update(bookNew, bookOld);
-			//下单失败必须将书籍库存还原
-			if( p > 0){
+			// 下单失败必须将书籍库存还原
+			if (p > 0) {
 				result = Result.failure("下单失败,请您稍后再试！！！");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
-				return ;
-			}else{
+				return;
+			} else {
 				throw new RuntimeException();
 			}
 		} catch (BizException e) {
@@ -699,166 +708,250 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// TODO: handle exception
-	// 查询
-	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
-		PrintWriter out = response.getWriter();
+	// 管理查询订单
+	public void query(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		OrderDetial orderDetial = new OrderDetial();
-		String eotime = "";
-		String eoid = "";
-		String eostate = "";
+		String eotime = request.getParameter("eotime");
+		String eoid = request.getParameter("eoid");
+		String eostate = request.getParameter("eostate");
+		String type = request.getParameter("type");
 		// 获取查询条件
-		if (request.getParameter("eotime") != null && !request.getParameter("eotime").isEmpty()) {
-			eotime = request.getParameter("eotime");
+		if (eotime != null && !eotime.isEmpty()) {
 			orderDetial.setEotime(eotime);
 		}
-		if (request.getParameter("eoid") != null && !request.getParameter("eoid").isEmpty()) {
-			eoid = request.getParameter("eoid");
+		if (eoid != null && !eoid.isEmpty()) {
 			orderDetial.setEoid(eoid);
 		}
-		if (request.getParameter("eostate") != null && !request.getParameter("eostate").isEmpty()) {
-			eostate = request.getParameter("eostate");
+		if (eostate != null && !eostate.isEmpty()) {
 			orderDetial.setEostate(Integer.parseInt(eostate));
 		}
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("eotime", eotime);
-		map.put("eoid", eoid);
-		session.setAttribute("queryOrder", map);
-		List<OrderDetial> order_show = eorderBiz.selectAllDetail(orderDetial);
-		for (int i = 0; i < order_show.size(); i++) {
-			if (order_show.get(i).getEostate() == 4 || order_show.get(i).getEostate() == 5
-					|| order_show.get(i).getEostate() == 7) {
-				order_show.remove(i);
-				i--;
+		try {
+			// 数据更新
+			List<OrderDetial> order_show = eorderBiz.selectAllDetail(orderDetial);
+			List<OrderDetial> orderRefund = new ArrayList<OrderDetial>();
+			List<OrderDetial> orderHand = new ArrayList<OrderDetial>();
+			for (int i = 0; i < order_show.size(); i++) {
+				if (order_show.get(i).getEostate() == 4 || order_show.get(i).getEostate() == 5
+						|| order_show.get(i).getEostate() == 7) {
+					orderRefund.add(order_show.get(i));
+				}else{
+					orderHand.add(order_show.get(i));
+				}
 			}
-		}
-		session.setAttribute("orderDetialShow", order_show);
-		long[] num = { 0, 0, 0, 0 };
-		for (OrderDetial order_main : order_show) {
-			if (order_main.getEostate() == 1) {
-				num[0] = num[0] + 1;
-			} else if (order_main.getEostate() == 2) {
-				num[1] = num[1] + 1;
-			} else if (order_main.getEostate() == 3) {
-				num[2] = num[2] + 1;
-			} else if (order_main.getEostate() == 6) {
-				num[3] = num[3] + 1;
+			session.setAttribute("eorderHand", orderHand);
+			long[] numHand = { 0, 0, 0, 0 };
+			for (OrderDetial order_main : orderHand) {
+				if (order_main.getEostate() == 1) {
+					numHand[0] = numHand[0] + 1;
+				} else if (order_main.getEostate() == 2) {
+					numHand[1] = numHand[1] + 1;
+				} else if (order_main.getEostate() == 3) {
+					numHand[2] = numHand[2] + 1;
+				} else if (order_main.getEostate() == 6) {
+					numHand[3] = numHand[3] + 1;
+				}
 			}
-		}
-		session.setAttribute("orderNum", num);
-		if (order_show.size() == 0) {
-			out.print(1);
+			session.setAttribute("orderNum", numHand);
+			//查询退款数据
+			session.setAttribute("eorderRefund", orderRefund);
+			if(type != null && !type.isEmpty()){
+				if(type.equals("0")){
+					if (orderRefund.size() > 0) {
+						result = Result.success("查询成功！！！");
+						String json = gson.toJson(result);
+						response.setContentType("application/json;charset=UTF-8");
+						response.getWriter().append(json);
+						return;
+					}
+					result = Result.failure("暂无数据！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return;
+				}
+				if(type.equals("1")){
+					if (orderHand.size() > 0) {
+						result = Result.success("查询成功！！！");
+						String json = gson.toJson(result);
+						response.setContentType("application/json;charset=UTF-8");
+						response.getWriter().append(json);
+						return;
+					}
+					result = Result.failure("暂无数据！！！");
+					String json = gson.toJson(result);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return;
+				}
+				
+			}
+			if (order_show.size() > 0) {
+				result = Result.success("查询成功！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			result = Result.failure("暂无数据！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+			e.printStackTrace();
+		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+
+			}
 		}
 	}
 
+	// 管理员更新订单
+	public void update(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		Eorder eorderNew = new Eorder();
+		Eorder eorderOld = new Eorder();
+		String eoid = request.getParameter("eoid");
+		String eostate = request.getParameter("eostate");
+		String eopress = request.getParameter("eopress");
+		String type = request.getParameter("type");
+		if (eostate != null && !eostate.isEmpty()) {
+			eorderNew.setEostate(Integer.parseInt(eostate));
+		}
+		if (eopress != null && !eopress.isEmpty()) {
+			eorderNew.setEoespress(eopress);
+		}
+		if (type != null && !type.isEmpty()) {
+			eorderNew.setEotype(type);
+		}
+		try {
+			// 获取eoid
+			if (eoid != null && !eoid.isEmpty()) {
+				eorderOld.setEoid(eoid);
+			} else {
+				result = Result.failure("未选择订单！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			//更新
+			int code = eorderBiz.update(eorderNew, eorderOld);
+			if (code <= 0) {
+				result = Result.failure("更新失败！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			result = Result.success("更新成功！！！");
+			//数据刷新
+			//存储不是退款操作的订单
+			OrderDetial eorder1 = new OrderDetial();
+			List<OrderDetial> order_show = eorderBiz.selectAllDetail(eorder1);
+			for (int i = 0; i < order_show.size(); i++) {
+				if (order_show.get(i).getEostate() == 4 || order_show.get(i).getEostate() == 5
+						|| order_show.get(i).getEostate() == 7) {
+					order_show.remove(i);
+					i--;
+				}
+			}
+			session.setAttribute("eorderHand", order_show);
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
+		} catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+			e.printStackTrace();
+		} catch (BizException e) {
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+
+			}
+		} catch (SQLException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
+			e.printStackTrace();
+		}
+
+	}
 	// 查询单个订单详情
-	public void querySingle(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
+	public void querySingle(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
 		OrderDetial order_Detial = new OrderDetial();
+		String eoid = request.getParameter("eoid");
 		// 获取查询条件
-		if (request.getParameter("eoid") != null && !request.getParameter("eoid").isEmpty()) {
-			order_Detial.setEoid(request.getParameter("eoid"));
+		if (eoid != null && !eoid.isEmpty()) {
+			order_Detial.setEoid(eoid);
 		}
 		try {
 			OrderDetial rDetial = eorderBiz.selectSingleDetail(order_Detial);
 			if (rDetial == null) {
-				out.print(1);
+				result = Result.failure("订单不存在,或已被删除！！！");
+				String json = gson.toJson(result);
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
 				return;
 			}
 			session.setAttribute("orderdetialshow", rDetial);
-		} catch (BizException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// 查询退货订单
-	public void queryReorder(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, BizException {
-		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession();
-		OrderDetial orderDetial = new OrderDetial();
-		String eotime = "";
-		String eoid = "";
-		String eostate = "";
-		// 获取查询条件
-		if (request.getParameter("eotime") != null && !request.getParameter("eotime").isEmpty()) {
-			eotime = request.getParameter("eotime");
-			orderDetial.setEotime(eotime);
-		}
-		if (request.getParameter("eoid") != null && !request.getParameter("eoid").isEmpty()) {
-			eoid = request.getParameter("eoid");
-			orderDetial.setEoid(eoid);
-		}
-		if (request.getParameter("eostate") != null && !request.getParameter("eostate").isEmpty()) {
-			eostate = request.getParameter("eostate");
-			orderDetial.setEostate(Integer.parseInt(eostate));
-		}
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("eotime", eotime);
-		map.put("eoid", eoid);
-		session.setAttribute("queryReOrder", map);
-		List<OrderDetial> order_show = eorderBiz.selectAllDetail(orderDetial);
-		for (int i = 0; i < order_show.size(); i++) {
-			if (order_show.get(i).getEostate() != 4 && order_show.get(i).getEostate() != 5
-					&& order_show.get(i).getEostate() != 7) {
-				order_show.remove(i);
-				i--;
+			result = Result.success("查询成功！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().append(json);
+			return;
+		}catch (IOException e) {
+			result = Result.error("业务繁忙,请稍等几分钟再操作！！！");
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
 			}
-		}
-		session.setAttribute("reorderDetialShow", order_show);
-		long[] num = { 0, 0, 0 };
-		for (OrderDetial order_main : order_show) {
-			if (order_main.getEostate() == 4) {
-				num[0] = num[0] + 1;
-			} else if (order_main.getEostate() == 5) {
-				num[1] = num[1] + 1;
-			} else if (order_main.getEostate() == 7) {
-				num[2] = num[2] + 1;
-			}
-		}
-		session.setAttribute("reorderNum", num);
-		if (order_show.size() == 0) {
-			out.print(1);
-		}
-	}
-
-	// 更新
-	public void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		Eorder eorderNew = new Eorder();
-		Eorder eorderOld = new Eorder();
-		// 获取eoid
-		if (request.getParameter("eoid") != null && !request.getParameter("eoid").toString().isEmpty()) {
-			eorderOld.setEoid(request.getParameter("eoid"));
-		}
-		if (request.getParameter("eostate") != null && !request.getParameter("eostate").toString().isEmpty()) {
-			eorderNew.setEostate(Integer.parseInt(request.getParameter("eostate")));
-		}
-		if (request.getParameter("eopress") != null && !request.getParameter("eopress").toString().isEmpty()) {
-			eorderNew.setEoespress(request.getParameter("eopress"));
-		}
-		if (request.getParameter("type") != null && !request.getParameter("type").toString().isEmpty()) {
-			eorderNew.setEotype(request.getParameter("type"));
-		}
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		eorderNew.setEotime(df.format(date));
-		try {
-			int i = eorderBiz.update(eorderNew, eorderOld);
-			if (i > 0) {
-				out.print(1);
-			} else {
-				out.print(0);
-			}
-		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (BizException e) {
-			e.printStackTrace();
+			result = Result.error(e.getMessage());
+			String json = gson.toJson(result);
+			response.setContentType("application/json;charset=UTF-8");
+			try {
+				response.getWriter().append(json);
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
 		}
-
 	}
-
 }

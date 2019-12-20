@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,21 +7,21 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
+ <link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${path}/back/css/style.css"/>       
+        <link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="${path}/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="${path}/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>           	
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
+		<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+        <script src="${path}/back/assets/js/bootstrap.min.js"></script>
+		<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script>           	
+		<script src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="${path}/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="${path}/back/assets/laydate/laydate.js" type="text/javascript"></script>
 <title>积分管理</title>
 </head>
 
@@ -62,7 +62,7 @@
         <td><a href="javascript:ovid()" onclick="integration_history('23')">3434</a></td>
         <td><a href="javascript:ovid()" onclick="Browse_history('13')">3434</a></td>
         <td><a href="javascript:ovid()" onclick="Order_history('33')">34</a></td>
-        <td> <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
+        <td> <a title="删除" href="${path}/back/javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
         </tr>
        <tr>
         <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
@@ -71,7 +71,7 @@
         <td><a href="javascript:ovid()" onclick="integration_history('43')">45</a></td>
         <td><a href="javascript:ovid()" onclick="Browse_history('53')">11</a></td>
         <td><a href="javascript:ovid()" onclick="Order_history('23')">45</a></td>
-        <td> <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
+        <td> <a title="删除" href="${path}/back/javascript:;"  onclick="member_del(this,'2')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
         </tr>
         <tr>
         <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
@@ -80,7 +80,7 @@
         <td><a href="javascript:ovid()" onclick="integration_history('5')">45</a></td>
         <td><a href="javascript:ovid()" onclick="Browse_history('4')">11</a></td>
         <td><a href="javascript:ovid()" onclick="Order_history('5')">45</a></td>
-        <td> <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'3')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
+        <td> <a title="删除" href="${path}/back/javascript:;"  onclick="member_del(this,'3')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
         </tr>
         <tr>
         <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
@@ -89,7 +89,7 @@
         <td><a href="javascript:ovid()" onclick="integration_history('5')">245</a></td>
         <td><a href="javascript:ovid()" onclick="Browse_history('4')">131</a></td>
         <td><a href="javascript:ovid()" onclick="Order_history('7')">45</a></td>
-        <td> <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'5')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
+        <td> <a title="删除" href="${path}/back/javascript:;"  onclick="member_del(this,'5')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a></td>
         </tr>
         </tbody>    
      </table>     
@@ -112,77 +112,77 @@
 	<tbody>
 		<tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">华为 畅享5S 金色 移动联通电信4G手机 </a></td>
+        <td><a href="${path}/back/#">华为 畅享5S 金色 移动联通电信4G手机 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>345</td>
         <td>232</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">乐视（Le）乐2Pro 32GB 金色 移动联通</a></td>
+        <td><a href="${path}/back/#">乐视（Le）乐2Pro 32GB 金色 移动联通</a></td>
         <td>4566</td>
         <td>3455</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">华为 P9 plus 64GB 琥珀金 移动联通电信卡双待 </a></td>
+        <td><a href="${path}/back/#">华为 P9 plus 64GB 琥珀金 移动联通电信卡双待 </a></td>
         <td>231</td>
         <td>11</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">华为 P9 plus 64GB 琥珀金 移动联通电信 </a></td>
+        <td><a href="${path}/back/#">华为 P9 plus 64GB 琥珀金 移动联通电信 </a></td>
         <td>23</td>
         <td>12</td>
         <td>2016-7-12 12:23:34</td>
@@ -206,77 +206,77 @@
 	<tbody>
 		<tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">华为 畅享5S 金色 移动联通电信4G手机 </a></td>
+        <td><a href="${path}/back/#">华为 畅享5S 金色 移动联通电信4G手机 </a></td>
         <td>2565</td>
         <td>1234</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
+        <td><a href="${path}/back/#">荣耀7i 海岛蓝 移动4G手机 双卡双待 </a></td>
         <td>345</td>
         <td>232</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">乐视（Le）乐2Pro 32GB 金色 移动联通</a></td>
+        <td><a href="${path}/back/#">乐视（Le）乐2Pro 32GB 金色 移动联通</a></td>
         <td>4566</td>
         <td>3455</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">华为 P9 plus 64GB 琥珀金 移动联通电信卡双待 </a></td>
+        <td><a href="${path}/back/#">华为 P9 plus 64GB 琥珀金 移动联通电信卡双待 </a></td>
         <td>231</td>
         <td>11</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">华为 P9 plus 64GB 琥珀金 移动联通电信 </a></td>
+        <td><a href="${path}/back/#">华为 P9 plus 64GB 琥珀金 移动联通电信 </a></td>
         <td>23</td>
         <td>12</td>
         <td>2016-7-12 12:23:34</td>
@@ -303,28 +303,28 @@
 	<tbody>
 		<tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">hd23342354534534 </a></td>
+        <td><a href="${path}/back/#">hd23342354534534 </a></td>
         <td>2</td>
         <td>已完成</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">hd23342354534534</a></td>
+        <td><a href="${path}/back/#">hd23342354534534</a></td>
         <td>2</td>
         <td>待收货</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">hd23342354534534 </a></td>
+        <td><a href="${path}/back/#">hd23342354534534 </a></td>
         <td>3</td>
         <td>已完成</td>
         <td>2016-7-12 12:23:34</td>
         </tr>
         <tr>
         <td>花海天天</td>
-        <td><a href="<%=application.getContextPath() %>/back/#">hd2335464544534534</a></td>
+        <td><a href="${path}/back/#">hd2335464544534534</a></td>
         <td>3</td>
         <td>交易失败</td>
         <td>2016-7-12 12:23:34</td>

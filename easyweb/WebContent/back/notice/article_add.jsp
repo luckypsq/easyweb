@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -7,20 +7,20 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
+        <link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${path}/back/css/style.css"/>       
+        <link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="${path}/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="${path}/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>  	         	
-        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
-        <script src="<%=application.getContextPath() %>/back/js/H-ui.js" type="text/javascript"></script>
+		<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+        <script src="${path}/back/assets/js/bootstrap.min.js"></script>
+		<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script>  	         	
+        <script src="${path}/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="${path}/back/assets/laydate/laydate.js" type="text/javascript"></script>
+        <script src="${path}/back/js/H-ui.js" type="text/javascript"></script>
 <title>添加文章</title>
 </head>
 
@@ -71,10 +71,9 @@
  </div>
 </div>
 </body>
-</html>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/ueditor.config.js"></script>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/ueditor.all.min.js"> </script>
-<script type="text/javascript" src="<%=application.getContextPath() %>/back/Widget/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script> 
+<script type="text/javascript" src="${path}/back/Widget/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="${path}/back/Widget/ueditor/1.4.3/ueditor.all.min.js"> </script>
+<script type="text/javascript" src="${path}/back/Widget/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script> 
 <script type="text/javascript">
 /**提交操作**/
 function article_save_submit(){
@@ -134,3 +133,5 @@ var end = {
 laydate(start);
 laydate(end);
 </script>
+
+</html>

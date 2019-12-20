@@ -1,12 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
-    <%@page import="java.util.List"%>
-<%@page import="com.yc.easyweb.bean.OrderDetial"%>
-<%@page import="com.yc.easyweb.dao.EorderDao"%>
-<%@page import="com.yc.easyweb.biz.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -30,7 +26,7 @@
 <title>订单详细</title>
 </head>
 
-<body onload="show()">
+<body >
 <div class="margin clearfix">
 <div class="Order_Details_style">
 <div class="Numbering">订单编号:<b>${orderdetialshow.eoid }</b></div></div>
@@ -45,7 +41,7 @@
         </div>
         <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 收件人电话： </label>
-         <div class="o_content">${orderdetialshow.uphone }</div>
+         <div class="o_content">${orderdetialshow.eotemp }</div>
         </div>
          <div class="col-xs-3">  
          <label class="label_name" for="form-field-2"> 收件地邮编： </label>
@@ -62,9 +58,9 @@
     <div class="title_name">产品信息</div>
     <div class="Info_style clearfix">
       <div class="product_info clearfix">
-      <a href="${path}/detail.jsp?bid=${orderdetialshow.bid }" class="img_link"><img src="${orderdetialshow.bimg }" /></a>
+      <a href="${path}/back/book/detail-admin.jsp?bid=${orderdetialshow.bid }" class="img_link"><img src="${orderdetialshow.bimg }" /></a>
       <span>
-      <a href="${path}/detail.jsp?bid=${orderdetialshow.bid }" class="name_link">${orderdetialshow.bname }</a>
+      <a href="${path}/back/book/detail-admin.jsp?bid=${orderdetialshow.bid }" class="name_link">${orderdetialshow.bname }</a>
        <p>数量：${orderdetialshow.count }本</p>
       <p>状态：<i class="label label-success radius">有货</i></p>   
       </span>
@@ -102,7 +98,7 @@
          <div class="o_content">2016-7-19</div>
         </div> -->
         </div>
-      <div class="Total_m_style"><span class="Total">总数：<b>${orderdetialshow.count }</b></span><span class="Total_price">总价：<b>${orderdetialshow.total() }</b>元</span></div>
+      <div class="Total_m_style"><span class="Total">总数：<b>${orderdetialshow.count }</b></span><span class="Total_price">总价：<b>${orderdetialshow.total }</b>元</span></div>
     </div>
     
     <!--物流信息-->
@@ -154,46 +150,5 @@
 </div>
  </div>
 </div>
-<script>
-//定义xml对象
-var xmlhttp;
-// ajax 
-try {
-	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-} catch (e) {
-	try {
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new XMLHttpRequest();
-		} catch (e) {
-		}
-	}
-}
-	function show(){
-		var eoid = "${param.eoid}";
-		if (xmlhttp != null) {
-			// 定义请求地址
-			var url = "${path}/eorder.s?op=querySingle&eoid="+eoid;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST", url, true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					/* var msg = xmlhttp.responseText.replace(/\s/gi, "");
-					if(msg == 0){
-						alert("暂无数据");
-					} */
-				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		} else {
-			alert("不能创建XMLHttpRequest对象实例")
-		}
-	}
-</script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -18,7 +18,6 @@
 
 <title>个人信息管理</title>
 </head>
-
 <body>
 	<div class="clearfix">
 		<div class="admin_info_style">
@@ -31,7 +30,7 @@
 						<div class="col-sm-9">
 							<input type="text" name="uname" id="uname"
 								value="${loginedUser.uname }" class="col-xs-7 text_info"
-								disabled="disabled" oninput="checkName('loginedUser.uid');">
+								disabled="disabled" oninput="checkName('${ loginedUser.uid}');">
 							&nbsp;&nbsp;&nbsp;<a href="javascript:;"
 								onclick="change_Password()" class="btn btn-warning btn-xs">修改密码</a>
 						</div>

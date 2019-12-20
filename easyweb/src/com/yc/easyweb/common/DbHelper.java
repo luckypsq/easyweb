@@ -26,7 +26,7 @@ public class DbHelper {
 			Class.forName(MyProperties.getInstace().getProperty("driver"));
 
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -62,7 +62,7 @@ public class DbHelper {
 				conn.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -122,8 +122,7 @@ public class DbHelper {
 			try {
 				pstmt.setObject(i + 1, params.get(i));
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -144,11 +143,8 @@ public class DbHelper {
 			closeAll(conn, pstmt, null);
 			return result;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		return result;
-
 	}
 
 	private static void setParamsObject(PreparedStatement pstmt2, Object[] params) {
@@ -159,8 +155,7 @@ public class DbHelper {
 			try {
 				pstmt2.setObject(i + 1, params[i]);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -214,10 +209,9 @@ public class DbHelper {
 				list.add(map);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			closeAll(conn, pstmt, rs);
 		}
@@ -247,10 +241,8 @@ public class DbHelper {
 			}
 			return list;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		return list;
 	}
 
 	/**
@@ -297,10 +289,9 @@ public class DbHelper {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			closeAll(conn, pstmt, rs);
 		}
@@ -345,10 +336,9 @@ public class DbHelper {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			closeAll(conn, pstmt, rs);
 		}

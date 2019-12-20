@@ -23,6 +23,8 @@ public class JoinServlet extends BaseServlet {
 	private BookTypeBiz btBiz = new BookTypeBiz();
 	private PayTypeBiz payTypeBiz = new PayTypeBiz();
 	private EorderitemBiz eorderitemBiz = new EorderitemBiz();
+	private UsercontrolBiz ucBiz = new UsercontrolBiz();
+	private ControlBiz controlBiz = new ControlBiz();
 	private EorderBiz eorderBiz = new EorderBiz();
 	private Gson gson = new Gson();
 	private Result result;
@@ -40,8 +42,10 @@ public class JoinServlet extends BaseServlet {
 		// 接收 用户名 和 密码
 		String username = request.getParameter("uname");
 		String password = request.getParameter("upassword");
-		String loginkeeping = request.getParameter("loginkeeping");// 验证码
-		session.setAttribute("loginUname", username);
+		/*String loginkeeping = request.getParameter("loginkeeping");*/
+		// 验证码
+		String vcode = request.getParameter("vcode");
+		String realCode = (String) session.getAttribute("vcode");
 		User user = new User();
 		try {
 			// 添加用户名条件
@@ -60,6 +64,14 @@ public class JoinServlet extends BaseServlet {
 				user.setUpassword(password);
 			} else {
 				result = Result.failure("密码为空！！！");
+				String json = gson.toJson(result);
+				// 返回json格式数据
+				response.setContentType("application/json;charset=UTF-8");
+				response.getWriter().append(json);
+				return;
+			}
+			if(!vcode.equalsIgnoreCase(realCode)){
+				result = Result.failure("验证码错误！！！");
 				String json = gson.toJson(result);
 				// 返回json格式数据
 				response.setContentType("application/json;charset=UTF-8");
@@ -125,7 +137,7 @@ public class JoinServlet extends BaseServlet {
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			} else {
-				UsercontrolBiz ucBiz = new UsercontrolBiz();
+				
 				Usercontrol usercontrolOld = new Usercontrol();
 				usercontrolOld.setUid(userShow.getUid());
 				List<Usercontrol> controlList = ucBiz.selectAll(usercontrolOld);
@@ -186,9 +198,12 @@ public class JoinServlet extends BaseServlet {
 		String[] userSex = { "保密", "男", "女" };
 		session.setAttribute("userSex", userSex);
 		String[] adminState = { "", "已启用", "已冻结", "已删除" };
-		session.setAttribute("adminStateC", adminState);// 存储所有存在的管理员信息
+		session.setAttribute("adminStateC", adminState);
 		String[] bookState = { "未上架", "已上架", "已下架", "售罄", "审核不通过", "未审核" };
 		session.setAttribute("bookState", bookState);
+		//公告
+		String[] noticeState  = {"未启用","启用"};
+		session.setAttribute("noticeState", noticeState);
 		// 管理员订单状态
 		String[] eorderState = { "", "待付款", "待发货", "已发货", "待处理", "已退款", "已接收", "退货失败" };
 		session.setAttribute("eoderState", eorderState);
@@ -348,21 +363,47 @@ public class JoinServlet extends BaseServlet {
 			}
 		}
 		session.setAttribute("customerAll", customerExit);// 存储所有用户信息
+		Long [] userSize = new Long[100];
+		for (int i = 0; i < userSize.length; i++) {
+			userSize[i] = (long) 0;
+		}
+		for (User u : customerExit) {
+			if(u.getUtype() == 2){
+				userSize[0] = userSize[0] + 1;
+			}
+			if(u.getUtype() == 3){
+				userSize[1] = userSize[1] + 1;
+			}
+			if(u.getUtype() == 4){
+				userSize[2] = userSize[2] + 1;
+			}
+			if(u.getUtype() == 6){
+				userSize[3] = userSize[3] + 1;
+			}
+			if(u.getUtype() == 7){
+				userSize[4] = userSize[4] + 1;
+			}
+			if(u.getUtype() == 8){
+				userSize[5] = userSize[5] + 1;
+			}
+			if(u.getUtype() == 9){
+				userSize[6] = userSize[6] + 1;
+			}
+			if(u.getUtype() == 10){
+				userSize[7] = userSize[7] + 1;
+			}
+		}
+		session.setAttribute("userSize", userSize);
 		// 获取书籍信息
 		Book book = new Book();
 		List<Book> bookAll = bookBiz.selectAll(book);
 		session.setAttribute("bookAll", bookAll);// 存储所有书籍
 		// 获取全部订单数
-		Eorder eorder = new Eorder();
 		OrderDetial eorder1 = new OrderDetial();
 		String[] date = (String[]) session.getAttribute("date");
-		eorder.setEotime(date[0]);
 		eorder1.setEotime(date[0]);
-		List<OrderDetial> eorderList;
-		eorderList = eorderBiz.selectAllDetail(eorder1);
-		List<Eorder> eorders = eorderBiz.selectAll(eorder);
-		session.setAttribute("eorderSuccess", eorderList);// 存储所有的订单信息
-		session.setAttribute("eorderAll", eorders);// 存储所有的订单信息
+		List<OrderDetial> eorderList = eorderBiz.selectAllDetail(eorder1);
+		session.setAttribute("eorderAll", eorderList);// 存一年所有的订单信息
 		double num = 0.0;
 		if (eorderList.size() != 0) {
 			for (OrderDetial oShow : eorderList) {
@@ -373,7 +414,7 @@ public class JoinServlet extends BaseServlet {
 		// eorderList保存着全部订单
 		// 状态1.待付款2.待发货3.已发货4.退货申请中5.退款成功6.已接收7.退货失败
 		long[] count = { 0, 0, 0, 0, 0 };
-		for (Eorder eo : eorders) {
+		for (OrderDetial eo : eorderList) {
 			if (eo.getEostate() == 1) {
 				// 待结算订单eotype==1
 				count[2] = count[2] + 1;
@@ -392,6 +433,34 @@ public class JoinServlet extends BaseServlet {
 			}
 		}
 		session.setAttribute("eorderCount", count);// 存储每一状态数值
+		//存储不是退款操作的订单
+		List<OrderDetial> order_show = eorderBiz.selectAllDetail(eorder1);
+		List<OrderDetial> orderRefund = new ArrayList<OrderDetial>();
+		List<OrderDetial> orderHand = new ArrayList<OrderDetial>();
+		for (int i = 0; i < order_show.size(); i++) {
+			if (order_show.get(i).getEostate() == 4 || order_show.get(i).getEostate() == 5
+					|| order_show.get(i).getEostate() == 7) {
+				orderRefund.add(order_show.get(i));
+			}else{
+				orderHand.add(order_show.get(i));
+			}
+		}
+		session.setAttribute("eorderHand", orderHand);
+		long[] numHand = { 0, 0, 0, 0 };
+		for (OrderDetial order_main : orderHand) {
+			if (order_main.getEostate() == 1) {
+				numHand[0] = numHand[0] + 1;
+			} else if (order_main.getEostate() == 2) {
+				numHand[1] = numHand[1] + 1;
+			} else if (order_main.getEostate() == 3) {
+				numHand[2] = numHand[2] + 1;
+			} else if (order_main.getEostate() == 6) {
+				numHand[3] = numHand[3] + 1;
+			}
+		}
+		session.setAttribute("orderNum", numHand);
+		//查询退款数据
+		session.setAttribute("eorderRefund", orderRefund);
 		// bookList存储所有书籍信息
 		// bstate;//状态(1可用，2.删除3.售罄)
 		long[] bookCount = { 0, 0, 0 };
@@ -453,7 +522,7 @@ public class JoinServlet extends BaseServlet {
 		List<BookType> bookTypes = btBiz.selectAll(bookType);
 		session.setAttribute("adminBtypes", bookTypes);
 		String[] type = new String[1000];
-		String btname;
+		String btname = null;
 		for (BookType bt : bookTypes) {
 			if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
 				btname = bt.getBtnamethird();
@@ -465,5 +534,36 @@ public class JoinServlet extends BaseServlet {
 			type[(int) bt.getBtid()] = btname;
 		}
 		session.setAttribute("adminBtypesEdit", type);
+		
+		//管理员权限
+		/*
+		String[] type = new String[1000];
+		String btname;
+		for (BookType bt : bookTypes) {
+			if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
+				btname = bt.getBtnamethird();
+			} else if (bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()) {
+				btname = bt.getBtnamesecond();
+			} else {
+				btname = bt.getBtname();
+			}
+			type[(int) bt.getBtid()] = btname;
+		}
+		session.setAttribute("btTypeEdit", type);*/
+		Control control = new Control();
+		control.setConstate(1);
+		List<Control> controls = controlBiz.selectAll(control);
+		session.setAttribute("controls", controls);
+		String[] cString = new String[1000];
+		String cname = null;
+		for (Control c : controls) {
+			if(c.getConamesecond() != null && !c.getConamesecond().isEmpty()){
+				cname = c.getConamesecond();
+			}else if(c.getConame() != null && !c.getConame().isEmpty()){
+				cname = c.getConame();
+			}
+			cString[(int) c.getConid()] = cname;
+		}
+		session.setAttribute("controlType", cString);
 	}
 }

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
@@ -34,6 +34,12 @@
 			interval: 2750  //** 停顿时间
 		})
 	});
+	//页面加载函数
+	$(function(){
+		$('#teachBook').load('${path}/back/lhoption/indexTeach.jsp');
+		$('#toolBook').load('${path}/back/lhoption/indexTool.jsp');
+	});
+	//查询
 function show(btid1,btid2,obj){
 	$("#index-book-show a").removeClass("on");
 	$(obj).addClass("on"); 

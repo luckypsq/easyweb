@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     
@@ -13,6 +13,11 @@
 	<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript">
+	//页面加载函数
+	$(function(){
+		$('#notice-show').load('${path}/back/lhoption/noticeChild.jsp');	
+	});
+	//查询
 		function show(page){
 			var page1 = "page="+page;
 			$.ajax({
@@ -28,7 +33,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -40,7 +45,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -7,22 +7,22 @@
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
+ <link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${path}/back/css/style.css"/>       
+        <link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="${path}/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="${path}/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/js/displayPart.js" type="text/javascript"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>           	
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
+		<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+		<script src="${path}/back/js/displayPart.js" type="text/javascript"></script>
+        <script src="${path}/back/assets/js/bootstrap.min.js"></script>
+		<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script>           	
+		<script src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="${path}/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="${path}/back/assets/laydate/laydate.js" type="text/javascript"></script>
 		  
 <title>意见反馈</title>
 </head>
@@ -72,13 +72,13 @@
           <td>13333333333</td>
           <td>56564653@qq.com</td>
           <td class="text-l displayPart" displayLength="90">
-          <a href="<%=application.getContextPath() %>/back/javascript:;" onclick="Guestbook_iew('12')">“第二届中国无锡水蜜桃开摘节”同时开幕，为期三个月的蜜桃季全面启动。值此京东“618品质狂欢节”之际，中国特产无锡馆限量上线618份8只装精品水蜜桃，61.8元全国包邮限时抢购。为了保证水蜜桃从枝头到达您的手中依旧鲜甜如初，京东采用递送升级服务，从下单到包装全程冷链运输。</a>
+          <a href="${path}/back/javascript:;" onclick="Guestbook_iew('12')">“第二届中国无锡水蜜桃开摘节”同时开幕，为期三个月的蜜桃季全面启动。值此京东“618品质狂欢节”之际，中国特产无锡馆限量上线618份8只装精品水蜜桃，61.8元全国包邮限时抢购。为了保证水蜜桃从枝头到达您的手中依旧鲜甜如初，京东采用递送升级服务，从下单到包装全程冷链运输。</a>
           <td>2016-6-11 11:11:42</td>
           <td class="td-status"><span class="label label-success radius">已浏览</span></td>
           <td>投诉</td>
           <td class="td-manage">    
-        <a  href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" title="删除" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
-        <a  href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_Reply(this,'1')" title="回复" class="btn btn-xs btn-pink" ><i class="fa fa-envelope-o  bigger-120"></i></a>
+        <a  href="${path}/back/javascript:;"  onclick="member_del(this,'1')" title="删除" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a  href="${path}/back/javascript:;"  onclick="member_Reply(this,'1')" title="回复" class="btn btn-xs btn-pink" ><i class="fa fa-envelope-o  bigger-120"></i></a>
           </td>
         </tr>
 		<tr>
@@ -88,13 +88,13 @@
           <td>13333333333</td>
           <td>56564653@qq.com</td>
           <td class="text-l displayPart" displayLength="90">
-          <a href="<%=application.getContextPath() %>/back/javascript:;"  style="display: block;" onclick="Guestbook_iew('12')" >“第二届中国无锡水蜜桃开摘节”同时开幕，为期三个月的蜜桃季全面启动。值此京东“618品质狂欢节”之际，中国特产无锡馆限量上线618份8只装精品水蜜桃，61.8元全国包邮限时抢购。为了保证水蜜桃从枝头到达您的手中依旧鲜甜如初，京东采用递送升级服务，从下单到包装全程冷链运输。</a>
+          <a href="${path}/back/javascript:;"  style="display: block;" onclick="Guestbook_iew('12')" >“第二届中国无锡水蜜桃开摘节”同时开幕，为期三个月的蜜桃季全面启动。值此京东“618品质狂欢节”之际，中国特产无锡馆限量上线618份8只装精品水蜜桃，61.8元全国包邮限时抢购。为了保证水蜜桃从枝头到达您的手中依旧鲜甜如初，京东采用递送升级服务，从下单到包装全程冷链运输。</a>
           <td>2016-6-11 11:11:42</td>
           <td class="td-status"><span class="label label-success radius">已浏览</span></td>
           <td>投诉</td>
           <td class="td-manage">    
-        <a  href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_del(this,'1')" title="删除" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
-        <a  href="<%=application.getContextPath() %>/back/javascript:;"  onclick="member_Reply(this,'1')" title="回复" class="btn btn-xs btn-pink" ><i class="fa fa-envelope-o  bigger-120"></i></a>
+        <a  href="${path}/back/javascript:;"  onclick="member_del(this,'1')" title="删除" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>
+        <a  href="${path}/back/javascript:;"  onclick="member_Reply(this,'1')" title="回复" class="btn btn-xs btn-pink" ><i class="fa fa-envelope-o  bigger-120"></i></a>
           </td>
         </tr>
         </tbody>

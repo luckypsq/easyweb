@@ -1,30 +1,31 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
- <link href="<%=application.getContextPath() %>/back/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/css/style.css"/>       
-        <link href="<%=application.getContextPath() %>/back/assets/css/codemirror.css" rel="stylesheet">
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace.min.css" />
-        <link rel="stylesheet" href="<%=application.getContextPath() %>/back/font/css/font-awesome.min.css" />
+ <link href="${path}/back/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="${path}/back/css/style.css"/>       
+        <link href="${path}/back/assets/css/codemirror.css" rel="stylesheet">
+        <link rel="stylesheet" href="${path}/back/assets/css/ace.min.css" />
+        <link rel="stylesheet" href="${path}/back/font/css/font-awesome.min.css" />
         <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="<%=application.getContextPath() %>/back/assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="${path}/back/assets/css/ace-ie.min.css" />
 		<![endif]-->
-		<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="<%=application.getContextPath() %>/back/js/H-ui.js"></script>     
-		<script src="<%=application.getContextPath() %>/back/assets/js/typeahead-bs2.min.js"></script>           	
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.min.js"></script>
-		<script src="<%=application.getContextPath() %>/back/assets/js/jquery.dataTables.bootstrap.js"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/layer/layer.js" type="text/javascript" ></script>          
-        <script src="<%=application.getContextPath() %>/back/assets/laydate/laydate.js" type="text/javascript"></script>
-        <script src="<%=application.getContextPath() %>/back/assets/js/jquery.easy-pie-chart.min.js"></script>
-        <script src="<%=application.getContextPath() %>/back/js/lrtk.js" type="text/javascript" ></script>
+		<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+        <script src="${path}/back/assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${path}/back/js/H-ui.js"></script>     
+		<script src="${path}/back/assets/js/typeahead-bs2.min.js"></script>           	
+		<script src="${path}/back/assets/js/jquery.dataTables.min.js"></script>
+		<script src="${path}/back/assets/js/jquery.dataTables.bootstrap.js"></script>
+        <script src="${path}/back/assets/layer/layer.js" type="text/javascript" ></script>          
+        <script src="${path}/back/assets/laydate/laydate.js" type="text/javascript"></script>
+        <script src="${path}/back/assets/js/jquery.easy-pie-chart.min.js"></script>
+        <script src="${path}/back/js/lrtk.js" type="text/javascript" ></script>
 <title>订单管理</title>
 </head>
 
@@ -39,15 +40,23 @@
       </div>
       </div>
         <div class="hide_style clearfix">
-       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="20" data-color="#D15B47"><span class="percent">20</span>%</div><span class="name">食品类</span></div>									
-       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="55" data-color="#87CEEB"><span class="percent">55</span>%</div><span class="name">服装类</span></div>									
-       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="90" data-color="#87B87F"><span class="percent">90</span>%</div><span class="name">数码配件</span></div>
-       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="30" data-color="#d63116"><span class="percent">30</span>%</div><span class="name">手机</span></div>
-       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="60" data-color="#ff6600"><span class="percent">60</span>%</div><span class="name">电脑</span></div>
-       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="40" data-color="#2ab023"><span class="percent">40</span>%</div><span class="name">电子产品</span></div>
-       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="46" data-color="#1e3ae6"><span class="percent">46</span>%</div><span class="name">厨房用品</span></div>
-       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="65" data-color="#c316a9"><span class="percent">65</span>%</div><span class="name">家用电器</span></div>
-       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="56" data-color="#13a9e1"><span class="percent">56</span>%</div><span class="name">卫浴</span></div>  
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="20" data-color="#D15B47"><span class="percent">20</span>%</div><span class="name">教材区</span></div>									
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="55" data-color="#87CEEB"><span class="percent">55</span>%</div><span class="name">工具书区</span></div>									
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="90" data-color="#87B87F"><span class="percent">90</span>%</div><span class="name">分享区</span></div>
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="30" data-color="#d63116"><span class="percent">30</span>%</div><span class="name">成功励志</span></div>
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="60" data-color="#ff6600"><span class="percent">60</span>%</div><span class="name">法律</span></div>
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="40" data-color="#2ab023"><span class="percent">40</span>%</div><span class="name">管理</span></div>
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="46" data-color="#1e3ae6"><span class="percent">46</span>%</div><span class="name">计算机与网络</span></div>
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="65" data-color="#c316a9"><span class="percent">65</span>%</div><span class="name">教育考试</span></div>
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="56" data-color="#13a9e1"><span class="percent">56</span>%</div><span class="name">科技工程</span></div>  
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="66" data-color="#37A2DA"><span class="percent">66</span>%</div><span class="name">生活时尚</span></div>  
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="78" data-color="#32C5E9"><span class="percent">78</span>%</div><span class="name">文化历史</span></div>  
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="34" data-color="#67E0E3"><span class="percent">34</span>%</div><span class="name">英语四六级</span></div>  
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="52" data-color="#8378EA"><span class="percent">52</span>%</div><span class="name">公务员考试</span></div>  
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="37" data-color="#96BFFF"><span class="percent">37</span>%</div><span class="name">考研资料</span></div>  
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="64" data-color="#fb7293"><span class="percent">64</span>%</div><span class="name">雅思托福</span></div>  
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="89" data-color="#ff9f7f"><span class="percent">89</span>%</div><span class="name">其他</span></div>  
+       <div class="proportion"> <div class="easy-pie-chart percentage" data-percent="40" data-color="#FFDB5C"><span class="percent">40</span>%</div><span class="name">名人名言</span></div>  
     </div>
     </div>
     <!--内容-->
@@ -60,16 +69,11 @@
          <div class="side_list"><div class="widget-header header-color-green2"><h4 class="lighter smaller">订单类型分类</h4></div>
          <div class="widget-body">         
          <ul class="b_P_Sort_list">
-             <li><i class="orange  fa fa-reorder"></i><a href="<%=application.getContextPath() %>/back/#">全部订单(235)</a></li>
-             <li><i class="fa fa-sticky-note pink "></i> <a href="<%=application.getContextPath() %>/back/#">食品类(235)</a></li>
-             <li><i class="fa fa-sticky-note pink "></i> <a href="<%=application.getContextPath() %>/back/#">数码配件(2215)</a> </li>
-             <li><i class="fa fa-sticky-note pink "></i> <a href="<%=application.getContextPath() %>/back/#">手机(3456)</a></li>
-             <li><i class="fa fa-sticky-note pink "></i> <a href="<%=application.getContextPath() %>/back/#">电脑(4332)</a></li>
-             <li><i class="fa fa-sticky-note pink "></i> <a href="<%=application.getContextPath() %>/back/#">厨房用品(1332)</a></li>
-             <li><i class="fa fa-sticky-note grey "></i> <a href="<%=application.getContextPath() %>/back/#">电子产品(4543)</a></li>
-             <li><i class="fa fa-sticky-note red  "></i> <a href="<%=application.getContextPath() %>/back/#">红钻会员(343)</a></li>
-             <li><i class="fa fa-sticky-note blue "></i> <a href="<%=application.getContextPath() %>/back/#">家用电器(2343)</a></li>
-             <li><i class="fa fa-sticky-note grey "></i> <a href="<%=application.getContextPath() %>/back/#">卫浴</a></li>
+            	<li><i class="orange  fa fa-reorder"></i><a href="javascript:;">全部订单(${eorderAll.size() })</a></li>
+          
+		     <c:forEach items="${btypes}" var="bt">
+					 <li><i class="fa fa-sticky-note pink "></i> <a href="javascript:;">${btTypeEdit[bt.btid] }(235)</a></li>
+			 </c:forEach>
             </ul>
     
        </div>
@@ -81,150 +85,21 @@
      <div class="search_style">
      
       <ul class="search_content clearfix">
-       <li><label class="l_f">订单编号</label><input name="" type="text" class="text_add" placeholder="订单订单编号" style=" width:250px"></li>
-       <li><label class="l_f">时间</label><input class="inline laydate-icon" id="start" style=" margin-left:10px;"></li>
-       <li style="width:90px;"><button type="button" class="btn_search"><i class="fa fa-search"></i>查询</button></li>
-      </ul>
+						<li><label class="l_f">订单编号</label><input id="eoid_show"
+							 type="text"  class="text_add" placeholder="输入订单编号" style="width: 250px" /></li>
+						<li><label class="l_f">交易时间</label><input
+							class="inline laydate-icon" id="start"
+							 style="margin-left:10px;"></li>
+						<li style="width: 90px;"><button type="button"
+								class="btn_search" onClick="selectDate('0')">
+								<i class="fa fa-search"></i>查询
+							</button></li>
+					</ul>
     </div>
       <!--订单列表展示-->
-       <table class="table table-striped table-bordered table-hover" id="sample-table">
-		<thead>
-		 <tr>
-				<th width="25px"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
-				<th width="120px">订单编号</th>
-				<th width="250px">产品名称</th>
-				<th width="100px">总价</th>
-				<th width="100px">优惠</th>
-                <th width="100px">订单时间</th>				
-				<th width="180px">所属类型</th>
-                <th width="80px">数量</th>
-				<th width="70px">状态</th>                
-				<th width="200px">操作</th>
-			</tr>
-		</thead>
-	<tbody>
-     <tr>
-     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-     <td>20160705445622</td>
-     <td class="order_product_name">
-      <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_1.jpg"  title="产品名称"/></a>
-      <i class="fa fa-plus"></i>
-       <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_2.jpg"  title="产品名称"/></a>
-     </td>
-     <td>456.5</td>
-     <td>14</td>
-     <td>2016-7-5</td>
-     <td>食品</td>
-     <td>2</td>
-      <td class="td-status"><span class="label label-success radius">代发货</span></td>
-     <td>
-     <a onClick="Delivery_stop(this,'10001')"  href="<%=application.getContextPath() %>/back/javascript:;" title="发货"  class="btn btn-xs btn-success"><i class="fa fa-cubes bigger-120"></i></a> 
-     <a title="订单详细"  href="<%=application.getContextPath() %>/back/order_detailed.html"  class="btn btn-xs btn-info order_detailed" ><i class="fa fa-list bigger-120"></i></a> 
-     <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>    
-     </td>
-     </tr>
-     <tr>
-     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-     <td>20160705445622</td>
-     <td class="order_product_name">
-      <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_1.jpg"  title="产品名称"/></a>
-      <i class="fa fa-plus"></i>
-       <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_2.jpg"  title="产品名称"/></a>
-     </td>
-     <td>456.5</td>
-     <td>14</td>
-     <td>2016-7-5</td>
-     <td>食品</td>
-     <td>2</td>
-      <td class="td-status"><span class="label label-success radius">代发货</span></td>
-     <td>
-     <a onClick="Delivery_stop(this,'10003')"  href="<%=application.getContextPath() %>/back/javascript:;" title="发货"  class="btn btn-xs btn-success"><i class="fa fa-cubes bigger-120"></i></a> 
-     <a title="订单详细"  href="<%=application.getContextPath() %>/back/order_detailed.html"  class="btn btn-xs btn-info order_detailed" ><i class="fa fa-list bigger-120"></i></a> 
-     <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>    
-     </td>
-     </tr>
-     <tr>
-     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-     <td>20160705445622</td>
-     <td class="order_product_name">
-      <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_1.jpg"  title="产品名称"/></a>
-      <i class="fa fa-plus"></i>
-       <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_2.jpg"  title="产品名称"/></a>
-     </td>
-     <td>456.5</td>
-     <td>14</td>
-     <td>2016-7-5</td>
-     <td>食品</td>
-     <td>2</td>
-      <td class="td-status"><span class="label label-success radius">代发货</span></td>
-     <td>
-     <a onClick="Delivery_stop(this,'10005')"  href="<%=application.getContextPath() %>/back/javascript:;" title="发货"  class="btn btn-xs btn-success"><i class="fa fa-cubes bigger-120"></i></a> 
-     <a title="订单详细"  href="<%=application.getContextPath() %>/back/order_detailed.html"  class="btn btn-xs btn-info order_detailed" ><i class="fa fa-list bigger-120"></i></a> 
-     <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>    
-     </td>
-     </tr>
-     <tr>
-     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-     <td>20160705445622</td>
-     <td class="order_product_name">
-      <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_1.jpg"  title="产品名称"/></a>
-      <i class="fa fa-plus"></i>
-       <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_2.jpg"  title="产品名称"/></a>
-     </td>
-     <td>456.5</td>
-     <td>14</td>
-     <td>2016-7-5</td>
-     <td>食品</td>
-     <td>2</td>
-      <td class="td-status"><span class="label label-success radius">代发货</span></td>
-     <td>
-     <a onClick="Delivery_stop(this,'10034')"  href="<%=application.getContextPath() %>/back/javascript:;" title="发货"  class="btn btn-xs btn-success"><i class="fa fa-cubes bigger-120"></i></a> 
-     <a title="订单详细"  href="<%=application.getContextPath() %>/back/order_detailed.html"  class="btn btn-xs btn-info order_detailed" ><i class="fa fa-list bigger-120"></i></a> 
-     <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>    
-     </td>
-     </tr>
-     <tr>
-     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-     <td>20160705445622</td>
-     <td class="order_product_name">
-      <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_5.jpg"  title="产品名称"/></a>
-      <i class="fa fa-plus"></i>
-       <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_4.jpg"  title="产品名称"/></a>
-     </td>
-     <td>456.5</td>
-     <td>14</td>
-     <td>2016-7-5</td>
-     <td>食品</td>
-     <td>2</td>
-      <td class="td-status"><span class="label label-success radius">代发货</span></td>
-     <td>
-     <a onClick="Delivery_stop(this,'10012')"  href="<%=application.getContextPath() %>/back/javascript:;" title="发货"  class="btn btn-xs btn-success"><i class="fa fa-cubes bigger-120"></i></a> 
-     <a title="订单详细"  href="<%=application.getContextPath() %>/back/order_detailed.html"  class="btn btn-xs btn-info order_detailed" ><i class="fa fa-list bigger-120"></i></a> 
-     <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>    
-     </td>
-     </tr>
-     <tr>
-     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
-     <td>20160705445622</td>
-     <td class="order_product_name">
-      <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_3.jpg"  title="产品名称"/></a>
-      <i class="fa fa-plus"></i>
-       <a href="<%=application.getContextPath() %>/back/#"><img src="<%=application.getContextPath() %>/back/products/p_7.jpg"  title="产品名称"/></a>
-     </td>
-     <td>456.5</td>
-     <td>14</td>
-     <td>2016-7-5</td>
-     <td>食品</td>
-     <td>2</td>
-      <td class="td-status"><span class="label label-success radius">代发货</span></td>
-     <td>
-     <a onClick="Delivery_stop(this,'10061')"  href="<%=application.getContextPath() %>/back/javascript:;" title="发货"  class="btn btn-xs btn-success"><i class="fa fa-cubes bigger-120"></i></a> 
-     <a title="订单详细"  href="<%=application.getContextPath() %>/back/order_detailed.html"  class="btn btn-xs btn-info order_detailed" ><i class="fa fa-list bigger-120"></i></a> 
-     <a title="删除" href="<%=application.getContextPath() %>/back/javascript:;"  onclick="Order_form_del(this,'1')" class="btn btn-xs btn-warning" ><i class="fa fa-trash  bigger-120"></i></a>    
-     </td>
-     </tr>
-     </tbody>
-     </table>
+       <div id="order-show-list">
+       		<jsp:include page="order-hand-list.jsp"></jsp:include>
+       </div>
      </div>
    </div>
  </div>
@@ -257,7 +132,32 @@
   </div>
  </div>
 </body>
-</html>
+<script>
+//订单列表
+jQuery(function($) {
+		var oTable1 = $('#sample-table').dataTable( {
+		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+		"bStateSave": true,//状态保存
+		"aoColumnDefs": [
+		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+		  {"orderable":false,"aTargets":[0,1,2,3,4,5,6,7,8,9]}// 制定列不参与排序
+		] } );
+				
+				
+				$('table th input:checkbox').on('click' , function(){
+					var that = this;
+					$(this).closest('table').find('tr > td:first-child input:checkbox')
+					.each(function(){
+						this.checked = that.checked;
+						$(this).closest('tr').toggleClass('selected');
+					});
+						
+				});
+			
+			
+			
+			});
+</script>
 <script>
  $(function() { 
 	$("#cover_style").fix({
@@ -305,43 +205,182 @@ $(function() {
     elem: '#start',
     event: 'focus' 
 });
-/*订单-删除*/
-function Order_form_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$(obj).parents("tr").remove();
-		layer.msg('已删除!',{icon:1,time:1000});
-	});
-}
-/**发货**/
-function Delivery_stop(obj,id){
-	layer.open({
-        type: 1,
-        title: '发货',
-		maxmin: true, 
-		shadeClose:false,
-        area : ['500px' , ''],
-        content:$('#Delivery_stop'),
-		btn:['确定','取消'],
-		yes: function(index, layero){		
-		if($('#form-field-1').val()==""){
-			layer.alert('快递号不能为空！',{
-               title: '提示框',				
-			  icon:0,		
-			  }) 
-			
-			}else{			
-			 layer.confirm('提交成功！',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style=" display:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="<%=application.getContextPath() %>/back/javascript:;" title="已发货"><i class="fa fa-cubes bigger-120"></i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发货</span>');
-		$(obj).remove();
-		layer.msg('已发货!',{icon: 6,time:1000});
-			});  
-			layer.close(index);    		  
-		  }
-		
-		}
-	})
-};
+ //查看订单详情
+ function selectSingle(id){
+	  var param ="eoid="+id;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/eorder.s?op=querySingle",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						location.href = '${path}/back/order/order_detailed.jsp';
+		        		return;
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
+							icon : 5,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        	return;
+		        	}
+				}
+			});
+ }
+ //查询
+   function selectDate(id){
+	  if(id == 0){
+		  id = "";
+	  }
+ 	  var eoid = document.getElementById("eoid_show").value.trim();
+ 	  var eotime = document.getElementById("start").value.trim();
+ 	  var param ="eoid="+eoid+"&eotime="+eotime+"&eostate="+id+"&type=1";
+ 		$.ajax({
+ 	        type: "post",
+ 	        url: "${path}/eorder.s?op=query",
+ 	        data: param,
+ 	        async:true, // 异步请求
+ 	        cache:true, // 设置为 false 将不缓存此页面
+ 	        dataType: 'json', // 返回对象
+ 	        success: function(result) {
+ 					if(result.code == 1){
+ 						$('#order-show-list').load('${path}/back/order/order-hand-list.jsp');
+ 		        		return;
+ 		        	}
+ 		        	if(result.code == 0){
+ 		        	layer.msg(result.msg, {
+ 							icon : 5,
+ 							time : 1000,
+ 							title: "提示"
+ 						});
+ 		        		return;
+ 		        	}
+ 		        	if(result.code == -1){
+ 		        		layer.msg(result.msg, {
+ 							icon : 2,
+ 							time : 1000,
+ 							title: "提示"
+ 							});
+ 		        	return;
+ 		        	}
+ 				}
+ 			});
+ }
+   /**发货**/
+   function Delivery_stop(obj,id){
+   	layer.open({
+           type: 1,
+           title: '发货',
+   		maxmin: true, 
+   		shadeClose:false,
+           area : ['500px' , ''],
+           content:$('#Delivery_stop'),
+   		btn:['确定','取消'],
+   		yes: function(index, layero){		
+   		if($('#form-field-1').val()==""){
+   			layer.alert('快递号不能为空！',{
+                  title: '提示框',				
+   			  icon:0,		
+   			  }) 
+   			}else{			
+   			 layer.confirm('提交成功！',function(index){
+   				 var express = document.getElementById("form-field-select-1").value.trim();
+   				 var eotype =  $("input[type='radio']:checked").val();
+   				 var param ="eostate=3&eoid="+id+"&eopress="+express+"&type="+eotype;
+   					$.ajax({
+   				        type: "post",
+   				        url: "${path}/eorder.s?op=update",
+   				        data: param,
+   				        async:true, // 异步请求
+   				        cache:true, // 设置为 false 将不缓存此页面
+   				        dataType: 'json', // 返回对象
+   				        success: function(result) {
+   								if(result.code == 1){
+   									$('#order-show-list').load('${path}/back/order/order-hand-list.jsp');
+   									layer.msg(result.msg, {
+   										icon :6,
+   										time : 1000,
+   										title: "提示"
+   									});
+   									layer.close(index); 
+   					        		return;
+   					        	}
+   					        	if(result.code == 0){
+   					        	layer.msg(result.msg, {
+   										icon : 5,
+   										time : 1000,
+   										title: "提示"
+   									});
+   					        		return;
+   					        	}
+   					        	if(result.code == -1){
+   					        		layer.msg(result.msg, {
+   										icon : 2,
+   										time : 1000,
+   										title: "提示"
+   										});
+   					        	return;
+   					        	}
+   							}
+   						});
+   			});  
+   		  }
+   		}
+   	})
+   };
+   /*订单-删除*/
+   function Order_form_del(obj, id) {
+   	layer.confirm('确认要删除吗？', function(index) {
+   		var param ="eoid="+id;
+   		$.ajax({
+   	        type: "post",
+   	        url: "${path}/eorder.s?op=delete",
+   	        data: param,
+   	        async:true, // 异步请求
+   	        cache:true, // 设置为 false 将不缓存此页面
+   	        dataType: 'json', // 返回对象
+   	        success: function(result) {
+   					if(result.code == 1){
+   						$('#order-show-list').load('${path}/back/order/order-hand-list.jsp');
+   						layer.msg(result.msg, {
+   							icon :6,
+   							time : 1000,
+   							title: "提示"
+   						});
+   		        		return;
+   		        	}
+   		        	if(result.code == 0){
+   		        	layer.msg(result.msg, {
+   							icon : 5,
+   							time : 1000,
+   							title: "提示"
+   						});
+   		        		return;
+   		        	}
+   		        	if(result.code == -1){
+   		        		layer.msg(result.msg, {
+   							icon : 2,
+   							time : 1000,
+   							title: "提示"
+   							});
+   		        	return;
+   		        	}
+   				}
+   			});
+   	});
+   }
 //面包屑返回值
 var index = parent.layer.getFrameIndex(window.name);
 parent.layer.iframeAuto(index);
@@ -358,7 +397,6 @@ $('.Order_form,.order_detailed').on('click', function(){
     parent.layer.close(index);
 	
 });
-
 //初始化宽度、高度  
   var heights=$(".top_style").outerHeight()+47; 
  $(".centent_style").height($(window).height()-heights); 
@@ -389,29 +427,5 @@ var oldie = /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase());
 			$('[data-rel=tooltip]').tooltip();
 			$('[data-rel=popover]').popover({html:true});
 </script>
-<script>
-//订单列表
-jQuery(function($) {
-		var oTable1 = $('#sample-table').dataTable( {
-		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-		"bStateSave": true,//状态保存
-		"aoColumnDefs": [
-		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[0,1,2,3,4,5,6,7,8,9]}// 制定列不参与排序
-		] } );
-				
-				
-				$('table th input:checkbox').on('click' , function(){
-					var that = this;
-					$(this).closest('table').find('tr > td:first-child input:checkbox')
-					.each(function(){
-						this.checked = that.checked;
-						$(this).closest('tr').toggleClass('selected');
-					});
-						
-				});
-			
-			
-			
-			});
-</script>
+
+</html>

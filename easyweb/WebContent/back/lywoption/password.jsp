@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=utf-8" isErrorPage="true"
     pageEncoding="utf-8"%>
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
@@ -44,7 +44,7 @@
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-						timeout:200,
+						timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''
@@ -78,7 +78,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-							timeout:200,
+							timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -140,7 +140,7 @@
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-						timeout:200,
+						timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''
@@ -152,7 +152,7 @@
 	    				title:'提示',
 	    				msg:result.msg,
 	    				showType:'fade',
-						timeout:200,
+						timeout:300,
 	    				style:{
 	    					right:'',
 	    					bottom:''

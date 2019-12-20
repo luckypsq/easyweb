@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -36,6 +36,7 @@ function deleteBook(obj,id){
 	    });
 	}
 }
+//查询
 function show(page){
 	var param = "page=" +page;
 	$.ajax({

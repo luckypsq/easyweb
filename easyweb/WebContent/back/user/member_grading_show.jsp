@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -48,10 +48,10 @@
 							<i class="fa fa-check bigger-120"></i></a>
 					</c:if> <c:if test="${not flag}">
 						<a style="text-decoration: none" class="btn btn-xs "
-							onClick="member_start(this,${u.uid })" href="javascript:;"
+							onClick="member_start(this,'${u.uid }')" href="javascript:;"
 							title="启用"><i class="fa fa-close bigger-120"></i></i></a>
 					</c:if> 
-          <a title="删除" href="javascript:;"onclick="member_del(this,${u.uid})" class="btn btn-xs btn-warning"><i class="fa fa-trash  bigger-120"></i></a>
+          <a title="删除" href="javascript:;"onclick="member_del(this,'${u.uid}')" class="btn btn-xs btn-warning"><i class="fa fa-trash  bigger-120"></i></a>
           </td>
 		</tr>
 		</c:forEach>

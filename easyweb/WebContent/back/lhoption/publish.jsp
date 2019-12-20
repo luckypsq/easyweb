@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -110,7 +110,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -123,7 +123,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -156,7 +156,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -194,7 +194,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -231,7 +231,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -268,7 +268,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -305,7 +305,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -336,7 +336,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -354,7 +354,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -367,7 +367,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -393,7 +393,7 @@
 		    				title:'提示',
 		    				msg:result.msg,
 		    				showType:'fade',
-		    				timeout:200,
+		    				timeout:300,
 		    				style:{
 		    					right:'',
 		    					bottom:''
@@ -404,56 +404,6 @@
 	            }
 	        });
 		}
-		$(function(){
-			var bid = "${param.bid}";
-			var param="bid=" +bid;
-			if(bid != ""){
-				$.ajax({
-		            type: "post",
-		            url: "${path}/book.s?op=bookDetail",
-		            data: param,
-		            async:true, // 异步请求
-		            cache:true, // 设置为 false 将不缓存此页面
-		            dataType: 'json', // 返回对象
-		            success: function(result) {
-		            	if(result.code == 1){
-		            		if(location.href.indexOf('#help-main')==-1){
-		            	        location.href=location.href+"#help-main";
-		            	        location.reload();
-		            	     } 
-		            		return ;
-		            	}
-		            	if(result.code == -1){
-		            		$.messager.show({
-			    				title:'提示',
-			    				msg:result.msg,
-			    				showType:'fade',
-			    				timeout:200,
-			    				style:{
-			    					right:'',
-			    					bottom:''
-			    				}
-			    			});
-		            		return ;
-		            	}
-		            	if(result.code == 0){
-		            		$.messager.show({
-			    				title:'提示',
-			    				msg:result.msg,
-			    				showType:'fade',
-			    				timeout:200,
-			    				style:{
-			    					right:'',
-			    					bottom:''
-			    				}
-			    			});
-		            		return ;
-		            	}
-		            }
-				});
-				
-			}
-		});
 	</script>
 	<title>发布书籍</title>
 </head>

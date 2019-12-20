@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html >
@@ -40,7 +40,7 @@
 	type="text/javascript"></script>
 <title>订单处理</title>
 </head>
-<body onload="selectDate()">
+<body>
 	<div class="clearfix">
 		<div class="handling_style" id="order_hand">
 			<div id="scrollsidebar" class="left_Treeview">
@@ -55,21 +55,8 @@
 						<div class="widget-header header-color-green2">
 							<h4 class="lighter smaller">订单操作</h4>
 						</div>
-						<div class="widget-body">
-							<ul class="b_P_Sort_list">
-								<li><i class="orange  fa fa-reorder"></i><a
-									href="${path}/back/order/Order_handling.jsp">全部订单(${orderDetialShow.size()})
-								</a></li>
-								<li><i class="fa fa-sticky-note pink "></i> <a
-									href="${path}/back/order/Order_handling.jsp?eostate=6">已完成(${orderNum[3]})</a></li>
-								<li><i class="fa fa-sticky-note pink "></i> <a
-									href="${path}/back/order/Order_handling.jsp?eostate=1">待付款(${orderNum[0]})</a>
-								</li>
-								<li><i class="fa fa-sticky-note pink "></i> <a
-									href="${path}/back/order/Order_handling.jsp?eostate=2">待发货(${orderNum[1]})</a></li>
-								<li><i class="fa fa-sticky-note pink "></i> <a
-									href="${path}/back/order/Order_handling.jsp?eostate=3">待收货(${orderNum[2]})</a></li>
-							</ul>
+						<div class="widget-body" id="widget-body-type">
+							<jsp:include page="order-hand-type.jsp"></jsp:include>
 						</div>
 					</div>
 				</div>
@@ -78,79 +65,19 @@
 				<div class="search_style">
 					<ul class="search_content clearfix">
 						<li><label class="l_f">订单编号</label><input id="eoid_show"
-							value="${queryOrder['eoid'] }" type="text"  class="text_add" placeholder="输入订单编号" style="width: 250px" /></li>
+							 type="text"  class="text_add" placeholder="输入订单编号" style="width: 250px" /></li>
 						<li><label class="l_f">交易时间</label><input
 							class="inline laydate-icon" id="start"
-							value="${queryOrder['eotime'] }" style="margin-left:10px;"></li>
+							 style="margin-left:10px;"></li>
 						<li style="width: 90px;"><button type="button"
-								class="btn_search" onClick="selectDate()">
+								class="btn_search" onClick="selectDate('0')">
 								<i class="fa fa-search"></i>查询
 							</button></li>
 					</ul>
 				</div>
 				<!--交易订单列表-->
-				<div class="Orderform_list">
-					<table class="table table-striped table-bordered table-hover"
-						id="sample-table">
-						<thead>
-							<tr>
-								<th width="25px"><label><input type="checkbox"
-										class="ace"><span class="lbl"></span></label></th>
-								<th width="120px">订单编号</th>
-								<th width="250px">书籍名称</th>
-								<th width="80px">交易金额</th>
-								<th width="100px">交易时间</th>
-								<th width="100px">配送方式</th>
-								<th width="180px">配送地区</th>
-								<th width="100px">联系电话</th>
-								<th width="100px">买家姓名</th>
-								<th width="80px">数量</th>
-								<th width="70px">状态</th>
-								<th width="100px">说明</th>
-								<th width="200px">操作</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${orderDetialShow}" var="orderShow">
-								<tr>
-									<td><label><input type="checkbox" class="ace"><span
-											class="lbl"></span></label></td>
-									<td>${orderShow.eoid }</td>
-									<td class="order_product_name"><a
-										href="${path}/detail.jsp?bid=${orderShow.bid}"
-										class="product_Display">${orderShow.bname }</a></td>
-									<td>${orderShow.total }</td>
-									<td>${orderShow.eotime }</td>
-									<td>${orderShow.eotype }</td>
-									<td>${orderShow.eoaddr }</td>
-									<td>${orderShow.uphone }</td>
-									<td>${orderShow.uname}</td>
-									<td>${orderShow.count }</td>
-									<td class="td-status">
-										${eoderState[orderShow.eostate]}
-									</td>
-									<td>${eoderMessage[orderShow.eostate]}</td>
-									<td>
-										<c:if test="${orderShow.eostate == 2}" var="flag" scope="session">
-											<a onClick="Delivery_stop(this,${orderShow.eoid})"
-											title="发货" class="btn btn-xs btn-success"><i
-												class="fa fa-cubes bigger-120"></i></a>
-										</c:if>
-										<a title="订单详细"
-										href="${path}/back/order/order_detailed.jsp?eoid=${orderShow.eoid }"
-										class="btn btn-xs btn-info order_detailed"><i
-											class="fa fa-list bigger-120"></i></a> 
-											
-											<a title="删除"
-										href="javascript:;"
-										onclick="Order_form_del(this,${orderShow.eoid })"
-										class="btn btn-xs btn-warning"><i
-											class="fa fa-trash  bigger-120"></i></a>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+				<div class="Orderform_list" id="Orderform_list_show">
+					<jsp:include page="order-hand-list.jsp"></jsp:include>
 				</div>
 			</div>
 		</div>
@@ -204,51 +131,7 @@
 		</div>
 	</div>
 </body>
-</html>
 <script>
-var xmlhttp;
-// ajax 
-try {
-	xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-} catch (e) {
-	try {
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	} catch (e) {
-		try {
-			xmlhttp = new XMLHttpRequest();
-		} catch (e) {
-		}
-	}
-}
-function selectDate(){
-	  var eoid = document.getElementById("eoid_show").value.trim();
-	  var eotime = document.getElementById("start").value.trim();
-	  if(xmlhttp!=null){
-			// 定义请求地址
-			var url ="${path}/eorder.s?op=query&eoid="+eoid+"&eotime="+eotime;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST",url,true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange=function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					// 替换空格
-					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					if(msg == 1){
-						alert("暂无数据！！！");
-					}
-				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		}else{
-			layer.msg('不能创建XMLHttpRequest对象实例', {
-				icon :2,
-				time : 1000
-				});
-		} 
-}
 $(function() { 
 	$("#order_hand").fix({
 		float : 'left',
@@ -275,6 +158,79 @@ $(".order_list_style").width($(window).width()-220);
 	 $(".order_list_style").width($(window).width()-234);
 	  $(".order_list_style").height($(window).height()-30);
 });
+  //查看订单详情
+  function selectSingle(id){
+	  var param ="eoid="+id;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/eorder.s?op=querySingle",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						location.href = '${path}/back/order/order_detailed.jsp';
+		        		return;
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
+							icon : 5,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        	return;
+		        	}
+				}
+			});
+  }
+  //查询
+    function selectDate(id){
+	  if(id == 0){
+		  id = "";
+	  }
+  	  var eoid = document.getElementById("eoid_show").value.trim();
+  	  var eotime = document.getElementById("start").value.trim();
+  	  var param ="eoid="+eoid+"&eotime="+eotime+"&eostate="+id+"&type=1";
+  		$.ajax({
+  	        type: "post",
+  	        url: "${path}/eorder.s?op=query",
+  	        data: param,
+  	        async:true, // 异步请求
+  	        cache:true, // 设置为 false 将不缓存此页面
+  	        dataType: 'json', // 返回对象
+  	        success: function(result) {
+  					if(result.code == 1){
+  						$('#Orderform_list_show').load('${path}/back/order/order-hand-list.jsp');
+  		        		return;
+  		        	}
+  		        	if(result.code == 0){
+  		        	layer.msg(result.msg, {
+  							icon : 5,
+  							time : 1000,
+  							title: "提示"
+  						});
+  		        		return;
+  		        	}
+  		        	if(result.code == -1){
+  		        		layer.msg(result.msg, {
+  							icon : 2,
+  							time : 1000,
+  							title: "提示"
+  							});
+  		        	return;
+  		        	}
+  				}
+  			});
+  }
 /**发货**/
 function Delivery_stop(obj,id){
 	layer.open({
@@ -295,42 +251,44 @@ function Delivery_stop(obj,id){
 			 layer.confirm('提交成功！',function(index){
 				 var express = document.getElementById("form-field-select-1").value.trim();
 				 var eotype =  $("input[type='radio']:checked").val();
-				 if(xmlhttp!=null){
-						// 定义请求地址
-						var url ="${path}/eorder.s?op=update&eostate=3&eoid="+id+"&eopress="+express+"&type="+eotype;
-						// 以 POST 方式 开启连接
-						// POST 请求 更安全（编码）  提交的数据大小没有限制
-						xmlhttp.open("POST",url,true);
-						// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-						// 每次的状态改变都会调用该方法
-						xmlhttp.onreadystatechange=function(){
-							if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-								// 替换空格
-								var msg = xmlhttp.responseText.replace(/\s/gi,"");
-								if(msg == 0){
-									layer.msg('发货失败!', {
+				 var param ="eostate=3&eoid="+id+"&eopress="+express+"&type="+eotype;
+					$.ajax({
+				        type: "post",
+				        url: "${path}/eorder.s?op=update",
+				        data: param,
+				        async:true, // 异步请求
+				        cache:true, // 设置为 false 将不缓存此页面
+				        dataType: 'json', // 返回对象
+				        success: function(result) {
+								if(result.code == 1){
+									$('#widget-body-type').load('${path}/back/order/order-hand-type.jsp');
+									$('#Orderform_list_show').load('${path}/back/order/order-hand-list.jsp');
+									layer.msg(result.msg, {
+										icon :6,
+										time : 1000,
+										title: "提示"
+									});
+									layer.close(index); 
+					        		return;
+					        	}
+					        	if(result.code == 0){
+					        	layer.msg(result.msg, {
 										icon : 5,
-										time : 1000
+										time : 1000,
+										title: "提示"
+									});
+					        		return;
+					        	}
+					        	if(result.code == -1){
+					        		layer.msg(result.msg, {
+										icon : 2,
+										time : 1000,
+										title: "提示"
 										});
-									 layer.close(index);  
-								}else{
-									$(obj).parents("tr").find(".td-manage").prepend('<a style=" display:none" class="btn btn-xs btn-success" onClick="member_stop(this,${orderShow.eoid })" href="javascript:;" title="已发货"><i class="fa fa-cubes bigger-120"></i></a>');
-									$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发货</span>');
-									$(obj).remove();
-									layer.msg('已发货!',{icon: 6,time:1000});
-								}
-								 layer.close(index);  
+					        	return;
+					        	}
 							}
-						};
-						// 发送请求
-						xmlhttp.send(null);
-					}else{
-						layer.msg('不能创建XMLHttpRequest对象实例', {
-							icon :2,
-							time : 1000
-							});
-					} 
-				
+						});
 			});  
 		  }
 		}
@@ -339,40 +297,43 @@ function Delivery_stop(obj,id){
 /*订单-删除*/
 function Order_form_del(obj, id) {
 	layer.confirm('确认要删除吗？', function(index) {
-		if(xmlhttp!=null){
-			// 定义请求地址
-			var url ="${path}/eorder.s?op=delete&eoid="+id;
-			// 以 POST 方式 开启连接
-			// POST 请求 更安全（编码）  提交的数据大小没有限制
-			xmlhttp.open("POST",url,true);
-			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
-			// 每次的状态改变都会调用该方法
-			xmlhttp.onreadystatechange=function(){
-				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-					// 替换空格
-					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					if(msg == '0'){
-						layer.msg('删除失败!', {
-							icon : 5,
-							time : 1000
-							});
-					}else{
-						$(obj).parents("tr").remove();
-						layer.msg('已删除!', {
-							icon : 1,
-							time : 1000
+		var param ="eoid="+id;
+		$.ajax({
+	        type: "post",
+	        url: "${path}/eorder.s?op=delete",
+	        data: param,
+	        async:true, // 异步请求
+	        cache:true, // 设置为 false 将不缓存此页面
+	        dataType: 'json', // 返回对象
+	        success: function(result) {
+					if(result.code == 1){
+						$('#widget-body-type').load('${path}/back/order/order-hand-type.jsp');
+						$('#Orderform_list_show').load('${path}/back/order/order-hand-list.jsp');
+						layer.msg(result.msg, {
+							icon :6,
+							time : 1000,
+							title: "提示"
 						});
-					}
+		        		return;
+		        	}
+		        	if(result.code == 0){
+		        	layer.msg(result.msg, {
+							icon : 5,
+							time : 1000,
+							title: "提示"
+						});
+		        		return;
+		        	}
+		        	if(result.code == -1){
+		        		layer.msg(result.msg, {
+							icon : 2,
+							time : 1000,
+							title: "提示"
+							});
+		        	return;
+		        	}
 				}
-			};
-			// 发送请求
-			xmlhttp.send(null);
-		}else{
-			layer.msg('不能创建XMLHttpRequest对象实例', {
-				icon :2,
-				time : 1000
-				});
-		} 
+			});
 	});
 }
 //订单列表
@@ -392,7 +353,7 @@ jQuery(function($) {
 						this.checked = that.checked;
 						$(this).closest('tr').toggleClass('selected');
 					});
-						
 				});
 			});
 </script>
+</html>

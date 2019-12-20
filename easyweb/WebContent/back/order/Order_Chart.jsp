@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +8,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <title>订单</title>
-	<script src="<%=application.getContextPath() %>/back/js/jquery-1.9.1.min.js"></script>
-    <script src="<%=application.getContextPath() %>/back/assets/dist/echarts.js"></script>
+	<script src="${path}/back/js/jquery-1.9.1.min.js"></script>
+    <script src="${path}/back/assets/dist/echarts.js"></script>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
 //统计
 	        require.config({
             paths: {
-                echarts: '<%=application.getContextPath() %>/back/assets/dist'
+                echarts: '${path}/back/assets/dist'
             }
         });
         require(

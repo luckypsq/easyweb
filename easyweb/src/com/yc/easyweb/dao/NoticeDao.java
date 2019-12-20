@@ -39,6 +39,12 @@ public class NoticeDao {
 			if (notice.getNstate() != 0) {
 				sb.append(" and nstate = " + notice.getNstate());
 			}
+			if (notice.getNid() != 0) {
+				sb.append(" and nid = " + notice.getNid());
+			}
+			if(notice.getNtitle() != null ){
+				sb.append(" and ntitle = " + notice.getNid());
+			}
 		}
 		sb.append(" order by  ntime desc");
 		List<Notice> list = db.selectAll(sb.toString(), null, Notice.class);
@@ -66,8 +72,11 @@ public class NoticeDao {
 			if (notice.getNid() != 0) {
 				sb.append(" and nid = " + notice.getNid());
 			}
+			if(notice.getNtitle() != null ){
+				sb.append(" and ntitle = " + notice.getNid());
+			}
 		}
-		sb.append(" order by  ntime desc");
+		sb.append(" order by  nid desc");
 		return db.selectSingle(sb.toString(), null, Notice.class);
 	}
 
@@ -120,7 +129,7 @@ public class NoticeDao {
 		if (noticeNew== null || noticeOld== null) {
 			return 0;
 		}
-		sb.append("update notice set ctemp='' ");
+		sb.append("update notice set ntemp='' ");
 		if (noticeNew.getNauthor() != null && !noticeNew.getNauthor().isEmpty()) {
 			sb.append(" , nauthor = '" + noticeNew.getNauthor() +"'");
 		}
@@ -147,7 +156,7 @@ public class NoticeDao {
 		if(noticeOld.getNid() != 0){
 			sb.append(" and nid = " + noticeOld.getNid());
 		}
-		if(noticeOld.getNtitle() != null && !noticeNew.getNtitle().isEmpty()){
+		if(noticeOld.getNtitle() != null && !noticeOld.getNtitle().isEmpty()){
 			sb.append(" and ntitle = '"+noticeOld.getNtitle() + "'");
 		}
 		return DbHelper.update(sb.toString(), null);

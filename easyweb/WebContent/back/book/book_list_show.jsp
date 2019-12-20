@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" isErrorPage="true"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -28,7 +28,7 @@
 				<td width="80px">${b.bid }</td>
 				<td width="250px"><u style="cursor: pointer"
 					class="text-primary"
-					onclick="window.location.href='${path}/detail.jsp?bid=${b.bid }';">${b.bname }</u></td>
+					onclick="window.location.href='${path}/back/book/detail-admin.jsp?bid=${b.bid }';">${b.bname }</u></td>
 				<td width="100px">${b.bauthor }</td>
 				<td width="100px">${btTypeEdit[b.btid] }</td>
 				<td width="100px">${b.btemp}</td>
@@ -51,17 +51,17 @@
 					</c:if></td>
 				<td class="td-manage"><c:if test="${b.bstate == 1}" var="flag"
 						scope="session">
-						<a onClick="member_stop(this,${b.bid })" title="下架"
+						<a onClick="member_stop(this,'${b.bid }')" title="下架"
 							class="btn btn-xs btn-success"> <i class="icon-ok bigger-120"></i></a>
 					</c:if> <c:if test="${not flag}">
 						<a style="text-decoration: none" class="btn btn-xs "
-							onClick="member_start(this,${b.bid })" href="javascript:;"
+							onClick="member_start(this,'${b.bid }')" href="javascript:;"
 							title="上架"> <i class="icon-ok bigger-120"></i></a>
 					</c:if> <a title="编辑"
 					onclick="member_edit('编辑','${path}/back/book/bookEdit.jsp?bid=${b.bid }','${b.bid }','','300')"
 					class="btn btn-xs btn-info"><i class="icon-edit bigger-120"></i></a>
 					<a title="删除" href="javascript:;"
-					onclick="member_del(this,${b.bid })" class="btn btn-xs btn-warning"><i
+					onclick="member_del(this,'${b.bid }')" class="btn btn-xs btn-warning"><i
 						class="icon-trash  bigger-120"></i></a></td>
 			</tr>
 		</c:forEach>
