@@ -36,9 +36,9 @@ public class ShowServlet extends BaseServlet {
 			int j = 1;
 			int i = 1;
 			// 教材区
-			if (btid1 != null && !btid1.isEmpty()) {
-				book2.setBtid(Long.parseLong(btid1));
-				pPageTeach = bookBiz.bookPage(1, 12, book2);
+			if (!btid1.equals("0")) {
+				book.setBtid(Long.parseLong(btid1));
+				pPageTeach = bookBiz.bookPage(1, 12, book);
 				session.setAttribute("teachBook", pPageTeach.getData());
 				session.setAttribute("teachPage", pPageTeach);
 				if (pPageTeach.getData().size() == 0) {
@@ -46,7 +46,7 @@ public class ShowServlet extends BaseServlet {
 				}
 			}
 			// 工具书区
-			if (btid2 != null && !btid2.isEmpty()) {
+			if (!btid2.equals("0")) {
 				book2.setBtid(Long.parseLong(btid2));
 				pPageTool = bookBiz.bookPage(1, 7, book2);
 				session.setAttribute("toolBook", pPageTool.getData());
@@ -55,7 +55,7 @@ public class ShowServlet extends BaseServlet {
 					j = 0;
 				}
 			}
-			if (i == 0 || j == 0) {
+			if (i == 0 && j == 0) {
 				result = Result.failure("暂无数据！！！");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");

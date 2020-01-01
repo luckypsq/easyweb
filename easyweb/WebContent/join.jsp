@@ -342,16 +342,7 @@ function checkReg(){
 					});
 				}
 				if (result.code == 0) {
-					$.messager.show({
-						title : '系统提示',
-						msg : result.msg,
-						showType : 'fade',
-						timeout : 300,
-						style : {
-							right : '',
-							bottom : ''
-						}
-					});
+					document.getElementById('msg').innerText = result.msg;
 					return;
 				}
 				if (result.code == -1) {

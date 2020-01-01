@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +55,7 @@ public class JoinServlet extends BaseServlet {
 			} else {
 				result = Result.failure("用户名为空！！！", username);
 				String json = gson.toJson(result);
-				// 返回json格式数据
+				
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
@@ -65,25 +66,35 @@ public class JoinServlet extends BaseServlet {
 			} else {
 				result = Result.failure("密码为空！！！");
 				String json = gson.toJson(result);
-				// 返回json格式数据
+				
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			if(!vcode.equalsIgnoreCase(realCode)){
-				result = Result.failure("验证码错误！！！");
+			if(vcode!= null && !vcode.isEmpty()){
+				if(!vcode.equalsIgnoreCase(realCode)){
+					result = Result.failure("验证码错误！！！");
+					String json = gson.toJson(result);
+					
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().append(json);
+					return;
+				}
+			}else{
+				result = Result.failure("验证码为空！！！");
 				String json = gson.toJson(result);
-				// 返回json格式数据
+				
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
+			
 			User userShow = userBiz.selectSingle(user);// 保存用户信息
 			if (userShow.getUid() == 0) {
 				// 用户名不存在
 				result = Result.failure("用户名或密码错误！！！", username);
 				String json = gson.toJson(result);
-				// 返回json格式数据
+				
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
@@ -91,7 +102,7 @@ public class JoinServlet extends BaseServlet {
 			if (userShow.getUstate() != 1) {
 				result = Result.failure("您已被冻结或账号被删除！！！", username);
 				String json = gson.toJson(result);
-				// 返回json格式数据
+				
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
@@ -133,7 +144,7 @@ public class JoinServlet extends BaseServlet {
 			if (userShow.getUtype() != 1 && userShow.getUtype() != 5) {
 				result = Result.success("用户登录成功！！！", username);
 				String json = gson.toJson(result);
-				// 返回json格式数据
+				
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			} else {
@@ -152,14 +163,14 @@ public class JoinServlet extends BaseServlet {
 				session.setAttribute("adminControl", conList);
 				result = new Result("管理员登录成功！！！", 2);
 				String json = gson.toJson(result);
-				// 返回json格式数据
+				
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			}
 		} catch (BizException e) {
 			result = Result.error(e.getMessage());
 			String json = gson.toJson(result);
-			// 返回json格式数据
+			
 			response.setContentType("application/json;charset=UTF-8");
 			try {
 				response.getWriter().append(json);
@@ -169,7 +180,6 @@ public class JoinServlet extends BaseServlet {
 		} catch (IOException e) {
 			result = Result.error("业务繁忙,请您稍等一会儿再操作！！！");
 			String json = gson.toJson(result);
-			// 返回json格式数据
 			response.setContentType("application/json;charset=UTF-8");
 			try {
 				response.getWriter().append(json);
@@ -240,7 +250,8 @@ public class JoinServlet extends BaseServlet {
 		List<BookType> bookTypes = btBiz.selectAll(bookType);
 		session.setAttribute("btypes", bookTypes);
 		String[] type = new String[1000];
-		String btname;
+		String btname =null;
+		Set<BookType> bookTypeSecond = new HashSet<BookType>();
 		for (BookType bt : bookTypes) {
 			if (bt.getBtnamethird() != null && !bt.getBtnamethird().isEmpty()) {
 				btname = bt.getBtnamethird();
@@ -249,9 +260,13 @@ public class JoinServlet extends BaseServlet {
 			} else {
 				btname = bt.getBtname();
 			}
+			if(bt.getBtname().equals("教材区") && bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()){
+				bookTypeSecond.add(bt);
+			}
 			type[(int) bt.getBtid()] = btname;
 		}
-		session.setAttribute("btTypeEdit", type);
+		session.setAttribute("btTypeEdit", type);//存储所有的类型
+		session.setAttribute("teachSecond", bookTypeSecond);//存储教材区所有子类型
 		// 公告展示初始化公告
 		Notice notice = new Notice();
 		notice.setNstate(1);
@@ -321,12 +336,14 @@ public class JoinServlet extends BaseServlet {
 		session.setAttribute("userOrderPage", Page);
 		// 购物车信息显示
 		Bought bought = new Bought();
+		bought.setUid(userOld.getUid());
+		bought.setCartstate(1);
+		Page<Bought> pageCart = eorderitemBiz.ePage(1, 5, bought);
+		session.setAttribute("cartPage", pageCart);
+		bought.setCartstate(2);
 		List<Bought> listEo = eorderitemBiz.selectAllCart(bought);
 		session.setAttribute("userCart", listEo);
-		bought.setCartstate(1);
-		bought.setUid(userOld.getUid());
-		Page<Bought> pageCart = eorderitemBiz.ePage(1, 6, bought);
-		session.setAttribute("cartPage", pageCart);
+		
 	}
 	// TODO Auto-generated catch block
 	// 管理员页面的信息展示初始化

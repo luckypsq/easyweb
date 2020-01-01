@@ -22,7 +22,7 @@
 					</div>
 				</div>
 				<c:forEach items="${cartPage.getData()}" var="cart">
-					<div class="pro">
+						<div class="pro">
 						<div class="product-attr">
 							<div class="product-name fl">
 								<div class="pic-thumb fl"><a href="${path}/detail.jsp?bid=${cart.bid}"  ><img class="middle" src="${cart.bimg}"></a></div>

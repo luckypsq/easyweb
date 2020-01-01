@@ -10,6 +10,9 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<title>购物车</title>
 	<script type="text/javascript">
+	$(function(){
+		$('#help-r-cart').load('${path}/back/lywoption/cartData.jsp');
+	});
 	function deleteCart(obj,itemid){
 		if(confirm("确实要删除吗？")){
 			var param = "itemid="+itemid;

@@ -327,6 +327,9 @@ public class EorderDao {
 			if (eorder.getEoespress() != null && !eorder.getEoespress().isEmpty()) {
 				sb.append(" and eoespress = '" + eorder.getEoespress() + "'");
 			}
+			if(eorder.getUid() != 0){
+				sb.append(" and uid = " + eorder.getUid());
+			}
 		}
 		sb.append("  order by  eoid asc");
 		return db.selectPageForMysql(page, rows, Eorder.class, sb.toString());
@@ -352,10 +355,10 @@ public class EorderDao {
 				sb.append(" and eostate = " + detial.getEostate());
 			}
 			if (detial.getUid() != 0) {
-				sb.append(" and u.uid = " + detial.getUid());
+				sb.append(" and eo.uid = " + detial.getUid());
 			}
 			if (detial.getBid() != 0) {
-				sb.append(" and b.bid = " + detial.getBid());
+				sb.append(" and eo.bid = " + detial.getBid());
 			}
 		}
 		sb.append("  order by  eoid asc");

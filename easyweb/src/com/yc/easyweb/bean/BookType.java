@@ -61,7 +61,6 @@ public class BookType implements Serializable{
 		int result = 1;
 		result = prime * result + ((btname == null) ? 0 : btname.hashCode());
 		result = prime * result + ((btnamesecond == null) ? 0 : btnamesecond.hashCode());
-		result = prime * result + ((btnamethird == null) ? 0 : btnamethird.hashCode());
 		return result;
 	}
 	@Override
@@ -83,12 +82,6 @@ public class BookType implements Serializable{
 				return false;
 		} else if (!btnamesecond.equals(other.btnamesecond))
 			return false;
-		if (btnamethird == null) {
-			if (other.btnamethird != null)
-				return false;
-		} else if (!btnamethird.equals(other.btnamethird))
-			return false;
 		return true;
 	}
-	
 }

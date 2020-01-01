@@ -190,8 +190,11 @@ public class EorderitemDao {
 				if(bought.getUid() != 0){
 					sb.append(" and eo.uid="+bought.getUid());
 				}
+				if(bought.getCartstate() != 0){
+					sb.append(" and cartstate="+bought.getCartstate());
+				}
 			}
-			sb.append("order by  itemid desc");
+			sb.append(" order by  itemid desc");
 			return DbHelper.selectAll(sb.toString(), null, Bought.class);
 		}
 		//查询单个购物车详情
@@ -214,8 +217,11 @@ public class EorderitemDao {
 				if(bought.getUid() != 0){
 					sb.append(" and eo.uid="+bought.getUid());
 				}
+				if(bought.getCartstate() != 0){
+					sb.append(" and cartstate="+bought.getCartstate());
+				}
 			}
-			sb.append("order by  itemid desc");
+			sb.append(" order by  itemid asc");
 			return DbHelper.selectSingle(sb.toString(), null, Bought.class);
 		}
 		
@@ -239,6 +245,9 @@ public class EorderitemDao {
 				}
 				if(bought.getUid() != 0){
 					sb.append(" and eo.uid="+bought.getUid());
+				}
+				if(bought.getCartstate() != 0){
+					sb.append(" and cartstate="+bought.getCartstate());
 				}
 			}
 			sb.append(" order by  itemid asc");

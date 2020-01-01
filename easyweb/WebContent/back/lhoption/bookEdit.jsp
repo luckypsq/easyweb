@@ -11,10 +11,6 @@
 	<link rel="stylesheet" href="${path}/css/font-awesome.min.css"/>
 	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
-<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
-<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
-	
-	<script src="${path}/js/jquery-1.11.2.min.js"></script>
 	<style type="text/css">
 	select{
 		padding: 3px 10px;
@@ -34,6 +30,9 @@
 		display:none;
 	}
 	</style>
+<script src="${path}/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript">
 		//图片上传预览    IE是用了滤镜。
 		function previewImage(file){
@@ -439,6 +438,7 @@
 			if(bid != ""){
 				$("#bid").val(bid);
 			}
+			var param = "bid=" + bid;
 				$.ajax({
 		            type: "post",
 		            url: "${path}/book.s?op=bookDetail",
@@ -686,7 +686,7 @@
 						<div class="product-edit-item-r fl" style="border: none;border-top:1px solid #E6E6E6">
 						</div>
 					</div>
-					<div class="upload"><label><input type="button" value="点击发布" onclick="insertBook();"></label></div>
+					<div class="upload"><label><input type="button" value="点击修改" onclick="insertBook();"></label></div>
 				</form>
 			</div>
 		</div>

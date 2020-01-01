@@ -166,12 +166,13 @@ public class EorderitemServlet extends BaseServlet {
 				//数据刷新
 				// 购物车信息显示
 				Bought bought = new Bought();
+				bought.setUid(userOld.getUid());
+				bought.setCartstate(1);
+				Page<Bought> pageCart = eBiz.ePage(1, 6, bought);
+				session.setAttribute("cartPage", pageCart);
+				bought.setCartstate(2);
 				List<Bought> listEo = eBiz.selectAllCart(bought);
 				session.setAttribute("userCart", listEo);
-				bought.setCartstate(1);
-				bought.setUid(userOld.getUid());
-				Page<Bought> pageCart =  eBiz.ePage(1, 6, bought);
-				session.setAttribute("cartPage", pageCart);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -219,7 +220,7 @@ public class EorderitemServlet extends BaseServlet {
 		String pageParam = request.getParameter("page");
 		int ipage = pageParam == null ? 1 : Integer.parseInt(pageParam);
 		// 每页行数
-		int rows = 6;
+		int rows = 5;
 		User userOld = (User) session.getAttribute("loginedUser");
 		Bought bou = new Bought();
 		bou.setUid(userOld.getUid());

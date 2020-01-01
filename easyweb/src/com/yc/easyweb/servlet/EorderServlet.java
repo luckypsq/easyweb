@@ -357,8 +357,6 @@ public class EorderServlet extends BaseServlet {
 		try {
 			if (count != null && !count.isEmpty()) {
 				if (!count.matches(reg)) {
-					System.out.println(count);
-					System.out.println(!count.matches(reg));
 					result = Result.failure("输入不合法(1~10位数字)");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
@@ -432,7 +430,7 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// 添加订单
+	// 用户添加订单
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		// 订单id
 		String uuidOrder = UUID.randomUUID().toString().replace("-", "").toLowerCase();
@@ -444,8 +442,6 @@ public class EorderServlet extends BaseServlet {
 
 		// 1.先从会话中获取书id或itemid
 		String bid = request.getParameter("bid");
-		Eorderitem itemOld = (Eorderitem) session.getAttribute("userOrderAddItem");
-
 		// 2.将所有的数据获取出来
 		String count = (String) session.getAttribute("addOrderCount");// request.getParameter("count");//数量
 		String eoaddr = (String) session.getAttribute("addOrderEoaddr");// request.getParameter("eoaddr");//地址
@@ -460,6 +456,7 @@ public class EorderServlet extends BaseServlet {
 		String sendType;
 		int pay = 0;
 		try {
+			Bought itemOld = (Bought) session.getAttribute("userOrderAddItem");
 			// 3.判断数据的合法
 			String check = "1";
 			// a.验证数量的输入
@@ -570,15 +567,18 @@ public class EorderServlet extends BaseServlet {
 					return;
 				}
 				eoReal = itemBiz.selectSingle(eoitem);
-			} else if (itemOld != null) {
+			} else if (itemOld != null && itemOld.getItemid() !=null && !itemOld.getItemid().isEmpty()) {
 				// 查询此购物车订单是否存在
-				Eorderitem item = itemBiz.selectSingle(itemOld);
+				Bought item = itemBiz.selectSingleCart(itemOld);
+				Eorderitem itemOld1 = new Eorderitem();
+				itemOld1.setItemid(item.getItemid());
 				Eorderitem itemNew = new Eorderitem();
 				if (item.getBid() != 0 && item.getUid() == userOld.getUid() && item.getCartstate() != 2) {
 					itemNew.setCount(Integer.parseInt(count));
 					itemNew.setTotal(total);
 				}
-				int k = itemBiz.update(itemNew, item);
+				
+				int k = itemBiz.update(itemNew, itemOld1);
 				if (k <= 0) {
 					result = Result.failure("下单失败,请您稍后在操作！！！");
 					String json = gson.toJson(result);
@@ -586,7 +586,7 @@ public class EorderServlet extends BaseServlet {
 					response.getWriter().append(json);
 					return;
 				}
-				eoReal = itemBiz.selectSingle(itemOld);
+				eoReal = itemBiz.selectSingle(itemOld1);
 			} else {
 				result = Result.failure("您未选择任何商品不能进行此操作！！！");
 				String json = gson.toJson(result);
@@ -644,10 +644,21 @@ public class EorderServlet extends BaseServlet {
 					result = Result.success("下单成功！！！");
 
 					// 数据刷新
+					
+					// 查询所有订单订单信息
 					Eorder eorder1 = new Eorder();
-					eorder1.setUid(userOld.getUid());
+					eorder.setUid(userOld.getUid());
 					Page<Eorder> Page = eorderBiz.eorderPage(1, 3, eorder1);
 					session.setAttribute("userOrderPage", Page);
+					// 购物车信息显示
+					Bought bought = new Bought();
+					bought.setUid(userOld.getUid());
+					bought.setCartstate(1);
+					Page<Bought> pageCart = itemBiz.ePage(1, 6, bought);
+					session.setAttribute("cartPage", pageCart);
+					bought.setCartstate(2);
+					List<Bought> listEo = itemBiz.selectAllCart(bought);
+					session.setAttribute("userCart", listEo);
 					// 会话还原
 					String string = null;
 					session.setAttribute("addOrderCount", string);

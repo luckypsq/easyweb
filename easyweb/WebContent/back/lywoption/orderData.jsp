@@ -63,7 +63,7 @@
 				<tr height="50px">
 					<td >
 						<div class="eo1" id="eo1">
-							<span style="margin-left:50px;">收货地址：${userOrder.eoaddr}</span><span style="margin-left:600px;">配送方式:${userOrder.eotype}</span>
+							<span style="margin-left:50px;">收货地址：${userOrder.eoaddr}</span><span style="margin-left:400px;">配送方式:${userOrder.eotype}</span>
 						</div>
 					</td>
 				</tr>
@@ -72,10 +72,10 @@
 		<br>
 		</c:forEach>
 				<div class="page clearfix">
-					<a href="javascript:void();" onclick = "show(${userOrderPage.getFirstPage()})">首页</a>
-					<a href="javascript:void();" onclick = "show(${userOrderPage.getPreviousPage()})">上一页</a>
-					<a href="javascript:void();" onclick = "show(${userOrderPage.getNextPage()})" >下一页</a>
-					<a href="javascript:void();" onclick = "show(${userOrderPage.getLastPage()})">尾页</a>
+					<a href="javascript:;" onclick = "show(${userOrderPage.getFirstPage()})">首页</a>
+					<a href="javascript:;" onclick = "show(${userOrderPage.getPreviousPage()})">上一页</a>
+					<a href="javascript:;" onclick = "show(${userOrderPage.getNextPage()})" >下一页</a>
+					<a href="javascript:;" onclick = "show(${userOrderPage.getLastPage()})">尾页</a>
 					第${userOrderPage.getPage()}/${userOrderPage.getLastPage()}页
 				</div>
 </div>

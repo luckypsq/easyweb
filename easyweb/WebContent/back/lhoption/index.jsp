@@ -16,6 +16,9 @@
 			height: 300px;
 			margin: 0 auto;
 		}
+		.book-wrap {
+		    padding: 0px;
+		}
 	</style>
 	<script type="text/javascript">
 	Qfast.add('widgets', { path: "${path}/js/terminator2.2.min.js", type: "js", requires: ['fx'] });
@@ -41,15 +44,11 @@
 	});
 	//查询
 function show(btid1,btid2,obj){
-	$("#index-book-show a").removeClass("on");
-	$(obj).addClass("on"); 
-	var param = "btid="+btid1 ;
-	if(btid1 != 0){
-		param = "&btid1=" +btid1;
-	}
-	if(btid2 != 0){
-		param = "&btid2=" +btid2;
-	}
+		if(obj != "0"){
+			$("#index-book-show a").removeClass("on");
+			$(obj).addClass("on"); 
+		}
+	var param = "btid1="+btid1+"&btid2=" +btid2 ;
 	$.ajax({
         type: "post",
         url: "${path}/show.s?op=queryUserIndex",
@@ -65,11 +64,12 @@ function show(btid1,btid2,obj){
         		alert(result.msg);
             }
         	if(result.code == 1){
-        		if(btid1 != 0){
+        		if(btid1 !=  "0"){
         			$('#teachBook').load('${path}/back/lhoption/indexTeach.jsp');
         		}
-        		if(btid2 != 0){
-        			$('#toolBook').load('${path}/back/lhoption/indexTool.jsp');
+        		if(btid2 !=  "0"){
+        			var url = '${path}/back/lhoption/indexTool.jsp?time='+btid2;
+        			$('#toolBook').load(url);
         		}
         	}
         }
@@ -129,7 +129,6 @@ function show(btid1,btid2,obj){
 							<li><i class="icon-bell red"></i><a href="${path}/notice-detail.jsp?nid=${n.nid}">${n.ntitle }</a></li>
 						</c:forEach>
 					</c:if>
-					
 					<c:if test="${not flag}">
 					   	<li><i class="icon-bell red"></i>暂无新公告</li>
 					</c:if>
@@ -146,19 +145,16 @@ function show(btid1,btid2,obj){
 		</h1>
 		<div class="list fl">
 			<ul class="one">
-				<c:forEach items="${btypes}" var="bookTypes">
-					<c:if test="${bookTypes.btname.equals('教材区')}" var="flag" scope="session">	
-						<li>
-							<c:if test="${bookTypes.btnamesecond != null}" var="flag" scope="session">	
-								<a class="on" href="javascript:;" onclick="show(${bookTypes.btid},0)">${bookTypes.btnamesecond}</a>
-								<ul class="two">
-									<c:if test="${!bookTypes.btnamethird.equals('')}" var="flag" scope="session">	
-										<li><a href="javascript:;" onclick="show(${bookTypes.btid},0)">${ bookTypes.btnamethird}</a></li>
-									</c:if>
-								</ul>
-							</c:if>
-						</li>					
-					</c:if>
+				<c:forEach items="${teachSecond}" var="teachSecond">
+					<li><a class="on" href="javascript:;" onclick="show('${teachSecond.btid}','0','0')">${teachSecond.btnamesecond}</a>
+						<ul class="two">
+							<c:forEach items="${btypes}" var="bookTypes">
+								<c:if test="${bookTypes.btnamesecond.equals(teachSecond.btnamesecond) && bookTypes.btnamethird != null && !bookTypes.btnamethird.isEmpty()}"  var="flag"  scope="session">	
+									<li><a href="javascript:;" onclick="show('${bookTypes.btid}','0','0')">${ bookTypes.btnamethird}</a></li>
+								</c:if>
+							</c:forEach>
+						</ul>
+					</li>
 				</c:forEach>
 			</ul>
 		</div>
@@ -174,8 +170,8 @@ function show(btid1,btid2,obj){
 		<ul class="tab clearfix">
 			<c:forEach items="${btypes}" var="bookTypes">
 				<c:if test="${bookTypes.btname.equals('工具书区')}" var="flag" scope="session">	
-					<c:if test="${bookTypes.btnamesecond != null}" var="flag" scope="session">	
-						<li><a   href="javascript:;" onclick="show(0,${bookTypes.btid},this)">${bookTypes.btnamesecond}</a></li>	
+					<c:if test="${bookTypes.btnamesecond != null && !bookTypes.btnamesecond.isEmpty()}" var="flag" scope="session">	
+						<li><a   href="javascript:;" onclick="show('0','${bookTypes.btid}',this)">${bookTypes.btnamesecond}</a></li>	
 					</c:if>
 				</c:if>
 			</c:forEach>

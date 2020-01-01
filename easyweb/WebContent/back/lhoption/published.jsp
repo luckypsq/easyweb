@@ -30,6 +30,7 @@ function deleteBook(obj,id){
 	           }
 	           if(result.code == 1){
 	        		alert(result.msg);
+	        		$('#published-show').load('${path}/back/lhoption/publishedChild.jsp');
 					return ;
 	           }
 	        }

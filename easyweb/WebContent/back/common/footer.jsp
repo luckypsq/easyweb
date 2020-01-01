@@ -37,7 +37,7 @@
 		<div class="line"></div>
 
 		<div class="bottom">
-			<p>友情链接：<a href="#">安工在线</a>&nbsp;&nbsp;<a href="#">万林强-前端在线简历</a></p>
+			<p>友情链接：<a href="javascript:;" onclick="window.open('https://www.baidu.com')">百度</a>&nbsp;&nbsp;<a href="javascript:;"onclick="window.open('https://www.taobao.com')">淘宝</a></p>
 			<p>本站所有信息均为用户自由发布，本站不对信息的真实性负任何责任，交易时请注意识别信息的真假如有网站内容侵害了您的权益请联系我们删除，举报电话：18873251434</p>
 			<p>技术支持：彭算泉 &nbsp;&nbsp;商务QQ:1457489935 &nbsp;&nbsp;邮箱：1139386771@qq.com</p>
 		</div>
