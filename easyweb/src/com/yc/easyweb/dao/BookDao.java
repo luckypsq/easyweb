@@ -11,7 +11,7 @@ import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.common.DbHelper;
 
 /**
- * ²Ù×÷notice±íµÄdaoÀà
+ * æ“ä½œnoticeè¡¨çš„daoç±»
  * 
  * @author psq
  *
@@ -19,66 +19,66 @@ import com.yc.easyweb.common.DbHelper;
 public class BookDao {
 	DbHelper db = new DbHelper();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	@SuppressWarnings("static-access")
 	public List<Book> selectAll(Book book) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
 				+ " bcontent,bimg,bprice,bstate,btid,btemp,btemp1,bnum,bauthor,bdate,uid" + " from book where 1=1 ");
 		if (book != null) {
-			//ÊéÃû
+			//ä¹¦å
 			if (book.getBname() != null && !book.getBname().isEmpty()) {
 				sb.append(" and bname like '%" + book.getBname() + "%'");
 			}
-			//´óÑ§
+			//å¤§å­¦
 			if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
 				sb.append(" and buniversity like '%" + book.getBuniversity() + "%'");
 			}
-			//Ñ§Ôº
+			//å­¦é™¢
 			if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
 				sb.append(" and bucollege like '%" + book.getBucollege() + "%'");
 			}
-			//×¨Òµ
+			//ä¸“ä¸š
 			if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
 				sb.append(" and bumajor like '%" + book.getBumajor() + "%'");
 			}
-			//Äê¼¶
+			//å¹´çº§
 			if (book.getBclass() != null && !book.getBclass().isEmpty()) {
 				sb.append(" and bclass like '%" + book.getBclass() + "%'");
 			}
-			//¿â´æ
+			//åº“å­˜
 			if(book.getBnum() != 0 ){
 				sb.append(" and bnum =" + book.getBnum());
 			}
-			//×÷Õß
+			//ä½œè€…
 			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
 				sb.append(" and bauthor like '%" + book.getBauthor() + "%'");
 			}
-			//Àà±ğ
+			//ç±»åˆ«
 			if (book.getBtid() != 0) {
 				sb.append(" and btid = " + book.getBtid());
 			}
-			//¼Û¸ñ
+			//ä»·æ ¼
 			if(book.getBprice() != 0){
 				sb.append(" and bprice = " + book.getBprice());
 			}
-			//·¢²¼Õß
+			//å‘å¸ƒè€…
 			if(book.getUid() != 0){
 				sb.append(" and uid = " + book.getUid());
 			}
-			//×´Ì¬
+			//çŠ¶æ€
 			if (book.getBstate() != 0) {
 				sb.append(" and bstate = " + book.getBstate());
 			}
-			//ÏµÁĞ
+			//ç³»åˆ—
 			if (book.getBtemp() != null && !book.getBtemp().isEmpty()) {
 				sb.append(" and btemp like '%" + book.getBtemp() + "%'");
 			}
-			//Êéid
+			//ä¹¦id
 			if (book.getBid() != 0) {
 				sb.append(" and bid = " + book.getBid());
 			}
-			//¼ÓÈëÈÕÆÚ
+			//åŠ å…¥æ—¥æœŸ
 			if (book.getBdate() != null && !book.getBdate().isEmpty()) {
 				sb.append(" and bdate like '%" + book.getBdate() + "%'");
 			}
@@ -87,54 +87,54 @@ public class BookDao {
 		List<Book> list = db.selectAll(sb.toString(), null, Book.class);
 		return list;
 	}
-	//²éÑ¯µ¥Ìõ¼ÇÂ¼
+	//æŸ¥è¯¢å•æ¡è®°å½•
 	@SuppressWarnings("static-access")
 	public Book selectSingle(Book book) throws IOException {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
 				+ " bcontent,bimg,bprice,bstate,btid,btemp,uid,btemp1,bnum,bauthor,bdate" + " from book where 1=1 ");
 		if (book != null) {
-			//ÊéÃû
+			//ä¹¦å
 			if (book.getBname() != null && !book.getBname().isEmpty()) {
 				sb.append(" and bname = '" + book.getBname() + "'");
 			}
-			//´óÑ§
+			//å¤§å­¦
 			if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
 				sb.append(" and buniversity = '" + book.getBuniversity() + "'");
 			}
-			//Ñ§Ôº
+			//å­¦é™¢
 			if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
 				sb.append(" and bucollege = '" + book.getBucollege() + "'");
 			}
-			//×¨Òµ
+			//ä¸“ä¸š
 			if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
 				sb.append(" and bumajor = '" + book.getBumajor() + "'");
 			}
-			//Äê¼¶
+			//å¹´çº§
 			if (book.getBclass() != null && !book.getBclass().isEmpty()) {
 				sb.append(" and bclass = '" + book.getBclass() + "'");
 			}
-			//ËùÓĞÕß
+			//æ‰€æœ‰è€…
 			if(book.getUid() != 0){
 				sb.append(" and uid = " + book.getUid());
 			}
-			//×÷Õß
+			//ä½œè€…
 			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
 				sb.append(" and bauthor = '" + book.getBauthor() + "'");
 			}
-			//Àà±ğ
+			//ç±»åˆ«
 			if (book.getBtid() !=0) {
 				sb.append(" and btid = " + book.getBtid());
 			}
-			//¼Û¸ñ
+			//ä»·æ ¼
 			if(book.getBprice() != 0){
 				sb.append(" and bprice = " + book.getBprice());
 			}
-			//×´Ì¬
+			//çŠ¶æ€
 			if (book.getBstate() != 0) {
 				sb.append(" and bstate = " + book.getBstate());
 			}
-			//ÏµÁĞ
+			//ç³»åˆ—
 			if (book.getBtemp() != null && !book.getBtemp().isEmpty()) {
 				sb.append(" and btemp = '" + book.getBtemp() + "'");
 			}
@@ -142,7 +142,7 @@ public class BookDao {
 			if (book.getBid() != 0) {
 				sb.append(" and bid = " + book.getBid());
 			}
-			//¼ÓÈëÊ±¼ä
+			//åŠ å…¥æ—¶é—´
 			if (book.getBdate() != null && !book.getBdate().isEmpty()) {
 				sb.append(" and bdate = '" + book.getBdate() + "'");
 			}
@@ -151,7 +151,7 @@ public class BookDao {
 		return db.selectSingle(sb.toString(), null, Book.class);	
 	}
 	
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(Book book) throws SQLException  {
 		String sql = "insert into book(bid,bname,buniversity,bucollege," + "bumajor,bclass,bcontent,bimg,bprice,btid,"
 				+ "btemp,bnum,bauthor,bdate,uid,bstate,btemp1) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default,?);";
@@ -161,64 +161,64 @@ public class BookDao {
 				book.getBnum(), book.getBauthor(), book.getBdate(),book.getUid(),book.getBtemp1());
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(Book book) throws  SQLException {
 		StringBuffer sb = new StringBuffer();
 		sb.append("delete from book where 1=1 ");
 		if (book != null) {
-			//ÊéÃû
+			//ä¹¦å
 			if (book.getBname() != null && !book.getBname().isEmpty()) {
 				sb.append(" and bname ='" + book.getBname() + "'");
 			}
-			//´óÑ§
+			//å¤§å­¦
 			if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
 				sb.append(" and buniversity ='"  + book.getBuniversity() + "'");
 			}
-			//Ñ§Ôº
+			//å­¦é™¢
 			if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
 				sb.append(" and bucollege ='"  + book.getBucollege() + "'");
 			}
-			//×¨Òµ
+			//ä¸“ä¸š
 			if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
 				sb.append(" and bumajor ='"  + book.getBumajor() + "'");
 			}
-			//Äê¼¶
+			//å¹´çº§
 			if (book.getBclass() != null && !book.getBclass().isEmpty()) {
 				sb.append(" and bclass ='"  + book.getBclass() + "'");
 			}
-			//¿â´æ
+			//åº“å­˜
 			if(book.getBnum() != 0){
 				sb.append(" and bnum =" + book.getBnum());
 			}
-			//×÷Õß
+			//ä½œè€…
 			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
 				sb.append(" and bauthor ='"  + book.getBauthor() + "'");
 			}
-			//Àà±ğ
+			//ç±»åˆ«
 			if (book.getBtid() != 0) {
 				sb.append(" and btid = " + book.getBtid());
 			}
-			//ËùÓĞÕß
+			//æ‰€æœ‰è€…
 			if (book.getUid() != 0) {
 				sb.append(" and uid = " + book.getUid());
 			}
-			//¼Û¸ñ
+			//ä»·æ ¼
 			if(book.getBprice() != 0){
 				sb.append(" and bprice = " + book.getBprice());
 			}
-			//×´Ì¬
+			//çŠ¶æ€
 			if (book.getBstate() != 0) {
 				sb.append(" and bstate = " + book.getBstate());
 			}
-			//ÏµÁĞ
+			//ç³»åˆ—
 			if (book.getBtemp() != null && !book.getBtemp().isEmpty()) {
 				sb.append(" and btemp ='"  + book.getBtemp() + "'");
 			}
-			//Êéid
+			//ä¹¦id
 			if (book.getBid() != 0) {
 				sb.append(" and bid = " + book.getBid());
 			}
-			//¼ÓÈëÊ±¼ä
+			//åŠ å…¥æ—¶é—´
 			if (book.getBdate() != null && !book.getBdate().isEmpty()) {
 				sb.append(" and bdate ='"  + book.getBdate() + "'");
 			}
@@ -226,14 +226,14 @@ public class BookDao {
 		return db.update(sb.toString(), null);
 	}
 
-	// É¾³ı¶àÌõÊı¾İ
+	// åˆ é™¤å¤šæ¡æ•°æ®
 	@SuppressWarnings("static-access")
 	public int delete(List<Book> list) throws SQLException  {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
 			return 0;
 		}
-		// ±£´æËùÓĞµÄÊı¾İ¿âÓï¾ä
+		// ä¿å­˜æ‰€æœ‰çš„æ•°æ®åº“è¯­å¥
 		List<String> sqList = new ArrayList<String>();
 		for (Book book : list) {
 			sb = new StringBuffer();
@@ -251,74 +251,74 @@ public class BookDao {
 		return db.update(sqList);
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(Book bookNew, Book bookOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (bookNew == null || bookOld == null) {
 			return 0;
 		}
 		sb.append("update book set btemp1='' ");
-		//ÊéÃû
+		//ä¹¦å
 		if (bookNew.getBname() != null && !bookNew.getBname().isEmpty()) {
 			sb.append(" ,bname = '" + bookNew.getBname() + "'");
 		}
-		//´óÑ§
+		//å¤§å­¦
 		if (bookNew.getBuniversity() != null && !bookNew.getBuniversity().isEmpty()) {
 			sb.append(" ,buniversity =  '" + bookNew.getBuniversity() + "'");
 		}
-		//Ñ§Ôº
+		//å­¦é™¢
 		if (bookNew.getBucollege() != null && !bookNew.getBucollege().isEmpty()) {
 			sb.append(" ,bucollege =  '" + bookNew.getBucollege() + "'");
 		}
-		//×¨Òµ
+		//ä¸“ä¸š
 		if (bookNew.getBumajor() != null && !bookNew.getBumajor().isEmpty()) {
 			sb.append(" ,bumajor =  '" + bookNew.getBumajor() + "'");
 		}
-		//Äê¼¶
+		//å¹´çº§
 		if (bookNew.getBclass() != null && !bookNew.getBclass().isEmpty()) {
 			sb.append(" ,bclass =  '" + bookNew.getBclass() + "'");
 		}
-		//Àà±ğÃû
+		//ç±»åˆ«å
 		if (bookNew.getBtid() != 0 ) {
 			sb.append(" ,btid = " + bookNew.getBtid());
 		}
-		//ÏµÁĞ
+		//ç³»åˆ—
 		if (bookNew.getBtemp() != null && !bookNew.getBtemp().isEmpty()) {
 			sb.append(" ,btemp = '" + bookNew.getBtemp() + "'");
 		}
-		//×÷Õß
+		//ä½œè€…
 		if (bookNew.getBauthor() != null && !bookNew.getBauthor().isEmpty()) {
 			sb.append(" ,bauthor =  '" + bookNew.getBauthor() + "'");
 		}
-		//¼Û¸ñ
+		//ä»·æ ¼
 		if(bookNew.getBprice()!=0){
 			sb.append(" ,bprice = " + bookNew.getBprice());
 		}
-		//¿â´æ
+		//åº“å­˜
 		if(bookNew.getBnum()!=0){
 			sb.append(" ,bnum = " + bookNew.getBnum());
 		}
-		//Í¼Æ¬
+		//å›¾ç‰‡
 		if(bookNew.getBimg()!=null && !bookNew.getBimg().isEmpty()){
 			sb.append(" ,bimg = '" + bookNew.getBimg()+"'");
 		}
-		//ÄÚÈİ
+		//å†…å®¹
 		if(bookNew.getBcontent()!=null && !bookNew.getBcontent().isEmpty()){
 			sb.append(" ,bcontent = '" + bookNew.getBcontent()+"'");
 		}
-		//×´Ì¬
+		//çŠ¶æ€
 		if (bookNew.getBstate() != 0) {
 			sb.append(" ,bstate = " + bookNew.getBstate());
 		}
-		//¼ÓÈëÈÕÆÚ
+		//åŠ å…¥æ—¥æœŸ
 		if (bookNew.getBdate() != null && !bookNew.getBdate().isEmpty()) {
 			sb.append(" ,bdate = '" + bookNew.getBdate()+"'");
 		}
-		//±¸ÓÃ×Ö¶Î
+		//å¤‡ç”¨å­—æ®µ
 		if(bookNew.getBtemp1() != null && !bookNew.getBtemp1().isEmpty()){
 			sb.append(" ,btemp1 = '" + bookNew.getBtemp1()+"'");
 		}
-		//ÄÚÈİ
+		//å†…å®¹
 		if(bookNew.getBcontent() != null && !bookNew.getBcontent().isEmpty()){
 			sb.append(" ,bcontent = '" + bookNew.getBcontent()+"'");
 		}
@@ -345,41 +345,41 @@ public class BookDao {
 		return db.update(sb.toString(), null);
 		
 	}
-	//book·ÖÒ³
+	//bookåˆ†é¡µ
 	@SuppressWarnings({ "static-access", "unchecked" })
 	public Page<Book> bookPage(int page, int rows,Book book) throws IOException {
 		StringBuffer sb = new StringBuffer();
     	sb.append("select * from book where 1=1 ");
     	if(book != null){
-    		//ÊéÃû
+    		//ä¹¦å
 			if (book.getBname() != null && !book.getBname().isEmpty()) {
 				sb.append(" and bname ='" + book.getBname() + "'");
 			}
-			//´óÑ§
+			//å¤§å­¦
 			if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
 				sb.append(" and buniversity ='"  + book.getBuniversity() + "'");
 			}
-			//Ñ§Ôº
+			//å­¦é™¢
 			if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
 				sb.append(" and bucollege ='"  + book.getBucollege() + "'");
 			}
-			//×¨Òµ
+			//ä¸“ä¸š
 			if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
 				sb.append(" and bumajor ='"  + book.getBumajor() + "'");
 			}
-			//Äê¼¶
+			//å¹´çº§
 			if (book.getBclass() != null && !book.getBclass().isEmpty()) {
 				sb.append(" and bclass ='"  + book.getBclass() + "'");
 			}
-			//×÷Õß
+			//ä½œè€…
 			if (book.getBauthor() != null && !book.getBauthor().isEmpty()) {
 				sb.append(" and bauthor ='"  + book.getBauthor() + "'");
 			}
-			//Àà±ğ
+			//ç±»åˆ«
 			if (book.getBtid() != 0) {
 				sb.append(" and btid = " + book.getBtid());
 			}
-			//ËùÓĞÕß
+			//æ‰€æœ‰è€…
 			if (book.getUid() != 0) {
 				sb.append(" and uid = " + book.getUid());
 			}
@@ -387,38 +387,38 @@ public class BookDao {
     	sb.append(" order by  bid asc");
     	return  db.selectPageForMysql(page, rows, Book.class, sb.toString());
 	}
-	//book·ÖÒ³
+	//bookåˆ†é¡µ
 		@SuppressWarnings({ "static-access", "unchecked" })
 		public Page<Book> bookChildPage(int page, int rows,BookChild book) throws IOException {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select bid,bname,buniversity,bucollege,bumajor,bclass, "
 					+ " bcontent,bimg,bprice,bstate,b.btid,btemp,btemp1,bnum,bauthor,bdate,uid,btname,btnamesecond,btnamethird" + " from book b,booktype bt where 1=1 and b.btid = bt.btid ");
 	    	if(book != null){
-	    		//Àà±ğÃû
+	    		//ç±»åˆ«å
 				if(book.getBtname() != null && !book.getBtname().isEmpty()){
 					sb.append(" and btname = '"+book.getBtname()+"'");
 				}
-				//Àà±ğid
+				//ç±»åˆ«id
 				if(book.getBtid() != 0){
 					sb.append(" and b.btid = "+book.getBtid());
 				}
-				//´óÑ§
+				//å¤§å­¦
 				if (book.getBuniversity() != null && !book.getBuniversity().isEmpty()) {
 					sb.append(" and buniversity = '" + book.getBuniversity() + "'");
 				}
-				//Ñ§Ôº
+				//å­¦é™¢
 				if (book.getBucollege() != null && !book.getBucollege().isEmpty()) {
 					sb.append(" and bucollege = '" + book.getBucollege() + "'");
 				}
-				//×¨Òµ
+				//ä¸“ä¸š
 				if (book.getBumajor() != null && !book.getBumajor().isEmpty()) {
 					sb.append(" and bumajor = '" + book.getBumajor() + "'");
 				}
-				//Äê¼¶
+				//å¹´çº§
 				if (book.getBclass() != null && !book.getBclass().isEmpty()) {
 					sb.append(" and bclass = '" + book.getBclass() + "'");
 				}
-				//ËùÒÔÕß
+				//æ‰€ä»¥è€…
 				if(book.getUid() != 0){
 					sb.append(" and uid = "+book.getUid());
 				}
@@ -426,5 +426,5 @@ public class BookDao {
 	    	sb.append(" order by  bid asc");
 	    	return  db.selectPageForMysql(page, rows, Book.class, sb.toString());
 		}
-	// ÆäËû
+	// å…¶ä»–
 }

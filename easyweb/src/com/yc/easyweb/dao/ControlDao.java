@@ -9,7 +9,7 @@ import com.yc.easyweb.bean.Control;
 import com.yc.easyweb.common.DbHelper;
 
 public class ControlDao {
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	public List<Control> selectAll(Control control) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select conid,coname,conamesecond,conadd,condelete,coninsert,conupdate,concheck,uid,"
@@ -93,7 +93,7 @@ public class ControlDao {
 		return DbHelper.selectSingle(sb.toString(), null, Control.class);
 	}
 
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(Control control) throws SQLException  {
 		String sql = "insert into control(conid,coname,conamesecond,uid,contemp,conadd,condelete,coninsert,conupdate,concheck,constate) "
 				+ " values(null,?,?,?,?,default,default,default,default,default,default);";
@@ -101,7 +101,7 @@ public class ControlDao {
 				 control.getContemp());
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(Control control) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (control == null) {
@@ -127,7 +127,7 @@ public class ControlDao {
 
 	}
 
-	// É¾³ı¶àÌõ
+	// åˆ é™¤å¤šæ¡
 	public int delete(List<Control> list) throws SQLException  {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
@@ -157,7 +157,7 @@ public class ControlDao {
 		return DbHelper.update(sqList);
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(Control controlNew, Control controlOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (controlNew == null || controlOld == null) {
@@ -214,5 +214,5 @@ public class ControlDao {
 		return DbHelper.update(sb.toString(), null);
 
 	}
-	// ÆäËû
+	// å…¶ä»–
 }

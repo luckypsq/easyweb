@@ -8,7 +8,7 @@ import com.yc.easyweb.bean.Control;
 import com.yc.easyweb.dao.ControlDao;
 
 /**
- * ²Ù×÷Control±íµÄÊÂÎñÀà
+ * æ“ä½œControlè¡¨çš„äº‹åŠ¡ç±»
  * 
  * @author psq
  *
@@ -17,82 +17,82 @@ public class ControlBiz {
 
 	private ControlDao dao = new ControlDao();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	public List<Control> selectAll(Control control) throws   IOException, BizException {
 		if(control == null){
-			throw new BizException("ÇëÌîĞ´¹ÜÀíÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ç®¡ç†æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.selectAll(control);
 	}
-	// ²éÑ¯µ¥¸ö
+	// æŸ¥è¯¢å•ä¸ª
 	public Control selectSingle(Control control) throws IOException, BizException {
 		if(control == null){
-			throw new BizException("ÇëÌîĞ´¹ÜÀíÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ç®¡ç†æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(control.getConid() == 0 && control.getConame() == null && control.getUid() == 0){
-			throw new BizException("ÇëÖ¸¶¨²éÑ¯µÄ¹ÜÀíÈ¨ÏŞ£¡£¡£¡");
+			throw new BizException("è¯·æŒ‡å®šæŸ¥è¯¢çš„ç®¡ç†æƒé™ï¼ï¼ï¼");
 		}
 		return dao.selectSingle(control);
 	}
 
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(Control control) throws SQLException, BizException {
 		if(control == null){
-			throw new BizException("ÇëÌîĞ´¹ÜÀíÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ç®¡ç†æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(control.getConame() == null ){
-			throw new BizException("ÇëÌîĞ´¹ÜÀíÖ÷ÀàÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ç®¡ç†ä¸»ç±»æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}else if(control.getConame().isEmpty() ){
-			throw new BizException("ÇëÌîĞ´¹ÜÀíÖ÷ÀàÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ç®¡ç†ä¸»ç±»æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(control.getConamesecond() == null  ){
-			throw new BizException("ÇëÌîĞ´¹ÜÀí¸±ÀàÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ç®¡ç†å‰¯ç±»æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}else if(control.getConamesecond().isEmpty()){
-			throw new BizException("ÇëÌîĞ´¹ÜÀí¸±ÀàÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ç®¡ç†å‰¯ç±»æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.insert(control);
 
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(Control control) throws SQLException, BizException {
 		if(control == null){
-			throw new BizException("ÇëÌîĞ´¹ÜÀíÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ç®¡ç†æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(control.getConid() ==0  && control.getConame() == null && control.getConamesecond() == null){
-			throw new BizException("ÇëÖ¸¶¨É¾³ıµÄ¹ÜÀíÈ¨ÏŞ£¡£¡£¡");
+			throw new BizException("è¯·æŒ‡å®šåˆ é™¤çš„ç®¡ç†æƒé™ï¼ï¼ï¼");
 		}
 		
 		return dao.delete(control);
 
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int deleteAll(List<Control> list) throws SQLException, BizException {
 		if(list.size() == 0){
-			throw new BizException("ÇëÌîĞ´¹ÜÀíÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ç®¡ç†æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		for(Control control : list){
 			if(control.getConid() ==0  && control.getConame() == null && control.getConamesecond() == null){
-				throw new BizException("ÇëÖ¸¶¨É¾³ıµÄ¹ÜÀíÈ¨ÏŞ£¡£¡£¡");
+				throw new BizException("è¯·æŒ‡å®šåˆ é™¤çš„ç®¡ç†æƒé™ï¼ï¼ï¼");
 			}
 		}
 		return dao.delete(list);
 
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(Control controlNew, Control controlOld) throws SQLException, BizException {
 		if(controlNew == null){
-			throw new BizException("ÇëÌîĞ´ĞŞ¸ÄµÄ¹ÜÀíÈ¨ÏŞĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ä¿®æ”¹çš„ç®¡ç†æƒé™ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(controlOld == null){
-			throw new BizException("ÇëÌîĞ´ĞèÒªµÄ¹ÜÀíÈ¨ÏŞ£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦çš„ç®¡ç†æƒé™ï¼ï¼ï¼");
 		}
 		if(controlOld.getConid() ==0  && controlOld.getConame() == null && controlOld.getConamesecond() == null){
-			throw new BizException("ÇëÖ¸¶¨ĞŞ¸ÄµÄ¹ÜÀíÈ¨ÏŞ£¡£¡£¡");
+			throw new BizException("è¯·æŒ‡å®šä¿®æ”¹çš„ç®¡ç†æƒé™ï¼ï¼ï¼");
 		}
 		return dao.update(controlNew, controlOld);
 	}
-	// ÆäËû
+	// å…¶ä»–
 }

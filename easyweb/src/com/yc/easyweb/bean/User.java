@@ -4,22 +4,22 @@ import java.io.Serializable;
 
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private long uid;//ÓÃ»§id
-	private String uname;//ÓÃ»§Ãû
-	private String uphone;//ÓÃ»§µç»°
-	private String university;//ÓÃ»§ËùÔÚ´óÑ§
-	private String ucollege;//ÓÃ»§ËùÔÚÑ§Ôº
-	private String umajor;//ÓÃ»§ËùÔÚ×¨Òµ
-	private String uclass;//ÓÃ»§ËùÔÚÄê¼¶
-	private String upassword;//ÓÃ»§ÃÜÂë
-	private int ustate;//ÓÃ»§×´Ì¬£¨1.¿ÉÓÃ2.¶³½á3.É¾³ı£©
-	private String utemp;//±¸ÓÃ×Ö¶Î
-	private int utype;//¼¶±ğ(2ÓÃ»§£¬3»áÔ±£¬4×êÊ¯»áÔ±£¬5ÆÕÍ¨¹ÜÀíÔ±£¬1³¬¼¶¹ÜÀíÔ±)
-	private String uemail;//ÓÊÏä
-	private String utime;//×¢²áÊ±¼ä
-	private int usex;//ĞÔ±ğ(1.ÄĞ2.Å®)
-	private int uage;//ÄêÁä
-	private String uminname;//êÇ³Æ
+	private long uid;//ç”¨æˆ·id
+	private String uname;//ç”¨æˆ·å
+	private String uphone;//ç”¨æˆ·ç”µè¯
+	private String university;//ç”¨æˆ·æ‰€åœ¨å¤§å­¦
+	private String ucollege;//ç”¨æˆ·æ‰€åœ¨å­¦é™¢
+	private String umajor;//ç”¨æˆ·æ‰€åœ¨ä¸“ä¸š
+	private String uclass;//ç”¨æˆ·æ‰€åœ¨å¹´çº§
+	private String upassword;//ç”¨æˆ·å¯†ç 
+	private int ustate;//ç”¨æˆ·çŠ¶æ€ï¼ˆ1.å¯ç”¨2.å†»ç»“3.åˆ é™¤ï¼‰
+	private String utemp;//å¤‡ç”¨å­—æ®µ
+	private int utype;//çº§åˆ«(2ç”¨æˆ·ï¼Œ3ä¼šå‘˜ï¼Œ4é’»çŸ³ä¼šå‘˜ï¼Œ5æ™®é€šç®¡ç†å‘˜ï¼Œ1è¶…çº§ç®¡ç†å‘˜)
+	private String uemail;//é‚®ç®±
+	private String utime;//æ³¨å†Œæ—¶é—´
+	private int usex;//æ€§åˆ«(1.ç”·2.å¥³)
+	private int uage;//å¹´é¾„
+	private String uminname;//æ˜µç§°
 	
 	public String getUclass() {
 		return uclass;
@@ -125,7 +125,7 @@ public class User implements Serializable{
 				+ ", ustate=" + ustate + ", utemp=" + utemp + ", utype=" + utype + ", uemail=" + uemail + ", utime="
 				+ utime + ", usex=" + usex + ", uage=" + uage + ", uminname=" + uminname + "]";
 	}
-	//ÖØĞ´hashCode ºÍequals·½·¨È¥ÖØ
+	//é‡å†™hashCode å’Œequalsæ–¹æ³•å»é‡
 	@Override
 	public int hashCode() {
 		final int prime = 31;

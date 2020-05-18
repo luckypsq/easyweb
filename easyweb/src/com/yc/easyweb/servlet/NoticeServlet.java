@@ -19,18 +19,18 @@ public class NoticeServlet extends BaseServlet {
 	private NoticeBiz noticeBiz = new NoticeBiz();
 	private  Gson gson = new Gson();
 	private Result result ;
-	//²éÑ¯
+	//æŸ¥è¯¢
 	public void  query(HttpServletRequest request, HttpServletResponse response){
-		// ¹«¸æÕ¹Ê¾
+		// å…¬å‘Šå±•ç¤º
 		HttpSession session = request.getSession();
 		User userOld = (User) session.getAttribute("loginedUser");
 		Notice notice = new Notice();
 		notice.setNstate(1);
 		try {
-			//¹«¸æ·ÖÒ³²éÑ¯
+			//å…¬å‘Šåˆ†é¡µæŸ¥è¯¢
 			String page = request.getParameter("page");
 			String nid = request.getParameter("nid");
-			//²éÑ¯¹«¸æÏêÇé
+			//æŸ¥è¯¢å…¬å‘Šè¯¦æƒ…
 			if(nid != null && !nid.isEmpty()){
 				notice.setNid(Long.parseLong(nid));
 				Notice notice2 = noticeBiz.selectSingle(notice);
@@ -42,13 +42,13 @@ public class NoticeServlet extends BaseServlet {
 						noticeNew.setNnumber(num);
 						noticeBiz.update(notice2,noticeNew );
 					}
-					result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+					result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return ;
 				}else{
-					result = Result.failure("²éÑ¯Ê§°Ü£¡£¡£¡");
+					result = Result.failure("æŸ¥è¯¢å¤±è´¥ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -63,14 +63,14 @@ public class NoticeServlet extends BaseServlet {
 				}
 				Page<Notice> sPage = noticeBiz.noticePage(iPage, 3, notice);
 				if(sPage.getData().size() == 0){
-					result = Result.failure("ÔİÎŞÊı¾İ£¡£¡£¡");
+					result = Result.failure("æš‚æ— æ•°æ®ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return ;
 				}else{
 					session.setAttribute("noticePage", sPage);
-					result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+					result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 					String json1 = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json1);
@@ -87,7 +87,7 @@ public class NoticeServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {

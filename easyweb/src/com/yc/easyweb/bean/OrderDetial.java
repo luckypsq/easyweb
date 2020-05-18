@@ -2,27 +2,27 @@ package com.yc.easyweb.bean;
 
 import java.io.Serializable;
 
-//¶©µ¥ÏêÇéÊı¾İ
+//è®¢å•è¯¦æƒ…æ•°æ®
 public class OrderDetial implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String eoid;//¶©µ¥±àºÅ
-	private String bname;//ÊéÃû
-	private double total;//×Ü¼Û
-	private String eotime;//Ê±¼ä
-	private String eotype;//ÅäËÍÀàĞÍ
-	private String eoaddr;//µØÖ·
-	private String uname;//ÓÃ»§Ãû
-	private long uid;//ÓÃ»§id
-	private long bid;//Êéid
-	private long count;//ÊıÁ¿
-	private int eostate;//×´Ì¬
-	private String eoespress;//¿ìµİÃû×Ö
-	private String eopayname;//Ö§¸¶ÀàĞÍ
-	private String bimg;//Í¼Æ¬
-	private String eotemp;//µç»°
+	private String eoid;//è®¢å•ç¼–å·
+	private String bname;//ä¹¦å
+	private double total;//æ€»ä»·
+	private String eotime;//æ—¶é—´
+	private String eotype;//é…é€ç±»å‹
+	private String eoaddr;//åœ°å€
+	private String uname;//ç”¨æˆ·å
+	private long uid;//ç”¨æˆ·id
+	private long bid;//ä¹¦id
+	private long count;//æ•°é‡
+	private int eostate;//çŠ¶æ€
+	private String eoespress;//å¿«é€’åå­—
+	private String eopayname;//æ”¯ä»˜ç±»å‹
+	private String bimg;//å›¾ç‰‡
+	private String eotemp;//ç”µè¯
 	
 	public String getEotemp() {
 		return eotemp;

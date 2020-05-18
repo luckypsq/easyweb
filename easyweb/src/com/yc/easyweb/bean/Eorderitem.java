@@ -7,16 +7,16 @@ public class Eorderitem implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// ¶©µ¥ÏêÇé±í
-	private String itemid;// ¶©µ¥ÏêÇéid
-	private int count;// ÊıÁ¿
-	private long bid;// Êéid
-	private String eoid;// ¶©µ¥ºÅ
-	private double total;// ×Ü¼Û
-	private String eitemp;// Ô¤±¸×Ö¶Î
-	private long uid;// ÓÃ»§Ãû
-	private int cartstate;// ×´Ì¬
-	private String carttime;// ¼ÓÈëÊ±¼ä
+	// è®¢å•è¯¦æƒ…è¡¨
+	private String itemid;// è®¢å•è¯¦æƒ…id
+	private int count;// æ•°é‡
+	private long bid;// ä¹¦id
+	private String eoid;// è®¢å•å·
+	private double total;// æ€»ä»·
+	private String eitemp;// é¢„å¤‡å­—æ®µ
+	private long uid;// ç”¨æˆ·å
+	private int cartstate;// çŠ¶æ€
+	private String carttime;// åŠ å…¥æ—¶é—´
 
 	public String getCarttime() {
 		return carttime;

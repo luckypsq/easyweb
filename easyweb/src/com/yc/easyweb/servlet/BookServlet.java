@@ -29,7 +29,7 @@ public class BookServlet extends BaseServlet {
 	private Gson gson = new Gson();
 	private Result result;
 
-	// Ìí¼ÓÊé¼®ÑéÖ¤ÊıÁ¿
+	// æ·»åŠ ä¹¦ç±éªŒè¯æ•°é‡
 	public void checkBnum(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String bnum = request.getParameter("bnum");
@@ -37,13 +37,13 @@ public class BookServlet extends BaseServlet {
 		try {
 			if (bnum != null && !bnum.isEmpty()) {
 				if (!bnum.matches(reg)) {
-					result = Result.failure("ÊıÁ¿ÊäÈë²»ºÏ·¨£¡£¡£¡");
+					result = Result.failure("æ•°é‡è¾“å…¥ä¸åˆæ³•ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.success("ÊäÈëÕıÈ·£¡£¡£¡");
+				result = Result.success("è¾“å…¥æ­£ç¡®ï¼ï¼ï¼");
 				session.setAttribute("insertBnum", bnum);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
@@ -51,7 +51,7 @@ public class BookServlet extends BaseServlet {
 				return;
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -63,7 +63,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// Ìí¼ÓÊé¼®ÑéÖ¤¼Û¸ñ
+	// æ·»åŠ ä¹¦ç±éªŒè¯ä»·æ ¼
 	public void checkBprice(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String bprice = request.getParameter("bprice");
@@ -72,29 +72,29 @@ public class BookServlet extends BaseServlet {
 		try {
 			if (bprice != null && !bprice.isEmpty()) {
 				if (!bprice.matches(reg)) {
-					result = Result.failure("¼Û¸ñÊäÈë²»ºÏ·¨£¡£¡£¡");
+					result = Result.failure("ä»·æ ¼è¾“å…¥ä¸åˆæ³•ï¼ï¼ï¼");
 					String json = gson.toJson(result);
-					// ·µ»Øjson¸ñÊ½Êı¾İ
+					// è¿”å›jsonæ ¼å¼æ•°æ®
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.success("ÊäÈëºÏ·¨£¡£¡£¡");
+				result = Result.success("è¾“å…¥åˆæ³•ï¼ï¼ï¼");
 				session.setAttribute("insertBprice", bprice);
 				String json = gson.toJson(result);
-				// ·µ»Øjson¸ñÊ½Êı¾İ
+				// è¿”å›jsonæ ¼å¼æ•°æ®
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("¼Û¸ñÎª¿Õ£¡£¡£¡");
+			result = Result.failure("ä»·æ ¼ä¸ºç©ºï¼ï¼ï¼");
 			String json = gson.toJson(result);
-			// ·µ»Øjson¸ñÊ½Êı¾İ
+			// è¿”å›jsonæ ¼å¼æ•°æ®
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -106,7 +106,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// Ìí¼ÓÊé¼®ÑéÖ¤×÷ÕßÃû
+	// æ·»åŠ ä¹¦ç±éªŒè¯ä½œè€…å
 	public void checkBauthor(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String bauthor = request.getParameter("bauthor");
@@ -115,29 +115,29 @@ public class BookServlet extends BaseServlet {
 		try {
 			if (bauthor != null && !bauthor.isEmpty()) {
 				if (!bauthor.matches(reg)) {
-					result = Result.failure("×÷ÕßÃûÊäÈë²»ºÏ·¨£¡£¡£¡");
+					result = Result.failure("ä½œè€…åè¾“å…¥ä¸åˆæ³•ï¼ï¼ï¼");
 					String json = gson.toJson(result);
-					// ·µ»Øjson¸ñÊ½Êı¾İ
+					// è¿”å›jsonæ ¼å¼æ•°æ®
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.success("ÊäÈëÕıÈ·£¡£¡£¡");
+				result = Result.success("è¾“å…¥æ­£ç¡®ï¼ï¼ï¼");
 				session.setAttribute("insertBauthor", bauthor);
 				String json = gson.toJson(result);
-				// ·µ»Øjson¸ñÊ½Êı¾İ
+				// è¿”å›jsonæ ¼å¼æ•°æ®
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("×÷ÕßÃûÎª¿Õ£¡£¡£¡");
+			result = Result.failure("ä½œè€…åä¸ºç©ºï¼ï¼ï¼");
 			String json = gson.toJson(result);
-			// ·µ»Øjson¸ñÊ½Êı¾İ
+			// è¿”å›jsonæ ¼å¼æ•°æ®
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -149,7 +149,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// Ìí¼ÓÊé¼®ÑéÖ¤ÊéÃû
+	// æ·»åŠ ä¹¦ç±éªŒè¯ä¹¦å
 	public void checkBname(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String bname = request.getParameter("bname");
@@ -158,43 +158,43 @@ public class BookServlet extends BaseServlet {
 		try {
 			if (bname != null && !bname.isEmpty()) {
 				if (!bname.matches(reg)) {
-					result = Result.failure("ÊéÃû²»ºÏ·¨£¡£¡£¡");
+					result = Result.failure("ä¹¦åä¸åˆæ³•ï¼ï¼ï¼");
 					String json = gson.toJson(result);
-					// ·µ»Øjson¸ñÊ½Êı¾İ
+					// è¿”å›jsonæ ¼å¼æ•°æ®
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				// ÅĞ¶ÏÊÇ·ñÉÏ´«ÁËÍ¬ÃûÊé¼®
+				// åˆ¤æ–­æ˜¯å¦ä¸Šä¼ äº†åŒåä¹¦ç±
 				Book book = new Book();
 				book.setBname(bname);
 				book.setBstate(1);
 				book.setUid(oldUser.getUid());
 				Book book2 = bookBiz.selectSingle(book);
 				if (book2.getBid() != 0) {
-					result = Result.failure("ÄúÒÑÉÏ´«´ËÊé£¡£¡£¡");
+					result = Result.failure("æ‚¨å·²ä¸Šä¼ æ­¤ä¹¦ï¼ï¼ï¼");
 					String json = gson.toJson(result);
-					// ·µ»Øjson¸ñÊ½Êı¾İ
+					// è¿”å›jsonæ ¼å¼æ•°æ®
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.success("ÊéÃû¿ÉÒÔÊ¹ÓÃ£¡£¡£¡");
+				result = Result.success("ä¹¦åå¯ä»¥ä½¿ç”¨ï¼ï¼ï¼");
 				session.setAttribute("insertBname", bname);
 				String json = gson.toJson(result);
-				// ·µ»Øjson¸ñÊ½Êı¾İ
+				// è¿”å›jsonæ ¼å¼æ•°æ®
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("ÊéÃûÎª¿Õ£¡£¡£¡");
+			result = Result.failure("ä¹¦åä¸ºç©ºï¼ï¼ï¼");
 			String json = gson.toJson(result);
-			// ·µ»Øjson¸ñÊ½Êı¾İ
+			// è¿”å›jsonæ ¼å¼æ•°æ®
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -215,7 +215,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// Ìí¼ÓÊé¼®ÑéÖ¤ÏµÁĞÃû
+	// æ·»åŠ ä¹¦ç±éªŒè¯ç³»åˆ—å
 	public void checkBtemp(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String btemp = request.getParameter("btemp");
@@ -224,23 +224,23 @@ public class BookServlet extends BaseServlet {
 		try {
 			if (btemp != null && !btemp.isEmpty()) {
 				if (!btemp.matches(reg)) {
-					result = Result.failure("ÏµÁĞÃû²»ºÏ·¨£¡£¡£¡");
+					result = Result.failure("ç³»åˆ—åä¸åˆæ³•ï¼ï¼ï¼");
 					String json = gson.toJson(result);
-					// ·µ»Øjson¸ñÊ½Êı¾İ
+					// è¿”å›jsonæ ¼å¼æ•°æ®
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
 				session.setAttribute("insertBtemp", btemp);
-				result = Result.success("¸ÃÏµÁĞÃû¿ÉÓÃ£¡£¡£¡");
+				result = Result.success("è¯¥ç³»åˆ—åå¯ç”¨ï¼ï¼ï¼");
 				String json = gson.toJson(result);
-				// ·µ»Øjson¸ñÊ½Êı¾İ
+				// è¿”å›jsonæ ¼å¼æ•°æ®
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -252,49 +252,49 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// Ìí¼ÓÊé¼®ÉÏ´«Í¼Æ¬
+	// æ·»åŠ ä¹¦ç±ä¸Šä¼ å›¾ç‰‡
 	public void uploadImage(HttpServletRequest request, HttpServletResponse response) {
-		// ´´½¨ÎÄ¼şÉÏ´«¶ÔÏó
+		// åˆ›å»ºæ–‡ä»¶ä¸Šä¼ å¯¹è±¡
 		SmartUpload su = new SmartUpload();
 		try {
-			// ³õÊ¼»¯£¬´«ÈëÒ³ÃæÉÏÏÂÎÄ¶ÔÏó
+			// åˆå§‹åŒ–ï¼Œä¼ å…¥é¡µé¢ä¸Šä¸‹æ–‡å¯¹è±¡
 			su.initialize(getServletConfig(), request, response);
-			// ÉèÖÃÉÏ´«µÄÅäÖÃĞÅÏ¢
-			// ÏŞ¶¨ÎÄ¼şÃûºó×º
+			// è®¾ç½®ä¸Šä¼ çš„é…ç½®ä¿¡æ¯
+			// é™å®šæ–‡ä»¶ååç¼€
 			su.setAllowedFilesList("jpg,png,gif,bmp");
-			// ÏŞ¶¨´óĞ¡
+			// é™å®šå¤§å°
 			su.setMaxFileSize(1024 * 1024 * 10);
-			// Ö´ĞĞÉÏ´«
+			// æ‰§è¡Œä¸Šä¼ 
 			su.upload();
-			// ÅĞ¶ÏÊÇ·ñÓĞÉÏ´«ÎÄ¼ş
+			// åˆ¤æ–­æ˜¯å¦æœ‰ä¸Šä¼ æ–‡ä»¶
 			String webPath = null;
-			String filename = null;// ÎÄ¼şÃû
-			String diskPath = null;// ´ÅÅÌÂ·¾¶
+			String filename = null;// æ–‡ä»¶å
+			String diskPath = null;// ç£ç›˜è·¯å¾„
 			if (su.getFiles().getSize() > 0) {
-				// Îª·ÀÖ¹ÉÏ´«µÄÎÄ¼şÃûÖØ¸´£¬½«ÎÄ¼şÃûĞŞ¸ÄÎªÎ¨Ò»
-				// »ñÈ¡ÏµÍ³µ±Ç°Ê±¼ä
+				// ä¸ºé˜²æ­¢ä¸Šä¼ çš„æ–‡ä»¶åé‡å¤ï¼Œå°†æ–‡ä»¶åä¿®æ”¹ä¸ºå”¯ä¸€
+				// è·å–ç³»ç»Ÿå½“å‰æ—¶é—´
 				SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 				Date date = new Date();
 				Files files = su.getFiles();
 				filename = df.format(date) + files.getFile(0).getFileName();
 				String path = this.getServletContext().getContextPath();
-				// Ê¹ÓÃapplication£¨Ó¦ÓÃÉÏÏÂÎÄ¶ÔÏó£© webÂ·¾¶ ×ª»»³É ´ÅÅÌÂ·¾¶
-				// getServletContext£¨£© === application
+				// ä½¿ç”¨applicationï¼ˆåº”ç”¨ä¸Šä¸‹æ–‡å¯¹è±¡ï¼‰ webè·¯å¾„ è½¬æ¢æˆ ç£ç›˜è·¯å¾„
+				// getServletContextï¼ˆï¼‰ === application
 				diskPath = getServletContext().getRealPath("/back/upload");
 				files.getFile(0).saveAs(diskPath + "/" + filename);
 				webPath = path + "/back/upload/" + filename;
 			}
 			if (webPath != null && !webPath.isEmpty()) {
-				result = Result.success("ÉÏ´«Í¼Æ¬³É¹¦£¡", webPath);
+				result = Result.success("ä¸Šä¼ å›¾ç‰‡æˆåŠŸï¼", webPath);
 			} else {
-				result = Result.failure("ÉÏ´«Í¼Æ¬Ê§°Ü£¡");
+				result = Result.failure("ä¸Šä¼ å›¾ç‰‡å¤±è´¥ï¼");
 			}
 			String json = gson.toJson(result);
-			// ·µ»Øjson¸ñÊ½Êı¾İ
+			// è¿”å›jsonæ ¼å¼æ•°æ®
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -304,7 +304,7 @@ public class BookServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (SmartUploadException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -314,7 +314,7 @@ public class BookServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (ServletException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -326,7 +326,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// ÏÔÊ¾listÒ³ÃæµÄÊé¼®
+	// æ˜¾ç¤ºlisté¡µé¢çš„ä¹¦ç±
 	public void listBook(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String uni = request.getParameter("university");
@@ -357,20 +357,20 @@ public class BookServlet extends BaseServlet {
 		try {
 			Page<Book> page2 = bookBiz.bookPage(ipage, 21, book);
 			if (page2.getData().size() == 0) {
-				result = Result.failure("ÔİÎŞÊı¾İ£¡£¡£¡");
+				result = Result.failure("æš‚æ— æ•°æ®ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+			result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 			session.setAttribute("listBookPage", page2);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -383,7 +383,7 @@ public class BookServlet extends BaseServlet {
 
 	}
 
-	// ÏÔÊ¾Êé±¾ÏêÇé
+	// æ˜¾ç¤ºä¹¦æœ¬è¯¦æƒ…
 	public void bookDetail(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		Book book1 = new Book();
@@ -393,7 +393,7 @@ public class BookServlet extends BaseServlet {
 		try {
 			Book book = bookBiz.selectSingle(book1);
 			if (book.getBid() == 0) {
-				result = Result.failure("¸ÃÊéÒÑ±»É¾³ı£¡£¡£¡");
+				result = Result.failure("è¯¥ä¹¦å·²è¢«åˆ é™¤ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -404,7 +404,7 @@ public class BookServlet extends BaseServlet {
 			List<Book> list = bookBiz.selectAll(book2);
 			session.setAttribute("bookDetail", book);
 			session.setAttribute("similarBook", list);
-			result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+			result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -419,7 +419,7 @@ public class BookServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -431,7 +431,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// ÓÃ»§·¢²¼Êé¼®
+	// ç”¨æˆ·å‘å¸ƒä¹¦ç±
 	public void userAddBook(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String buniversity = request.getParameter("buniversity");
@@ -442,7 +442,7 @@ public class BookServlet extends BaseServlet {
 		String btid = request.getParameter("btid");
 		String bimg = request.getParameter("img_path");
 		
-		// ĞèÒªÑéÖ¤µÄĞÅÏ¢
+		// éœ€è¦éªŒè¯çš„ä¿¡æ¯
 		String btemp = (String) session.getAttribute("insertBtemp");
 		String bname = (String) session.getAttribute("insertBname");
 		String bprice = (String) session.getAttribute("insertBprice");
@@ -452,16 +452,16 @@ public class BookServlet extends BaseServlet {
 		User userOld = (User) session.getAttribute("loginedUser");
 		Book book = new Book();
 
-		if (!buniversity.equals("Í¼ÊéËùÊô´óÑ§")) {
+		if (!buniversity.equals("å›¾ä¹¦æ‰€å±å¤§å­¦")) {
 			book.setBuniversity(buniversity);
 		}
-		if (!bucollege.equals("Í¼ÊéËùÊôÑ§Ôº")) {
+		if (!bucollege.equals("å›¾ä¹¦æ‰€å±å­¦é™¢")) {
 			book.setBucollege(bucollege);
 		}
-		if (!bumajor.equals("Í¼ÊéËùÊô×¨Òµ")) {
+		if (!bumajor.equals("å›¾ä¹¦æ‰€å±ä¸“ä¸š")) {
 			book.setBumajor(bumajor);
 		}
-		if (!bclass.equals("Í¼ÊéËùÊôÄê¼¶")) {
+		if (!bclass.equals("å›¾ä¹¦æ‰€å±å¹´çº§")) {
 			book.setBclass(bclass);
 		}
 		if (bimg != null && !bimg.isEmpty()) {
@@ -478,28 +478,28 @@ public class BookServlet extends BaseServlet {
 			book.setBtemp(btemp);
 		}
 		String check = "1";
-		// ÊéÃû
+		// ä¹¦å
 		if (bname != null && !bname.isEmpty()) {
 			book.setBname(bname);
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// Êé¼Û¸ñ
+		// ä¹¦ä»·æ ¼
 		if (bprice != null && !bprice.isEmpty()) {
 			book.setBprice(Double.parseDouble(bprice));
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// Êé×÷Õß
+		// ä¹¦ä½œè€…
 		if (bauthor != null && !bauthor.isEmpty()) {
 			book.setBauthor(bauthor);
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// Êé¿â´æ
+		// ä¹¦åº“å­˜
 		if (bnum != null && !bnum.isEmpty()) {
 			book.setBnum(Long.parseLong(bnum));
 			check = check + "/1";
@@ -508,16 +508,16 @@ public class BookServlet extends BaseServlet {
 		}
 		try {
 			if (!check.equals("1/1/1/1/1")) {
-				result = Result.lack("Ìí¼ÓÊ§°Ü£¡£¡£¡", check);
+				result = Result.lack("æ·»åŠ å¤±è´¥ï¼ï¼ï¼", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			if (!btid.equals("Í¼ÊéËùÊôÀàĞÍ")) {
+			if (!btid.equals("å›¾ä¹¦æ‰€å±ç±»å‹")) {
 				book.setBtid(Long.parseLong(btid));
 			} else {
-				result = Result.failure("ÇëÑ¡ÔñÊé¼®ÀàĞÍ£¡£¡£¡");
+				result = Result.failure("è¯·é€‰æ‹©ä¹¦ç±ç±»å‹ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -530,15 +530,15 @@ public class BookServlet extends BaseServlet {
 			book.setBstate(5);
 			int code = bookBiz.insert(book);
 			if (code > 0) {
-				result = Result.success("·¢²¼³É¹¦£¡£¡£¡");
-				//»á»°»¹Ô­
+				result = Result.success("å‘å¸ƒæˆåŠŸï¼ï¼ï¼");
+				//ä¼šè¯è¿˜åŸ
 				String string = null;
 				session.setAttribute("insertBtemp",string);
 				session.setAttribute("insertBname",string);
 				session.setAttribute("insertBprice",string);
 				session.setAttribute("insertBnum",string);
 				session.setAttribute("insertBauthor",string);
-				//2.Êı¾İË¢ĞÂ
+				//2.æ•°æ®åˆ·æ–°
 				Book userBook = new Book();
 				Page<Book> page;
 				if (userOld.getUid() != 0) {
@@ -553,14 +553,14 @@ public class BookServlet extends BaseServlet {
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("·¢²¼Ê§°Ü£¡£¡£¡");
+			result = Result.failure("å‘å¸ƒå¤±è´¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -579,7 +579,7 @@ public class BookServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -591,7 +591,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		Book book2;
 		HttpSession session = request.getSession();
@@ -602,7 +602,7 @@ public class BookServlet extends BaseServlet {
 		try {
 			if (bid != null && !bid.isEmpty()) {
 				if (bid.equals("all")) {
-					result = Result.failure("²»ÄÜ½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+					result = Result.failure("ä¸èƒ½è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -618,7 +618,7 @@ public class BookServlet extends BaseServlet {
 					}
 				}
 			} else {
-				result = Result.failure("Î´Ñ¡ÔñÊé¼®£¡£¡£¡");
+				result = Result.failure("æœªé€‰æ‹©ä¹¦ç±ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -628,33 +628,33 @@ public class BookServlet extends BaseServlet {
 			if (list.size() != 0) {
 				i = bookBiz.deleteMore(list);
 				if (i > 0) {
-					result = Result.success("É¾³ı³É¹¦£¡£¡£¡");
-					//Êı¾İË¢ĞÂ
+					result = Result.success("åˆ é™¤æˆåŠŸï¼ï¼ï¼");
+					//æ•°æ®åˆ·æ–°
 					Book book = new Book();
 					book.setUid(userOld.getUid());
 					Page<Book> page = bookBiz.bookPage(1, 5, book);
 					session.setAttribute("userBookPage", page);
 					Book bookAdmin = new Book();
 					List<Book> bookAll = bookBiz.selectAll(bookAdmin);
-					session.setAttribute("bookAll", bookAll);// ´æ´¢ËùÓĞÊé¼®
+					session.setAttribute("bookAll", bookAll);// å­˜å‚¨æ‰€æœ‰ä¹¦ç±
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.failure("É¾³ıÊ§°Ü£¡£¡£¡");
+				result = Result.failure("åˆ é™¤å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("Î´Ñ¡ÔñÊé¼®£¡£¡£¡");
+			result = Result.failure("æœªé€‰æ‹©ä¹¦ç±ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -673,7 +673,7 @@ public class BookServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -685,7 +685,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±Êé¼®ÁĞ±í²éÑ¯
+	// ç®¡ç†å‘˜ä¹¦ç±åˆ—è¡¨æŸ¥è¯¢
 	public void query(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String bauthor = request.getParameter("bauthor");
@@ -693,7 +693,7 @@ public class BookServlet extends BaseServlet {
 		String btid = request.getParameter("btid");
 		Book book = new Book();
 
-		// »ñÈ¡²éÑ¯Ìõ¼ş
+		// è·å–æŸ¥è¯¢æ¡ä»¶
 		if (bauthor != null && !bauthor.isEmpty()) {
 			book.setBauthor(bauthor);
 		}
@@ -705,15 +705,15 @@ public class BookServlet extends BaseServlet {
 		}
 		try {
 			List<Book> bookList = bookBiz.selectAll(book);
-			session.setAttribute("bookAll", bookList);// ±£´æËùÓĞÊé¼®ĞÅÏ¢
+			session.setAttribute("bookAll", bookList);// ä¿å­˜æ‰€æœ‰ä¹¦ç±ä¿¡æ¯
 			if (bookList.size() <= 0) {
-				result = Result.failure("ÔİÎŞÊé¼®ĞÅÏ¢£¡£¡£¡");
+				result = Result.failure("æš‚æ— ä¹¦ç±ä¿¡æ¯ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+			result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -728,7 +728,7 @@ public class BookServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -740,7 +740,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±¸üĞÂ×´Ì¬
+	// ç®¡ç†å‘˜æ›´æ–°çŠ¶æ€
 	public void update(HttpServletRequest request, HttpServletResponse response) {
 		Book bookNew = new Book();
 		Book bookOld = new Book();
@@ -751,7 +751,7 @@ public class BookServlet extends BaseServlet {
 			if (bid != null && !bid.isEmpty()) {
 				bookOld.setBid(Long.parseLong(bid));
 			} else {
-				result = Result.failure("ĞŞ¸ÄĞÅÏ¢²»È«£¡£¡£¡");
+				result = Result.failure("ä¿®æ”¹ä¿¡æ¯ä¸å…¨ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -760,34 +760,34 @@ public class BookServlet extends BaseServlet {
 			if (bstate != null && !bstate.isEmpty()) {
 				bookNew.setBstate(Integer.parseInt(bstate));
 			} else {
-				result = Result.failure("ĞŞ¸ÄĞÅÏ¢²»È«£¡£¡£¡");
+				result = Result.failure("ä¿®æ”¹ä¿¡æ¯ä¸å…¨ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
 			Book book = bookBiz.selectSingle(bookOld);
-			// Èç¹ûÎªÉóºË²»Í¨¹ı²»ÄÜ²Ù×÷
+			// å¦‚æœä¸ºå®¡æ ¸ä¸é€šè¿‡ä¸èƒ½æ“ä½œ
 			if (book.getBstate() != 4) {
 				int code = bookBiz.update(bookNew, bookOld);
 				if (code > 0) {
-					result = Result.success("²Ù×÷³É¹¦£¡£¡£¡");
-					//Êı¾İË¢ĞÂ
+					result = Result.success("æ“ä½œæˆåŠŸï¼ï¼ï¼");
+					//æ•°æ®åˆ·æ–°
 					Book book1 = new Book();
 					List<Book> bookAll = bookBiz.selectAll(book1);
-					session.setAttribute("bookAll", bookAll);// ´æ´¢ËùÓĞÊé¼®
+					session.setAttribute("bookAll", bookAll);// å­˜å‚¨æ‰€æœ‰ä¹¦ç±
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.failure("²Ù×÷Ê§°Ü£¡£¡£¡");
+				result = Result.failure("æ“ä½œå¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("Êé¼®ÉóºË²»Í¨¹ı,²»ÄÜ½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+			result = Result.failure("ä¹¦ç±å®¡æ ¸ä¸é€šè¿‡,ä¸èƒ½è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -802,7 +802,7 @@ public class BookServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -812,7 +812,7 @@ public class BookServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -824,7 +824,7 @@ public class BookServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÌí¼ÓÊé±¾ĞÅÏ¢
+	// ç®¡ç†æ·»åŠ ä¹¦æœ¬ä¿¡æ¯
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String buniversity = request.getParameter("buniversity");
@@ -835,23 +835,23 @@ public class BookServlet extends BaseServlet {
 		String btid = request.getParameter("btid");
 		String bimg = request.getParameter("img_path");
 		String bdate = request.getParameter("bdate");
-		// ĞèÒªÑéÖ¤µÄĞÅÏ¢
+		// éœ€è¦éªŒè¯çš„ä¿¡æ¯
 		String btemp = (String) session.getAttribute("insertBtemp");
 		String bname = (String) session.getAttribute("insertBname");
 		String bprice = (String) session.getAttribute("insertBprice");
 		String bnum = (String) session.getAttribute("insertBnum");
 		String bauthor = (String) session.getAttribute("insertBauthor");
 		Book book = new Book();
-		if (!buniversity.equals("ÇëÑ¡Ôñ")) {
+		if (!buniversity.equals("è¯·é€‰æ‹©")) {
 			book.setBuniversity(buniversity);
 		}
-		if (!bucollege.equals("ÇëÑ¡Ôñ")) {
+		if (!bucollege.equals("è¯·é€‰æ‹©")) {
 			book.setBucollege(bucollege);
 		}
-		if (!bumajor.equals("ÇëÑ¡Ôñ")) {
+		if (!bumajor.equals("è¯·é€‰æ‹©")) {
 			book.setBumajor(bumajor);
 		}
-		if (!bclass.equals("ÇëÑ¡Ôñ")) {
+		if (!bclass.equals("è¯·é€‰æ‹©")) {
 			book.setBclass(bclass);
 		}
 		if (bimg != null && !bimg.isEmpty()) {
@@ -868,28 +868,28 @@ public class BookServlet extends BaseServlet {
 			book.setBtemp(btemp);
 		}
 		String check = "1";
-		// ÊéÃû
+		// ä¹¦å
 		if (bname != null && !bname.isEmpty()) {
 			book.setBname(bname);
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// Êé¼Û¸ñ
+		// ä¹¦ä»·æ ¼
 		if (bprice != null && !bprice.isEmpty()) {
 			book.setBprice(Double.parseDouble(bprice));
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// Êé×÷Õß
+		// ä¹¦ä½œè€…
 		if (bauthor != null && !bauthor.isEmpty()) {
 			book.setBauthor(bauthor);
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// Êé¿â´æ
+		// ä¹¦åº“å­˜
 		if (bnum != null && !bnum.isEmpty()) {
 			book.setBnum(Long.parseLong(bnum));
 			check = check + "/1";
@@ -898,16 +898,16 @@ public class BookServlet extends BaseServlet {
 		}
 		try {
 			if (!check.equals("1/1/1/1/1")) {
-				result = Result.lack("Ìí¼ÓÊ§°Ü£¡£¡£¡", check);
+				result = Result.lack("æ·»åŠ å¤±è´¥ï¼ï¼ï¼", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			if (!btid.equals("ÇëÑ¡Ôñ")) {
+			if (!btid.equals("è¯·é€‰æ‹©")) {
 				book.setBtid(Long.parseLong(btid));
 			} else {
-				result = Result.failure("ÇëÑ¡ÔñÊé¼®ÀàĞÍ£¡£¡£¡");
+				result = Result.failure("è¯·é€‰æ‹©ä¹¦ç±ç±»å‹ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -923,31 +923,31 @@ public class BookServlet extends BaseServlet {
 			book.setBstate(1);
 			int code = bookBiz.insert(book);
 			if (code > 0) {
-				result = Result.success("ÉÏ´«³É¹¦£¡£¡£¡");
-				//»á»°»¹Ô­
+				result = Result.success("ä¸Šä¼ æˆåŠŸï¼ï¼ï¼");
+				//ä¼šè¯è¿˜åŸ
 				String string = null;
 				session.setAttribute("insertBtemp",string);
 				session.setAttribute("insertBname",string);
 				session.setAttribute("insertBprice",string);
 				session.setAttribute("insertBnum",string);
 				session.setAttribute("insertBauthor",string);
-				//Êı¾İË¢ĞÂ
+				//æ•°æ®åˆ·æ–°
 				Book book1 = new Book();
 				List<Book> bookAll = bookBiz.selectAll(book1);
-				session.setAttribute("bookAll", bookAll);// ´æ´¢ËùÓĞÊé¼®
+				session.setAttribute("bookAll", bookAll);// å­˜å‚¨æ‰€æœ‰ä¹¦ç±
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("ÉÏ´«Ê§°Ü£¡£¡£¡");
+			result = Result.failure("ä¸Šä¼ å¤±è´¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -966,7 +966,7 @@ public class BookServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -979,7 +979,7 @@ public class BookServlet extends BaseServlet {
 	}
 	
 
-	// ¹ÜÀíÔ±¸üĞÂÊé±¾ĞÅÏ¢
+	// ç®¡ç†å‘˜æ›´æ–°ä¹¦æœ¬ä¿¡æ¯
 	public void updateBook(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String buniversity = request.getParameter("buniversity");
@@ -991,7 +991,7 @@ public class BookServlet extends BaseServlet {
 		String bimg = request.getParameter("img_path");
 		String bid = request.getParameter("bid");
 		String bdate = request.getParameter("bdate");
-		// ĞèÒªÑéÖ¤µÄĞÅÏ¢
+		// éœ€è¦éªŒè¯çš„ä¿¡æ¯
 		String btemp = (String) session.getAttribute("insertBtemp");
 		String bname = (String) session.getAttribute("insertBname");
 		String bprice = (String) session.getAttribute("insertBprice");
@@ -1004,16 +1004,16 @@ public class BookServlet extends BaseServlet {
 		if(bdate != null && !bdate.isEmpty()){
 			book.setBdate(bdate);
 		}
-		if (!buniversity.equals("ÇëÑ¡Ôñ")) {
+		if (!buniversity.equals("è¯·é€‰æ‹©")) {
 			book.setBuniversity(buniversity);
 		}
-		if (!bucollege.equals("ÇëÑ¡Ôñ")) {
+		if (!bucollege.equals("è¯·é€‰æ‹©")) {
 			book.setBucollege(bucollege);
 		}
-		if (!bumajor.equals("ÇëÑ¡Ôñ")) {
+		if (!bumajor.equals("è¯·é€‰æ‹©")) {
 			book.setBumajor(bumajor);
 		}
-		if (!bclass.equals("ÇëÑ¡Ôñ")) {
+		if (!bclass.equals("è¯·é€‰æ‹©")) {
 			book.setBclass(bclass);
 		}
 		if (bimg != null && !bimg.isEmpty()) {
@@ -1030,7 +1030,7 @@ public class BookServlet extends BaseServlet {
 			book.setBtemp(btemp);
 		}
 		String check = "1";
-		// ÊéÃû
+		// ä¹¦å
 		if (bname != null && !bname.isEmpty()) {
 			book.setBname(bname);
 			check = check + "/1";
@@ -1042,7 +1042,7 @@ public class BookServlet extends BaseServlet {
 				check = check + "/-1";
 			}
 		}
-		// Êé¼Û¸ñ
+		// ä¹¦ä»·æ ¼
 		if (bprice != null && !bprice.isEmpty()) {
 			book.setBprice(Double.parseDouble(bprice));
 			check = check + "/1";
@@ -1054,7 +1054,7 @@ public class BookServlet extends BaseServlet {
 				check = check + "/-1";
 			}
 		}
-		// Êé×÷Õß
+		// ä¹¦ä½œè€…
 		if (bauthor != null && !bauthor.isEmpty()) {
 			book.setBauthor(bauthor);
 			check = check + "/1";
@@ -1066,7 +1066,7 @@ public class BookServlet extends BaseServlet {
 				check = check + "/-1";
 			}
 		}
-		// Êé¿â´æ
+		// ä¹¦åº“å­˜
 		if (bnum != null && !bnum.isEmpty()) {
 			book.setBnum(Long.parseLong(bnum));
 			check = check + "/1";
@@ -1080,29 +1080,29 @@ public class BookServlet extends BaseServlet {
 		}
 		try {
 			if (!check.equals("1/1/1/1/1")) {
-				result = Result.lack("¸üĞÂÊ§°Ü£¡£¡£¡", check);
+				result = Result.lack("æ›´æ–°å¤±è´¥ï¼ï¼ï¼", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			if (!btid.equals("ÇëÑ¡Ôñ")) {
+			if (!btid.equals("è¯·é€‰æ‹©")) {
 				book.setBtid(Long.parseLong(btid));
 			} else {
-				result = Result.failure("ÇëÑ¡ÔñÊé¼®ÀàĞÍ£¡£¡£¡");
+				result = Result.failure("è¯·é€‰æ‹©ä¹¦ç±ç±»å‹ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
 			if (bid != null && !bid.isEmpty()) {
-				//ÅĞ¶ÏÊÇ¹ÜÀíÔ±»¹ÊÇÓÃ»§
+				//åˆ¤æ–­æ˜¯ç®¡ç†å‘˜è¿˜æ˜¯ç”¨æˆ·
 				if(userOld.getUtype() ==1 || userOld.getUtype()==5){
 					Book book2 = new Book();
 					book2.setBid(Long.parseLong(bid));
 					Book book3 = bookBiz.selectSingle(book2);
 					if(book3.getUid() != 0){
-						result = Result.failure("¸ÃÊéÎªÓÃ»§ËùÓĞ²»ÄÜ½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+						result = Result.failure("è¯¥ä¹¦ä¸ºç”¨æˆ·æ‰€æœ‰ä¸èƒ½è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 						String json = gson.toJson(result);
 						response.setContentType("application/json;charset=UTF-8");
 						response.getWriter().append(json);
@@ -1113,36 +1113,36 @@ public class BookServlet extends BaseServlet {
 				oldBook.setBid(Long.parseLong(bid));
 				int code = bookBiz.update(book, oldBook);
 				if (code > 0) {
-					result = Result.success("ĞŞ¸Ä³É¹¦£¡£¡£¡");
-					//»á»°»¹Ô­
+					result = Result.success("ä¿®æ”¹æˆåŠŸï¼ï¼ï¼");
+					//ä¼šè¯è¿˜åŸ
 					String string = null;
 					session.setAttribute("insertBtemp",string);
 					session.setAttribute("insertBname",string);
 					session.setAttribute("insertBprice",string);
 					session.setAttribute("insertBnum",string);
 					session.setAttribute("insertBauthor",string);
-					//Êı¾İË¢ĞÂ
+					//æ•°æ®åˆ·æ–°
 					Book book1 = new Book();
 					List<Book> bookAll = bookBiz.selectAll(book1);
-					session.setAttribute("bookAll", bookAll);// ´æ´¢ËùÓĞÊé¼®
+					session.setAttribute("bookAll", bookAll);// å­˜å‚¨æ‰€æœ‰ä¹¦ç±
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.failure("ĞŞ¸ÄÊ§°Ü£¡£¡£¡");
+				result = Result.failure("ä¿®æ”¹å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("Î´Ñ¡ÔñÈÎºÎÊé¼®£¡£¡£¡");
+			result = Result.failure("æœªé€‰æ‹©ä»»ä½•ä¹¦ç±ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1161,7 +1161,7 @@ public class BookServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {

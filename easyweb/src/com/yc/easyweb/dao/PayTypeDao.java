@@ -12,13 +12,13 @@ import com.yc.easyweb.bean.PayType;
 import com.yc.easyweb.common.DbHelper;
 
 /**
- * ²Ù×÷PayType±íµÄdaoÀà
+ * æ“ä½œPayTypeè¡¨çš„daoç±»
  * 
  * @author psq
  *
  */
 public class PayTypeDao {
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	public List<PayType> selectAll(PayType payType) throws IOException  {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select eopaytypeid,eopayname,eopaystate,eopaytemp from paytype where 1=1 ");
@@ -35,7 +35,7 @@ public class PayTypeDao {
 		return list;
 	}
 
-	// ²éÑ¯µ¥¸ö
+	// æŸ¥è¯¢å•ä¸ª
 		public PayType selectSingle(PayType payType) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select eopaytypeid,eopayname,eopaystate,eopaytemp from paytype where 1=1 ");
@@ -50,12 +50,12 @@ public class PayTypeDao {
 			sb.append(" order by  eopaytypeid desc");
 			return  DbHelper.selectSingle(sb.toString(), null, PayType.class);
 		}
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(PayType payType) throws SQLException  {
 		String sql = "insert into paytype(eopaytypeid,eopayname,eostatetemp,eopaystate) " + " values(null,?,?,default);";
 		return DbHelper.update(sql, payType.getEopayname(),payType.getEopaytemp());
 	}
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(PayType payType) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (payType == null) {
@@ -73,7 +73,7 @@ public class PayTypeDao {
 		return DbHelper.update(sb.toString(), null);
 	}
 
-	//¸üĞÂ
+	//æ›´æ–°
 	public int update(PayType payTypeNew,PayType payTypeOld) {
 		StringBuffer sb = new StringBuffer();
 		if (payTypeOld== null || payTypeNew== null) {

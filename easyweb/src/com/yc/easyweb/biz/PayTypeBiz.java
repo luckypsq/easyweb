@@ -8,7 +8,7 @@ import com.yc.easyweb.bean.PayType;
 import com.yc.easyweb.dao.PayTypeDao;
 
 /**
- * ²Ù×÷PayType±íµÄÊÂÎñÀà
+ * æ“ä½œPayTypeè¡¨çš„äº‹åŠ¡ç±»
  * 
  * @author psq
  *
@@ -17,45 +17,45 @@ public class PayTypeBiz {
 
 	private PayTypeDao dao = new PayTypeDao();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	public List<PayType> selectAll(PayType payType) throws IOException, BizException {
 		if (payType == null) {
-			throw new BizException("ÇëÊäÈëÖ§¸¶ÀàĞÍĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¯ä»˜ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.selectAll(payType);
 	}
 
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(PayType payType) throws SQLException, BizException {
 		if (payType == null) {
-			throw new BizException("ÇëÊäÈëÖ§¸¶ÀàĞÍĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¯ä»˜ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if (payType.getEopayname() == null ) {
-			throw new BizException("ÇëÊäÈëÖ§¸¶ÀàĞÍĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¯ä»˜ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 		}else if(payType.getEopayname().isEmpty()){
-			throw new BizException("ÇëÊäÈëÖ§¸¶ÀàĞÍĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¯ä»˜ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.insert(payType);
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(PayType payType) throws SQLException, BizException {
 		if (payType == null) {
-			throw new BizException("ÇëÖ¸¶¨Ö§¸¶ÀàĞÍĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·æŒ‡å®šæ”¯ä»˜ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if (payType.getEopayname() == null && payType.getEopaytypeid() == 0) {
-			throw new BizException("ÇëÖ¸¶¨Ö§¸¶ÀàĞÍĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·æŒ‡å®šæ”¯ä»˜ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.delete(payType);
 
 	}
-	//¸üĞÂ
+	//æ›´æ–°
 	public int update (PayType payTypeNew,PayType  payTypeOld) throws BizException {
 		if (payTypeOld == null || payTypeNew == null) {
-			throw new BizException("ÇëÊäÈëÖ§¸¶ÀàĞÍĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¯ä»˜ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if (payTypeOld.getEopayname() == null && !payTypeOld.getEopayname().isEmpty()) {
-			throw new BizException("ÇëÊäÈëÖ§¸¶ÀàĞÍĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¯ä»˜ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.update(payTypeNew, payTypeOld); 
 	}

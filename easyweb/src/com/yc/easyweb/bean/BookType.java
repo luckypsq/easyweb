@@ -7,12 +7,12 @@ public class BookType implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private long btid;//Àà±ğid
-	private String btname;//Àà±ğÃûÒ»
-	private String btnamesecond;//Àà±ğÃû¶ş
-	private String btnamethird;//Àà±ğÃûÈı
-	private String bttemp;// ±¸ÓÃ×Ö¶Î
-	private int btstate;//×´Ì¬(1.ÕıÔÚÊ¹ÓÃ2.Î´Ê¹ÓÃ3.ÒÑÉ¾³ı)
+	private long btid;//ç±»åˆ«id
+	private String btname;//ç±»åˆ«åä¸€
+	private String btnamesecond;//ç±»åˆ«åäºŒ
+	private String btnamethird;//ç±»åˆ«åä¸‰
+	private String bttemp;// å¤‡ç”¨å­—æ®µ
+	private int btstate;//çŠ¶æ€(1.æ­£åœ¨ä½¿ç”¨2.æœªä½¿ç”¨3.å·²åˆ é™¤)
 	public int getBtstate() {
 		return btstate;
 	}
@@ -54,7 +54,7 @@ public class BookType implements Serializable{
 		return "BookType [btid=" + btid + ", btname=" + btname + ", btnamesecond=" + btnamesecond + ", btnamethird="
 				+ btnamethird + ", bttemp=" + bttemp + "]";
 	}
-	//ÖØĞ´hashCodeºÍequals·½·¨
+	//é‡å†™hashCodeå’Œequalsæ–¹æ³•
 	@Override
 	public int hashCode() {
 		final int prime = 31;

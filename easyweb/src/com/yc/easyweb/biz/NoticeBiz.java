@@ -8,7 +8,7 @@ import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.dao.NoticeDao;
 
 /**
- * ²Ù×÷Notice±íµÄÊÂÎñÀà
+ * æ“ä½œNoticeè¡¨çš„äº‹åŠ¡ç±»
  * 
  * @author psq
  *
@@ -17,84 +17,84 @@ public class NoticeBiz {
 
 	private NoticeDao dao = new NoticeDao();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	public List<Notice> selectAll(Notice notice) throws IOException, BizException  {
 		if(notice == null){
-			throw new BizException("ÇëÌîĞ´¹«¸æĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.selectAll(notice);
 	}
 
-	// ²éÑ¯µ¥¸ö
+	// æŸ¥è¯¢å•ä¸ª
 	public Notice selectSingle(Notice notice) throws BizException, IOException  {
 		if(notice == null){
-			throw new BizException("ÇëÌîĞ´¹«¸æĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(notice.getNid() ==0 && notice.getNtitle() == null && notice.getNtime() == null){
-			throw new BizException("ÇëÌîĞ´ĞèÒª²éÑ¯µÄ¹«¸æĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦æŸ¥è¯¢çš„å…¬å‘Šä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.selectSingle(notice);
 	}
 
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(Notice notice) throws BizException {
 		if(notice == null){
-			throw new BizException("ÇëÌîĞ´ĞèÒªÌí¼ÓµÄ¹«¸æĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦æ·»åŠ çš„å…¬å‘Šä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(notice.getNtime() == null ){
-			throw new BizException("ÇëÌîĞ´¹«¸æµÄ·¢²¼Ê±¼ä£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šçš„å‘å¸ƒæ—¶é—´ï¼ï¼ï¼");
 		}else if(notice.getNtime().isEmpty() ){
-			throw new BizException("ÇëÌîĞ´¹«¸æµÄ·¢²¼Ê±¼ä£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šçš„å‘å¸ƒæ—¶é—´ï¼ï¼ï¼");
 		}
 		
 		if (notice.getNcontent() == null ) {
-			throw new BizException("ÇëÌîĞ´¹«¸æµÄ·¢²¼ÄÚÈİ£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šçš„å‘å¸ƒå†…å®¹ï¼ï¼ï¼");
 		}else if(notice.getNcontent().isEmpty()){
-			throw new BizException("ÇëÌîĞ´¹«¸æµÄ·¢²¼ÄÚÈİ£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šçš„å‘å¸ƒå†…å®¹ï¼ï¼ï¼");
 		}
 		
 		if (notice.getNauthor() == null ) {
-			throw new BizException("ÇëÌîĞ´¹«¸æµÄ·¢²¼Õß£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šçš„å‘å¸ƒè€…ï¼ï¼ï¼");
 		}else if(notice.getNauthor().isEmpty()){
-			throw new BizException("ÇëÌîĞ´¹«¸æµÄ·¢²¼±êÌâ£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šçš„å‘å¸ƒæ ‡é¢˜ï¼ï¼ï¼");
 		}
 		
 		if (notice.getNtitle()== null ) {
-			throw new BizException("ÇëÌîĞ´¹«¸æµÄ·¢²¼±êÌâ£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šçš„å‘å¸ƒæ ‡é¢˜ï¼ï¼ï¼");
 		}else if(notice.getNtitle().isEmpty()){
-			throw new BizException("ÇëÌîĞ´¹«¸æµÄ·¢²¼±êÌâ£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™å…¬å‘Šçš„å‘å¸ƒæ ‡é¢˜ï¼ï¼ï¼");
 		}
 		return dao.insert(notice);
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(Notice notice) throws BizException {
 		if(notice == null){
-			throw new BizException("ÇëÌîĞ´ĞèÒªÉ¾³ıµÄ¹«¸æĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦åˆ é™¤çš„å…¬å‘Šä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if (notice.getNtitle()== null && notice.getNauthor() == null && notice.getNtime() == null && notice.getNid() == 0) {
-			throw new BizException("ÇëÌîĞ´ĞèÒªÉ¾³ıµÄ¹«¸æĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦åˆ é™¤çš„å…¬å‘Šä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.delete(notice);
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(Notice noticeOld, Notice noticeNew) throws BizException {
 		if(noticeNew ==null || noticeOld == null){
-			throw new BizException("ÇëÌîĞ´ĞèÒª¸üĞÂµÄ¹«¸æ£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦æ›´æ–°çš„å…¬å‘Šï¼ï¼ï¼");
 		}
 		if(noticeOld.getNid() == 0 && noticeOld.getNtitle() == null){
-			throw new BizException("ÇëÌîĞ´ĞèÒª¸üĞÂµÄ¹«¸æĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦æ›´æ–°çš„å…¬å‘Šä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.update(noticeOld, noticeNew);
 
 	}
-	//¹«¸æ·ÖÒ³
+	//å…¬å‘Šåˆ†é¡µ
 		public Page<Notice> noticePage(int page, int rows,Notice notice) throws IOException, BizException {
 			if(notice == null){
-				throw new BizException("ÇëÌîĞ´ĞèÒªÉ¾³ıµÄ¹«¸æĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™éœ€è¦åˆ é™¤çš„å…¬å‘Šä¿¡æ¯ï¼ï¼ï¼");
 			}
 			return dao.noticePage(page, rows, notice);
 		}
-	// ÆäËû
+	// å…¶ä»–
 }

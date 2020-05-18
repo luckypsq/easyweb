@@ -27,7 +27,7 @@ public class RegServlet extends BaseServlet {
 	private Result result ;
 	
 	/**
-	 * ¼ìÑéÓÃ»§Ãû
+	 * æ£€éªŒç”¨æˆ·å
 	 * @param request
 	 * @param response
 	 */
@@ -39,8 +39,8 @@ public class RegServlet extends BaseServlet {
 			if(username != null && !username.isEmpty()){
 				user.setUname(username);
 			}else{
-				//ÓÃ»§ÃûÊäÈëÎª¿Õ
-				result = Result.failure("ÓÃ»§ÃûÎª¿Õ£¡£¡£¡", username);
+				//ç”¨æˆ·åè¾“å…¥ä¸ºç©º
+				result = Result.failure("ç”¨æˆ·åä¸ºç©ºï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -48,7 +48,7 @@ public class RegServlet extends BaseServlet {
 			}
 			String reg = "^[\u4e00-\u9fa5a-zA-Z]{2,20}$";
 			if (!username.matches(reg)) {
-				result = Result.failure("ÓÃ»§ÃûÊäÈë²»ºÏ·¨£¡£¡£¡",username);
+				result = Result.failure("ç”¨æˆ·åè¾“å…¥ä¸åˆæ³•ï¼ï¼ï¼",username);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -57,15 +57,15 @@ public class RegServlet extends BaseServlet {
 		
 		
 			User user2 = userBiz.selectSingle(user);
-			if (user2.getUid() != 0) { // ËµÃ÷ÓÃ»§ÃûÒÑ¾­±»Ê¹ÓÃ
-				result = Result.failure("ÒÑ´æÔÚ¸ÃÓÃ»§£¡£¡£¡",username);
+			if (user2.getUid() != 0) { // è¯´æ˜ç”¨æˆ·åå·²ç»è¢«ä½¿ç”¨
+				result = Result.failure("å·²å­˜åœ¨è¯¥ç”¨æˆ·ï¼ï¼ï¼",username);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return ;
 			} 
 			
-				result = Result.success("¸ÃÓÃ»§Ãû¿ÉÒÔÊ¹ÓÃ£¡£¡£¡", username);
+				result = Result.success("è¯¥ç”¨æˆ·åå¯ä»¥ä½¿ç”¨ï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				session.setAttribute("regUname", username);
 				response.setContentType("application/json;charset=UTF-8");
@@ -82,7 +82,7 @@ public class RegServlet extends BaseServlet {
 				
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡",username);
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼",username);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -96,7 +96,7 @@ public class RegServlet extends BaseServlet {
 	}
 
 	/*
-	 * ¼ìÑéµç»°
+	 * æ£€éªŒç”µè¯
 	 * @param request
 	 * @param response
 	 */
@@ -108,7 +108,7 @@ public class RegServlet extends BaseServlet {
 		 try {
 			if(uphone != null && !uphone.isEmpty()){
 				if (!uphone.matches(regphone)) {
-					result = Result.failure("µç»°ºÅÂë²»ºÏ·¨£¡£¡£¡",uphone);
+					result = Result.failure("ç”µè¯å·ç ä¸åˆæ³•ï¼ï¼ï¼",uphone);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -117,19 +117,19 @@ public class RegServlet extends BaseServlet {
 				user.setUphone(uphone);
 				User user2 = userBiz.selectSingle(user);
 				if(user2.getUid() != 0){
-					result = Result.failure("µç»°ºÅÂëÒÑ±»Ê¹ÓÃ£¡£¡£¡",uphone);
+					result = Result.failure("ç”µè¯å·ç å·²è¢«ä½¿ç”¨ï¼ï¼ï¼",uphone);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return ;
 				}
-				result = Result.success("¸Ãµç»°ºÅÂë¿ÉÒÔÊ¹ÓÃ£¡£¡£¡", uphone);
+				result = Result.success("è¯¥ç”µè¯å·ç å¯ä»¥ä½¿ç”¨ï¼ï¼ï¼", uphone);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				session.setAttribute("regUphone", uphone);
 			}else{
-				result = Result.failure("ÇëÊäÈëµç»°ºÅÂë£¡£¡£¡",uphone);
+				result = Result.failure("è¯·è¾“å…¥ç”µè¯å·ç ï¼ï¼ï¼",uphone);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -144,7 +144,7 @@ public class RegServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			 result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷");
+			 result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œ");
 			 String json = gson.toJson(result);
 			 response.setContentType("application/json;charset=UTF-8");
 			 try {
@@ -157,7 +157,7 @@ public class RegServlet extends BaseServlet {
 		}
 	}
 
-	//¼ì²éÓÊÏä
+	//æ£€æŸ¥é‚®ç®±
 	public void checkEmail(HttpServletRequest request, HttpServletResponse response){
 		
 		String uemail = request.getParameter("uemail");
@@ -168,32 +168,32 @@ public class RegServlet extends BaseServlet {
 			if(uemail !=null && !uemail.isEmpty()){
 				user.setUemail(uemail);
 			}else{
-				result = Result.failure("ÇëÊäÈëÓÊÏä£¡£¡£¡",uemail);
+				result = Result.failure("è¯·è¾“å…¥é‚®ç®±ï¼ï¼ï¼",uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			//ÓÊÏä¸ñÊ½²»ºÏ·¨£¡
+			//é‚®ç®±æ ¼å¼ä¸åˆæ³•ï¼
 			if (!uemail.matches(regemail)) {
-				result = Result.failure("ÓÊÏä¸ñÊ½²»ºÏ·¨£¡£¡£¡",uemail);
+				result = Result.failure("é‚®ç®±æ ¼å¼ä¸åˆæ³•ï¼ï¼ï¼",uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
 			User user2 = userBiz.selectSingle(user);
-			//¸ÃÓÊÏäÒÑ±»×¢²á£¡
+			//è¯¥é‚®ç®±å·²è¢«æ³¨å†Œï¼
 			if (user2.getUid() != 0) {
-				result = Result.failure("¸ÃÓÊÏäÒÑ±»×¢²á£¡£¡£¡",uemail);
+				result = Result.failure("è¯¥é‚®ç®±å·²è¢«æ³¨å†Œï¼ï¼ï¼",uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			} 
-			//¸ÃÓÊÏä¿ÉÒÔ×¢²á!
+			//è¯¥é‚®ç®±å¯ä»¥æ³¨å†Œ!
 			session.setAttribute("regUemail", uemail);
-			result = Result.success("¸ÃÓÊÏä¿ÉÒÔ×¢²á",uemail);
+			result = Result.success("è¯¥é‚®ç®±å¯ä»¥æ³¨å†Œ",uemail);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -208,7 +208,7 @@ public class RegServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -221,38 +221,38 @@ public class RegServlet extends BaseServlet {
 		}
 	}
 	
-	//¼ì²éÃÜÂë
+	//æ£€æŸ¥å¯†ç 
 	public void checkPassword(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
 		String upassword = request.getParameter("upassword");
 		String regpassword = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$";
 		try {
 			if(upassword != null && !upassword.isEmpty()){
-				//²»ºÏ·¨
+				//ä¸åˆæ³•
 				if (!upassword.matches(regpassword)) {
-					result = Result.failure("ÃÜÂë²»ºÏ·¨,ÇëÖØĞÂÊäÈë(±ØĞë°üº¬Êı×ÖºÍ×ÖÄ¸)£¡£¡£¡");
+					result = Result.failure("å¯†ç ä¸åˆæ³•,è¯·é‡æ–°è¾“å…¥(å¿…é¡»åŒ…å«æ•°å­—å’Œå­—æ¯)ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return ;
 				} 
-				//¿ÉÒÔÊ¹ÓÃ
+				//å¯ä»¥ä½¿ç”¨
 				session.setAttribute("regUpwd", upassword);
-				result = Result.success("¸ÃÃÜÂë¿ÉÒÔÊ¹ÓÃ£¡£¡£¡");
+				result = Result.success("è¯¥å¯†ç å¯ä»¥ä½¿ç”¨ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}else{
-				//ÊäÈëÎª¿Õ
-				result = Result.failure("ÇëÊäÈëÃÜÂë£¡£¡£¡");
+				//è¾“å…¥ä¸ºç©º
+				result = Result.failure("è¯·è¾“å…¥å¯†ç ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return ;
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -266,41 +266,41 @@ public class RegServlet extends BaseServlet {
 	}
 
 	
-	//È·ÈÏÃÜÂë
+	//ç¡®è®¤å¯†ç 
 	public void checkRePassword(HttpServletRequest request, HttpServletResponse response){
 		String confirm = request.getParameter("confirm");
 		String upassword = request.getParameter("upassword");
 		HttpSession session = request.getSession();
 		try {
 			if(upassword == null ||  upassword.isEmpty()){
-				result = Result.failure("ÇëÊäÈëÃÜÂë£¡£¡£¡");
+				result = Result.failure("è¯·è¾“å…¥å¯†ç ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return ;
 			}
 			if(confirm == null ||  confirm.isEmpty()){
-				result = Result.failure("ÇëÈ·ÈÏÃÜÂë£¡£¡£¡");
+				result = Result.failure("è¯·ç¡®è®¤å¯†ç ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return ;
 			}
 			if ( !upassword.equals(confirm)) {
-				result = Result.failure("ÃÜÂë²»Ò»ÖÂ£¡£¡£¡");
+				result = Result.failure("å¯†ç ä¸ä¸€è‡´ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return ;
 			} 
-			result = Result.success("ÃÜÂëÒ»ÖÂ£¡£¡£¡");
+			result = Result.success("å¯†ç ä¸€è‡´ï¼ï¼ï¼");
 			session.setAttribute("checkPwd", "1");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return ;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -314,7 +314,7 @@ public class RegServlet extends BaseServlet {
 	}
 
 	/*
-	 * ×¢²áÑéÖ¤
+	 * æ³¨å†ŒéªŒè¯
 	 */
 	public void checkReg(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
@@ -336,61 +336,61 @@ public class RegServlet extends BaseServlet {
 			user.setUphone(uphone);
 			check = check +"/1";
 		}else{
-			check = check +"/-1";//µç»°Î´ÊäÈë»ò²»ºÏ·¨
+			check = check +"/-1";//ç”µè¯æœªè¾“å…¥æˆ–ä¸åˆæ³•
 		}
 		
 		if(upassword != null && !upassword.isEmpty()){
 			user.setUpassword(upassword);
 			check = check +"/1";
 		}else{
-			check = check +"/-1";//ÃÜÂëÎ´ÊäÈë»ò²»ºÏ·¨
+			check = check +"/-1";//å¯†ç æœªè¾“å…¥æˆ–ä¸åˆæ³•
 		}
 		
 		if(uemail != null && !uemail.isEmpty()){
 			user.setUemail(uemail);
 			check = check +"/1";
 		}else{
-			check = check +"/-1";//ÓÊÏä
+			check = check +"/-1";//é‚®ç®±
 		}
 		String university = request.getParameter("university");
 		String ucollege = request.getParameter("ucollege");
 		String umajor = request.getParameter("umajor");
 		
-		if(!university.equals("ÇëÑ¡ÔñÄãµÄ´óÑ§")){
+		if(!university.equals("è¯·é€‰æ‹©ä½ çš„å¤§å­¦")){
 			user.setUniversity(university);
 		}
-		if(!ucollege.equals("ÇëÑ¡ÔñÄãµÄÑ§Ôº")){
+		if(!ucollege.equals("è¯·é€‰æ‹©ä½ çš„å­¦é™¢")){
 			user.setUcollege(ucollege);
 		}
-		if(!umajor.equals("ÇëÑ¡ÔñÄãµÄ×¨Òµ")){
+		if(!umajor.equals("è¯·é€‰æ‹©ä½ çš„ä¸“ä¸š")){
 			user.setUmajor(umajor);
 		}
 		try {
 			if(!check.equals("1/1/1/1/1")){
-				result = Result.lack("Î´ÕıÈ·ÊäÈëĞÅÏ¢£¡£¡£¡", check);
+				result = Result.lack("æœªæ­£ç¡®è¾“å…¥ä¿¡æ¯ï¼ï¼ï¼", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return ;
 			}
-			// »ñÈ¡ÏµÍ³µ±Ç°Ê±¼ä
+			// è·å–ç³»ç»Ÿå½“å‰æ—¶é—´
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			user.setUtime(df.format(date));
 			String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
 			String min = uuid.substring(0, 10);
-			user.setUminname("ÓÃ»§"+min);
+			user.setUminname("ç”¨æˆ·"+min);
 			user.setUtype(2);
 			int code = userBiz.insert(user);
 			if (code <= 0) {
-				result = Result.failure("×¢²áÊ§°Ü£¡£¡£¡");
+				result = Result.failure("æ³¨å†Œå¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return ;
 			}
-			result = Result.success("×¢²á³É¹¦£¡£¡£¡");
-			//»á»°»¹Ô­
+			result = Result.success("æ³¨å†ŒæˆåŠŸï¼ï¼ï¼");
+			//ä¼šè¯è¿˜åŸ
 			String string = null;
 			session.setAttribute("regUname", string);
 			session.setAttribute("regUphone", string);
@@ -401,7 +401,7 @@ public class RegServlet extends BaseServlet {
 			response.getWriter().append(json);
 			
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -422,7 +422,7 @@ public class RegServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -461,19 +461,19 @@ public class RegServlet extends BaseServlet {
 			session.setAttribute("userUmar", bookUmagor);
 			
 			if(bookList_add.size() >0){
-				result = Result.success("Êı¾İÒÑ¼ÓÔØ£¡£¡£¡");
+				result = Result.success("æ•°æ®å·²åŠ è½½ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return ;
 			}
-			result = Result.failure("Êı¾İÎ´¼ÓÔØ,ÇëË¢ĞÂÒ³Ãæ£¡£¡£¡");
+			result = Result.failure("æ•°æ®æœªåŠ è½½,è¯·åˆ·æ–°é¡µé¢ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return ;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {

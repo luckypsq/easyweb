@@ -8,7 +8,7 @@ import com.yc.easyweb.bean.BookType;
 import com.yc.easyweb.dao.BookTypeDao;
 
 /**
- * ²Ù×÷BookType±íµÄÊÂÎñÀà
+ * æ“ä½œBookTypeè¡¨çš„äº‹åŠ¡ç±»
  * @author psq
  *
  */
@@ -16,53 +16,53 @@ public class BookTypeBiz {
 
 	private BookTypeDao book = new BookTypeDao();
 	
-	//²éÑ¯ËùÓĞ
+	//æŸ¥è¯¢æ‰€æœ‰
 		public List<BookType> selectAll(BookType bookType) throws IOException, BizException{
 			if(bookType ==null){
-				throw new BizException("ÇëÌîĞ´ÀàĞÍĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 			}
 				return book.selectAll(bookType);
 		}
-		//Ìí¼Ó
+		//æ·»åŠ 
 		public int insert(BookType bookType) throws BizException, SQLException{
 			if(bookType ==null){
-				throw new BizException("ÇëÌîĞ´ÀàĞÍĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 			}
 			if(bookType.getBtname() == null ){
-				throw new BizException("ÇëÌîĞ´Ö÷ÀàĞÍĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™ä¸»ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 			}else if(bookType.getBtname().isEmpty() ){
-				throw new BizException("ÇëÌîĞ´Ö÷ÀàĞÍĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™ä¸»ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 			}
 			if(bookType.getBtnamesecond() == null ){
-				throw new BizException("ÇëÌîĞ´¸±ÀàĞÍĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™å‰¯ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 			}else if(bookType.getBtnamesecond().isEmpty()){
-				throw new BizException("ÇëÌîĞ´¸±ÀàĞÍĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™å‰¯ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 			}
 			return book.insert(bookType);
 			
 		}
-		//É¾³ı
+		//åˆ é™¤
 		public int delete(BookType bookType)throws BizException, SQLException{
 			if(bookType ==null){
-				throw new BizException("ÇëÌîĞ´ĞèÒªÉ¾³ıµÄÀàĞÍĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™éœ€è¦åˆ é™¤çš„ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 			}
 			if(bookType.getBtname() == null && bookType.getBtid() == 0 && bookType.getBtnamesecond() == null && bookType.getBtnamethird() == null){
-				throw new BizException("ÇëÖ¸¶¨ĞèÒªÉ¾³ıµÄÀàĞÍ£¡£¡£¡");
+				throw new BizException("è¯·æŒ‡å®šéœ€è¦åˆ é™¤çš„ç±»å‹ï¼ï¼ï¼");
 			}
 				return book.delete(bookType);
 		}
-		//¸üĞÂ
+		//æ›´æ–°
 		public  int update (BookType bookTypeNew,BookType bookTypeOld)throws BizException, SQLException {
 			if(bookTypeOld ==null){
-				throw new BizException("ÇëÌîĞ´ÀàĞÍĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™ç±»å‹ä¿¡æ¯ï¼ï¼ï¼");
 			}
 			if(bookTypeOld.getBtname() == null && bookTypeOld.getBtid() == 0 && bookTypeOld.getBtnamesecond() == null && bookTypeOld.getBtnamethird() == null){
-				throw new BizException("ÇëÖ¸¶¨ĞèÒªĞŞ¸ÄµÄÀàĞÍ£¡£¡£¡");
+				throw new BizException("è¯·æŒ‡å®šéœ€è¦ä¿®æ”¹çš„ç±»å‹ï¼ï¼ï¼");
 			}
 			if(bookTypeNew ==null){
-				throw new BizException("ÇëÌîĞ´ĞèÒªĞŞ¸ÄµÄĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·å¡«å†™éœ€è¦ä¿®æ”¹çš„ä¿¡æ¯ï¼ï¼ï¼");
 			}
 			return book.update(bookTypeNew, bookTypeOld);
 		}
-		//ÆäËû
+		//å…¶ä»–
 }

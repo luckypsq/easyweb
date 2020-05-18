@@ -22,7 +22,7 @@ public class EorderServlet extends BaseServlet {
 	private Gson gson = new Gson();
 	private Result result;
 
-	// É¾³ı
+	// åˆ é™¤
 	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		Eorder eorder;
 		Eorder eorder1 = new Eorder();
@@ -30,7 +30,7 @@ public class EorderServlet extends BaseServlet {
 		String eoid1 = request.getParameter("eoid");
 		HttpSession session = request.getSession();
 		try {
-			// »ñÈ¡eoid
+			// è·å–eoid
 			if (eoid1 != null && !eoid1.isEmpty()) {
 				String[] eoid = eoid1.split("/");
 				if (eoid.length == 1) {
@@ -38,7 +38,7 @@ public class EorderServlet extends BaseServlet {
 						eorder1.setEoid(eoid[0]);
 						Eorder eorder2 = eorderBiz.selectSingle(eorder1);
 						if (eorder2.getEostate() != 5 && eorder2.getEostate() != 6) {
-							result = Result.failure("¸Ã½»Ò×ÉĞÎ´Íê³É²»ÄÜÉ¾³ı£¡£¡£¡");
+							result = Result.failure("è¯¥äº¤æ˜“å°šæœªå®Œæˆä¸èƒ½åˆ é™¤ï¼ï¼ï¼");
 							String json = gson.toJson(result);
 							response.setContentType("application/json;charset=UTF-8");
 							response.getWriter().append(json);
@@ -46,13 +46,13 @@ public class EorderServlet extends BaseServlet {
 						}
 						int code = eorderBiz.delete(eorder1);
 						if (code > 0) {
-							result = Result.success("É¾³ı³É¹¦£¡£¡£¡");
-							// Êı¾İË¢ĞÂ
+							result = Result.success("åˆ é™¤æˆåŠŸï¼ï¼ï¼");
+							// æ•°æ®åˆ·æ–°
 							Eorder eorder3 = new Eorder();
 							Page<Eorder> page = eorderBiz.eorderPage(1, 5, eorder3);
 							session.setAttribute("userOrderPage", page);
 							
-							//¹ÜÀíÔ±½çÃæÊı¾İË¢ĞÂ
+							//ç®¡ç†å‘˜ç•Œé¢æ•°æ®åˆ·æ–°
 							OrderDetial orderDetial = new OrderDetial();
 							List<OrderDetial> order_show = eorderBiz.selectAllDetail(orderDetial);
 							for (int i = 0; i < order_show.size(); i++) {
@@ -68,13 +68,13 @@ public class EorderServlet extends BaseServlet {
 							response.getWriter().append(json);
 							return;
 						}
-						result = Result.failure("É¾³ıÊ§°Ü£¡£¡£¡");
+						result = Result.failure("åˆ é™¤å¤±è´¥ï¼ï¼ï¼");
 						String json = gson.toJson(result);
 						response.setContentType("application/json;charset=UTF-8");
 						response.getWriter().append(json);
 						return;
 					}
-					result = Result.failure("Î´Ñ¡Ôñ¶©µ¥£¬ÎŞ·¨½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+					result = Result.failure("æœªé€‰æ‹©è®¢å•ï¼Œæ— æ³•è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -86,7 +86,7 @@ public class EorderServlet extends BaseServlet {
 						eorder.setEoid(string);
 						Eorder eorder2 = eorderBiz.selectSingle(eorder);
 						if (eorder2.getEostate() != 5 && eorder2.getEostate() != 6) {
-							result = Result.failure("´æÔÚ½»Ò×ÉĞÎ´Íê³ÉµÄ¶©µ¥£¬²»ÄÜ½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+							result = Result.failure("å­˜åœ¨äº¤æ˜“å°šæœªå®Œæˆçš„è®¢å•ï¼Œä¸èƒ½è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 							String json = gson.toJson(result);
 							response.setContentType("application/json;charset=UTF-8");
 							response.getWriter().append(json);
@@ -98,32 +98,32 @@ public class EorderServlet extends BaseServlet {
 				if (list.size() != 0) {
 					int j = eorderBiz.delete(list);
 					if (j > 0) {
-						result = Result.success("É¾³ı³É¹¦£¡£¡£¡");
+						result = Result.success("åˆ é™¤æˆåŠŸï¼ï¼ï¼");
 						String json = gson.toJson(result);
 						response.setContentType("application/json;charset=UTF-8");
 						response.getWriter().append(json);
 						return;
 					}
-					result = Result.failure("É¾³ıÊ§°Ü£¡£¡£¡");
+					result = Result.failure("åˆ é™¤å¤±è´¥ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				} else {
-					result = Result.failure("Î´Ñ¡Ôñ¶©µ¥,²»ÄÜ½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+					result = Result.failure("æœªé€‰æ‹©è®¢å•,ä¸èƒ½è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
 			}
-			result = Result.failure("Î´Ñ¡Ôñ¶©µ¥,²»ÄÜ½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+			result = Result.failure("æœªé€‰æ‹©è®¢å•,ä¸èƒ½è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -143,7 +143,7 @@ public class EorderServlet extends BaseServlet {
 
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -156,12 +156,12 @@ public class EorderServlet extends BaseServlet {
 
 	}
 
-	// ÓÃ»§¶©µ¥²éÑ¯
+	// ç”¨æˆ·è®¢å•æŸ¥è¯¢
 	public void queryUserOrder(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String pageParam = request.getParameter("page");
 		int ipage = pageParam == null ? 1 : Integer.parseInt(pageParam);
-		// Ã¿Ò³ĞĞÊı
+		// æ¯é¡µè¡Œæ•°
 		int rows = 5;
 		User user = (User) session.getAttribute("loginedUser");
 
@@ -175,20 +175,20 @@ public class EorderServlet extends BaseServlet {
 			Page<Eorder> page = eorderBiz.eorderPage(ipage, rows, eorder);
 			session.setAttribute("userOrderPage", page);
 			if (page.getData().size() == 0) {
-				result = Result.failure("ÔİÎŞÊı¾İ£¡£¡£¡");
+				result = Result.failure("æš‚æ— æ•°æ®ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+			result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -209,7 +209,7 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// ÓÃ»§ÌîĞ´¶©µ¥ĞÅÏ¢Õ¹Ê¾
+	// ç”¨æˆ·å¡«å†™è®¢å•ä¿¡æ¯å±•ç¤º
 	public void showEorder(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		BookBiz biz = new BookBiz();
@@ -228,19 +228,19 @@ public class EorderServlet extends BaseServlet {
 					map.put("bimg", book2.getBimg());
 					map.put("count", "1");
 					session.setAttribute("customerOrderAdd", map);
-					result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+					result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				} else {
-					result = Result.failure("¸ÃÊé¼®ÒÑ±»É¾³ı»òÏÂ¼Ü£¡£¡£¡");
+					result = Result.failure("è¯¥ä¹¦ç±å·²è¢«åˆ é™¤æˆ–ä¸‹æ¶ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 				}
 			} else {
-				result = Result.failure("Î´Ñ¡ÔñÊé¼®£¡£¡£¡");
+				result = Result.failure("æœªé€‰æ‹©ä¹¦ç±ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -256,7 +256,7 @@ public class EorderServlet extends BaseServlet {
 
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -268,7 +268,7 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// ºË¶ÔÌí¼Ó¶©µ¥µÄµØÖ·
+	// æ ¸å¯¹æ·»åŠ è®¢å•çš„åœ°å€
 	public void checkEoaddr(HttpServletRequest request, HttpServletResponse response) {
 		String reg = "^[\u4e00-\u9fa5A-Za-z0-9]{5,300}$";
 		HttpSession session = request.getSession();
@@ -276,27 +276,27 @@ public class EorderServlet extends BaseServlet {
 		try {
 			if (eoaddr != null && !eoaddr.isEmpty()) {
 				if (!eoaddr.matches(reg)) {
-					result = Result.failure("ÊäÈë²»ºÏ·¨(5~100¸ö×Ö·û»òºº×Ö)");
+					result = Result.failure("è¾“å…¥ä¸åˆæ³•(5~100ä¸ªå­—ç¬¦æˆ–æ±‰å­—)");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				// ½«µØÖ·±£´æÔÚ»á»°ÖĞ
+				// å°†åœ°å€ä¿å­˜åœ¨ä¼šè¯ä¸­
 				session.setAttribute("addOrderEoaddr", eoaddr);
-				result = Result.success("ÊäÈëºÏ·¨£¡£¡£¡");
+				result = Result.success("è¾“å…¥åˆæ³•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("µØÖ·Î´ÊäÈë£¡£¡£¡");
+			result = Result.failure("åœ°å€æœªè¾“å…¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -308,7 +308,7 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// ºË¶ÔÌí¼Ó¶©µ¥µÄÊÕ¼şÈË
+	// æ ¸å¯¹æ·»åŠ è®¢å•çš„æ”¶ä»¶äºº
 	public void checkUname(HttpServletRequest request, HttpServletResponse response) {
 		String reg = "^[\u4e00-\u9fa5a-zA-Z]{2,20}$";
 		HttpSession session = request.getSession();
@@ -316,27 +316,27 @@ public class EorderServlet extends BaseServlet {
 		try {
 			if (uname != null && !uname.isEmpty()) {
 				if (!uname.matches(reg)) {
-					result = Result.failure("ÊäÈë²»ºÏ·¨(2~10¸ö×Ö·û»òºº×Ö)£¡£¡£¡");
+					result = Result.failure("è¾“å…¥ä¸åˆæ³•(2~10ä¸ªå­—ç¬¦æˆ–æ±‰å­—)ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				// ½«ÊÕ¼şÈË±£´æÔÚ»á»°ÖĞ
+				// å°†æ”¶ä»¶äººä¿å­˜åœ¨ä¼šè¯ä¸­
 				session.setAttribute("addOrderUname", uname);
-				result = Result.success("ÊäÈëºÏ·¨£¡£¡£¡");
+				result = Result.success("è¾“å…¥åˆæ³•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("ÊÕ¼şÈËÎ´ÊäÈë£¡£¡£¡");
+			result = Result.failure("æ”¶ä»¶äººæœªè¾“å…¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -348,7 +348,7 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// ºË¶ÔÌí¼Ó¶©µ¥µÄÊıÁ¿
+	// æ ¸å¯¹æ·»åŠ è®¢å•çš„æ•°é‡
 	public void checkCount(HttpServletRequest request, HttpServletResponse response) {
 		String reg = "^[0-9]{1,10}$";
 		HttpSession session = request.getSession();
@@ -357,7 +357,7 @@ public class EorderServlet extends BaseServlet {
 		try {
 			if (count != null && !count.isEmpty()) {
 				if (!count.matches(reg)) {
-					result = Result.failure("ÊäÈë²»ºÏ·¨(1~10Î»Êı×Ö)");
+					result = Result.failure("è¾“å…¥ä¸åˆæ³•(1~10ä½æ•°å­—)");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -366,19 +366,19 @@ public class EorderServlet extends BaseServlet {
 				double total = Double.parseDouble(price) * Double.parseDouble(count);
 				DecimalFormat df = new DecimalFormat("#.00");
 				session.setAttribute("addOrderCount", count);
-				result = Result.success("ÊäÈëºÏ·¨£¡£¡£¡", df.format(total));
+				result = Result.success("è¾“å…¥åˆæ³•ï¼ï¼ï¼", df.format(total));
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("ÊäÈë²»ºÏ·¨(1~10Î»Êı×Ö)");
+			result = Result.failure("è¾“å…¥ä¸åˆæ³•(1~10ä½æ•°å­—)");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -390,7 +390,7 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// ºË¶ÔÌí¼Ó¶©µ¥µÄµç»°
+	// æ ¸å¯¹æ·»åŠ è®¢å•çš„ç”µè¯
 	public void checkUphone(HttpServletRequest request, HttpServletResponse response) {
 		String reg = "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$";
 		HttpSession session = request.getSession();
@@ -398,27 +398,27 @@ public class EorderServlet extends BaseServlet {
 		try {
 			if (uphone != null && !uphone.isEmpty()) {
 				if (!uphone.matches(reg)) {
-					result = Result.failure("ÊäÈë²»ºÏ·¨(11Î»Êı×Ö)£¡£¡£¡");
+					result = Result.failure("è¾“å…¥ä¸åˆæ³•(11ä½æ•°å­—)ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				// ½«µç»°±£´æÔÚ»á»°ÖĞ
+				// å°†ç”µè¯ä¿å­˜åœ¨ä¼šè¯ä¸­
 				session.setAttribute("addOrderUphone", uphone);
-				result = Result.success("ÊäÈëºÏ·¨£¡£¡£¡");
+				result = Result.success("è¾“å…¥åˆæ³•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("µç»°Î´ÊäÈë£¡£¡£¡");
+			result = Result.failure("ç”µè¯æœªè¾“å…¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -430,36 +430,36 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// ÓÃ»§Ìí¼Ó¶©µ¥
+	// ç”¨æˆ·æ·»åŠ è®¢å•
 	public void add(HttpServletRequest request, HttpServletResponse response) {
-		// ¶©µ¥id
+		// è®¢å•id
 		String uuidOrder = UUID.randomUUID().toString().replace("-", "").toLowerCase();
 		HttpSession session = request.getSession();
 		User userOld = (User) session.getAttribute("loginedUser");
-		Eorderitem eoitem = new Eorderitem();// Í¨¹ıÊé¼®Ìí¼Ó²úÉúµÄ¹ºÎï³µĞÅÏ¢
-		Eorderitem eoReal = null;// ÕæÊµµÄ¹ºÎï³µĞÅÏ¢
-		Eorder eorder = new Eorder();// ¶©µ¥ĞÅÏ¢
+		Eorderitem eoitem = new Eorderitem();// é€šè¿‡ä¹¦ç±æ·»åŠ äº§ç”Ÿçš„è´­ç‰©è½¦ä¿¡æ¯
+		Eorderitem eoReal = null;// çœŸå®çš„è´­ç‰©è½¦ä¿¡æ¯
+		Eorder eorder = new Eorder();// è®¢å•ä¿¡æ¯
 
-		// 1.ÏÈ´Ó»á»°ÖĞ»ñÈ¡Êéid»òitemid
+		// 1.å…ˆä»ä¼šè¯ä¸­è·å–ä¹¦idæˆ–itemid
 		String bid = request.getParameter("bid");
-		// 2.½«ËùÓĞµÄÊı¾İ»ñÈ¡³öÀ´
-		String count = (String) session.getAttribute("addOrderCount");// request.getParameter("count");//ÊıÁ¿
-		String eoaddr = (String) session.getAttribute("addOrderEoaddr");// request.getParameter("eoaddr");//µØÖ·
-		String uname = (String) session.getAttribute("addOrderUname");// request.getParameter("uname");//ÊÕ»õÈË
-		String uphone = (String) session.getAttribute("addOrderUphone"); // request.getParameter("uphone");//µç»°
+		// 2.å°†æ‰€æœ‰çš„æ•°æ®è·å–å‡ºæ¥
+		String count = (String) session.getAttribute("addOrderCount");// request.getParameter("count");//æ•°é‡
+		String eoaddr = (String) session.getAttribute("addOrderEoaddr");// request.getParameter("eoaddr");//åœ°å€
+		String uname = (String) session.getAttribute("addOrderUname");// request.getParameter("uname");//æ”¶è´§äºº
+		String uphone = (String) session.getAttribute("addOrderUphone"); // request.getParameter("uphone");//ç”µè¯
 
-		String type = request.getParameter("payType");// ËÍ»õ·½Ê½
-		String payType = request.getParameter("payOption");// Ö§¸¶·½Ê½
-		String totalOld = request.getParameter("total");// ×Ü¼Û
+		String type = request.getParameter("payType");// é€è´§æ–¹å¼
+		String payType = request.getParameter("payOption");// æ”¯ä»˜æ–¹å¼
+		String totalOld = request.getParameter("total");// æ€»ä»·
 
 		double total = 0;
 		String sendType;
 		int pay = 0;
 		try {
 			Bought itemOld = (Bought) session.getAttribute("userOrderAddItem");
-			// 3.ÅĞ¶ÏÊı¾İµÄºÏ·¨
+			// 3.åˆ¤æ–­æ•°æ®çš„åˆæ³•
 			String check = "1";
-			// a.ÑéÖ¤ÊıÁ¿µÄÊäÈë
+			// a.éªŒè¯æ•°é‡çš„è¾“å…¥
 			if (count != null && !count.isEmpty()) {
 				check = check + "/1";
 			} else {
@@ -470,97 +470,97 @@ public class EorderServlet extends BaseServlet {
 					check = check + "/-1";
 				}
 			}
-			// b.ÑéÖ¤µØÖ·µÄÊäÈë
+			// b.éªŒè¯åœ°å€çš„è¾“å…¥
 			if (eoaddr != null && !eoaddr.isEmpty()) {
 				check = check + "/1";
 			} else {
 				check = check + "/-1";
 			}
-			// c.ÑéÖ¤ÊÕ»õÈËµÄÊäÈë
+			// c.éªŒè¯æ”¶è´§äººçš„è¾“å…¥
 			if (uname != null && !uname.isEmpty()) {
 				check = check + "/1";
 			} else {
 				check = check + "/-1";
 			}
-			// d.ÑéÖ¤µç»°µÄÊäÈë
+			// d.éªŒè¯ç”µè¯çš„è¾“å…¥
 			if (uphone != null && !uphone.isEmpty()) {
 				check = check + "/1";
 			} else {
 				check = check + "/-1";
 			}
 			if (!check.equals("1/1/1/1/1")) {
-				result = Result.lack("ÊäÈëĞÅÏ¢²»×ã£¡£¡£¡", check);
+				result = Result.lack("è¾“å…¥ä¿¡æ¯ä¸è¶³ï¼ï¼ï¼", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ÅĞ¶Ï×Ü¼ÛÊÇ·ñÎª¿Õ
+			// åˆ¤æ–­æ€»ä»·æ˜¯å¦ä¸ºç©º
 			if (totalOld != null && !totalOld.isEmpty()) {
 				total = Double.parseDouble(totalOld);
 			} else {
-				result = Result.failure("ÏµÍ³·±Ã¦,ÇëÉÔºóÔÙÊÔ£¡£¡£¡");
+				result = Result.failure("ç³»ç»Ÿç¹å¿™,è¯·ç¨åå†è¯•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ÅĞ¶ÏËÍ»õ·½Ê½
-			if (!type.equals("ÇëÑ¡Ôñ")) {
+			// åˆ¤æ–­é€è´§æ–¹å¼
+			if (!type.equals("è¯·é€‰æ‹©")) {
 				sendType = type;
 			} else {
-				sendType = "ÔÚÏßÖ§¸¶";
+				sendType = "åœ¨çº¿æ”¯ä»˜";
 			}
-			// ÅĞ¶ÏÖ§¸¶·½Ê½
-			if (!payType.equals("ÇëÑ¡Ôñ")) {
+			// åˆ¤æ–­æ”¯ä»˜æ–¹å¼
+			if (!payType.equals("è¯·é€‰æ‹©")) {
 				pay = Integer.parseInt(payType);
 			} else {
 				pay = 2;
 			}
-			// 4.ÅĞ¶ÏÊÇÍ¨¹ıÊé±¾ÏÂµ¥»¹ÊÇ¹ºÎï³µÏÂµ¥
+			// 4.åˆ¤æ–­æ˜¯é€šè¿‡ä¹¦æœ¬ä¸‹å•è¿˜æ˜¯è´­ç‰©è½¦ä¸‹å•
 			if (userOld == null) {
-				result = Result.failure("ÇëÄúÏÈµÇÂ¼£¡£¡£¡");
+				result = Result.failure("è¯·æ‚¨å…ˆç™»å½•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// Á¢¼´¹ºÂò¼ÓÈëµÄ¶©µ¥
+			// ç«‹å³è´­ä¹°åŠ å…¥çš„è®¢å•
 			if (bid != null && !bid.isEmpty()) {
-				// ²éÑ¯´ËÊéÊÇ·ñÉÏ¼Ü
+				// æŸ¥è¯¢æ­¤ä¹¦æ˜¯å¦ä¸Šæ¶
 				Book checkBook = new Book();
 				checkBook.setBid(Long.parseLong(bid));
 				Book bookOld = biz.selectSingle(checkBook);
 				if (bookOld != null && bookOld.getBstate() == 1 && bookOld.getBnum() > 0) {
-					eoitem.setCount(Integer.parseInt(count));// Ìí¼ÓÊıÁ¿Öµ
-					eoitem.setTotal(total);// Ìí¼Ó×Ü¼Û
+					eoitem.setCount(Integer.parseInt(count));// æ·»åŠ æ•°é‡å€¼
+					eoitem.setTotal(total);// æ·»åŠ æ€»ä»·
 				} else {
-					result = Result.failure("¸ÃÊéÒÑÏÂ¼Ü»òÊÛóÀ,ÇëÖØĞÂÑ¡Ôñ£¡£¡£¡");
+					result = Result.failure("è¯¥ä¹¦å·²ä¸‹æ¶æˆ–å”®ç½„,è¯·é‡æ–°é€‰æ‹©ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
 				if (userOld.getUid() != 0) {
-					eoitem.setUid(userOld.getUid());// Ìí¼ÓuidÖµ
+					eoitem.setUid(userOld.getUid());// æ·»åŠ uidå€¼
 				} else {
-					result = Result.failure("ÇëÄúÏÈµÇÂ¼£¡£¡£¡");
+					result = Result.failure("è¯·æ‚¨å…ˆç™»å½•ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				// »ñÈ¡ÏµÍ³Ê±¼ä
+				// è·å–ç³»ç»Ÿæ—¶é—´
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				Date date = new Date();
-				eoitem.setCarttime(df.format(date));// Ìí¼Ó¹ºÎï³µ¼ÓÈëÊ±¼ä
-				// Éú³É¶©µ¥ºÅ
+				eoitem.setCarttime(df.format(date));// æ·»åŠ è´­ç‰©è½¦åŠ å…¥æ—¶é—´
+				// ç”Ÿæˆè®¢å•å·
 				String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
-				eoitem.setItemid(uuid);// Ìí¼Ó¹ºÎï³µºÅ
-				eoitem.setBid(Long.parseLong(bid));// Ìí¼ÓÊéid
+				eoitem.setItemid(uuid);// æ·»åŠ è´­ç‰©è½¦å·
+				eoitem.setBid(Long.parseLong(bid));// æ·»åŠ ä¹¦id
 				int i = itemBiz.insert(eoitem);
 				if (i <= 0) {
-					result = Result.failure("ÏÂµ¥Ê§°Ü,ÇëÄúÉÔºóÔÚ²Ù×÷£¡£¡£¡");
+					result = Result.failure("ä¸‹å•å¤±è´¥,è¯·æ‚¨ç¨ååœ¨æ“ä½œï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -568,7 +568,7 @@ public class EorderServlet extends BaseServlet {
 				}
 				eoReal = itemBiz.selectSingle(eoitem);
 			} else if (itemOld != null && itemOld.getItemid() !=null && !itemOld.getItemid().isEmpty()) {
-				// ²éÑ¯´Ë¹ºÎï³µ¶©µ¥ÊÇ·ñ´æÔÚ
+				// æŸ¥è¯¢æ­¤è´­ç‰©è½¦è®¢å•æ˜¯å¦å­˜åœ¨
 				Bought item = itemBiz.selectSingleCart(itemOld);
 				Eorderitem itemOld1 = new Eorderitem();
 				itemOld1.setItemid(item.getItemid());
@@ -580,7 +580,7 @@ public class EorderServlet extends BaseServlet {
 				
 				int k = itemBiz.update(itemNew, itemOld1);
 				if (k <= 0) {
-					result = Result.failure("ÏÂµ¥Ê§°Ü,ÇëÄúÉÔºóÔÚ²Ù×÷£¡£¡£¡");
+					result = Result.failure("ä¸‹å•å¤±è´¥,è¯·æ‚¨ç¨ååœ¨æ“ä½œï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -588,35 +588,35 @@ public class EorderServlet extends BaseServlet {
 				}
 				eoReal = itemBiz.selectSingle(itemOld1);
 			} else {
-				result = Result.failure("ÄúÎ´Ñ¡ÔñÈÎºÎÉÌÆ·²»ÄÜ½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+				result = Result.failure("æ‚¨æœªé€‰æ‹©ä»»ä½•å•†å“ä¸èƒ½è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
 
-			// 5.¸øeorderÌîÊı¾İ
-			// »ñÈ¡ÏµÍ³Ê±¼ä
+			// 5.ç»™eorderå¡«æ•°æ®
+			// è·å–ç³»ç»Ÿæ—¶é—´
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
-			eorder.setEotime(df.format(date));// ÏÂµ¥Ê±¼ä
-			eorder.setEoid(uuidOrder);// ¶©µ¥ºÅ
-			eorder.setEostate(2);// ¶©µ¥×´Ì¬(´ı·¢»õ)
-			eorder.setUid(userOld.getUid());// ÓÃ»§id
-			eorder.setEoaddr(eoaddr);// µØÖ·
-			eorder.setEotype(sendType);// ËÍ»õÀàĞÍ
-			eorder.setEopaytypeid(pay);// Ö§¸¶·½Ê½
-			eorder.setUname(uname);// ÊÕ»õÈË
-			eorder.setEotemp(uphone);// ÊÕ»õµç»°
+			eorder.setEotime(df.format(date));// ä¸‹å•æ—¶é—´
+			eorder.setEoid(uuidOrder);// è®¢å•å·
+			eorder.setEostate(2);// è®¢å•çŠ¶æ€(å¾…å‘è´§)
+			eorder.setUid(userOld.getUid());// ç”¨æˆ·id
+			eorder.setEoaddr(eoaddr);// åœ°å€
+			eorder.setEotype(sendType);// é€è´§ç±»å‹
+			eorder.setEopaytypeid(pay);// æ”¯ä»˜æ–¹å¼
+			eorder.setUname(uname);// æ”¶è´§äºº
+			eorder.setEotemp(uphone);// æ”¶è´§ç”µè¯
 
-			// ÏÈ½«¿â´æ¼õÈ¥
+			// å…ˆå°†åº“å­˜å‡å»
 			Book book = new Book();
 			book.setBid(eoReal.getBid());
 			Book bookOld = biz.selectSingle(book);
 			Book bookNew = new Book();
-			// ¿â´æ²»¹»²»ÄÜÏÂµ¥
+			// åº“å­˜ä¸å¤Ÿä¸èƒ½ä¸‹å•
 			if (bookOld.getBnum() < Long.parseLong(count)) {
-				result = Result.failure("¿â´æ²»¹»,ÇëÄúÖØĞÂÑ¡ÔñÊıÁ¿£¡£¡£¡");
+				result = Result.failure("åº“å­˜ä¸å¤Ÿ,è¯·æ‚¨é‡æ–°é€‰æ‹©æ•°é‡ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -625,9 +625,9 @@ public class EorderServlet extends BaseServlet {
 			long number = bookOld.getBnum() - Long.parseLong(count);
 			bookNew.setBnum(number);
 			int q = biz.update(bookNew, bookOld);
-			// Êé¼®ĞÅÏ¢Ã»ÓĞ¸üĞÂ£¬²»ÄÜÏÂµ¥
+			// ä¹¦ç±ä¿¡æ¯æ²¡æœ‰æ›´æ–°ï¼Œä¸èƒ½ä¸‹å•
 			if (q <= 0) {
-				result = Result.failure("ÏÂµ¥Ê§°Ü,ÇëÄúÉÔºóÔÙÊÔ£¡£¡£¡");
+				result = Result.failure("ä¸‹å•å¤±è´¥,è¯·æ‚¨ç¨åå†è¯•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -635,22 +635,22 @@ public class EorderServlet extends BaseServlet {
 			}
 			int j = eorderBiz.insert(eorder);
 			if (j > 0) {
-				// ½«¹ºÎï³µĞÅÏ¢¸üĞÂ(eoRealÎª¹ºÎï³µµÄĞÅÏ¢)
+				// å°†è´­ç‰©è½¦ä¿¡æ¯æ›´æ–°(eoRealä¸ºè´­ç‰©è½¦çš„ä¿¡æ¯)
 				Eorderitem eoRealNew = new Eorderitem();
 				eoRealNew.setCartstate(2);
 				eoRealNew.setEoid(uuidOrder);
 				int n = itemBiz.update(eoRealNew, eoReal);
 				if (n > 0) {
-					result = Result.success("ÏÂµ¥³É¹¦£¡£¡£¡");
+					result = Result.success("ä¸‹å•æˆåŠŸï¼ï¼ï¼");
 
-					// Êı¾İË¢ĞÂ
+					// æ•°æ®åˆ·æ–°
 					
-					// ²éÑ¯ËùÓĞ¶©µ¥¶©µ¥ĞÅÏ¢
+					// æŸ¥è¯¢æ‰€æœ‰è®¢å•è®¢å•ä¿¡æ¯
 					Eorder eorder1 = new Eorder();
 					eorder.setUid(userOld.getUid());
 					Page<Eorder> Page = eorderBiz.eorderPage(1, 3, eorder1);
 					session.setAttribute("userOrderPage", Page);
-					// ¹ºÎï³µĞÅÏ¢ÏÔÊ¾
+					// è´­ç‰©è½¦ä¿¡æ¯æ˜¾ç¤º
 					Bought bought = new Bought();
 					bought.setUid(userOld.getUid());
 					bought.setCartstate(1);
@@ -659,7 +659,7 @@ public class EorderServlet extends BaseServlet {
 					bought.setCartstate(2);
 					List<Bought> listEo = itemBiz.selectAllCart(bought);
 					session.setAttribute("userCart", listEo);
-					// »á»°»¹Ô­
+					// ä¼šè¯è¿˜åŸ
 					String string = null;
 					session.setAttribute("addOrderCount", string);
 					session.setAttribute("addOrderEoaddr", string);
@@ -676,9 +676,9 @@ public class EorderServlet extends BaseServlet {
 			}
 			bookNew.setBnum(bookOld.getBnum());
 			int p = biz.update(bookNew, bookOld);
-			// ÏÂµ¥Ê§°Ü±ØĞë½«Êé¼®¿â´æ»¹Ô­
+			// ä¸‹å•å¤±è´¥å¿…é¡»å°†ä¹¦ç±åº“å­˜è¿˜åŸ
 			if (p > 0) {
-				result = Result.failure("ÏÂµ¥Ê§°Ü,ÇëÄúÉÔºóÔÙÊÔ£¡£¡£¡");
+				result = Result.failure("ä¸‹å•å¤±è´¥,è¯·æ‚¨ç¨åå†è¯•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -697,7 +697,7 @@ public class EorderServlet extends BaseServlet {
 
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -707,7 +707,7 @@ public class EorderServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -719,7 +719,7 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀí²éÑ¯¶©µ¥
+	// ç®¡ç†æŸ¥è¯¢è®¢å•
 	public void query(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		OrderDetial orderDetial = new OrderDetial();
@@ -727,7 +727,7 @@ public class EorderServlet extends BaseServlet {
 		String eoid = request.getParameter("eoid");
 		String eostate = request.getParameter("eostate");
 		String type = request.getParameter("type");
-		// »ñÈ¡²éÑ¯Ìõ¼ş
+		// è·å–æŸ¥è¯¢æ¡ä»¶
 		if (eotime != null && !eotime.isEmpty()) {
 			orderDetial.setEotime(eotime);
 		}
@@ -738,7 +738,7 @@ public class EorderServlet extends BaseServlet {
 			orderDetial.setEostate(Integer.parseInt(eostate));
 		}
 		try {
-			// Êı¾İ¸üĞÂ
+			// æ•°æ®æ›´æ–°
 			List<OrderDetial> order_show = eorderBiz.selectAllDetail(orderDetial);
 			List<OrderDetial> orderRefund = new ArrayList<OrderDetial>();
 			List<OrderDetial> orderHand = new ArrayList<OrderDetial>();
@@ -764,18 +764,18 @@ public class EorderServlet extends BaseServlet {
 				}
 			}
 			session.setAttribute("orderNum", numHand);
-			//²éÑ¯ÍË¿îÊı¾İ
+			//æŸ¥è¯¢é€€æ¬¾æ•°æ®
 			session.setAttribute("eorderRefund", orderRefund);
 			if(type != null && !type.isEmpty()){
 				if(type.equals("0")){
 					if (orderRefund.size() > 0) {
-						result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+						result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 						String json = gson.toJson(result);
 						response.setContentType("application/json;charset=UTF-8");
 						response.getWriter().append(json);
 						return;
 					}
-					result = Result.failure("ÔİÎŞÊı¾İ£¡£¡£¡");
+					result = Result.failure("æš‚æ— æ•°æ®ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -783,13 +783,13 @@ public class EorderServlet extends BaseServlet {
 				}
 				if(type.equals("1")){
 					if (orderHand.size() > 0) {
-						result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+						result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 						String json = gson.toJson(result);
 						response.setContentType("application/json;charset=UTF-8");
 						response.getWriter().append(json);
 						return;
 					}
-					result = Result.failure("ÔİÎŞÊı¾İ£¡£¡£¡");
+					result = Result.failure("æš‚æ— æ•°æ®ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -798,19 +798,19 @@ public class EorderServlet extends BaseServlet {
 				
 			}
 			if (order_show.size() > 0) {
-				result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+				result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("ÔİÎŞÊı¾İ£¡£¡£¡");
+			result = Result.failure("æš‚æ— æ•°æ®ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -832,7 +832,7 @@ public class EorderServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±¸üĞÂ¶©µ¥
+	// ç®¡ç†å‘˜æ›´æ–°è®¢å•
 	public void update(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		Eorder eorderNew = new Eorder();
@@ -851,28 +851,28 @@ public class EorderServlet extends BaseServlet {
 			eorderNew.setEotype(type);
 		}
 		try {
-			// »ñÈ¡eoid
+			// è·å–eoid
 			if (eoid != null && !eoid.isEmpty()) {
 				eorderOld.setEoid(eoid);
 			} else {
-				result = Result.failure("Î´Ñ¡Ôñ¶©µ¥£¡£¡£¡");
+				result = Result.failure("æœªé€‰æ‹©è®¢å•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			//¸üĞÂ
+			//æ›´æ–°
 			int code = eorderBiz.update(eorderNew, eorderOld);
 			if (code <= 0) {
-				result = Result.failure("¸üĞÂÊ§°Ü£¡£¡£¡");
+				result = Result.failure("æ›´æ–°å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.success("¸üĞÂ³É¹¦£¡£¡£¡");
-			//Êı¾İË¢ĞÂ
-			//´æ´¢²»ÊÇÍË¿î²Ù×÷µÄ¶©µ¥
+			result = Result.success("æ›´æ–°æˆåŠŸï¼ï¼ï¼");
+			//æ•°æ®åˆ·æ–°
+			//å­˜å‚¨ä¸æ˜¯é€€æ¬¾æ“ä½œçš„è®¢å•
 			OrderDetial eorder1 = new OrderDetial();
 			List<OrderDetial> order_show = eorderBiz.selectAllDetail(eorder1);
 			for (int i = 0; i < order_show.size(); i++) {
@@ -888,7 +888,7 @@ public class EorderServlet extends BaseServlet {
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -908,7 +908,7 @@ public class EorderServlet extends BaseServlet {
 
 			}
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -920,32 +920,32 @@ public class EorderServlet extends BaseServlet {
 		}
 
 	}
-	// ²éÑ¯µ¥¸ö¶©µ¥ÏêÇé
+	// æŸ¥è¯¢å•ä¸ªè®¢å•è¯¦æƒ…
 	public void querySingle(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
 		OrderDetial order_Detial = new OrderDetial();
 		String eoid = request.getParameter("eoid");
-		// »ñÈ¡²éÑ¯Ìõ¼ş
+		// è·å–æŸ¥è¯¢æ¡ä»¶
 		if (eoid != null && !eoid.isEmpty()) {
 			order_Detial.setEoid(eoid);
 		}
 		try {
 			OrderDetial rDetial = eorderBiz.selectSingleDetail(order_Detial);
 			if (rDetial == null) {
-				result = Result.failure("¶©µ¥²»´æÔÚ,»òÒÑ±»É¾³ı£¡£¡£¡");
+				result = Result.failure("è®¢å•ä¸å­˜åœ¨,æˆ–å·²è¢«åˆ é™¤ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
 			session.setAttribute("orderdetialshow", rDetial);
-			result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+			result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		}catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {

@@ -27,7 +27,7 @@ public class UserServlet extends BaseServlet {
 	private Gson gson = new Gson();
 	private Result result;
 
-	// É¾³ı
+	// åˆ é™¤
 	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String uid = request.getParameter("uid");
@@ -35,42 +35,42 @@ public class UserServlet extends BaseServlet {
 		User user2;
 		List<User> list = new ArrayList<User>();
 		try {
-			// 1.ÅĞ¶ÏÊÇ·ñÎª¿Õ
+			// 1.åˆ¤æ–­æ˜¯å¦ä¸ºç©º
 			if (uid != null && !uid.isEmpty()) {
-				// 2.ÅĞ¶ÏÉ¾³ıµÄÓÃ»§×´Ì¬
+				// 2.åˆ¤æ–­åˆ é™¤çš„ç”¨æˆ·çŠ¶æ€
 				String[] uids = uid.split("/");
 				for (String string : uids) {
 					user = new User();
 					if (!string.isEmpty() && string != null) {
-						// a.×´Ì¬Îª3²»ÄÜÖØ¸´²Ù×÷
+						// a.çŠ¶æ€ä¸º3ä¸èƒ½é‡å¤æ“ä½œ
 						user.setUid(Long.parseLong(string));
 						user2 = userBiz.selectSingle(user);
 						if (user2.getUstate() == 3) {
-							result = Result.failure("¸ÃÓÃ»§ÒÑ±»É¾³ı,²»ÄÜÖØ¸´½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+							result = Result.failure("è¯¥ç”¨æˆ·å·²è¢«åˆ é™¤,ä¸èƒ½é‡å¤è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 							String json = gson.toJson(result);
 							response.setContentType("application/json;charset=UTF-8");
 							response.getWriter().append(json);
 							return;
 						}
-						//b.ÊÇ·ñ·¢²¼ÁËÊé¼®
+						//b.æ˜¯å¦å‘å¸ƒäº†ä¹¦ç±
 						Book book = new Book();
 						book.setUid(Long.parseLong(string));
 						List<Book> books = bookBiz.selectAll(book);
 						if(books.size()>0){
-							result = Result.failure("¸ÃÓÃ»§»¹ÓĞÉĞÎ´ÊÛÍê»òÏÂ¼ÜµÄÊé¼®,²»ÄÜ½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+							result = Result.failure("è¯¥ç”¨æˆ·è¿˜æœ‰å°šæœªå”®å®Œæˆ–ä¸‹æ¶çš„ä¹¦ç±,ä¸èƒ½è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 							String json = gson.toJson(result);
 							response.setContentType("application/json;charset=UTF-8");
 							response.getWriter().append(json);
 							return;
 						}
-						//c.ÊÇ·ñÓĞ¶©µ¥Î´´¦ÀíÍê
+						//c.æ˜¯å¦æœ‰è®¢å•æœªå¤„ç†å®Œ
 						OrderDetial orderDetial = new OrderDetial();
 						orderDetial.setUid(Long.parseLong(string));
 						List<OrderDetial> orderDetials = eorderBiz.selectAllDetail(orderDetial);
 						if(orderDetials.size() >0 ){
 							for (OrderDetial order : orderDetials) {
 								if(order.getEostate() != 5 && order.getEostate() != 6){
-									result = Result.failure("¸ÃÓÃ»§»¹ÓĞÉĞÎ´Íê³ÉµÄ¶©µ¥,²»ÄÜ½øĞĞ´Ë²Ù×÷£¡£¡£¡");
+									result = Result.failure("è¯¥ç”¨æˆ·è¿˜æœ‰å°šæœªå®Œæˆçš„è®¢å•,ä¸èƒ½è¿›è¡Œæ­¤æ“ä½œï¼ï¼ï¼");
 									String json = gson.toJson(result);
 									response.setContentType("application/json;charset=UTF-8");
 									response.getWriter().append(json);
@@ -83,7 +83,7 @@ public class UserServlet extends BaseServlet {
 					}
 				}
 			} else {
-				result = Result.failure("ÄúÎ´Ñ¡ÔñÈÎºÎÓÃ»§£¡£¡£¡");
+				result = Result.failure("æ‚¨æœªé€‰æ‹©ä»»ä½•ç”¨æˆ·ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -92,10 +92,10 @@ public class UserServlet extends BaseServlet {
 			if (list.size() > 0) {
 				int code = userBiz.update(list);
 				if (code > 0) {
-					result = Result.success("É¾³ı³É¹¦£¡£¡£¡");
-					// Êı¾İË¢ĞÂ
+					result = Result.success("åˆ é™¤æˆåŠŸï¼ï¼ï¼");
+					// æ•°æ®åˆ·æ–°
 					User user1 = new User();
-					List<User> customerExit = userBiz.selectAll(user1);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+					List<User> customerExit = userBiz.selectAll(user1);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 					user1.setUtype(1);
 					List<User> adminListAll = userBiz.selectAll(user1);
 					user1.setUtype(5);
@@ -109,20 +109,20 @@ public class UserServlet extends BaseServlet {
 							adminListAll.add(u);
 						}
 					}
-					session.setAttribute("adminAll", adminListAll);// ´æ´¢ËùÓĞ¹ÜÀíÔ±ĞÅÏ¢
-					// ÌŞ³ı¹ÜÀíÔ±
+					session.setAttribute("adminAll", adminListAll);// å­˜å‚¨æ‰€æœ‰ç®¡ç†å‘˜ä¿¡æ¯
+					// å‰”é™¤ç®¡ç†å‘˜
 					for (int i = 0; i < customerExit.size(); i++) {
 						for (int j = 0; j < adminListAll.size(); j++) {
 							if (customerExit.get(i).equals(adminListAll.get(j))
 									&& customerExit.get(i).hashCode() == adminListAll.get(j).hashCode()) {
 								customerExit.remove(i);
-								// ´ËÊ±Ğè×¢Òâ£¬ÒòÎªlist»á¶¯Ì¬±ä»¯²»ÏñÊı×é»áÕ¼Î»£¬ËùÒÔµ±Ç°Ë÷ÒıÓ¦¸ÃºóÍËÒ»Î»
+								// æ­¤æ—¶éœ€æ³¨æ„ï¼Œå› ä¸ºlistä¼šåŠ¨æ€å˜åŒ–ä¸åƒæ•°ç»„ä¼šå ä½ï¼Œæ‰€ä»¥å½“å‰ç´¢å¼•åº”è¯¥åé€€ä¸€ä½
 								i--;
 								break;
 							}
 						}
 					}
-					session.setAttribute("customerAll", customerExit);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+					session.setAttribute("customerAll", customerExit);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 					Long [] userSize = new Long[100];
 					for (int i = 0; i < userSize.length; i++) {
 						userSize[i] = (long) 0;
@@ -159,19 +159,19 @@ public class UserServlet extends BaseServlet {
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.failure("É¾³ıÊ§°Ü£¡£¡£¡");
+				result = Result.failure("åˆ é™¤å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("ÄúÎ´Ñ¡ÔñÈÎºÎÓÃ»§£¡£¡£¡");
+			result = Result.failure("æ‚¨æœªé€‰æ‹©ä»»ä½•ç”¨æˆ·ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -181,7 +181,7 @@ public class UserServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -202,7 +202,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±¸üĞÂÓÃ»§×´Ì¬ºÍÃÜÂë
+	// ç®¡ç†å‘˜æ›´æ–°ç”¨æˆ·çŠ¶æ€å’Œå¯†ç 
 	public void updateState(HttpServletRequest request, HttpServletResponse response) {
 		User userNew = new User();
 		User userOld = new User();
@@ -214,7 +214,7 @@ public class UserServlet extends BaseServlet {
 			if (uid != null && !uid.isEmpty()) {
 				userOld.setUid(Long.parseLong(uid));
 			} else {
-				result = Result.failure("ÇëÑ¡ÔñÓÃ»§£¡£¡£¡");
+				result = Result.failure("è¯·é€‰æ‹©ç”¨æˆ·ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -226,14 +226,14 @@ public class UserServlet extends BaseServlet {
 				if (upwd.equals("1")) {
 					userNew.setUpassword("aaaa8888");
 				} else {
-					result = Result.failure("¸üĞÂÊ§°Ü£¡£¡£¡");
+					result = Result.failure("æ›´æ–°å¤±è´¥ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
 			} else {
-				result = Result.failure("¸üĞÂÊ§°Ü£¡£¡£¡");
+				result = Result.failure("æ›´æ–°å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -241,11 +241,11 @@ public class UserServlet extends BaseServlet {
 			}
 			int code = userBiz.update(userNew, userOld);
 			if (code > 0) {
-				result = Result.success("²Ù×÷³É¹¦£¡£¡£¡");
-				// ¸üĞÂÊı¾İ
+				result = Result.success("æ“ä½œæˆåŠŸï¼ï¼ï¼");
+				// æ›´æ–°æ•°æ®
 				User user = new User();
-				// ¸üĞÂ¹ÜÀíÔ±Êı¾İ
-				List<User> customerExit = userBiz.selectAll(user);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+				// æ›´æ–°ç®¡ç†å‘˜æ•°æ®
+				List<User> customerExit = userBiz.selectAll(user);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 				user.setUtype(1);
 				List<User> adminListAll = userBiz.selectAll(user);
 				user.setUtype(5);
@@ -259,20 +259,20 @@ public class UserServlet extends BaseServlet {
 						adminListAll.add(u);
 					}
 				}
-				session.setAttribute("adminAll", adminListAll);// ´æ´¢ËùÓĞ¹ÜÀíÔ±ĞÅÏ¢
-				// ÌŞ³ı¹ÜÀíÔ±
+				session.setAttribute("adminAll", adminListAll);// å­˜å‚¨æ‰€æœ‰ç®¡ç†å‘˜ä¿¡æ¯
+				// å‰”é™¤ç®¡ç†å‘˜
 				for (int i = 0; i < customerExit.size(); i++) {
 					for (int j = 0; j < adminListAll.size(); j++) {
 						if (customerExit.get(i).equals(adminListAll.get(j))
 								&& customerExit.get(i).hashCode() == adminListAll.get(j).hashCode()) {
 							customerExit.remove(i);
-							// ´ËÊ±Ğè×¢Òâ£¬ÒòÎªlist»á¶¯Ì¬±ä»¯²»ÏñÊı×é»áÕ¼Î»£¬ËùÒÔµ±Ç°Ë÷ÒıÓ¦¸ÃºóÍËÒ»Î»
+							// æ­¤æ—¶éœ€æ³¨æ„ï¼Œå› ä¸ºlistä¼šåŠ¨æ€å˜åŒ–ä¸åƒæ•°ç»„ä¼šå ä½ï¼Œæ‰€ä»¥å½“å‰ç´¢å¼•åº”è¯¥åé€€ä¸€ä½
 							i--;
 							break;
 						}
 					}
 				}
-				session.setAttribute("customerAll", customerExit);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+				session.setAttribute("customerAll", customerExit);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 				Long [] userSize = new Long[100];
 				for (int i = 0; i < userSize.length; i++) {
 					userSize[i] = (long) 0;
@@ -309,13 +309,13 @@ public class UserServlet extends BaseServlet {
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("²Ù×÷Ê§°Ü£¡£¡£¡");
+			result = Result.failure("æ“ä½œå¤±è´¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -325,7 +325,7 @@ public class UserServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -346,7 +346,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±²é¿´ÓÃ»§¸öÈËĞÅÏ¢
+	// ç®¡ç†å‘˜æŸ¥çœ‹ç”¨æˆ·ä¸ªäººä¿¡æ¯
 	public void showUserMessage(HttpServletRequest request, HttpServletResponse response) {
 		User user = new User();
 		HttpSession session = request.getSession();
@@ -357,20 +357,20 @@ public class UserServlet extends BaseServlet {
 		try {
 			User userShow = userBiz.selectSingle(user);
 			if (userShow.getUid() == 0) {
-				result = Result.failure("²éÎŞ´ËÈË£¡£¡£¡");
+				result = Result.failure("æŸ¥æ— æ­¤äººï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
 			session.setAttribute("userMessage", userShow);
-			result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+			result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -391,17 +391,17 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±²é¿´ÓÃ»§ÁĞ±í
+	// ç®¡ç†å‘˜æŸ¥çœ‹ç”¨æˆ·åˆ—è¡¨
 	public void queryUser(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		String uname = request.getParameter("uname");// ĞÕÃû
-		String uphone = request.getParameter("uphone");// µç»°
-		String uemail = request.getParameter("uemail");// ÓÊÏä
+		String uname = request.getParameter("uname");// å§“å
+		String uphone = request.getParameter("uphone");// ç”µè¯
+		String uemail = request.getParameter("uemail");// é‚®ç®±
 		String utype = request.getParameter("utype");
-		// ²éÑ¯ËùÓĞµÄÓÃ»§
-		User userShow = new User();// ¶¨ÒåÏÔÊ¾µÄÓÃ»§Ìõ¼ş¶ÔÏó
+		// æŸ¥è¯¢æ‰€æœ‰çš„ç”¨æˆ·
+		User userShow = new User();// å®šä¹‰æ˜¾ç¤ºçš„ç”¨æˆ·æ¡ä»¶å¯¹è±¡
 
-		// »ñÈ¡²éÑ¯Ìõ¼ş
+		// è·å–æŸ¥è¯¢æ¡ä»¶
 		if (uname != null && !uname.isEmpty()) {
 			userShow.setUname(uname);
 		}
@@ -415,7 +415,7 @@ public class UserServlet extends BaseServlet {
 			userShow.setUtype(Integer.parseInt(utype));
 		}
 		try {
-			List<User> customerExit = userBiz.selectAll(userShow);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+			List<User> customerExit = userBiz.selectAll(userShow);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 			User user = new User();
 			user.setUtype(1);
 			List<User> adminListAll = userBiz.selectAll(user);
@@ -426,19 +426,19 @@ public class UserServlet extends BaseServlet {
 					adminListAll.add(u);
 				}
 			}
-			// ÌŞ³ı¹ÜÀíÔ±
+			// å‰”é™¤ç®¡ç†å‘˜
 			for (int i = 0; i < customerExit.size(); i++) {
 				for (int j = 0; j < adminListAll.size(); j++) {
 					if (customerExit.get(i).equals(adminListAll.get(j))
 							&& customerExit.get(i).hashCode() == adminListAll.get(j).hashCode()) {
 						customerExit.remove(i);
-						// ´ËÊ±Ğè×¢Òâ£¬ÒòÎªlist»á¶¯Ì¬±ä»¯²»ÏñÊı×é»áÕ¼Î»£¬ËùÒÔµ±Ç°Ë÷ÒıÓ¦¸ÃºóÍËÒ»Î»
+						// æ­¤æ—¶éœ€æ³¨æ„ï¼Œå› ä¸ºlistä¼šåŠ¨æ€å˜åŒ–ä¸åƒæ•°ç»„ä¼šå ä½ï¼Œæ‰€ä»¥å½“å‰ç´¢å¼•åº”è¯¥åé€€ä¸€ä½
 						i--;
 						break;
 					}
 				}
 			}
-			session.setAttribute("customerAll", customerExit);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+			session.setAttribute("customerAll", customerExit);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 			Long [] userSize = new Long[100];
 			for (int i = 0; i < userSize.length; i++) {
 				userSize[i] = (long) 0;
@@ -471,19 +471,19 @@ public class UserServlet extends BaseServlet {
 			}
 			session.setAttribute("userSize", userSize);
 			if (customerExit.size() > 0) {
-				result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+				result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("ÔİÎŞÊı¾İ£¡£¡£¡");
+			result = Result.failure("æš‚æ— æ•°æ®ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -504,7 +504,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ĞŞ¸Ä¸öÈËÃÜÂë
+	// ä¿®æ”¹ä¸ªäººå¯†ç 
 	public void updatePwd(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loginedUser");
@@ -514,21 +514,21 @@ public class UserServlet extends BaseServlet {
 			if (newpassword != null && !newpassword.isEmpty()) {
 				userNew.setUpassword(newpassword);
 			} else {
-				result = Result.failure("ĞÂÃÜÂëÎ´ÊäÈë»ò²»ºÏ·¨");
+				result = Result.failure("æ–°å¯†ç æœªè¾“å…¥æˆ–ä¸åˆæ³•");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			}
 			int code = userBiz.update(userNew, user);
 			if (code <= 0) {
-				result = Result.failure("ĞŞ¸ÄÊ§°Ü£¡£¡£¡");
+				result = Result.failure("ä¿®æ”¹å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.success("ĞŞ¸Ä³É¹¦£¡£¡£¡");
-			// Êı¾İË¢ĞÂ
+			result = Result.success("ä¿®æ”¹æˆåŠŸï¼ï¼ï¼");
+			// æ•°æ®åˆ·æ–°
 			User user2 = userBiz.selectSingle(user);
 			session.setAttribute("longinedUser", user2);
 			String json = gson.toJson(result);
@@ -536,7 +536,7 @@ public class UserServlet extends BaseServlet {
 			response.getWriter().append(json);
 			return;
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -556,7 +556,7 @@ public class UserServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -568,7 +568,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¼ì²é¸öÈËÃÜÂëÊäÈë
+	// æ£€æŸ¥ä¸ªäººå¯†ç è¾“å…¥
 	public void checkPwd(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loginedUser");
@@ -576,26 +576,26 @@ public class UserServlet extends BaseServlet {
 			String oldpassword = request.getParameter("oldpassword");
 			if (oldpassword != null && !oldpassword.isEmpty()) {
 				if (oldpassword.equals(user.getUpassword())) {
-					result = Result.success("Ô­ÃÜÂëÕıÈ·£¡£¡£¡");
+					result = Result.success("åŸå¯†ç æ­£ç¡®ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					session.setAttribute("updateOldPwd", oldpassword);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 				} else {
-					result = Result.failure("Ô­ÃÜÂëÊäÈë´íÎó£¡£¡£¡");
+					result = Result.failure("åŸå¯†ç è¾“å…¥é”™è¯¯ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 				}
 			} else {
-				result = Result.failure("ÇëÊäÈëÔ­ÃÜÂë£¡£¡£¡");
+				result = Result.failure("è¯·è¾“å…¥åŸå¯†ç ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -608,7 +608,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¸üĞÂ¸öÈËĞÅÏ¢
+	// æ›´æ–°ä¸ªäººä¿¡æ¯
 	public void updateUser(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = new User();
@@ -623,7 +623,7 @@ public class UserServlet extends BaseServlet {
 		String uclass = request.getParameter("uclass");
 		User userOld = (User) session.getAttribute("loginedUser");
 		String check = "1";
-		// µç»°
+		// ç”µè¯
 		if (phone != null && !phone.isEmpty()) {
 			if (!phone.equals(userOld.getUphone())) {
 				phone = (String) session.getAttribute("updateUphone");
@@ -641,7 +641,7 @@ public class UserServlet extends BaseServlet {
 			check = check + "/-1";
 		}
 
-		// ÄêÁä
+		// å¹´é¾„
 		if (age != null && !age.isEmpty()) {
 			if (!age.equals(userOld.getUage())) {
 				age = (String) session.getAttribute("updateUage");
@@ -658,7 +658,7 @@ public class UserServlet extends BaseServlet {
 		} else {
 			check = check + "/-1";
 		}
-		// ÓÊÏä
+		// é‚®ç®±
 		if (email != null && !email.isEmpty()) {
 			if (!email.equals(userOld.getUemail())) {
 				email = (String) session.getAttribute("updateUemail");
@@ -677,13 +677,13 @@ public class UserServlet extends BaseServlet {
 		}
 		try {
 			if (!check.equals("1/1/1/1")) {
-				result = Result.lack("ĞÅÏ¢²»ÍêÕû»ò´íÎó", check);
+				result = Result.lack("ä¿¡æ¯ä¸å®Œæ•´æˆ–é”™è¯¯", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ÊäÈëºÏ·¨
+			// è¾“å…¥åˆæ³•
 			if (minname != null && !minname.isEmpty()) {
 				user.setUminname(minname);
 			}
@@ -703,23 +703,23 @@ public class UserServlet extends BaseServlet {
 				user.setUmajor(umajor);
 			}
 
-			// ½øĞĞ¸üĞÂ²Ù×÷
+			// è¿›è¡Œæ›´æ–°æ“ä½œ
 
 			int code = userBiz.update(user, userOld);
 			if (code > 0) {
-				// Êı¾İË¢ĞÂ
+				// æ•°æ®åˆ·æ–°
 				User user2 = userBiz.selectSingle(user);
 				session.setAttribute("longinedUser", user2);
-				result = Result.success("ĞŞ¸Ä³É¹¦£¡£¡£¡");
+				result = Result.success("ä¿®æ”¹æˆåŠŸï¼ï¼ï¼");
 			} else {
-				result = Result.failure("ĞŞ¸ÄÊ§°Ü");
+				result = Result.failure("ä¿®æ”¹å¤±è´¥");
 			}
 			String json = gson.toJson(result);
 
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -740,7 +740,7 @@ public class UserServlet extends BaseServlet {
 
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -753,7 +753,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¸üĞÂ¼ìÑéÄêÁä
+	// æ›´æ–°æ£€éªŒå¹´é¾„
 	public void checkUage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
@@ -762,7 +762,7 @@ public class UserServlet extends BaseServlet {
 		try {
 			if (uage != null && !uage.isEmpty()) {
 				if (!uage.matches(regage)) {
-					result = Result.failure("ÄêÁäÊäÈë²»ºÏ·¨£¡£¡£¡");
+					result = Result.failure("å¹´é¾„è¾“å…¥ä¸åˆæ³•ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 
 					response.setContentType("application/json;charset=UTF-8");
@@ -770,18 +770,18 @@ public class UserServlet extends BaseServlet {
 					return;
 				}
 				session.setAttribute("updateUage", uage);
-				result = Result.success("ÊäÈëÕıÈ·£¡£¡£¡");
+				result = Result.success("è¾“å…¥æ­£ç¡®ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			} else {
-				result = Result.failure("ÇëÊäÈëÄêÁä£¡£¡£¡");
+				result = Result.failure("è¯·è¾“å…¥å¹´é¾„ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -794,7 +794,7 @@ public class UserServlet extends BaseServlet {
 	}
 
 	/*
-	 * ¸üĞÂ¼ìÑéµç»°
+	 * æ›´æ–°æ£€éªŒç”µè¯
 	 */
 	public void checkPhone(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -804,7 +804,7 @@ public class UserServlet extends BaseServlet {
 		User user = new User();
 		try {
 			if (uphone != null && !uphone.isEmpty()) {
-				// µç»°Î´ĞŞ¸Ä
+				// ç”µè¯æœªä¿®æ”¹
 				if (uphone.equals(userOld.getUphone())) {
 					result = Result.success("", uphone);
 					String json = gson.toJson(result);
@@ -814,7 +814,7 @@ public class UserServlet extends BaseServlet {
 					return;
 				}
 				if (!uphone.matches(regphone)) {
-					result = Result.failure("µç»°ºÅÂë²»ºÏ·¨£¡£¡£¡", uphone);
+					result = Result.failure("ç”µè¯å·ç ä¸åˆæ³•ï¼ï¼ï¼", uphone);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -823,19 +823,19 @@ public class UserServlet extends BaseServlet {
 				user.setUphone(uphone);
 				User user2 = userBiz.selectSingle(user);
 				if (user2.getUid() != 0) {
-					result = Result.failure("µç»°ºÅÂëÒÑ±»Ê¹ÓÃ£¡£¡£¡", uphone);
+					result = Result.failure("ç”µè¯å·ç å·²è¢«ä½¿ç”¨ï¼ï¼ï¼", uphone);
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.success("¸Ãµç»°ºÅÂë¿ÉÒÔÊ¹ÓÃ£¡£¡£¡", uphone);
+				result = Result.success("è¯¥ç”µè¯å·ç å¯ä»¥ä½¿ç”¨ï¼ï¼ï¼", uphone);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				session.setAttribute("updateUphone", uphone);
 			} else {
-				result = Result.failure("ÇëÊäÈëµç»°ºÅÂë£¡£¡£¡", uphone);
+				result = Result.failure("è¯·è¾“å…¥ç”µè¯å·ç ï¼ï¼ï¼", uphone);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -850,7 +850,7 @@ public class UserServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œ");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -862,7 +862,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¸üĞÂ¼ì²éÓÊÏä
+	// æ›´æ–°æ£€æŸ¥é‚®ç®±
 	public void checkEmail(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User userOld = (User) session.getAttribute("loginedUser");
@@ -873,21 +873,21 @@ public class UserServlet extends BaseServlet {
 			if (uemail != null && !uemail.isEmpty()) {
 				user.setUemail(uemail);
 			} else {
-				result = Result.failure("ÇëÊäÈëÓÊÏä£¡£¡£¡", uemail);
+				result = Result.failure("è¯·è¾“å…¥é‚®ç®±ï¼ï¼ï¼", uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ÓÊÏä¸ñÊ½²»ºÏ·¨£¡
+			// é‚®ç®±æ ¼å¼ä¸åˆæ³•ï¼
 			if (!uemail.matches(regemail)) {
-				result = Result.failure("ÓÊÏä¸ñÊ½²»ºÏ·¨£¡£¡£¡", uemail);
+				result = Result.failure("é‚®ç®±æ ¼å¼ä¸åˆæ³•ï¼ï¼ï¼", uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ÓÊÏäÎ´ĞŞ¸Ä
+			// é‚®ç®±æœªä¿®æ”¹
 			if (uemail.equals(userOld.getUemail())) {
 				result = Result.success("");
 				String json = gson.toJson(result);
@@ -897,17 +897,17 @@ public class UserServlet extends BaseServlet {
 				return;
 			}
 			User user2 = userBiz.selectSingle(user);
-			// ¸ÃÓÊÏäÒÑ±»×¢²á£¡
+			// è¯¥é‚®ç®±å·²è¢«æ³¨å†Œï¼
 			if (user2.getUid() != 0) {
-				result = Result.failure("¸ÃÓÊÏäÒÑ±»×¢²á£¡£¡£¡", uemail);
+				result = Result.failure("è¯¥é‚®ç®±å·²è¢«æ³¨å†Œï¼ï¼ï¼", uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ¸ÃÓÊÏä¿ÉÒÔ×¢²á!
+			// è¯¥é‚®ç®±å¯ä»¥æ³¨å†Œ!
 			session.setAttribute("updateUemail", uemail);
-			result = Result.success("¸ÃÓÊÏä¿ÉÒÔÊ¹ÓÃ", uemail);
+			result = Result.success("è¯¥é‚®ç®±å¯ä»¥ä½¿ç”¨", uemail);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -921,7 +921,7 @@ public class UserServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -933,7 +933,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±Ìí¼ÓÓÃ»§
+	// ç®¡ç†å‘˜æ·»åŠ ç”¨æˆ·
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		User user = new User();
 		HttpSession session = request.getSession();
@@ -947,23 +947,23 @@ public class UserServlet extends BaseServlet {
 		} else {
 			user.setUtype(2);
 		}
-		// 1.ÑéÖ¤Êı¾İµÄºÏ·¨ĞÔ
+		// 1.éªŒè¯æ•°æ®çš„åˆæ³•æ€§
 		String check = "1";
-		// ÓÃ»§Ãû
+		// ç”¨æˆ·å
 		if (uname != null && !uname.isEmpty()) {
 			user.setUname(uname);
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// µç»°
+		// ç”µè¯
 		if (uphone != null && !uphone.isEmpty()) {
 			user.setUphone(uphone);
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// ÓÊÏä
+		// é‚®ç®±
 		if (uemail != null && !uemail.isEmpty()) {
 			user.setUemail(uemail);
 			check = check + "/1";
@@ -972,34 +972,34 @@ public class UserServlet extends BaseServlet {
 		}
 		try {
 			if (!check.equals("1/1/1/1")) {
-				result = Result.lack("ĞÅÏ¢²»ÍêÕû£¡£¡£¡", check);
+				result = Result.lack("ä¿¡æ¯ä¸å®Œæ•´ï¼ï¼ï¼", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// 2.Ìí¼Ó
-			// »ñÈ¡ÏµÍ³µ±Ç°Ê±¼ä
+			// 2.æ·»åŠ 
+			// è·å–ç³»ç»Ÿå½“å‰æ—¶é—´
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			user.setUtime(df.format(date));
 			String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
 			String min = uuid.substring(0, 10);
-			user.setUminname("ÓÃ»§" + min);
+			user.setUminname("ç”¨æˆ·" + min);
 			user.setUpassword("aaaa8888");
 			user.setUstate(1);
 			int code = userBiz.insert(user);
 			if (code > 0) {
-				result = Result.success("Ìí¼Ó³É¹¦£¡£¡£¡");
-				// »á»°»¹Ô­
+				result = Result.success("æ·»åŠ æˆåŠŸï¼ï¼ï¼");
+				// ä¼šè¯è¿˜åŸ
 				String string = null;
 				session.setAttribute("regUname", string);
 				session.setAttribute("regUphone", string);
 				session.setAttribute("regUpwd", string);
 				session.setAttribute("regUemail", string);
-				// Êı¾İË¢ĞÂ
+				// æ•°æ®åˆ·æ–°
 				User user1 = new User();
-				List<User> customerExit = userBiz.selectAll(user1);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+				List<User> customerExit = userBiz.selectAll(user1);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 				user1.setUtype(1);
 				List<User> adminListAll = userBiz.selectAll(user1);
 				user1.setUtype(5);
@@ -1009,19 +1009,19 @@ public class UserServlet extends BaseServlet {
 						adminListAll.add(u);
 					}
 				}
-				// ÌŞ³ı¹ÜÀíÔ±
+				// å‰”é™¤ç®¡ç†å‘˜
 				for (int i = 0; i < customerExit.size(); i++) {
 					for (int j = 0; j < adminListAll.size(); j++) {
 						if (customerExit.get(i).equals(adminListAll.get(j))
 								&& customerExit.get(i).hashCode() == adminListAll.get(j).hashCode()) {
 							customerExit.remove(i);
-							// ´ËÊ±Ğè×¢Òâ£¬ÒòÎªlist»á¶¯Ì¬±ä»¯²»ÏñÊı×é»áÕ¼Î»£¬ËùÒÔµ±Ç°Ë÷ÒıÓ¦¸ÃºóÍËÒ»Î»
+							// æ­¤æ—¶éœ€æ³¨æ„ï¼Œå› ä¸ºlistä¼šåŠ¨æ€å˜åŒ–ä¸åƒæ•°ç»„ä¼šå ä½ï¼Œæ‰€ä»¥å½“å‰ç´¢å¼•åº”è¯¥åé€€ä¸€ä½
 							i--;
 							break;
 						}
 					}
 				}
-				session.setAttribute("customerAll", customerExit);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+				session.setAttribute("customerAll", customerExit);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 				Long [] userSize = new Long[100];
 				for (int i = 0; i < userSize.length; i++) {
 					userSize[i] = (long) 0;
@@ -1058,7 +1058,7 @@ public class UserServlet extends BaseServlet {
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("Ìí¼ÓÊ§°Ü£¡£¡£¡");
+			result = Result.failure("æ·»åŠ å¤±è´¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -1073,7 +1073,7 @@ public class UserServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1083,7 +1083,7 @@ public class UserServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1096,7 +1096,7 @@ public class UserServlet extends BaseServlet {
 	}
 
 	/*
-	 * ¹ÜÀíÔ±¸üĞÂÓÃ»§¼ìÑéÓÃ»§Ãû
+	 * ç®¡ç†å‘˜æ›´æ–°ç”¨æˆ·æ£€éªŒç”¨æˆ·å
 	 * 
 	 * @param request
 	 * 
@@ -1111,8 +1111,8 @@ public class UserServlet extends BaseServlet {
 			if (username != null && !username.isEmpty()) {
 				user.setUname(username);
 			} else {
-				// ÓÃ»§ÃûÊäÈëÎª¿Õ
-				result = Result.failure("ÓÃ»§ÃûÎª¿Õ£¡£¡£¡", username);
+				// ç”¨æˆ·åè¾“å…¥ä¸ºç©º
+				result = Result.failure("ç”¨æˆ·åä¸ºç©ºï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -1120,7 +1120,7 @@ public class UserServlet extends BaseServlet {
 			}
 			String reg = "^[\u4e00-\u9fa5a-zA-Z]{2,20}$";
 			if (!username.matches(reg)) {
-				result = Result.failure("ÓÃ»§ÃûÊäÈë²»ºÏ·¨£¡£¡£¡", username);
+				result = Result.failure("ç”¨æˆ·åè¾“å…¥ä¸åˆæ³•ï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -1130,21 +1130,21 @@ public class UserServlet extends BaseServlet {
 			if (uid != null && !uid.isEmpty()) {
 				uid1 = Long.parseLong(uid);
 			} else {
-				result = Result.failure("Î´Ñ¡ÔñÓÃ»§£¡£¡£¡", username);
+				result = Result.failure("æœªé€‰æ‹©ç”¨æˆ·ï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
 			User user2 = userBiz.selectSingle(user);
-			if (user2.getUid() != uid1 && user2.getUid() != 0) { // ËµÃ÷ÓÃ»§ÃûÒÑ¾­±»Ê¹ÓÃ
-				result = Result.failure("ÒÑ´æÔÚ¸ÃÓÃ»§£¡£¡£¡", username);
+			if (user2.getUid() != uid1 && user2.getUid() != 0) { // è¯´æ˜ç”¨æˆ·åå·²ç»è¢«ä½¿ç”¨
+				result = Result.failure("å·²å­˜åœ¨è¯¥ç”¨æˆ·ï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.success("¸ÃÓÃ»§Ãû¿ÉÒÔÊ¹ÓÃ£¡£¡£¡");
+			result = Result.success("è¯¥ç”¨æˆ·åå¯ä»¥ä½¿ç”¨ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			session.setAttribute("adminUpdateUname", username);
 			response.setContentType("application/json;charset=UTF-8");
@@ -1161,7 +1161,7 @@ public class UserServlet extends BaseServlet {
 
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡", username);
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼", username);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1175,7 +1175,7 @@ public class UserServlet extends BaseServlet {
 	}
 
 	/*
-	 * ¹ÜÀíÔ±¸üĞÂÓÃ»§¼ìÑéµç»°
+	 * ç®¡ç†å‘˜æ›´æ–°ç”¨æˆ·æ£€éªŒç”µè¯
 	 */
 	public void adminCheckPhone(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -1190,14 +1190,14 @@ public class UserServlet extends BaseServlet {
 				uid1 = Long.parseLong(uid);
 				user2.setUid(uid1);
 			} else {
-				result = Result.failure("Î´Ñ¡ÔñÓÃ»§£¡£¡£¡");
+				result = Result.failure("æœªé€‰æ‹©ç”¨æˆ·ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			}
 			User userOld = userBiz.selectSingle(user2);
 			if (uphone != null && !uphone.isEmpty()) {
-				// µç»°Î´ĞŞ¸Ä
+				// ç”µè¯æœªä¿®æ”¹
 				if (uphone.equals(userOld.getUphone())) {
 					result = Result.success("", uphone);
 					String json = gson.toJson(result);
@@ -1207,7 +1207,7 @@ public class UserServlet extends BaseServlet {
 					return;
 				}
 				if (!uphone.matches(regphone)) {
-					result = Result.failure("µç»°ºÅÂë²»ºÏ·¨£¡£¡£¡");
+					result = Result.failure("ç”µè¯å·ç ä¸åˆæ³•ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -1216,20 +1216,20 @@ public class UserServlet extends BaseServlet {
 				user.setUphone(uphone);
 				User user3 = userBiz.selectSingle(user);
 				if (user3.getUid() != 0 && user3.getUid() != uid1) {
-					result = Result.failure("µç»°ºÅÂëÒÑ±»Ê¹ÓÃ£¡£¡£¡");
+					result = Result.failure("ç”µè¯å·ç å·²è¢«ä½¿ç”¨ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.success("¸Ãµç»°ºÅÂë¿ÉÒÔÊ¹ÓÃ£¡£¡£¡");
+				result = Result.success("è¯¥ç”µè¯å·ç å¯ä»¥ä½¿ç”¨ï¼ï¼ï¼");
 				session.setAttribute("adminUpdateUphone", uphone);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			} else {
-				result = Result.failure("ÇëÊäÈëµç»°ºÅÂë£¡£¡£¡", uphone);
+				result = Result.failure("è¯·è¾“å…¥ç”µè¯å·ç ï¼ï¼ï¼", uphone);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -1244,7 +1244,7 @@ public class UserServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œ");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1256,7 +1256,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±¸üĞÂÓÃ»§¼ì²éÓÊÏä
+	// ç®¡ç†å‘˜æ›´æ–°ç”¨æˆ·æ£€æŸ¥é‚®ç®±
 	public void adminCheckEmail(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String uemail = request.getParameter("uemail");
@@ -1267,27 +1267,27 @@ public class UserServlet extends BaseServlet {
 			if (uemail != null && !uemail.isEmpty()) {
 				user.setUemail(uemail);
 			} else {
-				result = Result.failure("ÇëÊäÈëÓÊÏä£¡£¡£¡");
+				result = Result.failure("è¯·è¾“å…¥é‚®ç®±ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ÓÊÏä¸ñÊ½²»ºÏ·¨£¡
+			// é‚®ç®±æ ¼å¼ä¸åˆæ³•ï¼
 			if (!uemail.matches(regemail)) {
-				result = Result.failure("ÓÊÏä¸ñÊ½²»ºÏ·¨£¡£¡£¡");
+				result = Result.failure("é‚®ç®±æ ¼å¼ä¸åˆæ³•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ÓÊÏäÎ´ĞŞ¸Ä
+			// é‚®ç®±æœªä¿®æ”¹
 			long uid1 = 0;
 			if (uid != null && !uid.isEmpty()) {
 				uid1 = Long.parseLong(uid);
 				user.setUid(uid1);
 			} else {
-				result = Result.failure("Î´Ñ¡ÔñÓÃ»§£¡£¡£¡");
+				result = Result.failure("æœªé€‰æ‹©ç”¨æˆ·ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -1305,17 +1305,17 @@ public class UserServlet extends BaseServlet {
 				return;
 			}
 			User user3 = userBiz.selectSingle(user);
-			// ¸ÃÓÊÏäÒÑ±»×¢²á£¡
+			// è¯¥é‚®ç®±å·²è¢«æ³¨å†Œï¼
 			if (user3.getUid() != 0 && user3.getUid() != uid1) {
-				result = Result.failure("¸ÃÓÊÏäÒÑ±»×¢²á£¡£¡£¡", uemail);
+				result = Result.failure("è¯¥é‚®ç®±å·²è¢«æ³¨å†Œï¼ï¼ï¼", uemail);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ¸ÃÓÊÏä¿ÉÒÔ×¢²á!
+			// è¯¥é‚®ç®±å¯ä»¥æ³¨å†Œ!
 			session.setAttribute("adminUpdateUemail", uemail);
-			result = Result.success("¸ÃÓÊÏä¿ÉÒÔÊ¹ÓÃ", uemail);
+			result = Result.success("è¯¥é‚®ç®±å¯ä»¥ä½¿ç”¨", uemail);
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -1330,7 +1330,7 @@ public class UserServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1342,7 +1342,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±¸üĞÂÓÃ»§ºÍ¹ÜÀíÔ±ĞÅÏ¢
+	// ç®¡ç†å‘˜æ›´æ–°ç”¨æˆ·å’Œç®¡ç†å‘˜ä¿¡æ¯
 	public void adminUpdateUser(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String uid = request.getParameter("uid");
@@ -1354,9 +1354,9 @@ public class UserServlet extends BaseServlet {
 		String uemail = (String) session.getAttribute("adminUpdateUemail");
 		String uphone = (String) session.getAttribute("adminUpdateUphone");
 
-		// 1.ÑéÖ¤Êı¾İµÄºÏ·¨ĞÔ
+		// 1.éªŒè¯æ•°æ®çš„åˆæ³•æ€§
 		String check = "1";
-		// a.ĞÕÃû
+		// a.å§“å
 		if (uname != null && !uname.isEmpty()) {
 			userNew.setUname(uname);
 			check = check + "/1";
@@ -1368,7 +1368,7 @@ public class UserServlet extends BaseServlet {
 				check = check + "/-1";
 			}
 		}
-		// b.ÓÊÏä
+		// b.é‚®ç®±
 		if (uemail != null && !uemail.isEmpty()) {
 			userNew.setUemail(uemail);
 			check = check + "/1";
@@ -1380,7 +1380,7 @@ public class UserServlet extends BaseServlet {
 				check = check + "/-1";
 			}
 		}
-		// c.µç»°
+		// c.ç”µè¯
 		if (uphone != null && !uphone.isEmpty()) {
 			userNew.setUphone(uphone);
 			check = check + "/1";
@@ -1393,25 +1393,25 @@ public class UserServlet extends BaseServlet {
 			}
 		}
 		try {
-			// Êı¾İ²»ºÏ·¨
+			// æ•°æ®ä¸åˆæ³•
 			if (!check.equals("1/1/1/1")) {
-				result = Result.lack("Êı¾İ²»ºÏ·¨£¡£¡£¡", check);
+				result = Result.lack("æ•°æ®ä¸åˆæ³•ï¼ï¼ï¼", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// ÓÃ»§´æÔÚ
+			// ç”¨æˆ·å­˜åœ¨
 			if (uid != null && !uid.isEmpty()) {
 				userOld.setUid(Long.parseLong(uid));
 			} else {
-				result = Result.failure("Î´Ñ¡ÔñÓÃ»§£¡£¡£¡");
+				result = Result.failure("æœªé€‰æ‹©ç”¨æˆ·ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// 2.½øĞĞ¸üĞÂ²Ù×÷
+			// 2.è¿›è¡Œæ›´æ–°æ“ä½œ
 			if (utype != null && !utype.isEmpty()) {
 				userNew.setUtype(Integer.parseInt(utype));
 			}
@@ -1420,15 +1420,15 @@ public class UserServlet extends BaseServlet {
 			}
 			int code = userBiz.update(userNew, userOld);
 			if (code > 0) {
-				result = Result.success("¸üĞÂ³É¹¦£¡£¡£¡");
-				// »á»°»¹Ô­
+				result = Result.success("æ›´æ–°æˆåŠŸï¼ï¼ï¼");
+				// ä¼šè¯è¿˜åŸ
 				String string = null;
 				session.setAttribute("adminUpdateUname", string);
 				session.setAttribute("adminUpdateUemail", string);
 				session.setAttribute("adminUpdateUphone", string);
-				// Êı¾İ¸üĞÂ
+				// æ•°æ®æ›´æ–°
 				User user1 = new User();
-				List<User> customerExit = userBiz.selectAll(user1);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+				List<User> customerExit = userBiz.selectAll(user1);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 				user1.setUtype(1);
 				List<User> adminListAll = userBiz.selectAll(user1);
 				user1.setUtype(5);
@@ -1442,20 +1442,20 @@ public class UserServlet extends BaseServlet {
 						adminListAll.add(u);
 					}
 				}
-				session.setAttribute("adminAll", adminListAll);// ´æ´¢ËùÓĞ¹ÜÀíÔ±ĞÅÏ¢
-				// ÌŞ³ı¹ÜÀíÔ±
+				session.setAttribute("adminAll", adminListAll);// å­˜å‚¨æ‰€æœ‰ç®¡ç†å‘˜ä¿¡æ¯
+				// å‰”é™¤ç®¡ç†å‘˜
 				for (int i = 0; i < customerExit.size(); i++) {
 					for (int j = 0; j < adminListAll.size(); j++) {
 						if (customerExit.get(i).equals(adminListAll.get(j))
 								&& customerExit.get(i).hashCode() == adminListAll.get(j).hashCode()) {
 							customerExit.remove(i);
-							// ´ËÊ±Ğè×¢Òâ£¬ÒòÎªlist»á¶¯Ì¬±ä»¯²»ÏñÊı×é»áÕ¼Î»£¬ËùÒÔµ±Ç°Ë÷ÒıÓ¦¸ÃºóÍËÒ»Î»
+							// æ­¤æ—¶éœ€æ³¨æ„ï¼Œå› ä¸ºlistä¼šåŠ¨æ€å˜åŒ–ä¸åƒæ•°ç»„ä¼šå ä½ï¼Œæ‰€ä»¥å½“å‰ç´¢å¼•åº”è¯¥åé€€ä¸€ä½
 							i--;
 							break;
 						}
 					}
 				}
-				session.setAttribute("customerAll", customerExit);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+				session.setAttribute("customerAll", customerExit);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 				Long [] userSize = new Long[100];
 				for (int i = 0; i < userSize.length; i++) {
 					userSize[i] = (long) 0;
@@ -1492,13 +1492,13 @@ public class UserServlet extends BaseServlet {
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("¸üĞÂÊ§°Ü£¡£¡£¡");
+			result = Result.failure("æ›´æ–°å¤±è´¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1508,7 +1508,7 @@ public class UserServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1529,7 +1529,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// administratorÒ³ÃæÊı¾İÏÔÊ¾
+	// administratoré¡µé¢æ•°æ®æ˜¾ç¤º
 	public void queryAdmin(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = new User();
@@ -1546,7 +1546,7 @@ public class UserServlet extends BaseServlet {
 			user.setUtype(Integer.parseInt(utype));
 		}
 		try {
-			// Ë¢ĞÂÊı¾İ
+			// åˆ·æ–°æ•°æ®
 			List<User> adminListAll = null;
 			List<User> adminList = null;
 			if(user.getUtype() == 0){
@@ -1563,15 +1563,15 @@ public class UserServlet extends BaseServlet {
 				adminListAll = userBiz.selectAll(user);
 				adminList = userBiz.selectAll(user);
 			}
-			session.setAttribute("adminAll", adminListAll);// ´æ´¢ËùÓĞ¹ÜÀíÔ±ĞÅÏ¢
+			session.setAttribute("adminAll", adminListAll);// å­˜å‚¨æ‰€æœ‰ç®¡ç†å‘˜ä¿¡æ¯
 			if (adminListAll.size() > 0) {
-				result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+				result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("ÔİÎŞÊı¾İ£¡£¡£¡");
+			result = Result.failure("æš‚æ— æ•°æ®ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -1586,7 +1586,7 @@ public class UserServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1599,7 +1599,7 @@ public class UserServlet extends BaseServlet {
 
 	}
 
-	// ¹ÜÀíÔ±Ìí¼Ó¹ÜÀíÔ±
+	// ç®¡ç†å‘˜æ·»åŠ ç®¡ç†å‘˜
 	public void addAdmin(HttpServletRequest request, HttpServletResponse response) {
 		User user = new User();
 		HttpSession session = request.getSession();
@@ -1619,23 +1619,23 @@ public class UserServlet extends BaseServlet {
 		} else {
 			user.setUsex(0);
 		}
-		// 1.ÑéÖ¤Êı¾İµÄºÏ·¨ĞÔ
+		// 1.éªŒè¯æ•°æ®çš„åˆæ³•æ€§
 		String check = "1";
-		// ÓÃ»§Ãû
+		// ç”¨æˆ·å
 		if (uname != null && !uname.isEmpty()) {
 			user.setUname(uname);
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// µç»°
+		// ç”µè¯
 		if (uphone != null && !uphone.isEmpty()) {
 			user.setUphone(uphone);
 			check = check + "/1";
 		} else {
 			check = check + "/-1";
 		}
-		// ÓÊÏä
+		// é‚®ç®±
 		if (uemail != null && !uemail.isEmpty()) {
 			user.setUemail(uemail);
 			check = check + "/1";
@@ -1644,14 +1644,14 @@ public class UserServlet extends BaseServlet {
 		}
 		try {
 			if (!check.equals("1/1/1/1")) {
-				result = Result.lack("ĞÅÏ¢²»ÍêÕû£¡£¡£¡", check);
+				result = Result.lack("ä¿¡æ¯ä¸å®Œæ•´ï¼ï¼ï¼", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// 2.Ìí¼Ó
-			// »ñÈ¡ÏµÍ³µ±Ç°Ê±¼ä
+			// 2.æ·»åŠ 
+			// è·å–ç³»ç»Ÿå½“å‰æ—¶é—´
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			user.setUtime(df.format(date));
@@ -1659,14 +1659,14 @@ public class UserServlet extends BaseServlet {
 			user.setUstate(1);
 			int code = userBiz.insert(user);
 			if (code > 0) {
-				result = Result.success("Ìí¼Ó³É¹¦£¡£¡£¡");
-				// »á»°»¹Ô­
+				result = Result.success("æ·»åŠ æˆåŠŸï¼ï¼ï¼");
+				// ä¼šè¯è¿˜åŸ
 				String string = null;
 				session.setAttribute("regUname", string);
 				session.setAttribute("regUphone", string);
 				session.setAttribute("regUpwd", string);
 				session.setAttribute("regUemail", string);
-				// Êı¾İË¢ĞÂ
+				// æ•°æ®åˆ·æ–°
 				User user1 = new User();
 				user1.setUtype(1);
 				List<User> adminListAll = userBiz.selectAll(user1);
@@ -1681,13 +1681,13 @@ public class UserServlet extends BaseServlet {
 						adminListAll.add(u);
 					}
 				}
-				session.setAttribute("adminAll", adminListAll);// ´æ´¢ËùÓĞ¹ÜÀíÔ±ĞÅÏ¢
+				session.setAttribute("adminAll", adminListAll);// å­˜å‚¨æ‰€æœ‰ç®¡ç†å‘˜ä¿¡æ¯
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("Ìí¼ÓÊ§°Ü£¡£¡£¡");
+			result = Result.failure("æ·»åŠ å¤±è´¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -1702,7 +1702,7 @@ public class UserServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1712,7 +1712,7 @@ public class UserServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1724,7 +1724,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±¸üĞÂ¸öÈËÃÜÂë
+	// ç®¡ç†å‘˜æ›´æ–°ä¸ªäººå¯†ç 
 	public void adminUpdatePwd(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String upassword = (String) session.getAttribute("regUpwd");
@@ -1732,7 +1732,7 @@ public class UserServlet extends BaseServlet {
 		String checkPwd = (String) session.getAttribute("checkPwd");
 		User user = new User();
 		User userOld = (User) session.getAttribute("loginedUser");
-		// 1.ÑéÖ¤Êı¾İµÄºÏ·¨ĞÔ
+		// 1.éªŒè¯æ•°æ®çš„åˆæ³•æ€§
 		String check = "1";
 		if (upassword != null && !upassword.isEmpty()) {
 			user.setUpassword(upassword);
@@ -1752,35 +1752,35 @@ public class UserServlet extends BaseServlet {
 		}
 		try {
 			if (!check.equals("1/1/1/1")) {
-				result = Result.lack("ĞÅÏ¢²»ÍêÕû£¡£¡!", check);
+				result = Result.lack("ä¿¡æ¯ä¸å®Œæ•´ï¼ï¼!", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
 			if (userOld.getUid() == 0) {
-				result = Result.failure("¸üĞÂÊ§°Ü£¡£¡£¡");
+				result = Result.failure("æ›´æ–°å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// 2.¸üĞÂ
+			// 2.æ›´æ–°
 			int code = userBiz.update(user, userOld);
 			if (code > 0) {
-				result = Result.success("¸üĞÂ³É¹¦,Îª±ÜÃâÊı¾İÏÔÊ¾ÓĞÎó,ÇëÄúÉÔºóÖØĞÂµÇÂ¼£¡£¡£¡");
+				result = Result.success("æ›´æ–°æˆåŠŸ,ä¸ºé¿å…æ•°æ®æ˜¾ç¤ºæœ‰è¯¯,è¯·æ‚¨ç¨åé‡æ–°ç™»å½•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("¸üĞÂÊ§°Ü£¡£¡£¡");
+			result = Result.failure("æ›´æ–°å¤±è´¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1790,7 +1790,7 @@ public class UserServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1811,7 +1811,7 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 
-	// ¹ÜÀíÔ±¸üĞÂ¸öÈËĞÅÏ¢
+	// ç®¡ç†å‘˜æ›´æ–°ä¸ªäººä¿¡æ¯
 	public void adminUpdate(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User userNew = new User();
@@ -1822,9 +1822,9 @@ public class UserServlet extends BaseServlet {
 		String uphone = (String) session.getAttribute("updateUphone");
 		String usex = request.getParameter("usex");
 		try {
-			// 1.ÑéÖ¤Êı¾İµÄºÏ·¨ĞÔ
+			// 1.éªŒè¯æ•°æ®çš„åˆæ³•æ€§
 			String check = "1";
-			// a.ÓÃ»§Ãû
+			// a.ç”¨æˆ·å
 			if (uname != null && !uname.isEmpty()) {
 				userNew.setUname(uname);
 				check = check + "/1";
@@ -1834,7 +1834,7 @@ public class UserServlet extends BaseServlet {
 			} else {
 				check = check + "/-1";
 			}
-			// b.ÓÊÏä
+			// b.é‚®ç®±
 			if (uemail != null && !uemail.isEmpty()) {
 				userNew.setUemail(uemail);
 				check = check + "/1";
@@ -1844,7 +1844,7 @@ public class UserServlet extends BaseServlet {
 			} else {
 				check = check + "/-1";
 			}
-			// c.ÄêÁä
+			// c.å¹´é¾„
 			if (uage != null && !uage.isEmpty()) {
 				userNew.setUage(Integer.parseInt(uage));
 				check = check + "/1";
@@ -1854,7 +1854,7 @@ public class UserServlet extends BaseServlet {
 			} else {
 				check = check + "/-1";
 			}
-			// d.µç»°
+			// d.ç”µè¯
 			if (uphone != null && !uphone.isEmpty()) {
 				userNew.setUphone(uphone);
 				check = check + "/1";
@@ -1865,40 +1865,40 @@ public class UserServlet extends BaseServlet {
 				check = check + "/-1";
 			}
 			if (!check.equals("1/1/1/1/1")) {
-				result = Result.lack("ĞÅÏ¢²»ÍêÕû£¡£¡£¡", check);
+				result = Result.lack("ä¿¡æ¯ä¸å®Œæ•´ï¼ï¼ï¼", check);
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// 2.¼ìÑéÊÇ·ñµÇÂ¼
+			// 2.æ£€éªŒæ˜¯å¦ç™»å½•
 			if (userOld.getUid() == 0) {
-				result = Result.failure("¸üĞÂÊ§°Ü£¡£¡£¡");
+				result = Result.failure("æ›´æ–°å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// 3.¸üĞÂ
+			// 3.æ›´æ–°
 			if (usex != null && !usex.isEmpty()) {
 				userNew.setUsex(Integer.parseInt(usex));
 			}
 			int code = userBiz.update(userNew, userOld);
 			if (code <= 0) {
-				result = Result.failure("¸üĞÂÊ§°Ü£¡£¡£¡");
+				result = Result.failure("æ›´æ–°å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.success("¸üĞÂ³É¹¦£¡£¡£¡");
-			// a.»á»°»¹Ô­
+			result = Result.success("æ›´æ–°æˆåŠŸï¼ï¼ï¼");
+			// a.ä¼šè¯è¿˜åŸ
 			String string = null;
 			session.setAttribute("adminUpdateUname", string);
 			session.setAttribute("updateUemail", string);
 			session.setAttribute("updateUage", string);
 			session.setAttribute("updateUphone", string);
-			// b.Êı¾İ¸üĞÂ
+			// b.æ•°æ®æ›´æ–°
 			User user = userBiz.selectSingle(userNew);
 			session.setAttribute("loginedUser", user);
 			User user1 = new User();
@@ -1915,13 +1915,13 @@ public class UserServlet extends BaseServlet {
 					adminListAll.add(u);
 				}
 			}
-			session.setAttribute("adminAll", adminListAll);// ´æ´¢ËùÓĞ¹ÜÀíÔ±ĞÅÏ¢
+			session.setAttribute("adminAll", adminListAll);// å­˜å‚¨æ‰€æœ‰ç®¡ç†å‘˜ä¿¡æ¯
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -1931,7 +1931,7 @@ public class UserServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {

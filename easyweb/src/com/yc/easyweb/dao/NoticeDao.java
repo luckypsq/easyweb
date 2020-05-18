@@ -13,7 +13,7 @@ import com.yc.easyweb.bean.Usercontrol;
 import com.yc.easyweb.common.DbHelper;
 
 /**
- * ²Ù×÷notice±íµÄdaoÀà
+ * æ“ä½œnoticeè¡¨çš„daoç±»
  * 
  * @author psq
  *
@@ -21,21 +21,21 @@ import com.yc.easyweb.common.DbHelper;
 public class NoticeDao {
 	DbHelper db = new DbHelper();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	@SuppressWarnings("static-access")
 	public List<Notice> selectAll(Notice notice) throws IOException {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select nid,ntime,nnumber,nauthor,ncontent,nstate,ntemp,ntitle " + " from notice where 1=1 ");
 		if (notice != null) {
-			// °´·¢²¼Õß²é
+			// æŒ‰å‘å¸ƒè€…æŸ¥
 			if (notice.getNauthor() != null ) {
 				sb.append(" and nauthor like '%" + notice.getNauthor() + "%'");
 			}
-			// °´Ê±¼ä²é
+			// æŒ‰æ—¶é—´æŸ¥
 			if (notice.getNtime() != null) {
 				sb.append(" and ntime like '%" + notice.getNtime() + "%'");
 			}
-			// °´×´Ì¬²é
+			// æŒ‰çŠ¶æ€æŸ¥
 			if (notice.getNstate() != 0) {
 				sb.append(" and nstate = " + notice.getNstate());
 			}
@@ -51,21 +51,21 @@ public class NoticeDao {
 		return list;
 	}
 
-	// ²éÑ¯µ¥¸ö
+	// æŸ¥è¯¢å•ä¸ª
 	@SuppressWarnings("static-access")
 	public Notice selectSingle(Notice notice) throws IOException {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select nid,ntime,nnumber,nauthor,ncontent,nstate,ntemp,ntitle " + " from notice where 1=1 ");
 		if (notice != null) {
-			// °´·¢²¼Õß²é
+			// æŒ‰å‘å¸ƒè€…æŸ¥
 			if (notice.getNauthor() != null) {
 				sb.append(" and nauthor = '" + notice.getNauthor() + "'");
 			}
-			// °´Ê±¼ä²é
+			// æŒ‰æ—¶é—´æŸ¥
 			if (notice.getNtime() != null) {
 				sb.append(" and ntime = '" + notice.getNtime() + "'");
 			}
-			// °´×´Ì¬²é
+			// æŒ‰çŠ¶æ€æŸ¥
 			if (notice.getNstate() != 0) {
 				sb.append(" and nstate = " + notice.getNstate());
 			}
@@ -80,13 +80,13 @@ public class NoticeDao {
 		return db.selectSingle(sb.toString(), null, Notice.class);
 	}
 
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(Notice notice) {
 		String sql = "insert into notice(nid,ntime,nnumber,nauthor,ncontent,ntitle,ntemp,nstate) " + " values(null,?,?,?,?,?,?,default);";
 		return DbHelper.update(sql, notice.getNtime(),notice.getNnumber(), notice.getNauthor(), notice.getNcontent(), notice.getNtitle(),notice.getNtemp());
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(Notice notice) {
 		StringBuffer sb = new StringBuffer();
 		if (notice == null) {
@@ -102,7 +102,7 @@ public class NoticeDao {
 		return DbHelper.update(sb.toString(), null);
 	}
 
-	// É¾³ı¶àÌõ
+	// åˆ é™¤å¤šæ¡
 	public int deleteMore(List<Notice> list) throws SQLException {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
@@ -123,7 +123,7 @@ public class NoticeDao {
 		return DbHelper.update(sqList);
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(Notice noticeOld, Notice noticeNew) {
 		StringBuffer sb = new StringBuffer();
 		if (noticeNew== null || noticeOld== null) {
@@ -162,7 +162,7 @@ public class NoticeDao {
 		return DbHelper.update(sb.toString(), null);
 	}
 
-	// ¹«¸æ·ÖÒ³
+	// å…¬å‘Šåˆ†é¡µ
 	@SuppressWarnings({ "unchecked", "static-access" })
 	public Page<Notice> noticePage(int page, int rows, Notice notice) throws IOException {
 		StringBuffer sb = new StringBuffer();

@@ -11,7 +11,7 @@ import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.common.DbHelper;
 
 /**
- * ²Ù×÷Eorder±íµÄdaoÀà
+ * æ“ä½œEorderè¡¨çš„daoç±»
  * 
  * @author psq
  *
@@ -19,7 +19,7 @@ import com.yc.easyweb.common.DbHelper;
 public class EorderDao {
 	DbHelper db = new DbHelper();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	@SuppressWarnings("static-access")
 	public List<Eorder> selectAll(Eorder eorder) throws IOException {
 		StringBuffer sb = new StringBuffer();
@@ -59,7 +59,7 @@ public class EorderDao {
 		return list;
 	}
 
-	// ²éÑ¯ËùÓĞ¶©µ¥ÏêÏ¸ĞÅÏ¢
+	// æŸ¥è¯¢æ‰€æœ‰è®¢å•è¯¦ç»†ä¿¡æ¯
 	@SuppressWarnings("static-access")
 	public List<OrderDetial> selectAllDetail(OrderDetial detial) throws IOException {
 		StringBuffer sb = new StringBuffer();
@@ -90,7 +90,7 @@ public class EorderDao {
 
 	}
 
-	// ²éÑ¯µ¥¸ö¶©µ¥ÏêÏ¸ĞÅÏ¢
+	// æŸ¥è¯¢å•ä¸ªè®¢å•è¯¦ç»†ä¿¡æ¯
 	@SuppressWarnings("static-access")
 	public OrderDetial selectSingleDetail(OrderDetial detial) throws IOException {
 		StringBuffer sb = new StringBuffer();
@@ -120,7 +120,7 @@ public class EorderDao {
 		return db.selectSingle(sb.toString(), null, OrderDetial.class);
 	}
 
-	// ²éÑ¯µ¥¸ö
+	// æŸ¥è¯¢å•ä¸ª
 	@SuppressWarnings("static-access")
 	public Eorder selectSingle(Eorder eorder) throws IOException {
 		StringBuffer sb = new StringBuffer();
@@ -159,7 +159,7 @@ public class EorderDao {
 		return db.selectSingle(sb.toString(), null, Eorder.class);
 	}
 
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(Eorder eorder) throws SQLException {
 		String sql = "insert into eorder(eoid,uid,eotime,eotemp,uname,eoaddr,eotype,eoespress,eopaytypeid,eostate  ) "
 				+ " values(?,?,?,?,?,?,?,?,?,?);";
@@ -168,7 +168,7 @@ public class EorderDao {
 				eorder.getEopaytypeid(), eorder.getEostate());
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(Eorder eorder) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 		if (eorder == null) {
@@ -202,7 +202,7 @@ public class EorderDao {
 		return DbHelper.update(sb.toString(), null);
 	}
 
-	// É¾³ı¶àÌõ
+	// åˆ é™¤å¤šæ¡
 	public int delete(List<Eorder> list) throws SQLException {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
@@ -241,7 +241,7 @@ public class EorderDao {
 		return DbHelper.update(sqList);
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(Eorder eorderNew, Eorder eorderOld) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 		if (eorderNew == null || eorderOld == null) {
@@ -300,7 +300,7 @@ public class EorderDao {
 		return db.update(sb.toString(), null);
 	}
 
-	// Eorder·ÖÒ³
+	// Eorderåˆ†é¡µ
 	@SuppressWarnings({ "unchecked", "static-access" })
 	public Page<Eorder> eorderPage(int page, int rows, Eorder eorder) throws IOException {
 		StringBuffer sb = new StringBuffer();
@@ -335,7 +335,7 @@ public class EorderDao {
 		return db.selectPageForMysql(page, rows, Eorder.class, sb.toString());
 	}
 
-	// EorderÏêÇé·ÖÒ³
+	// Eorderè¯¦æƒ…åˆ†é¡µ
 	@SuppressWarnings({ "unchecked", "static-access" })
 	public Page<OrderDetial> orderPage(int page, int rows, OrderDetial detial) throws IOException {
 		StringBuffer sb = new StringBuffer();
@@ -364,5 +364,5 @@ public class EorderDao {
 		sb.append("  order by  eoid asc");
 		return db.selectPageForMysql(page, rows, OrderDetial.class, sb.toString());
 	}
-	// ÆäËû
+	// å…¶ä»–
 }

@@ -33,38 +33,38 @@ public class JoinServlet extends BaseServlet {
 	public void join(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		/*
-		 * // »ñÈ¡ÑéÖ¤Âë String vcode01 = (String) session.getAttribute("vcode");
+		 * // è·å–éªŒè¯ç  String vcode01 = (String) session.getAttribute("vcode");
 		 * String vcode02 = request.getParameter("vcode"); if(vcode01 != null &&
 		 * !vcode01.isEmpty() && !vcode02.isEmpty() && vcode02 != null){ if
-		 * (!vcode01.equalsIgnoreCase(vcode02)) { out.print(-2);//ÑéÖ¤Âë´íÎó return;
+		 * (!vcode01.equalsIgnoreCase(vcode02)) { out.print(-2);//éªŒè¯ç é”™è¯¯ return;
 		 * } }
 		 */
 
-		// ½ÓÊÕ ÓÃ»§Ãû ºÍ ÃÜÂë
+		// æ¥æ”¶ ç”¨æˆ·å å’Œ å¯†ç 
 		String username = request.getParameter("uname");
 		String password = request.getParameter("upassword");
 		/*String loginkeeping = request.getParameter("loginkeeping");*/
-		// ÑéÖ¤Âë
+		// éªŒè¯ç 
 		String vcode = request.getParameter("vcode");
 		String realCode = (String) session.getAttribute("vcode");
 		User user = new User();
 		try {
-			// Ìí¼ÓÓÃ»§ÃûÌõ¼ş
+			// æ·»åŠ ç”¨æˆ·åæ¡ä»¶
 			if (username != null && !username.isEmpty()) {
 				user.setUname(username);
 			} else {
-				result = Result.failure("ÓÃ»§ÃûÎª¿Õ£¡£¡£¡", username);
+				result = Result.failure("ç”¨æˆ·åä¸ºç©ºï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// Ìí¼ÓÃÜÂëÌõ¼ş
+			// æ·»åŠ å¯†ç æ¡ä»¶
 			if (password != null && !password.isEmpty()) {
 				user.setUpassword(password);
 			} else {
-				result = Result.failure("ÃÜÂëÎª¿Õ£¡£¡£¡");
+				result = Result.failure("å¯†ç ä¸ºç©ºï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				
 				response.setContentType("application/json;charset=UTF-8");
@@ -73,7 +73,7 @@ public class JoinServlet extends BaseServlet {
 			}
 			if(vcode!= null && !vcode.isEmpty()){
 				if(!vcode.equalsIgnoreCase(realCode)){
-					result = Result.failure("ÑéÖ¤Âë´íÎó£¡£¡£¡");
+					result = Result.failure("éªŒè¯ç é”™è¯¯ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					
 					response.setContentType("application/json;charset=UTF-8");
@@ -81,7 +81,7 @@ public class JoinServlet extends BaseServlet {
 					return;
 				}
 			}else{
-				result = Result.failure("ÑéÖ¤ÂëÎª¿Õ£¡£¡£¡");
+				result = Result.failure("éªŒè¯ç ä¸ºç©ºï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				
 				response.setContentType("application/json;charset=UTF-8");
@@ -89,10 +89,10 @@ public class JoinServlet extends BaseServlet {
 				return;
 			}
 			
-			User userShow = userBiz.selectSingle(user);// ±£´æÓÃ»§ĞÅÏ¢
+			User userShow = userBiz.selectSingle(user);// ä¿å­˜ç”¨æˆ·ä¿¡æ¯
 			if (userShow.getUid() == 0) {
-				// ÓÃ»§Ãû²»´æÔÚ
-				result = Result.failure("ÓÃ»§Ãû»òÃÜÂë´íÎó£¡£¡£¡", username);
+				// ç”¨æˆ·åä¸å­˜åœ¨
+				result = Result.failure("ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯ï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				
 				response.setContentType("application/json;charset=UTF-8");
@@ -100,7 +100,7 @@ public class JoinServlet extends BaseServlet {
 				return;
 			}
 			if (userShow.getUstate() != 1) {
-				result = Result.failure("ÄúÒÑ±»¶³½á»òÕËºÅ±»É¾³ı£¡£¡£¡", username);
+				result = Result.failure("æ‚¨å·²è¢«å†»ç»“æˆ–è´¦å·è¢«åˆ é™¤ï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				
 				response.setContentType("application/json;charset=UTF-8");
@@ -111,38 +111,38 @@ public class JoinServlet extends BaseServlet {
 
 			String adminType = null;
 			if (userShow.getUtype() == 1) {
-				adminType = "³¬¼¶¹ÜÀíÔ±";
+				adminType = "è¶…çº§ç®¡ç†å‘˜";
 			} else {
-				adminType = "ÆÕÍ¨¹ÜÀíÔ±";
+				adminType = "æ™®é€šç®¡ç†å‘˜";
 			}
 			String path = this.getServletContext().getContextPath();
-			// ½«ÏîÄ¿Ãû×Ö·ÅÈë»á»°ÖĞ
+			// å°†é¡¹ç›®åå­—æ”¾å…¥ä¼šè¯ä¸­
 			session.setAttribute("path", path);
 			request.getSession().setAttribute("adminType", adminType);
 			JoinServlet joinServlet = new JoinServlet();
 			joinServlet.init(request, response);
 			joinServlet.adminInit(request, response);
-			// ±£´æµÇÂ¼
+			// ä¿å­˜ç™»å½•
 			/**
 			 * Cookie cookie = new Cookie("loginedUsername",
-			 * URLEncoder.encode(username, "GBK")); // Ä¬ÈÏÎªÁÙÊ±Cookie,MaxAge<0 //
-			 * ´´½¨Ò»¸öcookie¶ÔÏó Cookie cookie01 = new Cookie("loginedPassword",
-			 * password); // ½â¾öCookie´æÖĞÎÄµÄÂÒÂëÎÊÌâ cookie.setMaxAge(60);// ÉèÖÃÓĞĞ§Ê±¼ä
-			 * 1·ÖÖÓf cookie01.setMaxAge(60); response.addCookie(cookie);//
-			 * ½«cookieÌí¼Óµ½ÏìÓ¦¶ÔÏóÖĞ response.addCookie(cookie01);
-			 * //´ÓÇëÇó¶ÔÏóÖĞ»ñÈ¡ä¯ÀÀÆ÷·¢ËÍ»Ø·şÎñÆ÷µÄcookieÊı¾İ Cookie[]
+			 * URLEncoder.encode(username, "GBK")); // é»˜è®¤ä¸ºä¸´æ—¶Cookie,MaxAge<0 //
+			 * åˆ›å»ºä¸€ä¸ªcookieå¯¹è±¡ Cookie cookie01 = new Cookie("loginedPassword",
+			 * password); // è§£å†³Cookieå­˜ä¸­æ–‡çš„ä¹±ç é—®é¢˜ cookie.setMaxAge(60);// è®¾ç½®æœ‰æ•ˆæ—¶é—´
+			 * 1åˆ†é’Ÿf cookie01.setMaxAge(60); response.addCookie(cookie);//
+			 * å°†cookieæ·»åŠ åˆ°å“åº”å¯¹è±¡ä¸­ response.addCookie(cookie01);
+			 * //ä»è¯·æ±‚å¯¹è±¡ä¸­è·å–æµè§ˆå™¨å‘é€å›æœåŠ¡å™¨çš„cookieæ•°æ® Cookie[]
 			 * cookies=request.getCookies(); //Cookie loginedUserCookie=null;
 			 * Cookie loginedPasswordCookie=null; if(cookies!=null){ for(Cookie
 			 * cookie:cookies){
 			 * if(cookie.getName().equalsIgnoreCase("loginedUsername")) {
-			 * //½â¾ö¶ÁÈ¡ÖĞÎÄÂÒÂëÎÊÌâ
+			 * //è§£å†³è¯»å–ä¸­æ–‡ä¹±ç é—®é¢˜
 			 * request.setAttribute("username",URLDecoder.decode(cookie.getValue
 			 * (),"GBK")); } if("loginedPassword".equals(cookie.getName())){
 			 * loginedPasswordCookie=cookie; } } }
 			 */
 
 			if (userShow.getUtype() != 1 && userShow.getUtype() != 5) {
-				result = Result.success("ÓÃ»§µÇÂ¼³É¹¦£¡£¡£¡", username);
+				result = Result.success("ç”¨æˆ·ç™»å½•æˆåŠŸï¼ï¼ï¼", username);
 				String json = gson.toJson(result);
 				
 				response.setContentType("application/json;charset=UTF-8");
@@ -159,9 +159,9 @@ public class JoinServlet extends BaseServlet {
 						conList.add(ucon.getConid());
 					}
 				}
-				// ¹ÜÀíÔ±È¨ÏŞ
+				// ç®¡ç†å‘˜æƒé™
 				session.setAttribute("adminControl", conList);
-				result = new Result("¹ÜÀíÔ±µÇÂ¼³É¹¦£¡£¡£¡", 2);
+				result = new Result("ç®¡ç†å‘˜ç™»å½•æˆåŠŸï¼ï¼ï¼", 2);
 				String json = gson.toJson(result);
 				
 				response.setContentType("application/json;charset=UTF-8");
@@ -178,7 +178,7 @@ public class JoinServlet extends BaseServlet {
 				throw new RuntimeException(e);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÄúÉÔµÈÒ»»á¶ùÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·æ‚¨ç¨ç­‰ä¸€ä¼šå„¿å†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -191,38 +191,38 @@ public class JoinServlet extends BaseServlet {
 	}
 	// TODO Auto-generated catch block
 	private void init(HttpServletRequest request, HttpServletResponse response) throws IOException, BizException {
-		// »ñÈ¡ÏµÍ³µ±Ç°Ê±¼ä
+		// è·å–ç³»ç»Ÿå½“å‰æ—¶é—´
 		HttpSession session = request.getSession();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
 		Date date = new Date();
 		String[] dateStr = df.format(date).split("/");
-		// ½«µÇÂ¼Ê±¼ä·ÅÈë»á»°ÖĞ
+		// å°†ç™»å½•æ—¶é—´æ”¾å…¥ä¼šè¯ä¸­
 		session.setAttribute("date", dateStr);
-		// ½«¸÷ÖÖ×´Ì¬µÄÀàĞÍ·ÅÈë»á»°ÖĞ
-		String[] userType = { "", "", "ÆÕÍ¨ÓÃ»§", "ÌúÅÆÓÃ»§", "Í­ÅÆÓÃ»§",  "","ÒøÅÆÓÃ»§","½ğÅÆÓÃ»§", "×êÊ¯ÓÃ»§", "À¶×êÓÃ»§", "ºì×êÓÃ»§" };
+		// å°†å„ç§çŠ¶æ€çš„ç±»å‹æ”¾å…¥ä¼šè¯ä¸­
+		String[] userType = { "", "", "æ™®é€šç”¨æˆ·", "é“ç‰Œç”¨æˆ·", "é“œç‰Œç”¨æˆ·",  "","é“¶ç‰Œç”¨æˆ·","é‡‘ç‰Œç”¨æˆ·", "é’»çŸ³ç”¨æˆ·", "è“é’»ç”¨æˆ·", "çº¢é’»ç”¨æˆ·" };
 		int[] uType = { 2, 3, 4, 6, 7,8,9 ,10};
 		session.setAttribute("userType", userType);
 		session.setAttribute("uType", uType);
-		String[] adminType = { "", "³¬¼¶¹ÜÀíÔ±", "", "", "" ,"ÆÕÍ¨¹ÜÀíÔ±"};
+		String[] adminType = { "", "è¶…çº§ç®¡ç†å‘˜", "", "", "" ,"æ™®é€šç®¡ç†å‘˜"};
 		session.setAttribute("adminType", adminType);
-		String[] userSex = { "±£ÃÜ", "ÄĞ", "Å®" };
+		String[] userSex = { "ä¿å¯†", "ç”·", "å¥³" };
 		session.setAttribute("userSex", userSex);
-		String[] adminState = { "", "ÒÑÆôÓÃ", "ÒÑ¶³½á", "ÒÑÉ¾³ı" };
+		String[] adminState = { "", "å·²å¯ç”¨", "å·²å†»ç»“", "å·²åˆ é™¤" };
 		session.setAttribute("adminStateC", adminState);
-		String[] bookState = { "Î´ÉÏ¼Ü", "ÒÑÉÏ¼Ü", "ÒÑÏÂ¼Ü", "ÊÛóÀ", "ÉóºË²»Í¨¹ı", "Î´ÉóºË" };
+		String[] bookState = { "æœªä¸Šæ¶", "å·²ä¸Šæ¶", "å·²ä¸‹æ¶", "å”®ç½„", "å®¡æ ¸ä¸é€šè¿‡", "æœªå®¡æ ¸" };
 		session.setAttribute("bookState", bookState);
-		//¹«¸æ
-		String[] noticeState  = {"Î´ÆôÓÃ","ÆôÓÃ"};
+		//å…¬å‘Š
+		String[] noticeState  = {"æœªå¯ç”¨","å¯ç”¨"};
 		session.setAttribute("noticeState", noticeState);
-		// ¹ÜÀíÔ±¶©µ¥×´Ì¬
-		String[] eorderState = { "", "´ı¸¶¿î", "´ı·¢»õ", "ÒÑ·¢»õ", "´ı´¦Àí", "ÒÑÍË¿î", "ÒÑ½ÓÊÕ", "ÍË»õÊ§°Ü" };
+		// ç®¡ç†å‘˜è®¢å•çŠ¶æ€
+		String[] eorderState = { "", "å¾…ä»˜æ¬¾", "å¾…å‘è´§", "å·²å‘è´§", "å¾…å¤„ç†", "å·²é€€æ¬¾", "å·²æ¥æ”¶", "é€€è´§å¤±è´¥" };
 		session.setAttribute("eoderState", eorderState);
-		// ÓÃ»§¶©µ¥×´Ì¬
-		String[] userOrder = { "", "µÈ´ıÖ§¸¶", "µÈ´ı·¢»õ", "µÈ´ı½ÓÊÕ", "µÈ´ı´¦Àí", "ÍË¿î³É¹¦", "ÒÑ½ÓÊÕ", "ÍË»õÊ§°Ü" };
+		// ç”¨æˆ·è®¢å•çŠ¶æ€
+		String[] userOrder = { "", "ç­‰å¾…æ”¯ä»˜", "ç­‰å¾…å‘è´§", "ç­‰å¾…æ¥æ”¶", "ç­‰å¾…å¤„ç†", "é€€æ¬¾æˆåŠŸ", "å·²æ¥æ”¶", "é€€è´§å¤±è´¥" };
 		session.setAttribute("userEorderState", userOrder);
-		String[] eorderMessage = { "", "µÈ´ıÖ§¸¶", "µÈ´ı·¢»õ", "µÈ´ıÀ¿¼ş", "µÈ´ı´¦Àí", "ÍË¿î³É¹¦", "Âò¼ÒÒÑÀ¿¼ş", "Ìõ¼ş²»·ûºÏ" };
+		String[] eorderMessage = { "", "ç­‰å¾…æ”¯ä»˜", "ç­‰å¾…å‘è´§", "ç­‰å¾…æ½ä»¶", "ç­‰å¾…å¤„ç†", "é€€æ¬¾æˆåŠŸ", "ä¹°å®¶å·²æ½ä»¶", "æ¡ä»¶ä¸ç¬¦åˆ" };
 		session.setAttribute("eoderMessage", eorderMessage);
-		// ³õÊ¼»¯´óÑ§£¬Ñ§Ôº£¬×¨Òµ
+		// åˆå§‹åŒ–å¤§å­¦ï¼Œå­¦é™¢ï¼Œä¸“ä¸š
 		Book book = new Book();
 		List<Book> bookList_add = bookBiz.selectAll(book);
 		HashSet<String> bookUniver = new HashSet<String>();
@@ -243,8 +243,8 @@ public class JoinServlet extends BaseServlet {
 		session.setAttribute("userUcol", bookUcollage);
 		session.setAttribute("userUmar", bookUmagor);
 
-		// ³õÊ¼»¯Êé¼®ÀàĞÍ
-		// Êé¼®ÀàĞÍ
+		// åˆå§‹åŒ–ä¹¦ç±ç±»å‹
+		// ä¹¦ç±ç±»å‹
 		BookType bookType = new BookType();
 		bookType.setBtstate(1);
 		List<BookType> bookTypes = btBiz.selectAll(bookType);
@@ -260,14 +260,14 @@ public class JoinServlet extends BaseServlet {
 			} else {
 				btname = bt.getBtname();
 			}
-			if(bt.getBtname().equals("½Ì²ÄÇø") && bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()){
+			if(bt.getBtname().equals("æ•™æåŒº") && bt.getBtnamesecond() != null && !bt.getBtnamesecond().isEmpty()){
 				bookTypeSecond.add(bt);
 			}
 			type[(int) bt.getBtid()] = btname;
 		}
-		session.setAttribute("btTypeEdit", type);//´æ´¢ËùÓĞµÄÀàĞÍ
-		session.setAttribute("teachSecond", bookTypeSecond);//´æ´¢½Ì²ÄÇøËùÓĞ×ÓÀàĞÍ
-		// ¹«¸æÕ¹Ê¾³õÊ¼»¯¹«¸æ
+		session.setAttribute("btTypeEdit", type);//å­˜å‚¨æ‰€æœ‰çš„ç±»å‹
+		session.setAttribute("teachSecond", bookTypeSecond);//å­˜å‚¨æ•™æåŒºæ‰€æœ‰å­ç±»å‹
+		// å…¬å‘Šå±•ç¤ºåˆå§‹åŒ–å…¬å‘Š
 		Notice notice = new Notice();
 		notice.setNstate(1);
 		List<Notice> nList;
@@ -281,43 +281,43 @@ public class JoinServlet extends BaseServlet {
 				nShow.add(nList.get(i));
 			}
 		}
-		// ´æ´¢×îĞÂµÄÁù¸ö¹«¸æÕ¹Ê¾³öÀ´
+		// å­˜å‚¨æœ€æ–°çš„å…­ä¸ªå…¬å‘Šå±•ç¤ºå‡ºæ¥
 		session.setAttribute("noticeShow", nShow);
 		Page<Notice> pageNotice = noticeBiz.noticePage(1, 3, notice);
 		session.setAttribute("noticePage", pageNotice);
-		// ³õÊ¼»¯Ö§¸¶ÀàĞÍ
+		// åˆå§‹åŒ–æ”¯ä»˜ç±»å‹
 
 		PayType payType = new PayType();
 		payType.setEopaystate(1);
 		List<PayType> payTypeList = payTypeBiz.selectAll(payType);
 		session.setAttribute("payType", payTypeList);
-		// listÒ³ÃæÊé¼®
+		// listé¡µé¢ä¹¦ç±
 		Book bookList = new Book();
 		bookList.setBstate(1);
 		Page<Book> page2 = bookBiz.bookPage(1, 21, bookList);
 		session.setAttribute("listBookPage", page2);
-		// ÓÃ»§index³õÊ¼Êı¾İ
-		// Êé¼®Õ¹Ê¾
+		// ç”¨æˆ·indexåˆå§‹æ•°æ®
+		// ä¹¦ç±å±•ç¤º
 		BookChild bookChild = new BookChild();
 		bookChild.setBstate(1);
-		// ½Ì²ÄÇø
-		bookChild.setBtname("½Ì²ÄÇø");
+		// æ•™æåŒº
+		bookChild.setBtname("æ•™æåŒº");
 		Page<Book> pPage = bookBiz.bookChildPage(1, 12, bookChild);
 		session.setAttribute("teachBook", pPage.getData());
 		session.setAttribute("teachPage", pPage);
 
-		// ¹¤¾ßÊé
-		bookChild.setBtname("¹¤¾ßÊéÇø");
+		// å·¥å…·ä¹¦
+		bookChild.setBtname("å·¥å…·ä¹¦åŒº");
 		Page<Book> pPaget = bookBiz.bookChildPage(1, 7, bookChild);
 		session.setAttribute("toolBook", pPaget.getData());
 		session.setAttribute("toolPage", pPaget);
-		// ·ÖÏíÇø
+		// åˆ†äº«åŒº
 		bookChild.setBtid(Long.parseLong("3"));
 		Page<Book> pPages = bookBiz.bookPage(1, 7, bookChild);
 		session.setAttribute("shareBook", pPages.getData());
 		session.setAttribute("sharePage", pPages);
 
-		// ÓÃ»§ÒÑ·¢²¼Êé¼®Õ¹Ê¾
+		// ç”¨æˆ·å·²å‘å¸ƒä¹¦ç±å±•ç¤º
 		User userOld = (User) session.getAttribute("loginedUser");
 		Book userBook = new Book();
 		Page<Book> page;
@@ -329,12 +329,12 @@ public class JoinServlet extends BaseServlet {
 		page = bookBiz.bookPage(1, 5, userBook);
 		session.setAttribute("userBookPage", page);
 
-		// ²éÑ¯ËùÓĞ¶©µ¥¶©µ¥ĞÅÏ¢
+		// æŸ¥è¯¢æ‰€æœ‰è®¢å•è®¢å•ä¿¡æ¯
 		Eorder eorder = new Eorder();
 		eorder.setUid(userOld.getUid());
 		Page<Eorder> Page = eorderBiz.eorderPage(1, 3, eorder);
 		session.setAttribute("userOrderPage", Page);
-		// ¹ºÎï³µĞÅÏ¢ÏÔÊ¾
+		// è´­ç‰©è½¦ä¿¡æ¯æ˜¾ç¤º
 		Bought bought = new Bought();
 		bought.setUid(userOld.getUid());
 		bought.setCartstate(1);
@@ -346,14 +346,14 @@ public class JoinServlet extends BaseServlet {
 		
 	}
 	// TODO Auto-generated catch block
-	// ¹ÜÀíÔ±Ò³ÃæµÄĞÅÏ¢Õ¹Ê¾³õÊ¼»¯
+	// ç®¡ç†å‘˜é¡µé¢çš„ä¿¡æ¯å±•ç¤ºåˆå§‹åŒ–
 	public void adminInit(HttpServletRequest request, HttpServletResponse response) throws IOException, BizException {
 		HttpSession session = request.getSession();
-		// »ñÈ¡ÓÃ»§ĞÅÏ¢
+		// è·å–ç”¨æˆ·ä¿¡æ¯
 		User user = new User();
-		// »ñÈ¡user±íËùÓĞĞÅÏ¢´æ´¢ÔÚ»á»°ÖĞ
-		List<User> customerExit = userBiz.selectAll(user);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
-		// ´æ´¢¹ÜÀíÔ±ËùÓĞĞÅÏ¢
+		// è·å–userè¡¨æ‰€æœ‰ä¿¡æ¯å­˜å‚¨åœ¨ä¼šè¯ä¸­
+		List<User> customerExit = userBiz.selectAll(user);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
+		// å­˜å‚¨ç®¡ç†å‘˜æ‰€æœ‰ä¿¡æ¯
 		user.setUtype(1);
 		List<User> adminListAll = userBiz.selectAll(user);
 		user.setUtype(5);
@@ -367,19 +367,19 @@ public class JoinServlet extends BaseServlet {
 				adminListAll.add(u);
 			}
 		}
-		session.setAttribute("adminAll", adminListAll);// ´æ´¢ËùÓĞ¹ÜÀíÔ±ĞÅÏ¢
-		// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+		session.setAttribute("adminAll", adminListAll);// å­˜å‚¨æ‰€æœ‰ç®¡ç†å‘˜ä¿¡æ¯
+		// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 		for (int i = 0; i < customerExit.size(); i++) {
 			for (int j = 0; j < adminListAll.size(); j++) {
 				if (customerExit.get(i).equals(adminListAll.get(j)) &&  customerExit.get(i).hashCode() == adminListAll.get(j).hashCode()) {
 					customerExit.remove(i);
-					// ´ËÊ±Ğè×¢Òâ£¬ÒòÎªlist»á¶¯Ì¬±ä»¯²»ÏñÊı×é»áÕ¼Î»£¬ËùÒÔµ±Ç°Ë÷ÒıÓ¦¸ÃºóÍËÒ»Î»
+					// æ­¤æ—¶éœ€æ³¨æ„ï¼Œå› ä¸ºlistä¼šåŠ¨æ€å˜åŒ–ä¸åƒæ•°ç»„ä¼šå ä½ï¼Œæ‰€ä»¥å½“å‰ç´¢å¼•åº”è¯¥åé€€ä¸€ä½
 						i--;
 						break ;
 				}
 			}
 		}
-		session.setAttribute("customerAll", customerExit);// ´æ´¢ËùÓĞÓÃ»§ĞÅÏ¢
+		session.setAttribute("customerAll", customerExit);// å­˜å‚¨æ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 		Long [] userSize = new Long[100];
 		for (int i = 0; i < userSize.length; i++) {
 			userSize[i] = (long) 0;
@@ -411,46 +411,46 @@ public class JoinServlet extends BaseServlet {
 			}
 		}
 		session.setAttribute("userSize", userSize);
-		// »ñÈ¡Êé¼®ĞÅÏ¢
+		// è·å–ä¹¦ç±ä¿¡æ¯
 		Book book = new Book();
 		List<Book> bookAll = bookBiz.selectAll(book);
-		session.setAttribute("bookAll", bookAll);// ´æ´¢ËùÓĞÊé¼®
-		// »ñÈ¡È«²¿¶©µ¥Êı
+		session.setAttribute("bookAll", bookAll);// å­˜å‚¨æ‰€æœ‰ä¹¦ç±
+		// è·å–å…¨éƒ¨è®¢å•æ•°
 		OrderDetial eorder1 = new OrderDetial();
 		String[] date = (String[]) session.getAttribute("date");
 		eorder1.setEotime(date[0]);
 		List<OrderDetial> eorderList = eorderBiz.selectAllDetail(eorder1);
-		session.setAttribute("eorderAll", eorderList);// ´æÒ»ÄêËùÓĞµÄ¶©µ¥ĞÅÏ¢
+		session.setAttribute("eorderAll", eorderList);// å­˜ä¸€å¹´æ‰€æœ‰çš„è®¢å•ä¿¡æ¯
 		double num = 0.0;
 		if (eorderList.size() != 0) {
 			for (OrderDetial oShow : eorderList) {
-				num = num + oShow.getTotal();// ´æ´¢ÏúÊÛ×Ü¶î
+				num = num + oShow.getTotal();// å­˜å‚¨é”€å”®æ€»é¢
 			}
 		}
-		session.setAttribute("eorderTotal", num);// ´æ´¢Ã¿Ò»ÄêÏúÊÛ×Ü¼Û
-		// eorderList±£´æ×ÅÈ«²¿¶©µ¥
-		// ×´Ì¬1.´ı¸¶¿î2.´ı·¢»õ3.ÒÑ·¢»õ4.ÍË»õÉêÇëÖĞ5.ÍË¿î³É¹¦6.ÒÑ½ÓÊÕ7.ÍË»õÊ§°Ü
+		session.setAttribute("eorderTotal", num);// å­˜å‚¨æ¯ä¸€å¹´é”€å”®æ€»ä»·
+		// eorderListä¿å­˜ç€å…¨éƒ¨è®¢å•
+		// çŠ¶æ€1.å¾…ä»˜æ¬¾2.å¾…å‘è´§3.å·²å‘è´§4.é€€è´§ç”³è¯·ä¸­5.é€€æ¬¾æˆåŠŸ6.å·²æ¥æ”¶7.é€€è´§å¤±è´¥
 		long[] count = { 0, 0, 0, 0, 0 };
 		for (OrderDetial eo : eorderList) {
 			if (eo.getEostate() == 1) {
-				// ´ı½áËã¶©µ¥eotype==1
+				// å¾…ç»“ç®—è®¢å•eotype==1
 				count[2] = count[2] + 1;
 			} else if (eo.getEostate() == 2) {
-				// ´ı·¢»õ¶©µ¥eostate == 2
+				// å¾…å‘è´§è®¢å•eostate == 2
 				count[1] = count[1] + 1;
 			} else if (eo.getEostate() == 4) {
-				// Î´´¦Àí¶©µ¥eostate == 4
+				// æœªå¤„ç†è®¢å•eostate == 4
 				count[0] = count[0] + 1;
 			} else if (eo.getEostate() == 6 || eo.getEostate() == 3) {
-				// ÒÑ³É½»¶©µ¥Êıeostate == 6
+				// å·²æˆäº¤è®¢å•æ•°eostate == 6
 				count[3] = count[3] + 1;
 			} else if (eo.getEostate() == 5) {
-				// ½»Ò×Ê§°Üeostate == 5
+				// äº¤æ˜“å¤±è´¥eostate == 5
 				count[4] = count[4] + 1;
 			}
 		}
-		session.setAttribute("eorderCount", count);// ´æ´¢Ã¿Ò»×´Ì¬ÊıÖµ
-		//´æ´¢²»ÊÇÍË¿î²Ù×÷µÄ¶©µ¥
+		session.setAttribute("eorderCount", count);// å­˜å‚¨æ¯ä¸€çŠ¶æ€æ•°å€¼
+		//å­˜å‚¨ä¸æ˜¯é€€æ¬¾æ“ä½œçš„è®¢å•
 		List<OrderDetial> order_show = eorderBiz.selectAllDetail(eorder1);
 		List<OrderDetial> orderRefund = new ArrayList<OrderDetial>();
 		List<OrderDetial> orderHand = new ArrayList<OrderDetial>();
@@ -476,10 +476,10 @@ public class JoinServlet extends BaseServlet {
 			}
 		}
 		session.setAttribute("orderNum", numHand);
-		//²éÑ¯ÍË¿îÊı¾İ
+		//æŸ¥è¯¢é€€æ¬¾æ•°æ®
 		session.setAttribute("eorderRefund", orderRefund);
-		// bookList´æ´¢ËùÓĞÊé¼®ĞÅÏ¢
-		// bstate;//×´Ì¬(1¿ÉÓÃ£¬2.É¾³ı3.ÊÛóÀ)
+		// bookListå­˜å‚¨æ‰€æœ‰ä¹¦ç±ä¿¡æ¯
+		// bstate;//çŠ¶æ€(1å¯ç”¨ï¼Œ2.åˆ é™¤3.å”®ç½„)
 		long[] bookCount = { 0, 0, 0 };
 		for (Book book1 : bookAll) {
 			if (book1.getBstate() == 3) {
@@ -490,13 +490,13 @@ public class JoinServlet extends BaseServlet {
 				bookCount[2] = bookCount[2] + 1;
 			}
 		}
-		session.setAttribute("bookCount", bookCount);// ´æ´¢Ã¿Ò»×´Ì¬ÊıÖµ
+		session.setAttribute("bookCount", bookCount);// å­˜å‚¨æ¯ä¸€çŠ¶æ€æ•°å€¼
 
-		// ¹«¸æÕ¹Ê¾
+		// å…¬å‘Šå±•ç¤º
 		Notice notice = new Notice();
 		List<Notice> nList = noticeBiz.selectAll(notice);
 		List<Notice> nShow = new ArrayList<Notice>();
-		session.setAttribute("noticeAll", nList);// ´æ´¢ËùÓĞ¹«¸æ
+		session.setAttribute("noticeAll", nList);// å­˜å‚¨æ‰€æœ‰å…¬å‘Š
 		if (nList.size() != 0) {
 			for (int i = 0; i < nList.size(); i++) {
 				if (i == 6) {
@@ -505,18 +505,18 @@ public class JoinServlet extends BaseServlet {
 				nShow.add(nList.get(i));
 			}
 		}
-		// ´æ´¢×îĞÂµÄÁù¸ö¹«¸æÕ¹Ê¾³öÀ´
+		// å­˜å‚¨æœ€æ–°çš„å…­ä¸ªå…¬å‘Šå±•ç¤ºå‡ºæ¥
 		session.setAttribute("noticeShow", nShow);
-		// ¹ÜÀíÔ±¿´µ½µÄĞŞ¸ÄµÄÀàĞÍ
+		// ç®¡ç†å‘˜çœ‹åˆ°çš„ä¿®æ”¹çš„ç±»å‹
 		BookType bType = new BookType();
-		bType.setBtname("½Ì²ÄÇø");
+		bType.setBtname("æ•™æåŒº");
 		List<BookType> btypes = btBiz.selectAll(bType);
 		for (int i = 0; i < btypes.size(); i++) {
 			if (btypes.get(i).getBtnamesecond() != null && !btypes.get(i).getBtnamesecond().isEmpty()) {
 				continue;
 			}
 			btypes.remove(i);
-			// ´ËÊ±Ğè×¢Òâ£¬ÒòÎªlist»á¶¯Ì¬±ä»¯²»ÏñÊı×é»áÕ¼Î»£¬ËùÒÔµ±Ç°Ë÷ÒıÓ¦¸ÃºóÍËÒ»Î»
+			// æ­¤æ—¶éœ€æ³¨æ„ï¼Œå› ä¸ºlistä¼šåŠ¨æ€å˜åŒ–ä¸åƒæ•°ç»„ä¼šå ä½ï¼Œæ‰€ä»¥å½“å‰ç´¢å¼•åº”è¯¥åé€€ä¸€ä½
 			i--;
 		}
 		String[] btShow = new String[1000];
@@ -534,7 +534,7 @@ public class JoinServlet extends BaseServlet {
 		}
 		session.setAttribute("adminRealBtypes", btShow);
 		session.setAttribute("adminShowBtypes", btypes);
-		// ¹ÜÀíÔ±³õÊ¼»¯Êé¼®ÀàĞÍ
+		// ç®¡ç†å‘˜åˆå§‹åŒ–ä¹¦ç±ç±»å‹
 		BookType bookType = new BookType();
 		List<BookType> bookTypes = btBiz.selectAll(bookType);
 		session.setAttribute("adminBtypes", bookTypes);
@@ -552,7 +552,7 @@ public class JoinServlet extends BaseServlet {
 		}
 		session.setAttribute("adminBtypesEdit", type);
 		
-		//¹ÜÀíÔ±È¨ÏŞ
+		//ç®¡ç†å‘˜æƒé™
 		/*
 		String[] type = new String[1000];
 		String btname;

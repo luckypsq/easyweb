@@ -3,7 +3,7 @@ package com.yc.easyweb.util;
 public class StrUtil {
 
 	/*
-	 * 	ÅĞ¶Ï×Ö·û´®ÊÇ·ñÎª¿Õ
+	 * 	åˆ¤æ–­å­—ç¬¦ä¸²æ˜¯å¦ä¸ºç©º
 	 */
 	public static boolean isEmpty(String str) {
 		if(null == str || "".equals(str)) {
@@ -13,7 +13,7 @@ public class StrUtil {
 	}
 	
 	/*
-	 * 	¶ÔÏó×ª»»Îª×Ö·û´®
+	 * 	å¯¹è±¡è½¬æ¢ä¸ºå­—ç¬¦ä¸²
 	 */
 	public static String objToString(Object obj) {
 		if(obj == null) {

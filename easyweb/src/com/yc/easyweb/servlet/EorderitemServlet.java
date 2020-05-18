@@ -32,7 +32,7 @@ public class EorderitemServlet extends BaseServlet {
 	private Gson gson = new Gson();
 	private Result result;
 
-	// É¾³ı
+	// åˆ é™¤
 	public void delete(HttpServletRequest request, HttpServletResponse response) {
 		Eorderitem eorderitem = new Eorderitem();
 		HttpSession session = request.getSession();
@@ -41,7 +41,7 @@ public class EorderitemServlet extends BaseServlet {
 			if (itemid != null && !itemid.isEmpty()) {
 				eorderitem.setItemid(itemid);
 			} else {
-				result = Result.failure("Î´Ñ¡Ôñ¹ºÎï³µÉÌÆ·£¡£¡£¡");
+				result = Result.failure("æœªé€‰æ‹©è´­ç‰©è½¦å•†å“ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -49,8 +49,8 @@ public class EorderitemServlet extends BaseServlet {
 			}
 			int code = eBiz.delete(eorderitem);
 			if (code > 1) {
-				result = Result.success("É¾³ı³É¹¦£¡£¡£¡");
-				//Êı¾İË¢ĞÂ
+				result = Result.success("åˆ é™¤æˆåŠŸï¼ï¼ï¼");
+				//æ•°æ®åˆ·æ–°
 				User userOld = (User) session.getAttribute("loginedUser");
 				Bought bou = new Bought();
 				bou.setUid(userOld.getUid());
@@ -62,7 +62,7 @@ public class EorderitemServlet extends BaseServlet {
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("É¾³ıÊ§°Ü£¡£¡£¡");
+			result = Result.failure("åˆ é™¤å¤±è´¥ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
@@ -77,7 +77,7 @@ public class EorderitemServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -87,7 +87,7 @@ public class EorderitemServlet extends BaseServlet {
 			}
 			e.printStackTrace();
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -99,7 +99,7 @@ public class EorderitemServlet extends BaseServlet {
 		}
 	}
 
-	// ÓÃ»§Ìí¼Ó¹ºÎïĞÅÏ¢
+	// ç”¨æˆ·æ·»åŠ è´­ç‰©ä¿¡æ¯
 	public void add(HttpServletRequest request, HttpServletResponse response) {
 		Eorderitem eod = new Eorderitem();
 		HttpSession session = request.getSession();
@@ -115,14 +115,14 @@ public class EorderitemServlet extends BaseServlet {
 				if (bookOld != null) {
 					eod.setTotal(bookOld.getBprice());
 				} else {
-					result = Result.lack("¸Ã±¾ÊéÒÑ±»ÏÂ¼Ü»òÉ¾³ı£¡£¡£¡");
+					result = Result.lack("è¯¥æœ¬ä¹¦å·²è¢«ä¸‹æ¶æˆ–åˆ é™¤ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
 			} else {
-				result = Result.lack("ÇëÑ¡ÔñÊé¼®£¡£¡£¡");
+				result = Result.lack("è¯·é€‰æ‹©ä¹¦ç±ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
@@ -134,37 +134,37 @@ public class EorderitemServlet extends BaseServlet {
 				if (userOld.getUid() != 0) {
 					eod.setUid(userOld.getUid());
 				} else {
-					result = Result.lack("ÇëÏÈµÇÂ¼£¡£¡£¡");
+					result = Result.lack("è¯·å…ˆç™»å½•ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return;
 				}
 			} else {
-				result = Result.lack("ÇëÏÈµÇÂ¼£¡£¡£¡");
+				result = Result.lack("è¯·å…ˆç™»å½•ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			// »ñÈ¡ÏµÍ³Ê±¼ä
+			// è·å–ç³»ç»Ÿæ—¶é—´
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			eod.setCarttime(df.format(date));
-			// Éú³É¶©µ¥ºÅ
+			// ç”Ÿæˆè®¢å•å·
 			String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
 			eod.setItemid(uuid);
 			eod.setCount(1);
 			int i = eBiz.insert(eod);
 			if (i > 0) {
-				result = Result.success("Ìí¼Ó³É¹¦£¡£¡£¡");
-				//»á»°»¹Ô­
+				result = Result.success("æ·»åŠ æˆåŠŸï¼ï¼ï¼");
+				//ä¼šè¯è¿˜åŸ
 				Map<String, String> map = new HashMap<String, String>();
 				session.setAttribute("customerOrderAdd", map);
 				Bought eo = new Bought();
 				session.setAttribute("userOrderAddItem", eo);
-				//Êı¾İË¢ĞÂ
-				// ¹ºÎï³µĞÅÏ¢ÏÔÊ¾
+				//æ•°æ®åˆ·æ–°
+				// è´­ç‰©è½¦ä¿¡æ¯æ˜¾ç¤º
 				Bought bought = new Bought();
 				bought.setUid(userOld.getUid());
 				bought.setCartstate(1);
@@ -177,13 +177,13 @@ public class EorderitemServlet extends BaseServlet {
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			} else {
-				result = Result.failure("Ìí¼ÓÊ§°Ü£¡£¡£¡");
+				result = Result.failure("æ·»åŠ å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 			}
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -202,7 +202,7 @@ public class EorderitemServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -214,12 +214,12 @@ public class EorderitemServlet extends BaseServlet {
 		}
 	}
 
-	// ²éÑ¯¹ºÎï³µÊı¾İ
+	// æŸ¥è¯¢è´­ç‰©è½¦æ•°æ®
 	public void query(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String pageParam = request.getParameter("page");
 		int ipage = pageParam == null ? 1 : Integer.parseInt(pageParam);
-		// Ã¿Ò³ĞĞÊı
+		// æ¯é¡µè¡Œæ•°
 		int rows = 5;
 		User userOld = (User) session.getAttribute("loginedUser");
 		Bought bou = new Bought();
@@ -229,19 +229,19 @@ public class EorderitemServlet extends BaseServlet {
 			Page<Bought> Page = eBiz.ePage(ipage, rows, bou);
 			session.setAttribute("cartPage", Page);
 			if (Page.getData().size() == 0) {
-				result = Result.failure("ÔİÎŞÊı¾İ£¡£¡£¡");
+				result = Result.failure("æš‚æ— æ•°æ®ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+			result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -262,7 +262,7 @@ public class EorderitemServlet extends BaseServlet {
 		}
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public void update(HttpServletRequest request, HttpServletResponse response) {
 		String itemid = request.getParameter("itemid");
 		String count = request.getParameter("count");
@@ -275,7 +275,7 @@ public class EorderitemServlet extends BaseServlet {
 				eorderitem.setItemid(itemid);
 				Eorderitem eoSelect = eBiz.selectSingle(eorderitem);
 				if(eoSelect.getBid() == 0){
-					result = Result.failure("¶©µ¥ÕÒ²»µ½»ò²»´æÔÚ£¡£¡£¡");
+					result = Result.failure("è®¢å•æ‰¾ä¸åˆ°æˆ–ä¸å­˜åœ¨ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
@@ -291,8 +291,8 @@ public class EorderitemServlet extends BaseServlet {
 				int code = eBiz.update(eoNew, eoOld);
 				if (code > 0) {
 					DecimalFormat df = new DecimalFormat("#.00");
-					result = Result.success("ĞŞ¸Ä³É¹¦£¡£¡£¡", df.format(total));
-					//Êı¾İË¢ĞÂ
+					result = Result.success("ä¿®æ”¹æˆåŠŸï¼ï¼ï¼", df.format(total));
+					//æ•°æ®åˆ·æ–°
 					User userOld = (User) session.getAttribute("loginedUser");
 					Bought bou = new Bought();
 					bou.setUid(userOld.getUid());
@@ -304,19 +304,19 @@ public class EorderitemServlet extends BaseServlet {
 					response.getWriter().append(json);
 					return;
 				}
-				result = Result.failure("ĞŞ¸ÄÊ§°Ü£¡£¡£¡");
+				result = Result.failure("ä¿®æ”¹å¤±è´¥ï¼ï¼ï¼");
 				String json = gson.toJson(result);
 				response.setContentType("application/json;charset=UTF-8");
 				response.getWriter().append(json);
 				return;
 			}
-			result = Result.failure("ĞŞ¸ÄµÄÊı¾İÎ´ÌîĞ´£¡£¡£¡");
+			result = Result.failure("ä¿®æ”¹çš„æ•°æ®æœªå¡«å†™ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return;
 		} catch (SQLException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -335,7 +335,7 @@ public class EorderitemServlet extends BaseServlet {
 				throw new RuntimeException(e1);
 			}
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {
@@ -347,7 +347,7 @@ public class EorderitemServlet extends BaseServlet {
 		}
 	}
 
-	// ½«ÒªÏÂµ¥µÄ¹ºÎï³µid¼ÓÈë»á»°ÖĞ
+	// å°†è¦ä¸‹å•çš„è´­ç‰©è½¦idåŠ å…¥ä¼šè¯ä¸­
 	public void buyBook(HttpServletRequest request, HttpServletResponse response) {
 		String itemid = request.getParameter("itemid");
 		HttpSession session = request.getSession();
@@ -359,13 +359,13 @@ public class EorderitemServlet extends BaseServlet {
 				bought.setItemid(itemid);
 				 eo = eBiz.selectSingleCart(bought);
 				if(eo.getUid() != userOld.getUid()){
-					result = Result.failure("¸Ã¹ºÎï³µÉÌÆ·²»´æÔÚ£¡£¡£¡");
+					result = Result.failure("è¯¥è´­ç‰©è½¦å•†å“ä¸å­˜åœ¨ï¼ï¼ï¼");
 					String json = gson.toJson(result);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().append(json);
 					return ;
 				}
-				result = Result.success("²éÑ¯³É¹¦£¡£¡£¡");
+				result = Result.success("æŸ¥è¯¢æˆåŠŸï¼ï¼ï¼");
 				Map<String, String> map = new HashMap<String, String>();
 				map.put("bname", eo.getBname());
 				map.put("bprice", eo.getBprice()+"");
@@ -379,13 +379,13 @@ public class EorderitemServlet extends BaseServlet {
 				response.getWriter().append(json);
 				return ;
 			}
-			result = Result.failure("Î´Ö¸¶¨¹ºÎï³µÉÌÆ·£¡£¡£¡");
+			result = Result.failure("æœªæŒ‡å®šè´­ç‰©è½¦å•†å“ï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().append(json);
 			return ;
 		} catch (IOException e) {
-			result = Result.error("ÒµÎñ·±Ã¦,ÇëÉÔµÈ¼¸·ÖÖÓÔÙ²Ù×÷£¡£¡£¡");
+			result = Result.error("ä¸šåŠ¡ç¹å¿™,è¯·ç¨ç­‰å‡ åˆ†é’Ÿå†æ“ä½œï¼ï¼ï¼");
 			String json = gson.toJson(result);
 			response.setContentType("application/json;charset=UTF-8");
 			try {

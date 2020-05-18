@@ -9,13 +9,13 @@ import com.yc.easyweb.bean.BookType;
 import com.yc.easyweb.common.DbHelper;
 
 /**
- * ²Ù×÷BookType±íµÄdaoÀà
+ * æ“ä½œBookTypeè¡¨çš„daoç±»
  * @author psq
  *
  */
 public class BookTypeDao {
 	DbHelper db = new DbHelper();
-	//²éÑ¯ËùÓĞ
+	//æŸ¥è¯¢æ‰€æœ‰
 	@SuppressWarnings("static-access")
 	public List<BookType> selectAll(BookType bookType) throws IOException{
 		StringBuffer sb = new StringBuffer();
@@ -42,13 +42,13 @@ public class BookTypeDao {
 		List<BookType> list = db.selectAll(sb.toString(), null, BookType.class);
 		return list;
 	}
-	//Ìí¼Ó
+	//æ·»åŠ 
 	public int insert(BookType bookType) throws SQLException {
 		String sql = "insert into booktype(btid,btname,btnamesecond,btnamethird,bttemp,btstate) " 
 					+ " values(null,?,?,?,?,default);";
 		return DbHelper.update(sql, bookType.getBtname(),bookType.getBtnamesecond(),bookType.getBtnamethird(),bookType.getBttemp());
 	}
-	//É¾³ı
+	//åˆ é™¤
 	public int delete(BookType bookType) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 		if (bookType == null) {
@@ -73,7 +73,7 @@ public class BookTypeDao {
 		return db.update(sb.toString(), null);
 	}
 	
-	//É¾³ı¶àÌõÊı¾İ
+	//åˆ é™¤å¤šæ¡æ•°æ®
 	@SuppressWarnings("static-access")
 	public int delete(List<BookType> list) throws SQLException {
 		StringBuffer sb = null;
@@ -103,7 +103,7 @@ public class BookTypeDao {
 		}
 		return db.update(sqList);
 	}
-	//¸üĞÂ
+	//æ›´æ–°
 	public  int update (BookType bookTypeNew,BookType bookTypeOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (bookTypeNew == null || bookTypeOld == null) {
@@ -137,5 +137,5 @@ public class BookTypeDao {
 		}
 		return db.update(sb.toString(), null);
 	}
-	//ÆäËû
+	//å…¶ä»–
 }

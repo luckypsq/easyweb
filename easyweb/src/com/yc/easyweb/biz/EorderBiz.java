@@ -10,7 +10,7 @@ import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.dao.EorderDao;
 
 /**
- * ²Ù×÷Eorder±íµÄÊÂÎñÀà
+ * æ“ä½œEorderè¡¨çš„äº‹åŠ¡ç±»
  * 
  * @author psq
  *
@@ -19,145 +19,145 @@ public class EorderBiz {
 
 	private EorderDao dao = new EorderDao();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	public List<Eorder> selectAll(Eorder eorder) throws IOException, BizException  {
 		if(eorder == null){
-			throw new BizException("ÇëÊäÈë¶©µ¥ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥è®¢å•ä¿¡æ¯");
 		}
 		return dao.selectAll(eorder);
 	}
 
-	// ²éÑ¯µ¥¸ö
+	// æŸ¥è¯¢å•ä¸ª
 	public Eorder selectSingle(Eorder eorder) throws IOException, BizException  {
 		if(eorder == null){
-			throw new BizException("ÇëÊäÈë¶©µ¥ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥è®¢å•ä¿¡æ¯");
 		}
 		if(eorder.getEoid() ==null && eorder.getUid() ==0 && eorder.getEostate() == 0 && eorder.getUname() == null){
-			throw new BizException("ÇëÊäÈëĞèÒª²éÑ¯µÄ¶©µ¥ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥éœ€è¦æŸ¥è¯¢çš„è®¢å•ä¿¡æ¯");
 		}
 		return dao.selectSingle(eorder);
 	}
 
-	// ²éÑ¯¶©µ¥ÏêÇé
+	// æŸ¥è¯¢è®¢å•è¯¦æƒ…
 	public List<OrderDetial> selectAllDetail(OrderDetial detial) throws IOException, BizException  {
 		if(detial == null){
-			throw new BizException("ÇëÊäÈë¶©µ¥ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥è®¢å•ä¿¡æ¯");
 		}
 		return dao.selectAllDetail(detial);
 	}
-	// ²éÑ¯µ¥¸ö¶©µ¥ÏêÇé
+	// æŸ¥è¯¢å•ä¸ªè®¢å•è¯¦æƒ…
 		public OrderDetial selectSingleDetail(OrderDetial detial) throws IOException, BizException   {
 			if(detial == null){
-				throw new BizException("ÇëÊäÈë¶©µ¥ĞÅÏ¢");
+				throw new BizException("è¯·è¾“å…¥è®¢å•ä¿¡æ¯");
 			}
 			if(detial.getBid() == 0 && detial.getEoid() == null && detial.getUid() ==0 && detial.getUname() == null && detial.getEotemp() == null ){
-				throw new BizException("ÇëÊäÈëĞèÒª²éÑ¯µÄ¶©µ¥ĞÅÏ¢");
+				throw new BizException("è¯·è¾“å…¥éœ€è¦æŸ¥è¯¢çš„è®¢å•ä¿¡æ¯");
 			}
 			return dao.selectSingleDetail(detial);
 		}
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(Eorder eorder) throws SQLException, BizException  {
 		if(eorder == null){
-			throw new BizException("ÇëÊäÈë¶©µ¥ĞÅÏ¢£¡£¡!");
+			throw new BizException("è¯·è¾“å…¥è®¢å•ä¿¡æ¯ï¼ï¼!");
 		}
 		if(eorder.getEoaddr() == null ){
-			throw new BizException("ÇëÊäÈëÊÕ»ñµØÖ·£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¶è·åœ°å€ï¼ï¼ï¼");
 		}else if(eorder.getEoaddr().isEmpty()){
-			throw new BizException("ÇëÊäÈëÊÕ»ñµØÖ·£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¶è·åœ°å€ï¼ï¼ï¼");
 		}
 		
 		
 		if(eorder.getEotime() == null ){
-			throw new BizException("ÇëÊäÈëÏÂµ¥Ê±¼ä£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥ä¸‹å•æ—¶é—´ï¼ï¼ï¼");
 		}else if(eorder.getEotime().isEmpty() ){
-			throw new BizException("ÇëÊäÈëÏÂµ¥Ê±¼ä£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥ä¸‹å•æ—¶é—´ï¼ï¼ï¼");
 		}
 		
 		if(eorder.getUname() ==null ){
-			throw new BizException("ÇëÊäÈëÊÕ»õÈË£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¶è´§äººï¼ï¼ï¼");
 		}else if(eorder.getUname().isEmpty()){
-			throw new BizException("ÇëÊäÈëÊÕ»õÈË£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¶è´§äººï¼ï¼ï¼");
 		}
 		
 		if(eorder.getEotype() == null ){
-			throw new BizException("ÇëÑ¡ÔñÖ§¸¶ÀàĞÍ£¡£¡£¡");
+			throw new BizException("è¯·é€‰æ‹©æ”¯ä»˜ç±»å‹ï¼ï¼ï¼");
 		}else if(eorder.getEotype().isEmpty()){
-			throw new BizException("ÇëÑ¡ÔñÖ§¸¶ÀàĞÍ£¡£¡£¡");
+			throw new BizException("è¯·é€‰æ‹©æ”¯ä»˜ç±»å‹ï¼ï¼ï¼");
 		}
 		
 		if(eorder.getEopaytypeid() == 0){
-			throw new BizException("ÇëÊäÈëÖ§¸¶·½Ê½£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥æ”¯ä»˜æ–¹å¼ï¼ï¼ï¼");
 		}
 		
 		if(eorder.getEoid() == null ){
-			throw new BizException("ÇëÊäÈë¶©µ¥ºÅ£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥è®¢å•å·ï¼ï¼ï¼");
 		}else if(eorder.getEoid().isEmpty()){
-			throw new BizException("ÇëÊäÈë¶©µ¥ºÅ£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥è®¢å•å·ï¼ï¼ï¼");
 		}
 		
 		if(eorder.getUid() == 0){
-			throw new BizException("ÇëÊäÈë¶©µ¥ËùÓĞÕß£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥è®¢å•æ‰€æœ‰è€…ï¼ï¼ï¼");
 		}
 		
 		if(eorder.getEostate() == 0){
-			throw new BizException("ÇëÊäÈë¶©µ¥×´Ì¬£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥è®¢å•çŠ¶æ€ï¼ï¼ï¼");
 		}
 		return dao.insert(eorder);
 
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(Eorder eorder) throws SQLException, BizException  {
 		if(eorder == null){
-			throw new BizException("ÇëÊäÈë¶©µ¥ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥è®¢å•ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(eorder.getEoid() == null && eorder.getUid() == 0 && eorder.getUname() == null){
-			throw new BizException("ÇëÑ¡ÔñĞèÒªÉ¾³ıµÄ¶©µ¥ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·é€‰æ‹©éœ€è¦åˆ é™¤çš„è®¢å•ä¿¡æ¯ï¼ï¼ï¼");
 		}
 	
 		return dao.delete(eorder);
 
 	}
 
-	// É¾³ı¶à¸ö
+	// åˆ é™¤å¤šä¸ª
 	public int delete(List<Eorder> list) throws SQLException, BizException  {
 		if(list.size() == 0){
-			throw new BizException("ÇëÊäÈë¶©µ¥ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥è®¢å•ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		for(Eorder eorder : list){
 			if(eorder.getEoid() == null && eorder.getUid() == 0 && eorder.getUname() == null){
-				throw new BizException("ÇëÑ¡ÔñĞèÒªÉ¾³ıµÄ¶©µ¥ĞÅÏ¢£¡£¡£¡");
+				throw new BizException("è¯·é€‰æ‹©éœ€è¦åˆ é™¤çš„è®¢å•ä¿¡æ¯ï¼ï¼ï¼");
 			}
 		}
 		return dao.delete(list);
 
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(Eorder eorderNew, Eorder eorderOld) throws SQLException, BizException  {
 		if(eorderNew == null){
-			throw new BizException("ÇëÊäÈëĞŞ¸ÄµÄ¶©µ¥ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥ä¿®æ”¹çš„è®¢å•ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(eorderOld == null){
-			throw new BizException("ÇëÊäÈëĞèÒªĞŞ¸ÄµÄ¶©µ¥£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥éœ€è¦ä¿®æ”¹çš„è®¢å•ï¼ï¼ï¼");
 		}
 		if(eorderOld.getEoid() == null && eorderOld.getUid() == 0 && eorderOld.getUname() == null){
-			throw new BizException("ÇëÑ¡ÔñĞèÒªĞè¸ÄµÄ¶©µ¥ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·é€‰æ‹©éœ€è¦éœ€æ”¹çš„è®¢å•ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.update(eorderNew, eorderOld);
 	}
-	//·ÖÒ³
+	//åˆ†é¡µ
 	public Page<Eorder> eorderPage(int page, int rows,Eorder eorder) throws IOException, BizException {
 		if(eorder == null){
-			throw new BizException("ÇëÊäÈë¶©µ¥ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥è®¢å•ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.eorderPage(page, rows, eorder);
 	}
 	public Page<OrderDetial> eorderPage(int page, int rows,OrderDetial eorder) throws IOException, BizException {
 		if(eorder == null){
-			throw new BizException("ÇëÊäÈë¶©µ¥ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·è¾“å…¥è®¢å•ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.orderPage(page, rows, eorder);
 	}
-	// ÆäËû
+	// å…¶ä»–
 }

@@ -7,14 +7,14 @@ public class Notice implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private long nid;//¹«¸æid
-	private String ntime;//·¢²¼Ê±¼ä
-	private long nnumber;//ä¯ÀÀÁ¿
-	private String nauthor;//·¢²¼Õß
-	private String ncontent;//ÄÚÈİ
-	private int nstate;//×´Ì¬£¨1.Î´¹ıÆÚ2.ÒÑ¹ıÆÚ£©
-	private String ntemp;//±¸ÓÃ×Ö¶Î
-	private String ntitle;//±êÌâ
+	private long nid;//å…¬å‘Šid
+	private String ntime;//å‘å¸ƒæ—¶é—´
+	private long nnumber;//æµè§ˆé‡
+	private String nauthor;//å‘å¸ƒè€…
+	private String ncontent;//å†…å®¹
+	private int nstate;//çŠ¶æ€ï¼ˆ1.æœªè¿‡æœŸ2.å·²è¿‡æœŸï¼‰
+	private String ntemp;//å¤‡ç”¨å­—æ®µ
+	private String ntitle;//æ ‡é¢˜
 	
 	public String getNtitle() {
 		return ntitle;

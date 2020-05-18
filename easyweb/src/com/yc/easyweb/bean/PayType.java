@@ -8,8 +8,8 @@ public class PayType implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private long eopaytypeid;//id
-	private String eopayname;//Ö§¸¶Ãû×Ö
-	private int eopaystate;//×´Ì¬
+	private String eopayname;//æ”¯ä»˜åå­—
+	private int eopaystate;//çŠ¶æ€
 	private String eopaytemp;
 	public long getEopaytypeid() {
 		return eopaytypeid;

@@ -9,7 +9,7 @@ import com.yc.easyweb.bean.User;
 import com.yc.easyweb.common.DbHelper;
 
 /**
- * ²Ù×÷User±íµÄdaoÀà
+ * æ“ä½œUserè¡¨çš„daoç±»
  * 
  * @author psq
  *
@@ -17,7 +17,7 @@ import com.yc.easyweb.common.DbHelper;
 public class UserDao {
 	DbHelper db = new DbHelper();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	@SuppressWarnings("static-access")
 	public List<User> selectAll(User user) throws IOException  {
 		StringBuffer sb = new StringBuffer();
@@ -67,7 +67,7 @@ public class UserDao {
 		return list;
 
 	}
-	// ²éÑ¯µ¥¸ö
+	// æŸ¥è¯¢å•ä¸ª
 		@SuppressWarnings("static-access")
 		public User selectSingle(User user) throws IOException  {
 			StringBuffer sb = new StringBuffer();
@@ -86,7 +86,7 @@ public class UserDao {
 				if (user.getUpassword() != null) {
 					sb.append(" and upassword = '" + user.getUpassword() + "'");
 				}
-				//ÓÊÏä
+				//é‚®ç®±
 				if (user.getUemail()!= null) {
 					sb.append(" and uemail = '" + user.getUemail() + "'");
 				}
@@ -97,7 +97,7 @@ public class UserDao {
 			sb.append("  order by  uid desc");
 			return db.selectSingle(sb.toString(), null,User.class);
 		}
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(User user) throws SQLException  {
 		String sql = "insert into user(uid,uname,uminname,uphone,university,ucollege,umajor,uclass,upassword,"
 				+ " utemp,utype,uemail,utime,usex,uage,ustate) " + " values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,default);";
@@ -106,7 +106,7 @@ public class UserDao {
 				user.getUtemp(), user.getUtype(), user.getUemail(), user.getUtime(), user.getUsex(), user.getUage());
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(User user) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (user == null) {
@@ -125,7 +125,7 @@ public class UserDao {
 		if (user.getUid() != 0) {
 			sb.append(" and uid = " + user.getUid());
 		}
-		//ÓÊÏä
+		//é‚®ç®±
 		if (user.getUemail()!= null) {
 			sb.append(" and uemail = '" + user.getUemail() + "'");
 		}
@@ -133,7 +133,7 @@ public class UserDao {
 
 	}
 
-	// É¾³ı¶àÌõ¼ÇÂ¼
+	// åˆ é™¤å¤šæ¡è®°å½•
 	@SuppressWarnings("static-access")
 	public int delete(List<User> list) throws SQLException  {
 		StringBuffer sb = null;
@@ -156,7 +156,7 @@ public class UserDao {
 			if (user.getUid() != 0) {
 				sb.append(" and uid = " + user.getUid());
 			}
-			//ÓÊÏä
+			//é‚®ç®±
 			if (user.getUemail()!= null) {
 				sb.append(" and uemail = '" + user.getUemail() + "'");
 			}
@@ -165,70 +165,70 @@ public class UserDao {
 		return db.update(sqList);
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(User userNew, User userOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (userNew == null || userOld == null) {
 			return 0;
 		}
 		sb.append("update user set utemp='' ");
-		//êÇ³Æ
+		//æ˜µç§°
 		if (userNew.getUminname() != null && !userNew.getUminname().isEmpty()) {
 			sb.append(" , uminname ='" + userNew.getUminname() + "'");
 		}
-		//ÓÃ»§Ãû
+		//ç”¨æˆ·å
 		if (userNew.getUname() != null && !userNew.getUname().isEmpty()) {
 			sb.append(" , uname ='" + userNew.getUname() + "'");
 		}
-		//µç»°
+		//ç”µè¯
 		if (userNew.getUphone() != null && !userNew.getUphone().isEmpty()) {
 			sb.append(" , uphone ='" + userNew.getUphone() + "'");
 		}
-		//´óÑ§
+		//å¤§å­¦
 		if (userNew.getUniversity() != null && !userNew.getUniversity().isEmpty()) {
 			sb.append(" , university ='" + userNew.getUniversity() + "'");
 		}
-		//Ñ§Ôº
+		//å­¦é™¢
 		if (userNew.getUcollege() != null && !userNew.getUcollege().isEmpty()) {
 			sb.append(" , ucollege ='" + userNew.getUcollege() + "'");
 		}
-		//×¨Òµ
+		//ä¸“ä¸š
 		if (userNew.getUmajor() != null && !userNew.getUmajor().isEmpty()) {
 			sb.append(" , umajor ='" + userNew.getUmajor() + "'");
 		}
-		//×´Ì¬
+		//çŠ¶æ€
 		if (userNew.getUstate() != 0) {
 			sb.append(" , ustate = " + userNew.getUstate());
 		}
-		//Äê¼¶
+		//å¹´çº§
 		if (userNew.getUclass() != null && !userNew.getUclass().isEmpty()) {
 			sb.append(" , uclass = '" + userNew.getUclass() + "'");
 		}
-		//ÀàĞÍ
+		//ç±»å‹
 		if (userNew.getUtype() != 0) {
 			sb.append(" , utype = " + userNew.getUtype());
 		}
-		//ÄêÁä
+		//å¹´é¾„
 		if (userNew.getUage() != 0) {
 			sb.append(" , uage = " + userNew.getUage());
 		}
-		//ĞÔ±ğ
+		//æ€§åˆ«
 		if (userNew.getUsex() != 0) {
 			sb.append(" , usex = " + userNew.getUsex());
 		}
-		//ÓÊÏä
+		//é‚®ç®±
 		if (userNew.getUemail() != null && !userNew.getUemail().isEmpty()) {
 			sb.append(" , uemail = '" + userNew.getUemail() + "'");
 		}
-		//ÃÜÂë
+		//å¯†ç 
 		if (userNew.getUpassword() != null && !userNew.getUpassword().isEmpty()) {
 			sb.append(" , upassword = '" + userNew.getUpassword() + "'");
 		}
-		//±¸ÓÃ
+		//å¤‡ç”¨
 		if (userNew.getUtemp() != null && !userNew.getUtemp().isEmpty()) {
 			sb.append(" , utemp = '" + userNew.getUtemp() + "'");
 		}
-		//Ê±¼ä
+		//æ—¶é—´
 		if (userNew.getUtime() != null && !userNew.getUtime().isEmpty()) {
 			sb.append(" , utime = '" + userNew.getUtime() + "'");
 		}
@@ -244,7 +244,7 @@ public class UserDao {
 		return DbHelper.update(sb.toString(), null);
 	}
 
-	// ¸üĞÂ¶àÌõ
+	// æ›´æ–°å¤šæ¡
 	public int update(List<User> list) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		List<String> sqList = new ArrayList<String>();
@@ -264,5 +264,5 @@ public class UserDao {
 		}
 		return DbHelper.update(sqList);
 	}
-	// ÆäËû
+	// å…¶ä»–
 }

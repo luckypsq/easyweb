@@ -12,7 +12,7 @@ import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.dao.BookDao;
 
 /**
- * ²Ù×÷book±íµÄÊÂÎñÀà
+ * æ“ä½œbookè¡¨çš„äº‹åŠ¡ç±»
  * 
  * @author psq
  *
@@ -21,46 +21,46 @@ public class BookBiz {
 
 	private BookDao dao = new BookDao();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	public List<Book> selectAll(Book book) throws  IOException, BizException {
 		if (book == null) {
-			throw new BizException("ÇëÌîĞ´Êé¼®ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ä¹¦ç±ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.selectAll(book);
 	}
-	// ²éÑ¯µ¥Ìõ
+	// æŸ¥è¯¢å•æ¡
 	public Book selectSingle(Book book) throws BizException, IOException {
 		if (book == null) {
-			throw new BizException("ÇëÌîĞ´Êé¼®ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ä¹¦ç±ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(book.getBid() == 0  && book.getBname() == null ){
-			throw new BizException("Î´Ö¸¶¨Êé¼®£¡£¡£¡");
+			throw new BizException("æœªæŒ‡å®šä¹¦ç±ï¼ï¼ï¼");
 		}
 		return dao.selectSingle(book);
 	}
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(Book book) throws BizException, SQLException {
 		if (book == null) {
-			throw new BizException("ÇëÌîĞ´Êé¼®ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ä¹¦ç±ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(book.getBname() == null ){
-			throw new BizException("ÇëÌîĞ´ÊéÃû£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ä¹¦åï¼ï¼ï¼");
 		}else if(book.getBname().isEmpty()){
-			throw new BizException("ÇëÌîĞ´ÊéÃû£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ä¹¦åï¼ï¼ï¼");
 		}
 		if(book.getBprice() == 0){
-			throw new BizException("ÇëÌîĞ´Êé¼®¼Û¸ñ£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ä¹¦ç±ä»·æ ¼ï¼ï¼ï¼");
 		}
 		return dao.insert(book);
 	}
 
-	// É¾³ı
+	// åˆ é™¤
 	public int delete(Book book) throws BizException, SQLException, IOException {
 		if (book == null) {
-			throw new BizException("ÇëÌîĞ´Êé¼®ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ä¹¦ç±ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if(book.getBid() == 0 && book.getUid() ==0 && book.getBname() == null){
-			throw new BizException("Î´Ö¸¶¨É¾³ıµÄÊé¼®£¡£¡£¡");
+			throw new BizException("æœªæŒ‡å®šåˆ é™¤çš„ä¹¦ç±ï¼ï¼ï¼");
 		}
 		EorderBiz biz = new EorderBiz();
 		OrderDetial eo = new OrderDetial();
@@ -69,21 +69,21 @@ public class BookBiz {
 		if(list.size() != 0 ){
 			for(OrderDetial o : list){
 				if(o.getEostate() != 5 && o.getEostate() != 6){
-					throw new BizException("»¹ÓĞ¶©µ¥Î´´¦ÀíÍê²»ÄÜÉ¾³ı£¡£¡£¡");
+					throw new BizException("è¿˜æœ‰è®¢å•æœªå¤„ç†å®Œä¸èƒ½åˆ é™¤ï¼ï¼ï¼");
 				}
 			}
 		}
 		return dao.delete(book);
 	}
 
-	// É¾³ı¶àÌõ
+	// åˆ é™¤å¤šæ¡
 	public int deleteMore(List<Book> list) throws BizException, SQLException, IOException {
 		if (list.size() == 0) {
-			throw new BizException("ÇëÌîĞ´Êé¼®ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™ä¹¦ç±ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		for(Book book : list){
 			if(book.getBid() == 0 && book.getUid() ==0 && book.getBname() == null){
-				throw new BizException("Î´Ö¸¶¨É¾³ıµÄÊé¼®£¡£¡£¡");
+				throw new BizException("æœªæŒ‡å®šåˆ é™¤çš„ä¹¦ç±ï¼ï¼ï¼");
 			}
 			EorderBiz biz = new EorderBiz();
 			OrderDetial eo = new OrderDetial();
@@ -92,7 +92,7 @@ public class BookBiz {
 			if(list1.size() != 0 ){
 				for(OrderDetial o : list1){
 					if(o.getEostate() != 5 && o.getEostate() != 6){
-						throw new BizException("»¹ÓĞ¶©µ¥Î´´¦ÀíÍê²»ÄÜÉ¾³ı£¡£¡£¡");
+						throw new BizException("è¿˜æœ‰è®¢å•æœªå¤„ç†å®Œä¸èƒ½åˆ é™¤ï¼ï¼ï¼");
 					}
 				}
 			}
@@ -100,25 +100,25 @@ public class BookBiz {
 			return dao.delete(list);
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(Book newBook, Book oldBook) throws BizException, SQLException {
 		if (newBook == null ) {
-			throw new BizException("ÇëÌîĞ´ĞèÒªĞŞ¸ÄµÄĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦ä¿®æ”¹çš„ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		if (oldBook == null ) {
-			throw new BizException("ÇëÌîĞ´ĞèÒªĞŞ¸ÄµÄÊé¼®£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦ä¿®æ”¹çš„ä¹¦ç±ï¼ï¼ï¼");
 		}
 		if(oldBook.getBid() == 0 && oldBook.getBname() == null && oldBook.getBtid() == 0){
-			throw new BizException("ÇëÌîĞ´ĞèÒªĞŞ¸ÄµÄÊé¼®ĞÅÏ¢£¡£¡£¡");
+			throw new BizException("è¯·å¡«å†™éœ€è¦ä¿®æ”¹çš„ä¹¦ç±ä¿¡æ¯ï¼ï¼ï¼");
 		}
 		return dao.update(newBook, oldBook);
 	}
-	//·ÖÒ³
+	//åˆ†é¡µ
 	public Page<Book> bookPage(int page, int rows,Book book) throws IOException{
 		return dao.bookPage(page, rows, book);
 	}
 	public Page<Book> bookChildPage(int page, int rows,BookChild book) throws IOException{
 		return dao.bookChildPage(page, rows, book);
 	}
-	// ÆäËû
+	// å…¶ä»–
 }

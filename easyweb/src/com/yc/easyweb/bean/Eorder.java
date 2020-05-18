@@ -7,16 +7,16 @@ public class Eorder implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String eoid;//¶©µ¥id
-	private long uid;//ÓÃ»§id
-	private int eostate;//×´Ì¬1.´ı¸¶¿î2.´ı·¢»õ3.ÒÑ·¢»õ4.ÍË»õÉêÇëÖĞ5.ÍË¿î³É¹¦6.ÒÑ½ÓÊÕ7.ÍË»õÊ§°Ü
-	private String eotime;//ÏÂµ¥Ê±¼ä
-	private String eotemp;//µç»°
-	private String uname;//ÓÃ»§Ãû
-	private String eoaddr;//µØÖ·
-	private String eotype;//ÅäËÍ·½Ê½(ÔÚÏßÖ§¸¶ £¬»õµ½¸¶¿î µêÃæ½ÓÈ¡)
-	private String eoespress;//¿ìµİÃû×Ö
-	private long eopaytypeid;//Ö§¸¶ÀàĞÍ
+	private String eoid;//è®¢å•id
+	private long uid;//ç”¨æˆ·id
+	private int eostate;//çŠ¶æ€1.å¾…ä»˜æ¬¾2.å¾…å‘è´§3.å·²å‘è´§4.é€€è´§ç”³è¯·ä¸­5.é€€æ¬¾æˆåŠŸ6.å·²æ¥æ”¶7.é€€è´§å¤±è´¥
+	private String eotime;//ä¸‹å•æ—¶é—´
+	private String eotemp;//ç”µè¯
+	private String uname;//ç”¨æˆ·å
+	private String eoaddr;//åœ°å€
+	private String eotype;//é…é€æ–¹å¼(åœ¨çº¿æ”¯ä»˜ ï¼Œè´§åˆ°ä»˜æ¬¾ åº—é¢æ¥å–)
+	private String eoespress;//å¿«é€’åå­—
+	private long eopaytypeid;//æ”¯ä»˜ç±»å‹
 	public String getEoespress() {
 		return eoespress;
 	}

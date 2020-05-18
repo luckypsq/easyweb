@@ -25,14 +25,14 @@ public class ControlServlet extends BaseServlet {
 	ControlBiz controlBiz = new ControlBiz();
 	UsercontrolBiz userc = new UsercontrolBiz();
 
-	// ²éÑ¯
+	// æŸ¥è¯¢
 	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		UserBiz userBiz = new UserBiz();
 		User user = new User();
 		user.setUstate(1);
-		// ´æ´¢¹ÜÀíÔ±ËùÓĞĞÅÏ¢
+		// å­˜å‚¨ç®¡ç†å‘˜æ‰€æœ‰ä¿¡æ¯
 		user.setUtype(1);
 		List<User> adminListAll = userBiz.selectAll(user);
 		user.setUtype(5);
@@ -42,13 +42,13 @@ public class ControlServlet extends BaseServlet {
 				adminListAll.add(u);
 			}
 		}
-		session.setAttribute("adminExit", adminListAll);// ´æ´¢ËùÓĞ´æÔÚµÄ¹ÜÀíÔ±ĞÅÏ¢
+		session.setAttribute("adminExit", adminListAll);// å­˜å‚¨æ‰€æœ‰å­˜åœ¨çš„ç®¡ç†å‘˜ä¿¡æ¯
 		if(adminListAll.size() ==0 ){
 			out.print(1);
 		}
 	}
 
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Control control = new Control();
 		PrintWriter out = response.getWriter();
@@ -73,7 +73,7 @@ public class ControlServlet extends BaseServlet {
 		}
 	}
 
-	// ¸üĞÂ¹ÜÀíÔ±È¨ÏŞ
+	// æ›´æ–°ç®¡ç†å‘˜æƒé™
 	public void addUserControl(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
@@ -85,14 +85,14 @@ public class ControlServlet extends BaseServlet {
 		if (request.getParameter("type") != null && !request.getParameter("type").isEmpty()) {
 			utype = request.getParameter("type").split("/");
 		}
-		// ½«ËùÌí¼ÓµÄÈ¨ÏŞ·ÅÈë¼¯ºÏÖĞ
+		// å°†æ‰€æ·»åŠ çš„æƒé™æ”¾å…¥é›†åˆä¸­
 		List<Integer> listType = new ArrayList<Integer>();
 		if (utype.length != 0 && utype != null) {
 			for (String string : utype) {
 				listType.add(Integer.parseInt(string));
 			}
 		}
-		// ²éÑ¯¹ÜÀíÔ±ËùÓµÓĞµÄÈ¨ÏŞ
+		// æŸ¥è¯¢ç®¡ç†å‘˜æ‰€æ‹¥æœ‰çš„æƒé™
 		Usercontrol userm = null;
 		if (uid.length != 0 && uid != null) {
 			try {
@@ -119,21 +119,21 @@ public class ControlServlet extends BaseServlet {
 				e.printStackTrace();
 			}
 		}
-		// ½«ÆäÓë´«¹ıÀ´µÄÏà±È½Ï£¬ÏàÍ¬Ôò²»Ìí¼Ó£¬²»ÏàÍ¬ÔòÌí¼Ó
+		// å°†å…¶ä¸ä¼ è¿‡æ¥çš„ç›¸æ¯”è¾ƒï¼Œç›¸åŒåˆ™ä¸æ·»åŠ ï¼Œä¸ç›¸åŒåˆ™æ·»åŠ 
 
 	}
 
 	
 	
-	//CompetenceÒ³ÃæÊı¾İÏÔÊ¾
+	//Competenceé¡µé¢æ•°æ®æ˜¾ç¤º
 	public void queryCom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, BizException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
-		//²éÑ¯ËùÓĞµÄÈ¨ÏŞ
-		Control control_com = new Control();//²éÑ¯ËùÓĞµÄÌõ¼ş¶ÔÏó
-		control_com.setConstate(1);//Îª1Ê±ÊÇÏµÍ³È«²¿´æÔÚµÄ¹¦ÄÜ
+		//æŸ¥è¯¢æ‰€æœ‰çš„æƒé™
+		Control control_com = new Control();//æŸ¥è¯¢æ‰€æœ‰çš„æ¡ä»¶å¯¹è±¡
+		control_com.setConstate(1);//ä¸º1æ—¶æ˜¯ç³»ç»Ÿå…¨éƒ¨å­˜åœ¨çš„åŠŸèƒ½
 		ControlBiz cBiz = new ControlBiz();
-		List<Control> conShow = cBiz.selectAll(control_com);//±£´æËùÓĞµÄÈ¨ÏŞÏîÄ¿
+		List<Control> conShow = cBiz.selectAll(control_com);//ä¿å­˜æ‰€æœ‰çš„æƒé™é¡¹ç›®
 		HashSet<String> conType = new HashSet<String>(); 
 		for(Control con : conShow){
 			if(con.getConamesecond()== null){

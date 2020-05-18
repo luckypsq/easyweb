@@ -9,7 +9,7 @@ import com.yc.easyweb.bean.Usercontrol;
 import com.yc.easyweb.common.DbHelper;
 
 public class UsercontrolDao {
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 		public List<Usercontrol> selectAll(Usercontrol usercontrol) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select uid,conid,ucon from usercontrol where 1=1 ");
@@ -28,7 +28,7 @@ public class UsercontrolDao {
 			List<Usercontrol> list = DbHelper.selectAll(sb.toString(), null, Usercontrol.class);
 			return list;
 		}
-		//²éÑ¯µ¥¸ö
+		//æŸ¥è¯¢å•ä¸ª
 		public Usercontrol selectSingle(Usercontrol usercontrol) throws IOException  {
 			StringBuffer sb = new StringBuffer();
 			sb.append(" select uid,conid,ucon from usercontrol where 1=1 ");
@@ -46,13 +46,13 @@ public class UsercontrolDao {
 			sb.append(" order by  ucon desc");
 			return DbHelper.selectSingle(sb.toString(), null, Usercontrol.class);
 		}
-		// Ìí¼Ó
+		// æ·»åŠ 
 		public int insert(Usercontrol usercontrol) throws SQLException  {
 			String sql = "insert into Usercontrol(ucon,conid,uid) " + " values(null,?,?);";
 			return DbHelper.update(sql, usercontrol.getConid(),usercontrol.getUid());
 		}
 		
-		// É¾³ı
+		// åˆ é™¤
 		public int delete(Usercontrol usercontrol) throws SQLException  {
 			StringBuffer sb = new StringBuffer();
 			if (usercontrol == null) {
@@ -72,7 +72,7 @@ public class UsercontrolDao {
 
 		}
 		
-		//É¾³ı¶àÌõ
+		//åˆ é™¤å¤šæ¡
 		public int delete(List<Usercontrol> list) throws SQLException  {
 			StringBuffer sb = null;
 			if (list.size() == 0) {
@@ -96,7 +96,7 @@ public class UsercontrolDao {
 			return DbHelper.update(sqList);
 		}
 
-		// ¸üĞÂ
+		// æ›´æ–°
 		public int update(Usercontrol usercontrolNew,Usercontrol usercontrolOld) throws SQLException  {
 			StringBuffer sb = new StringBuffer();
 			if (usercontrolNew== null || usercontrolOld== null) {
@@ -125,5 +125,5 @@ public class UsercontrolDao {
 			return DbHelper.update(sb.toString(), null);
 
 		}
-		// ÆäËû
+		// å…¶ä»–
 }

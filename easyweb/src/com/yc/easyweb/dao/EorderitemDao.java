@@ -11,13 +11,13 @@ import com.yc.easyweb.bean.Page;
 import com.yc.easyweb.common.DbHelper;
 
 /**
- * ²Ù×÷Eorderitem±íµÄdaoÀà
+ * æ“ä½œEorderitemè¡¨çš„daoç±»
  * @author psq
  *
  */
 public class EorderitemDao {
 	DbHelper db = new DbHelper();
-	//²éÑ¯ËùÓĞ
+	//æŸ¥è¯¢æ‰€æœ‰
 	@SuppressWarnings("static-access")
 	public List<Eorderitem> selectAll(Eorderitem eorderitem) throws IOException {
 		StringBuffer sb = new StringBuffer();
@@ -45,7 +45,7 @@ public class EorderitemDao {
 		return list;
 		
 	}
-	//²éÑ¯µ¥¸ö
+	//æŸ¥è¯¢å•ä¸ª
 		@SuppressWarnings("static-access")
 		public Eorderitem selectSingle(Eorderitem eorderitem) throws IOException {
 			StringBuffer sb = new StringBuffer();
@@ -70,7 +70,7 @@ public class EorderitemDao {
 			
 			
 		}
-	//Ìí¼Ó
+	//æ·»åŠ 
 	public int insert(Eorderitem eorderitem) throws SQLException {
 		String sql = "insert into eorderitem(itemid,bid,count,total,eitemp,uid,carttime,cartstate,eoid) " 
 					+ " values(?,?,?,?,?,?,?,?,?);";
@@ -78,7 +78,7 @@ public class EorderitemDao {
 				eorderitem.getTotal(),eorderitem.getEitemp()
 				,eorderitem.getUid(),eorderitem.getCarttime(),eorderitem.getCartstate(),eorderitem.getEoid());
 	}
-	//É¾³ı
+	//åˆ é™¤
 	public int delete(Eorderitem eorderitem) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 		if (eorderitem == null) {
@@ -99,7 +99,7 @@ public class EorderitemDao {
 		}
 		return DbHelper.update(sb.toString(), null);
 	}
-	//É¾³ı¶àÌõÊı¾İ
+	//åˆ é™¤å¤šæ¡æ•°æ®
 	public int delete(List<Eorderitem > list) throws SQLException {
 		StringBuffer sb = null;
 		if (list.size() == 0) {
@@ -126,7 +126,7 @@ public class EorderitemDao {
 		return DbHelper.update(sqList);
 	}
 	
-	//¸üĞÂ
+	//æ›´æ–°
 	public  int update (Eorderitem eoNew,Eorderitem eoOld) throws SQLException  {
 		StringBuffer sb = new StringBuffer();
 		if (eoNew== null || eoOld== null) {
@@ -170,7 +170,7 @@ public class EorderitemDao {
 		}
 		return DbHelper.update(sb.toString(), null);
 	}
-	//²éÑ¯¹ºÎï³µÏêÇé
+	//æŸ¥è¯¢è´­ç‰©è½¦è¯¦æƒ…
 		public List<Bought> selectAll(Bought bought) throws IOException {
 			StringBuffer sb = new StringBuffer();
 			String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
@@ -197,7 +197,7 @@ public class EorderitemDao {
 			sb.append(" order by  itemid desc");
 			return DbHelper.selectAll(sb.toString(), null, Bought.class);
 		}
-		//²éÑ¯µ¥¸ö¹ºÎï³µÏêÇé
+		//æŸ¥è¯¢å•ä¸ªè´­ç‰©è½¦è¯¦æƒ…
 		public Bought selectSingle(Bought bought) throws IOException {
 			StringBuffer sb = new StringBuffer();
 			String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
@@ -225,7 +225,7 @@ public class EorderitemDao {
 			return DbHelper.selectSingle(sb.toString(), null, Bought.class);
 		}
 		
-		//¹ºÎï³µ·ÖÒ³
+		//è´­ç‰©è½¦åˆ†é¡µ
 		@SuppressWarnings({ "unchecked", "static-access" })
 		public Page<Bought> eoPage(int page, int rows,Bought bought) throws IOException {
 			String sql = "select bucollege,bumajor,bclass,bname,bprice,bimg,itemid,count,eo.bid,eo.eoid,total,eitemp,"
@@ -254,5 +254,5 @@ public class EorderitemDao {
 			return db.selectPageForMysql(page, rows, Bought.class,sb.toString());
 		}
 		
-	//ÆäËû
+	//å…¶ä»–
 }

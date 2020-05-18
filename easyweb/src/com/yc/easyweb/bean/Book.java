@@ -8,23 +8,23 @@ public class Book implements Serializable  {
 	 */
 	private static final long serialVersionUID = 1L;
 	private long bid;//id
-	private String bname;//ÊéÃû
-	private String buniversity;//Êé¼®·ÖÀàÑ§Ğ£
-	private String bucollege;//Êé¼®·ÖÀàÑ§Ôº
-	private String bumajor;//Êé¼®·ÖÀà×¨Òµ
-	private String bclass;//Êé¼®·ÖÀàÄê¼¶
+	private String bname;//ä¹¦å
+	private String buniversity;//ä¹¦ç±åˆ†ç±»å­¦æ ¡
+	private String bucollege;//ä¹¦ç±åˆ†ç±»å­¦é™¢
+	private String bumajor;//ä¹¦ç±åˆ†ç±»ä¸“ä¸š
+	private String bclass;//ä¹¦ç±åˆ†ç±»å¹´çº§
 	
-	private String bcontent;//ÃèÊö
-	private String bimg;//Í¼Æ¬
-	private double bprice;//¼Û¸ñ
-	private int bstate;//×´Ì¬(1ÒÑÉÏ¼Ü£¬2.ÒÑÏÂ¼Ü3.ÊÛóÀ4.ÉóºË²»Í¨¹ı5.Î´ÉóºË)
-	private long btid;//Àà±ğ
-	private String btemp;//ËùÊôÏµÁĞ
-	private String btemp1;//Ô¤Áô×Ö¶Î
-	private long bnum;//¿â´æ
-	private String bauthor ;//×÷Õß»ò³ö°æÉç
-	private String bdate;//ÉÏ´«Ê±¼ä
-	private long uid;//ÉÏ´«Õß
+	private String bcontent;//æè¿°
+	private String bimg;//å›¾ç‰‡
+	private double bprice;//ä»·æ ¼
+	private int bstate;//çŠ¶æ€(1å·²ä¸Šæ¶ï¼Œ2.å·²ä¸‹æ¶3.å”®ç½„4.å®¡æ ¸ä¸é€šè¿‡5.æœªå®¡æ ¸)
+	private long btid;//ç±»åˆ«
+	private String btemp;//æ‰€å±ç³»åˆ—
+	private String btemp1;//é¢„ç•™å­—æ®µ
+	private long bnum;//åº“å­˜
+	private String bauthor ;//ä½œè€…æˆ–å‡ºç‰ˆç¤¾
+	private String bdate;//ä¸Šä¼ æ—¶é—´
+	private long uid;//ä¸Šä¼ è€…
 	
 	public long getUid() {
 		return uid;
@@ -139,7 +139,7 @@ public class Book implements Serializable  {
 				+ ", bprice=" + bprice + ", bstate=" + bstate + ", btid=" + btid + ", btemp=" + btemp + ", btemp1="
 				+ btemp1 + ", bnum=" + bnum + ", bauthor=" + bauthor + ", bdate=" + bdate + ", uid=" + uid + "]";
 	}
-	//ÖØĞ´hashCode ºÍequals·½·¨ ÅĞ¶ÏÊé¼®ÊÇ·ñÏàÍ¬
+	//é‡å†™hashCode å’Œequalsæ–¹æ³• åˆ¤æ–­ä¹¦ç±æ˜¯å¦ç›¸åŒ
 	@Override
 	public int hashCode() {
 		final int prime = 31;

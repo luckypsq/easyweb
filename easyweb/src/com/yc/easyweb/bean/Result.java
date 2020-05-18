@@ -2,11 +2,11 @@ package com.yc.easyweb.bean;
 
 
 public class Result{
-	// ·µ»ØµÄÏûÏ¢
+	// è¿”å›çš„æ¶ˆæ¯
 	private String msg;
-	// ·µ»ØµÄ½á¹ûÂë 0 Ê§°Ü  1 ³É¹¦
+	// è¿”å›çš„ç»“æœç  0 å¤±è´¥  1 æˆåŠŸ
 	private int code;
-	// ·µ»ØµÄÊı¾İ
+	// è¿”å›çš„æ•°æ®
 	private Object data;
 	
 	public Result() {
@@ -28,7 +28,7 @@ public class Result{
 	}
 
 	/**
-	 * Ä¬ÈÏ³É¹¦µÄ½á¹û¶ÔÏó
+	 * é»˜è®¤æˆåŠŸçš„ç»“æœå¯¹è±¡
 	 * @param msg
 	 * @return
 	 */
@@ -46,7 +46,7 @@ public class Result{
 		return result;
 	}
 	/**
-	 * Ä¬ÈÏÊ§°ÜµÄ½á¹û¶ÔÏó
+	 * é»˜è®¤å¤±è´¥çš„ç»“æœå¯¹è±¡
 	 * @param msg
 	 * @return
 	 */
@@ -65,7 +65,7 @@ public class Result{
 		return result;
 	}
 	/**
-	 * Ä¬ÈÏ´íÎóµÄ½á¹û¶ÔÏó
+	 * é»˜è®¤é”™è¯¯çš„ç»“æœå¯¹è±¡
 	 * @param msg
 	 * @param data
 	 * @return
@@ -85,7 +85,7 @@ public class Result{
 	}
 	
 	/**
-	 * Ä¬ÈÏĞÅÏ¢²»ÍêÈ«µÄ½á¹û¶ÔÏó
+	 * é»˜è®¤ä¿¡æ¯ä¸å®Œå…¨çš„ç»“æœå¯¹è±¡
 	 * @return
 	 */
 	public static Result lack(String msg){

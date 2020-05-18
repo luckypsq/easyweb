@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * ¹ıÂËÆ÷Ò²ÊÇ·şÎñÆ÷×é¼ş
- * ¹ıÂËÆ÷µÄÅäÖÃ£º web.xml ×¢½â
+ * è¿‡æ»¤å™¨ä¹Ÿæ˜¯æœåŠ¡å™¨ç»„ä»¶
+ * è¿‡æ»¤å™¨çš„é…ç½®ï¼š web.xml æ³¨è§£
  */
 public class JoinFilter implements Filter {
 	public void destroy() {	}
 
 	/**
-	 * ¹ıÂË·½·¨
-	 *  FilterChain  ¹ıÂËÆ÷Á´¶ÔÏó
+	 * è¿‡æ»¤æ–¹æ³•
+	 *  FilterChain  è¿‡æ»¤å™¨é“¾å¯¹è±¡
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(
@@ -33,7 +33,7 @@ public class JoinFilter implements Filter {
 		String path = httpRequest.getSession().getServletContext().getContextPath();
 		path = path +"/join.jsp";
 		if(session.getAttribute("loginedUser") == null) {
-			request.setAttribute("msg", "ÇëÏÈµÇÂ¼ÏµÍ³");
+			request.setAttribute("msg", "è¯·å…ˆç™»å½•ç³»ç»Ÿ");
 			response2.sendRedirect(path);
 			return;
 		}

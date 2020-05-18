@@ -8,7 +8,7 @@ import com.yc.easyweb.bean.User;
 import com.yc.easyweb.dao.UserDao;
 
 /**
- * ²Ù×÷User±íµÄÊÂÎñÀà
+ * æ“ä½œUserè¡¨çš„äº‹åŠ¡ç±»
  * 
  * @author psq
  *
@@ -17,78 +17,78 @@ public class UserBiz {
 
 	private UserDao dao = new UserDao();
 
-	// ²éÑ¯ËùÓĞ
+	// æŸ¥è¯¢æ‰€æœ‰
 	public List<User> selectAll(User user) throws IOException, BizException {
 		if (user == null) {
-			throw new BizException("ÇëÊäÈëÓÃ»§ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥ç”¨æˆ·ä¿¡æ¯");
 		}
 		return dao.selectAll(user);
 	}
 
-	// Ìí¼Ó
+	// æ·»åŠ 
 	public int insert(User user) throws SQLException, BizException {
 		if (user == null) {
-			throw new BizException("ÇëÊäÈëÓÃ»§ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥ç”¨æˆ·ä¿¡æ¯");
 		}
 		if(user.getUemail() == null && user.getUphone() == null){
-			throw new BizException("ÇëÊäÈëÄúµÄÓÊÏä»òµç»°ºÅÂë£¬·½±ãÒÔºóÑéÖ¤");
+			throw new BizException("è¯·è¾“å…¥æ‚¨çš„é‚®ç®±æˆ–ç”µè¯å·ç ï¼Œæ–¹ä¾¿ä»¥åéªŒè¯");
 		}else if(user.getUemail().isEmpty() && user.getUphone().isEmpty() ){
-			throw new BizException("ÇëÊäÈëÄúµÄÓÊÏä»òµç»°ºÅÂë£¬·½±ãÒÔºóÑéÖ¤");
+			throw new BizException("è¯·è¾“å…¥æ‚¨çš„é‚®ç®±æˆ–ç”µè¯å·ç ï¼Œæ–¹ä¾¿ä»¥åéªŒè¯");
 		}
 		if(user.getUname() == null ){
-			throw new BizException("ÇëÊäÈëÄúµÄÓÃ»§Ãû");
+			throw new BizException("è¯·è¾“å…¥æ‚¨çš„ç”¨æˆ·å");
 		}else if(user.getUname().isEmpty()){
-			throw new BizException("ÇëÊäÈëÄúµÄÓÃ»§Ãû");
+			throw new BizException("è¯·è¾“å…¥æ‚¨çš„ç”¨æˆ·å");
 		}
 		if(user.getUpassword() == null ){
-			throw new BizException("ÇëÊäÈëÄúµÄÃÜÂë");
+			throw new BizException("è¯·è¾“å…¥æ‚¨çš„å¯†ç ");
 		}else if( user.getUpassword().isEmpty() ){
-			throw new BizException("ÇëÊäÈëÄúµÄÃÜÂë");
+			throw new BizException("è¯·è¾“å…¥æ‚¨çš„å¯†ç ");
 		}
 		return dao.insert(user);
 	}
 
-	// ¸üĞÂ
+	// æ›´æ–°
 	public int update(User userNew, User userOld) throws SQLException, BizException {
 		if (userNew == null) {
-			throw new BizException("ÇëÊäÈëÓÃ»§ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥ç”¨æˆ·ä¿¡æ¯");
 		}
 		if (userOld == null) {
-			throw new BizException("ÇëÊäÈëĞèÒªĞŞ¸ÄµÄÓÃ»§");
+			throw new BizException("è¯·è¾“å…¥éœ€è¦ä¿®æ”¹çš„ç”¨æˆ·");
 		}
 		if(userOld.getUcollege() == null && userOld.getUid() == 0 && userOld.getUminname() ==null && 
 				userOld.getUname() == null && userOld.getUphone() == null 
 				&& userOld.getUemail() == null){
-			throw new BizException("ÇëÊäÈëĞèÒªĞŞ¸ÄµÄÓÃ»§ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥éœ€è¦ä¿®æ”¹çš„ç”¨æˆ·ä¿¡æ¯");
 		}
 		return dao.update(userNew, userOld);
 
 	}
-	// ¸üĞÂ¶à¸ö
+	// æ›´æ–°å¤šä¸ª
 
 	public int update(List<User> list) throws SQLException, BizException {
 		if (list.size() == 0) {
-			throw new BizException("ÇëÊäÈëÓÃ»§ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥ç”¨æˆ·ä¿¡æ¯");
 		}
 		for(User user : list){
 			if( user.getUid() == 0 && user.getUminname() ==null && 
 					user.getUname() == null && user.getUphone() == null 
 					&& user.getUemail() == null && user.getUstate() == 0){
-				throw new BizException("ÇëÊäÈëĞèÒªĞŞ¸ÄµÄÓÃ»§ĞÅÏ¢");
+				throw new BizException("è¯·è¾“å…¥éœ€è¦ä¿®æ”¹çš„ç”¨æˆ·ä¿¡æ¯");
 			}
 		}
 		return dao.update(list);
 	}
 
-	// ²éÑ¯µ¥¸ö
+	// æŸ¥è¯¢å•ä¸ª
 	public User selectSingle(User user) throws IOException, BizException {
 		if (user == null) {
-			throw new BizException("ÇëÊäÈëÓÃ»§ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥ç”¨æˆ·ä¿¡æ¯");
 		}
 		if(user.getUcollege() == null && user.getUid() == 0 && user.getUminname() ==null && 
 				user.getUname() == null && user.getUphone() == null 
 				&& user.getUemail() == null){
-			throw new BizException("ÇëÊäÈëĞèÒª²éÑ¯µÄÓÃ»§ĞÅÏ¢");
+			throw new BizException("è¯·è¾“å…¥éœ€è¦æŸ¥è¯¢çš„ç”¨æˆ·ä¿¡æ¯");
 		}
 		return dao.selectSingle(user);
 	}
