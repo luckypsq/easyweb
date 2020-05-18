@@ -10,9 +10,15 @@
 <link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css">
 <script type="text/javascript" src="${path}/js/easyui/jquery.min.js"></script>
 <script type="text/javascript" src="${path}/js/easyui/jquery.easyui.min.js"></script>
-	<script src="${path }/js/jquery-1.11.2.min.js"></script>
-	<script type="text/javascript" src="${path }/js/mz-packed.js"></script>
-	<script type="text/javascript">
+<script type="text/javascript" src="${path }/js/mz-packed.js"></script>
+<style type="text/css">
+	#msg{
+		font-size:20px;
+	}
+</style>
+<script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript">
 
 function addCart(id){
 	var id = "bid="+id;
@@ -180,7 +186,7 @@ $(function(){
 					</c:if>
 				</span></p>
 				<a  class="pay" href="${path }/back/lywoption/buy.jsp?bid=${bookDetail.bid}">立即购买</a>
-				<a  class="pay" href="javascript:;"onclick="addCart(${bookDetail.bid});">加入购物车</a>
+				<a  class="pay" href="javascript:addCart(${bookDetail.bid});">加入购物车</a>
 			</div>
 			<div class="clearfix"></div>
 			<div class="description clearfix">

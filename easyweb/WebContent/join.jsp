@@ -383,7 +383,7 @@ function checkReg(){
 					placeholder="请输入用户名"/>
 				</p>
 				<p> 
-					<label for="password" class="youpasswd" data-icon="p">你的密码</label>
+					<label for="password" class="youpasswd" data-icon="p">您的密码</label>
 					<input id="password" name="password" required="required" type="password" 
 					placeholder="请输入密码" />
 				</p>
@@ -411,7 +411,7 @@ function checkReg(){
 				</p>				
 				
 				<p class="change_link">
-				          忘记密码?<a href="javascript:;" onclick="">找回密码</a>
+				          忘记密码?<a href="updatePwd.jsp" >找回密码</a>
 					不是成员?<a href="#toregister" class="to_register">加入我们</a>
 				</p>
 			</form>
